@@ -54,7 +54,7 @@ time:
 # 首页封面轮播图的相关配置.
 cover:
   showPrevNext: false # 是否显示左右切换按钮. Whether to display the left and right toggle buttons.
-  showIndicators: true # 是否显示指示器. # Whether to display the indicators
+  showIndicators: false # 是否显示指示器. # Whether to display the indicators
   autoLoop: false # 是否自动轮播. Whether it is automatically rotated.
   duration: 120 # 切换延迟时间. Switching delay time.
   intervalTime: 5000 # 自动切换下一张的间隔时间. Automatically switch the interval of the next one.
@@ -153,7 +153,7 @@ toc:
 
 # 代码块相关
 code:
-  lang: true # 代码块是否显示名称
+  lang: false # 代码块是否显示名称
   copy: true # 代码块是否可复制
   shrink: true # 代码块是否可以收缩
   break: false # 代码是否折行
