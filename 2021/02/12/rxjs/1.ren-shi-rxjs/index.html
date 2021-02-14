@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="认识Rxjs, LazyYu">
+    <meta name="keywords" content="1.认识Rxjs, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>认识Rxjs | LazyYu</title>
+    <title>1.认识Rxjs | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">认识Rxjs</h1>
+                    <h1 class="description center-align post-title">1.认识Rxjs</h1>
                 </div>
             </div>
         </div>
@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    941
+                    948
                 </div>
                 
 
@@ -446,16 +446,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-认识Rxjs"><a href="#1-认识Rxjs" class="headerlink" title="1. 认识Rxjs"></a>1. 认识Rxjs</h2><p>这个系列仍然是笔记系列,有关RxJS的.</p>
+                <h2 id="一-认识Rxjs"><a href="#一-认识Rxjs" class="headerlink" title="一. 认识Rxjs"></a>一. 认识Rxjs</h2><p>这个系列仍然是笔记系列,有关RxJS的.</p>
 <p>由于还是第一次看,就没什么介绍的了.</p>
 <p>仅用自己的语言做精炼的记录,供自己将来复习.</p>
 <p>所以有任何删减,出入,难以理解,甚至错误都是可能的….</p>
 <p>第一次学习建议直接看大佬的原文.</p>
 <p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10186104">宝岛台湾的大佬JerryHong 30天精通RxJS</a></p>
-<h3 id="异步编程增多"><a href="#异步编程增多" class="headerlink" title="异步编程增多"></a>异步编程增多</h3><p>在网页的世界中,存取任何资源都是异步的</p>
+<h3 id="1-异步编程增多"><a href="#1-异步编程增多" class="headerlink" title="1.异步编程增多"></a>1.异步编程增多</h3><p>在网页的世界中,存取任何资源都是异步的</p>
 <p>异步意味着发送一个获取文件请求,必须等到文件获取结束,才能进行操作</p>
 <p>随着业务复杂化,编写异步代码的需求更多,同时也更困难.</p>
-<h3 id="异步带来新的问题"><a href="#异步带来新的问题" class="headerlink" title="异步带来新的问题"></a>异步带来新的问题</h3><ul>
+<h3 id="2-异步带来新的问题"><a href="#2-异步带来新的问题" class="headerlink" title="2.异步带来新的问题"></a>2.异步带来新的问题</h3><ul>
 <li>竞态条件(Race Condition)</li>
 <li>内存泄漏(Memory Leak)</li>
 <li>复杂的状态(Complex State)</li>
@@ -464,7 +464,7 @@
 </ul>
 <p>DOM Events<br>XMLHttpRequest<br>fetch<br>WebSockets<br>Server Send Events<br>Service Worker<br>Node Stream<br>Timer</p>
 <p><strong>面对日益复杂的问题,我们需要一个更好的解决方法</strong></p>
-<h3 id="RxJS-是什么"><a href="#RxJS-是什么" class="headerlink" title="RxJS 是什么"></a>RxJS 是什么</h3><ul>
+<h3 id="3-RxJS-是什么"><a href="#3-RxJS-是什么" class="headerlink" title="3.RxJS 是什么"></a>3.RxJS 是什么</h3><ul>
 <li>RxJS 是一套使用 <strong>观察者队</strong>列(Observable sequences) 来组合 <strong>异步行为</strong> 和 <strong>事件基础</strong> 的 库.</li>
 <li>RxJS 被称为 函数响应式编程 Function Reactive Programming(FPR) ,更确切的说是 函数编程(Functional Programming) 跟 响应式编程(Reactive Programming) 的結合.</li>
 </ul>
@@ -485,10 +485,10 @@ Rx<span class="token punctuation">.</span>Observable
 <blockquote>
 <p>可以认为RxJS是处理异步的Lodash.<br><strong>异步行为</strong> 和 <strong>事件基础</strong> 不是很清楚具体是指什么<br>RxJS 被称为 FPR有争议, 并且 FPR 与 Functional Programming 跟 Reactive Programming 的結合 概念不同.<br>简单说就是FPR 是操作随时间<strong>连续改变的数值</strong>,而Rx则比较像随时间发出<strong>离散的数值</strong>.这部分不用太过深究,因为RPR本身的定义及其解释也存在争议.<br>30天精通RxJS 文章的作者JerryHong 认为 编程思想是想法的集合,而非严格的指南, 因而该更宽松的看待FPR的定义, 所以更偏向于 直接称其为FPR ,避免困惑.</p>
 </blockquote>
-<h3 id="Functional-Reactive-Programming-是什么"><a href="#Functional-Reactive-Programming-是什么" class="headerlink" title="Functional Reactive Programming 是什么"></a>Functional Reactive Programming 是什么</h3><p>Functional Reactive Programming 是一种编程思想(programming paradigm),就是编程的方法论.<br>比如,OOP就是一种编程思想,告诉我们使用对象的方式来思考.</p>
+<h3 id="4-Functional-Reactive-Programming-是什么"><a href="#4-Functional-Reactive-Programming-是什么" class="headerlink" title="4.Functional Reactive Programming 是什么"></a>4.Functional Reactive Programming 是什么</h3><p>Functional Reactive Programming 是一种编程思想(programming paradigm),就是编程的方法论.<br>比如,OOP就是一种编程思想,告诉我们使用对象的方式来思考.</p>
 <p>其 包含了 响应式编程 及 函数编程 两种编程思想.</p>
-<h4 id="Functional-Programming-函数式编程"><a href="#Functional-Programming-函数式编程" class="headerlink" title="Functional Programming 函数式编程"></a>Functional Programming 函数式编程</h4><p>用函数的方式来思考我们的问题.</p>
-<h4 id="Reactive-Programming-响应式编程"><a href="#Reactive-Programming-响应式编程" class="headerlink" title="Reactive Programming 响应式编程"></a>Reactive Programming 响应式编程</h4><p>响应式编程 就是当变量或者说资源发生变动,由变量或资源主动告诉依赖项,我发生变动了.</p>
+<h4 id="1-Functional-Programming-函数式编程"><a href="#1-Functional-Programming-函数式编程" class="headerlink" title="(1) Functional Programming 函数式编程"></a>(1) Functional Programming 函数式编程</h4><p>用函数的方式来思考我们的问题.</p>
+<h4 id="2-Reactive-Programming-响应式编程"><a href="#2-Reactive-Programming-响应式编程" class="headerlink" title="(2) Reactive Programming 响应式编程"></a>(2) Reactive Programming 响应式编程</h4><p>响应式编程 就是当变量或者说资源发生变动,由变量或资源主动告诉依赖项,我发生变动了.</p>
 <p>其背后隐含两件事:</p>
 <ul>
 <li>发生变动,即非同步,因为不知道什么时候会发生变动.</li>
@@ -498,7 +498,7 @@ Rx<span class="token punctuation">.</span>Observable
 <blockquote>
 <p>响应式编程 只是一种编程思想,很多库都有用到,不止RxJS,比如Vue就是响应式编程的典范之一</p>
 </blockquote>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>RxJS 是异步处理方案,有更优雅更便捷的书写方式.<br>RxJS 吸收了 函数式编程 和 响应式编程 的编程思想.</p>
+<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5.总结"></a>5.总结</h3><p>RxJS 是异步处理方案,有更优雅更便捷的书写方式.<br>RxJS 吸收了 函数式编程 和 响应式编程 的编程思想.</p>
 
                 
             </div>
@@ -742,9 +742,9 @@ Rx<span class="token punctuation">.</span>Observable
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Functional Programming概念">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="2.Functional Programming概念">
                         
-                        <span class="card-title">Functional Programming概念</span>
+                        <span class="card-title">2.Functional Programming概念</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -969,7 +969,7 @@ Rx<span class="token punctuation">.</span>Observable
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">3.8k</span>&nbsp;字
+                class="white-color">6.3k</span>&nbsp;字
             
             
             
