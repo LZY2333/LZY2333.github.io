@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="8.take,first,takeUntil,concatAll, LazyYu">
+    <meta name="keywords" content="10.30天精通RxJS系列笔记断更, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>8.take,first,takeUntil,concatAll | LazyYu</title>
+    <title>10.30天精通RxJS系列笔记断更 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">8.take,first,takeUntil,concatAll</h1>
+                    <h1 class="description center-align post-title">10.30天精通RxJS系列笔记断更</h1>
                 </div>
             </div>
         </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/RxJS%E7%B3%BB%E5%88%97/" class="post-category">
-                                RxJS系列
+                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                30天精通RxJS笔记
                             </a>
                         
                     </div>
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    594
+                    185
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    1 分
                 </div>
                 
 
@@ -446,122 +446,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="八-take-first-takeUntil-concatAll"><a href="#八-take-first-takeUntil-concatAll" class="headerlink" title="八.take,first,takeUntil,concatAll"></a>八.take,first,takeUntil,concatAll</h2><p>讲四个 operators,并实现拖拉功能</p>
-<h3 id="Operators"><a href="#Operators" class="headerlink" title="Operators"></a>Operators</h3><p><strong>take</strong></p>
-<p><code>take(x)</code> 取结果的前 X 个元素</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> example <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-example<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">error</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Error: '</span> <span class="token operator">+</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">complete</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'complete'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 1</span>
-<span class="token comment">// 2</span>
-<span class="token comment">// complete</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>最后会调用一个 complete, 有点意外.</p>
-</blockquote>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">source <span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">3</span><span class="token operator">--</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-                <span class="token function">take</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
-example<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><strong>first</strong></p>
-<p><code>first()</code> 等于 <code>take(1)</code></p>
-<p><strong>takeUntil</strong></p>
-<p><code>Observable1.takeUntil(Observable2)</code> observable2 发送值时, observable1 会被调用complete.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> click <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> example <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">takeUntil</span><span class="token punctuation">(</span>click<span class="token punctuation">)</span><span class="token punctuation">;</span>     
-   
-example<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">error</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Error: '</span> <span class="token operator">+</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">complete</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'complete'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 1</span>
-<span class="token comment">// 2</span>
-<span class="token comment">// 3</span>
-<span class="token comment">// complete (點擊body了</span>
-
-source <span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token number">3</span><span class="token operator">--</span>
-click  <span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>c<span class="token operator">--</span><span class="token operator">--</span>
-                <span class="token function">takeUntil</span><span class="token punctuation">(</span>click<span class="token punctuation">)</span>
-example<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>concatAll</strong></p>
-<p><code>Observable1.concatAll()</code> 将 内含值为二维数组的 Observable1,转换内含值为 一维数组</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> click <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> source <span class="token operator">=</span> click<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">e</span> <span class="token operator">=></span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">var</span> example <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">concatAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-example<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">error</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Error: '</span> <span class="token operator">+</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">complete</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'complete'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-click  <span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>c<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>c<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
-        <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">e</span> <span class="token operator">=></span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-source <span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>o<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>o<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
-                \            \
-                 <span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token operator">|</span>       <span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token operator">|</span>
-                   <span class="token function">concatAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-example<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>source 被传递的值 还是个 Observable</p>
-<p>concatAll相当于解包了里面的Observable,将其值作为 source 的值向下传递.</p>
-<p>重要的是,<br>concatAll 依次会等待 每一个传入的 Observable complete 拿到所有值后 才开始拿下一个 Observable的所有数据.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> obs1 <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> obs2 <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> obs3 <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>obs1<span class="token punctuation">,</span> obs2<span class="token punctuation">,</span> obs3<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">var</span> example <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">concatAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-example<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">error</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Error: '</span> <span class="token operator">+</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">complete</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'complete'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 1</span>
-<span class="token comment">// 2</span>
-<span class="token comment">// 3</span>
-<span class="token comment">// 4</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 1</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// complete</span>
-source <span class="token operator">:</span> <span class="token punctuation">(</span>o1                 o2      o3<span class="token punctuation">)</span><span class="token operator">|</span>
-           \                  \       \
-            <span class="token operator">--</span><span class="token number">0</span><span class="token operator">--</span><span class="token number">1</span><span class="token operator">--</span><span class="token number">2</span><span class="token operator">--</span><span class="token number">3</span><span class="token operator">--</span><span class="token number">4</span><span class="token operator">|</span>   <span class="token operator">-</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">|</span>   <span class="token operator">--</span><span class="token operator">--</span><span class="token number">0</span><span class="token operator">|</span>
-                <span class="token function">concatAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span>        
-example<span class="token operator">:</span> <span class="token operator">--</span><span class="token number">0</span><span class="token operator">--</span><span class="token number">1</span><span class="token operator">--</span><span class="token number">2</span><span class="token operator">--</span><span class="token number">3</span><span class="token operator">--</span><span class="token number">4</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token number">0</span><span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="用上述四个函数完成简易拖拉"><a href="#用上述四个函数完成简易拖拉" class="headerlink" title="用上述四个函数完成简易拖拉"></a>用上述四个函数完成简易拖拉</h3><p>需求:</p>
-<ol>
-<li>画面上有个 dom元素 (#drag)</li>
-<li>鼠标在 #drag 上 按下左键(mousedown), 开始 监听鼠标移动(mousemove) 的位置</li>
-<li>鼠标 左键放开(mouseup), 结束监听鼠标移动</li>
-<li>鼠标移动被监听时, 同时需要 修改原件位置属性 造成拖拽效果.</li>
-</ol>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> dragDOM <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'drag'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> body <span class="token operator">=</span> document<span class="token punctuation">.</span>body<span class="token punctuation">;</span>
-
-<span class="token keyword">const</span> mouseDown <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">fromEvent</span><span class="token punctuation">(</span>dragDOM<span class="token punctuation">,</span> <span class="token string">'mousedown'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> mouseUp <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">fromEvent</span><span class="token punctuation">(</span>body<span class="token punctuation">,</span> <span class="token string">'mouseup'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> mouseMove <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">fromEvent</span><span class="token punctuation">(</span>body<span class="token punctuation">,</span> <span class="token string">'mousemove'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-mouseDown
-  <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">event</span> <span class="token operator">=></span> mouseMove<span class="token punctuation">.</span><span class="token function">takeUntil</span><span class="token punctuation">(</span>mouseUp<span class="token punctuation">)</span><span class="token punctuation">)</span>
-  <span class="token punctuation">.</span><span class="token function">concatAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">event</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span> x<span class="token operator">:</span> event<span class="token punctuation">.</span>clientX<span class="token punctuation">,</span> y<span class="token operator">:</span> event<span class="token punctuation">.</span>clientY <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-  <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">pos</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-  	dragDOM<span class="token punctuation">.</span>style<span class="token punctuation">.</span>left <span class="token operator">=</span> pos<span class="token punctuation">.</span>x <span class="token operator">+</span> <span class="token string">'px'</span><span class="token punctuation">;</span>
-    dragDOM<span class="token punctuation">.</span>style<span class="token punctuation">.</span>top <span class="token operator">=</span> pos<span class="token punctuation">.</span>y <span class="token operator">+</span> <span class="token string">'px'</span><span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>take, first, takeUntil, concatAll 用法 和 简易拖拽</p>
+                <h2 id="十-30天精通RxJS系列笔记断更"><a href="#十-30天精通RxJS系列笔记断更" class="headerlink" title="十.30天精通RxJS系列笔记断更"></a>十.30天精通RxJS系列笔记断更</h2><p>在开篇提到了 这个系列是看大佬写的 下面系列文章的笔记</p>
+<p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10186104">宝岛台湾的大佬JerryHong 30天精通RxJS</a></p>
+<p>看大佬前几章入门之后, 到常用 operator 这里在 理解上已经不是那么易懂 详细 了，</p>
+<p>或者我希望有 更多的对比，在网上对此有更详细的资料， 以及中文官方文档。</p>
+<p>毕竟是16年的文章，且受到翻译，台湾用词习惯的影响，阅读起来存在障碍。</p>
+<p>即便如此我依旧在这系列文章内受益匪浅，入门了RxJS。</p>
+<p>之后准备直接阅读 官方中文文档 ， 并编写自己的RxJS系列。</p>
 
                 
             </div>
@@ -588,7 +479,7 @@ mouseDown
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/19/rxjs/8.take-first-takeuntil-concatall/">https://github.com/LZY2333/LZY2333.github.io/2021/02/19/rxjs/8.take-first-takeuntil-concatall/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/19/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/10.30-tian-jing-tong-rxjs-xi-lie-bi-ji-duan-geng/">https://github.com/LZY2333/LZY2333.github.io/2021/02/19/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/10.30-tian-jing-tong-rxjs-xi-lie-bi-ji-duan-geng/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -797,18 +688,17 @@ mouseDown
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/19/rxjs/8.take-first-takeuntil-concatall/">
+                <a href="/2021/02/19/rxjs/rxjs-xue-xi-zong-jie/1.rxjs-xue-xi-zong-jie-xi-lie-qian-yan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="8.take,first,takeUntil,concatAll">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="1.Rxjs学习总结系列前言">
                         
-                        <span class="card-title">8.take,first,takeUntil,concatAll</span>
+                        <span class="card-title">1.Rxjs学习总结系列前言</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -818,22 +708,21 @@ mouseDown
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-19
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-19
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/RxJS%E7%B3%BB%E5%88%97/" class="post-category">
-                                    RxJS系列
+                            <a href="/categories/RxJS%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" class="post-category">
+                                    RxJS学习总结
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -852,13 +741,13 @@ mouseDown
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/19/rxjs/7.operators-nei-zhi-han-shu/">
+                <a href="/2021/02/19/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/9.skip-takelast-last-concat-startwith-merge/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="7.Operators操作函数">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="9.skip,takeLast,last,concat,startWith,merge">
                         
-                        <span class="card-title">7.Operators操作函数</span>
+                        <span class="card-title">9.skip,takeLast,last,concat,startWith,merge</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -875,8 +764,8 @@ mouseDown
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/RxJS%E7%B3%BB%E5%88%97/" class="post-category">
-                                    RxJS系列
+                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    30天精通RxJS笔记
                                 </a>
                             
                             
@@ -1034,7 +923,7 @@ mouseDown
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">8.4k</span>&nbsp;字
+                class="white-color">9.1k</span>&nbsp;字
             
             
             

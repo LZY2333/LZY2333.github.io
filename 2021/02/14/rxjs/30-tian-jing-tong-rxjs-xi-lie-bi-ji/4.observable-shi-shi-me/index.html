@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="2.Functional Programming, LazyYu">
+    <meta name="keywords" content="4.Observerble 是什么, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>2.Functional Programming | LazyYu</title>
+    <title>4.Observerble 是什么 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">2.Functional Programming</h1>
+                    <h1 class="description center-align post-title">4.Observerble 是什么</h1>
                 </div>
             </div>
         </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/RxJS%E7%B3%BB%E5%88%97/" class="post-category">
-                                RxJS系列
+                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                30天精通RxJS笔记
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-02-12
+                    2021-02-14
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    949
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    6 分
                 </div>
                 
 
@@ -446,70 +446,169 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="二-Functional-Programming"><a href="#二-Functional-Programming" class="headerlink" title="二. Functional Programming"></a>二. Functional Programming</h2><p>函数式编程 是Rx最重要的概念之一,学会FP 再上手Rx就不难了.</p>
-<p>函数式编程 同时可以说是16年来的显学,各个语言都有加强对FP的支持.</p>
-<h3 id="1-Functional-Programming-是什么"><a href="#1-Functional-Programming-是什么" class="headerlink" title="1.Functional Programming 是什么"></a>1.Functional Programming 是什么</h3><p>函数式编程(Functional Programming) 是一种编程思想.</p>
-<p>函数式编程的核心思想就是做运算处理,从 函数 的角度来思考问题.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// (5 + 6) - 1 * 3</span>
-<span class="token comment">// 写成如下</span>
-<span class="token keyword">const</span> <span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">+</span> b
-<span class="token keyword">const</span> <span class="token function-variable function">mul</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">*</span> b
-<span class="token keyword">const</span> <span class="token function-variable function">sub</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">-</span> b
-
-<span class="token function">sub</span><span class="token punctuation">(</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">mul</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ol>
-<li>每一步骤包装成一个个不同的函数</li>
-<li>调用函数,<strong>组合</strong>完成复杂的计算<br>这就是最简单的 函数式编程.</li>
-</ol>
-<blockquote>
-<p>就像 面向对象 Object-oriented Programming(OOP)一样, 一种编程的方法论,告诉我们如何思考和解决问题.<br>同时函数更语义话,读函数名即知其效果.</p>
-</blockquote>
-<h3 id="2-什么样的语言可以使用-Functional-Programming-思想"><a href="#2-什么样的语言可以使用-Functional-Programming-思想" class="headerlink" title="2.什么样的语言可以使用 Functional Programming 思想"></a>2.什么样的语言可以使用 Functional Programming 思想</h3><p><strong>函数为一等公民(First Class)</strong></p>
-<p>指,拥有和其他变量类型同等的地位.能被赋值给变量,能作为参数,能作为返回值.</p>
-<h3 id="3-Functional-Programming-的特点"><a href="#3-Functional-Programming-的特点" class="headerlink" title="3.Functional Programming 的特点"></a>3.Functional Programming 的特点</h3><h4 id="1-Expression-no-Statement-使用表达式"><a href="#1-Expression-no-Statement-使用表达式" class="headerlink" title="(1) Expression, no Statement 使用表达式"></a>(1) Expression, no Statement 使用表达式</h4><p>Functional Programming 都是 表达式 (Expression) 不會是 称述式(Statement).</p>
-<p><strong>表达式</strong> 是一个运算过程, 一定会有返回值, 例如执行一个function</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><strong>陈述式</strong> 则表现某种行为, 例如给一个变量赋值</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<blockquote>
-<p>有时候表达式也可能是合法的陈述式,这里只讲了基本的判断方式.更深入的了解区别,<a target="_blank" rel="noopener" href="https://2ality.com/2012/09/expressions-vs-statements.html"> Expressions versus statements in JavaScript</a><br>这一块基本没看懂.</p>
-</blockquote>
-<h4 id="2-Pure-Function-必须是纯函数"><a href="#2-Pure-Function-必须是纯函数" class="headerlink" title="(2) Pure Function 必须是纯函数"></a>(2) Pure Function 必须是纯函数</h4><p>纯函数 是指 一个函数传入相同的参数并执行,永远返回相同的值,并且没做任何额外操作.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
-arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
-arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
-<span class="token comment">// 不管执行多少次,返回值都相同,并且除了返回值,没有任何额外操作.</span>
-<span class="token comment">// 所以slice是一个 纯函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-arr<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
-arr<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [4, 5]</span>
-arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// []</span>
-<span class="token comment">// splice 每次执行都影响了arr本身,做了额外操作,并且导致每次结果不同</span>
-<span class="token comment">// 所以splice不是一个 纯函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>修改全局变量, 修改传入参数的值,甚至执行console.log,都不能算纯函数<br>纯函数 不管外部环境如何,只要参数相同,其返回值必定相同.这种不依赖任何外部状态,只依赖传入参数的特性也称为 引用透明</p>
-</blockquote>
-<h4 id="3-可利用参数保存状态"><a href="#3-可利用参数保存状态" class="headerlink" title="(3) 可利用参数保存状态"></a>(3) 可利用参数保存状态</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">findIndex</span><span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> predicate<span class="token punctuation">,</span> start <span class="token operator">=</span> <span class="token number">0</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token number">0</span> <span class="token operator">&lt;=</span> start <span class="token operator">&amp;&amp;</span> start <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">predicate</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>start<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> start<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> <span class="token function">findIndex</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> predicate<span class="token punctuation">,</span> start<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+                <h2 id="四-Observerble-是什么"><a href="#四-Observerble-是什么" class="headerlink" title="四. Observerble 是什么"></a>四. Observerble 是什么</h2><p>整个RxJS的基础就是 Observable,只要弄懂Observable就算学会一半的RxJS了,</p>
+<p>剩下的只是对一些方法的练习.</p>
+<p>要理解 Observable,必须先谈谈两个设计模式,</p>
+<p>迭代器模式(Iterator Pattern) 跟 观察者模式(Observer Pattern)</p>
+<h3 id="Observer-Pattern-观察者模式"><a href="#Observer-Pattern-观察者模式" class="headerlink" title="Observer Pattern 观察者模式"></a>Observer Pattern 观察者模式</h3><p>最简单的观察者模式就是DOM对象的事件监听.</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">clickHandler</span><span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'user click!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token function">findIndex</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">===</span> <span class="token string">'b'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 找陣列中 'b' 的 index</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>findeIndex</code>中第三个参数就是利用参数保存状态</p>
-<h3 id="4-Functional-Programming-有什么优势"><a href="#4-Functional-Programming-有什么优势" class="headerlink" title="4.Functional Programming 有什么优势"></a>4.Functional Programming 有什么优势</h3><p><strong>可读性高</strong>,透过一系列函数封装,代码能非常简洁易懂</p>
-<p><strong>可维护性高</strong>,不依赖外部环境，不影响外部环境，一个函数维持一小个功能，可直接单独修改。</p>
-<p><strong>易于并行/平行的处理</strong>, 因为只运算,不碰I/O,没有额外操作,所以不用担心锁死</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// 合并</span>
-      <span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">// 排序</span>
-      <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">></span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token comment">// 过滤出大于5的.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> clickHandler<span class="token punctuation">)</span>
+<span class="token comment">// 首先声明一个clickHandler函数</span>
+<span class="token comment">// 再调用 addEventListener 来注册监听click事件,clickHandler 就是监听者(listener)</span>
+<span class="token comment">// body发生click事件时,通知所有注册的监听者事件发生,并传入 event,监听者函数 自动执行.</span>
+<span class="token comment">// 这就是观察者模式. 观察者模式的概念其实就是这么简单</span>
+<span class="token comment">// 代码的关键点,事件的注册监听与通知,都已经被观察者类做好了,而不用自己编写.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>下面来练习写一个观察者类,或者说构造函数</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// ES5</span>
+<span class="token keyword">function</span> <span class="token function">Producer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token keyword">instanceof</span> <span class="token class-name">Producer</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 避免使用者直接当函数来调用</span>
+	  <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'请用 new Producer()!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	
+	<span class="token keyword">this</span><span class="token punctuation">.</span>listeners <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 给观察者类,加入注册listener的方法,listener只是一个个用户定义的回调函数.</span>
+<span class="token class-name">Producer</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">addListener</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">listener</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> listener <span class="token operator">===</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token keyword">this</span><span class="token punctuation">.</span>listeners<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span>
+	<span class="token keyword">else</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'listener 必須是 function'</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 加入移除listener的方法,listener由使用者编写,写的是事件发生后要进行的操作.</span>
+<span class="token class-name">Producer</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">removeListener</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">listener</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">this</span><span class="token punctuation">.</span>listeners<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>listeners<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 事件发生时的通知方法,其实就是拿出所有listener,传参让其执行.</span>
+<span class="token class-name">Producer</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">notify</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">message</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">this</span><span class="token punctuation">.</span>listeners<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">listener</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+		<span class="token function">listener</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>第三条 易于并行/平行的处理 没懂,意思是都是同步操作所以不担心锁死,所以方便处理并行操作?</p>
+<p>Promise 的实现就是使用的观察者模式</p>
 </blockquote>
-<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5.总结"></a>5.总结</h3><p>Functional Programming 的特性,必须表达式,必须是纯函数,易于参数保存<br>Functional Programming 的优势,可读性高,可维护性强,易于并行/平行的处理.</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// ES6</span>
+<span class="token keyword">class</span> <span class="token class-name">Producer</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>listeners <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token function">addListener</span><span class="token punctuation">(</span><span class="token parameter">listener</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> listener <span class="token operator">===</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token keyword">this</span><span class="token punctuation">.</span>listeners<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span>
+		<span class="token keyword">else</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'listener 必須是 function'</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token function">removeListener</span><span class="token punctuation">(</span><span class="token parameter">listener</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>listeners<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>listeners<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token function">notify</span><span class="token punctuation">(</span><span class="token parameter">message</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>listeners<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">listener</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+			<span class="token function">listener</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 使用</span>
+<span class="token keyword">var</span> egghead <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Producer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token comment">// new 出一个 Producer 实例叫 egghead</span>
+
+<span class="token keyword">function</span> <span class="token function">listener1</span><span class="token punctuation">(</span><span class="token parameter">message</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>message <span class="token operator">+</span> <span class="token string">'from listener1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">function</span> <span class="token function">listener2</span><span class="token punctuation">(</span><span class="token parameter">message</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>message <span class="token operator">+</span> <span class="token string">'from listener2'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+egghead<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span>listener1<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 注册监听事件</span>
+egghead<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span>listener2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+egghead<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token string">'A new course!!'</span><span class="token punctuation">)</span> <span class="token comment">// 发生事件时调用notify方法.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>总结</strong></p>
+<p>观察者就是一个拥有注册监听,移除监听,通知监听者,三个方法的对象.</p>
+<p>所有监听者调用观察者对象上的方法注册监听,当事件发生时调用观察者对象的通知方法</p>
+<p>通过观察者这个中介, 做到了 事件 与 监听者 两者间的解耦.</p>
+<h3 id="Iterator-Pattern-迭代器模式"><a href="#Iterator-Pattern-迭代器模式" class="headerlink" title="Iterator Pattern 迭代器模式"></a>Iterator Pattern 迭代器模式</h3><p>迭代器(Iterator) 是一个对象,就像一个指针(pointer),指向一个队列(sequence)结构的数据.</p>
+<p>下面写一个简单的迭代器构造函数.</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// JS在ES6开始才原生支持 Iterator</span>
+<span class="token keyword">function</span> <span class="token function">IteratorFromArray</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token keyword">instanceof</span> <span class="token class-name">IteratorFromArray</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'请用 new IteratorFromArray()!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">this</span><span class="token punctuation">.</span>_array <span class="token operator">=</span> arr<span class="token punctuation">;</span>
+	<span class="token keyword">this</span><span class="token punctuation">.</span>_cursor <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>	
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">IteratorFromArray</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">next</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_cursor <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">.</span>length <span class="token operator">?</span>
+		<span class="token punctuation">&#123;</span> value<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span>_cursor<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span> done<span class="token operator">:</span> <span class="token boolean">false</span> <span class="token punctuation">&#125;</span> <span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span> done<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// ES6 实现</span>
+<span class="token keyword">class</span> <span class="token class-name">IteratorFromArray</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>_array <span class="token operator">=</span> arr<span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>_cursor <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+  
+	<span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_cursor <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">.</span>length <span class="token operator">?</span>
+		<span class="token punctuation">&#123;</span> value<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span>_cursor<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span> done<span class="token operator">:</span> <span class="token boolean">false</span> <span class="token punctuation">&#125;</span> <span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span> done<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>迭代器 相当于一个拥有 next方法 的数组,</p>
+<p>一直调用 next方法 会返回当前下标的数据,并将指针指向下一下标,</p>
+<p>直到迭代器的 指针指向最后一个元素之后,返回<code>&#123; done: true, value: undefined&#125;</code></p>
+<p>迭代器有两大优点, </p>
+<p>可以做延迟执行(Lazy evaluation).便于处理异步操作.</p>
+<p>作为类数组对象, 可以加入很多循环方法, 如map,filter等.</p>
+<h3 id="Lazy-evaluation-延迟执行"><a href="#Lazy-evaluation-延迟执行" class="headerlink" title="Lazy evaluation 延迟执行"></a>Lazy evaluation 延迟执行</h3><p>延迟一个表达式的执行 直到真正需要它的值时 才执行.</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// ES6的generator函数,可终端执行的函数</span>
+	<span class="token keyword">function</span><span class="token operator">*</span> <span class="token function">getNumbers</span><span class="token punctuation">(</span><span class="token parameter">words</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> word <span class="token keyword">of</span> words<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^[0-9]+$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			    <span class="token keyword">yield</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	
+	<span class="token keyword">const</span> iterator <span class="token operator">=</span> <span class="token function">getNumbers</span><span class="token punctuation">(</span><span class="token string">'30 天精通 RxJS (04)'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">// 此时变量iterator 得到的是 getNumbers 第一次执行到yield时,暂停并返回的迭代器</span>
+	
+	
+	iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 此时第一次执行 yield 后的 parseInt(word, 10)</span>
+	<span class="token comment">// 结果作为next()方法的返回值返回,&#123; value: 3, done: false &#125;</span>
+	<span class="token comment">// 并将iterator继续执行到下一个yield 然后暂停.</span>
+
+	iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123; value: 0, done: false &#125;</span>
+	iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123; value: 0, done: false &#125;</span>
+	iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123; value: 4, done: false &#125;</span>
+	iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 执行到无yield,并且 函数执行完毕(return),</span>
+	<span class="token comment">// 包括这次 及之后每次执行next,都返回 &#123; value: undefined, done: true &#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>每次调用next()时, 才会执行后面的代码. 这种情况就是延迟执行.</p>
+<h3 id="Observable-总结"><a href="#Observable-总结" class="headerlink" title="Observable 总结"></a>Observable 总结</h3><p>Observer 和 Iterator 有个共通的特性,就是都是渐进式的取得数据.</p>
+<p>差别只在于<br>Observer 是生产者(Producer)推送数据(push),<br>Iterator 是消费者(Consumer)要求数据(pull)!</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// Observer 事先注册好拿到数据要干什么,而不知道什么时候会获取到数据,</span>
+<span class="token comment">// 由事件自动触发,被动接收数据,并执行.</span>
+<span class="token comment">// 生产者知道什么时候有数据,所以由生产者推送,并触发回调.(异步)</span>
+body<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// iterator 去主动调用,立即获取数据,然后执行.(同步)</span>
+<span class="token keyword">var</span> x <span class="token operator">=</span> iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Observable,其实是两者的结合,由生产者推送资料(异步,响应式),<br>同时又像队列一样拥有map,filter等方法…</p>
+<p>Observable 就像一个队列,里面的元素会随着时间推送(原话).</p>
+<p>我的理解:<br>Observable 就像 链式调用,<br>里面的异步操作在完成时 自动触发(生产者推送) 已经注册好的回调(Observer),<br>回调完成后会根据返回值 主动发起(消费者要求) 下一个数据请求(Iterator),</p>
+<p>然后再等 异步/同步 执行完毕 自动触发 已经注册好的回调,<br>以此循环,直到链式调用执行完毕.<br>(暂定解析,猜测如此,后期学完修复)</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">Rx<span class="token punctuation">.</span>Observable
+	<span class="token punctuation">.</span><span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span> <span class="token comment">// 註冊監聽</span>
+	<span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">// 只取一次</span>
+	<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>Observable 这一小段没有彻底明白,有点模糊,只做了思路整理.</p>
+</blockquote>
 
                 
             </div>
@@ -536,7 +635,7 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/12/rxjs/2.functional-programming/">https://github.com/LZY2333/LZY2333.github.io/2021/02/12/rxjs/2.functional-programming/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/14/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/4.observable-shi-shi-me/">https://github.com/LZY2333/LZY2333.github.io/2021/02/14/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/4.observable-shi-shi-me/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -749,13 +848,13 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/14/rxjs/4.observable-shi-shi-me/">
+                <a href="/2021/02/15/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/5.observable-jian-dan-shi-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="4.Observerble 是什么">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="5.Observerble简单使用">
                         
-                        <span class="card-title">4.Observerble 是什么</span>
+                        <span class="card-title">5.Observerble简单使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -766,14 +865,14 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-14
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-15
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/RxJS%E7%B3%BB%E5%88%97/" class="post-category">
-                                    RxJS系列
+                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    30天精通RxJS笔记
                                 </a>
                             
                             
@@ -798,13 +897,13 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/12/rxjs/1.ren-shi-rxjs/">
+                <a href="/2021/02/12/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/2.functional-programming/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="1.认识Rxjs">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="2.Functional Programming">
                         
-                        <span class="card-title">1.认识Rxjs</span>
+                        <span class="card-title">2.Functional Programming</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -821,8 +920,8 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/RxJS%E7%B3%BB%E5%88%97/" class="post-category">
-                                    RxJS系列
+                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    30天精通RxJS笔记
                                 </a>
                             
                             
@@ -980,7 +1079,7 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">8.4k</span>&nbsp;字
+                class="white-color">9.1k</span>&nbsp;字
             
             
             

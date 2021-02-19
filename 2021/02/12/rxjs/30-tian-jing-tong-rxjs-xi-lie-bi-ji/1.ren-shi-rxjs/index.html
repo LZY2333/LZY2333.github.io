@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="词法作用域和动态作用域, LazyYu">
+    <meta name="keywords" content="1.认识Rxjs, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>词法作用域和动态作用域 | LazyYu</title>
+    <title>1.认识Rxjs | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">词法作用域和动态作用域</h1>
+                    <h1 class="description center-align post-title">1.认识Rxjs</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                                <span class="chip bg-color">JS基础</span>
+                            <a href="/tags/RxJS/">
+                                <span class="chip bg-color">RxJS</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%B7%B1%E5%85%A5JS%E7%B3%BB%E5%88%97/" class="post-category">
-                                深入JS系列
+                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                30天精通RxJS笔记
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-02-07
+                    2021-02-12
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    140
+                    948
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -446,13 +446,59 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="2-词法作用域和动态作用域"><a href="#2-词法作用域和动态作用域" class="headerlink" title="2.词法作用域和动态作用域"></a>2.词法作用域和动态作用域</h2><p>这一片解释了JavaScript 采用的词法作用域，以及与词法作用域相对的动态作用域</p>
-<h3 id="词法作用域与动态作用域"><a href="#词法作用域与动态作用域" class="headerlink" title="词法作用域与动态作用域"></a>词法作用域与动态作用域</h3><ol start="0">
-<li><strong>作用域</strong>: 可访问变量，对象，函数的集合。</li>
-<li><strong>词法作用域</strong>: 函数的作用域在函数定义的时候就决定了</li>
-<li><strong>动态作用域</strong>: 函数的作用域是在函数调用的时候才决定的</li>
-</ol>
-<p>临时笔记：执行上下文是 具有生命周期，作用域链，变量对象，</p>
+                <h2 id="一-认识Rxjs"><a href="#一-认识Rxjs" class="headerlink" title="一. 认识Rxjs"></a>一. 认识Rxjs</h2><p>这个系列仍然是笔记系列,有关RxJS的.</p>
+<p>由于还是第一次看,就没什么介绍的了.</p>
+<p>仅用自己的语言做精炼的记录,供自己将来复习.</p>
+<p>所以有任何删减,出入,难以理解,甚至错误都是可能的….</p>
+<p>第一次学习建议直接看大佬的原文.</p>
+<p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10186104">宝岛台湾的大佬JerryHong 30天精通RxJS</a></p>
+<h3 id="1-异步编程增多"><a href="#1-异步编程增多" class="headerlink" title="1.异步编程增多"></a>1.异步编程增多</h3><p>在网页的世界中,存取任何资源都是异步的</p>
+<p>异步意味着发送一个获取文件请求,必须等到文件获取结束,才能进行操作</p>
+<p>随着业务复杂化,编写异步代码的需求更多,同时也更困难.</p>
+<h3 id="2-异步带来新的问题"><a href="#2-异步带来新的问题" class="headerlink" title="2.异步带来新的问题"></a>2.异步带来新的问题</h3><ul>
+<li>竞态条件(Race Condition)</li>
+<li>内存泄漏(Memory Leak)</li>
+<li>复杂的状态(Complex State)</li>
+<li>报错处理(Exception Handling)</li>
+<li>异步API多种多样</li>
+</ul>
+<p>DOM Events<br>XMLHttpRequest<br>fetch<br>WebSockets<br>Server Send Events<br>Service Worker<br>Node Stream<br>Timer</p>
+<p><strong>面对日益复杂的问题,我们需要一个更好的解决方法</strong></p>
+<h3 id="3-RxJS-是什么"><a href="#3-RxJS-是什么" class="headerlink" title="3.RxJS 是什么"></a>3.RxJS 是什么</h3><ul>
+<li>RxJS 是一套使用 <strong>观察者队</strong>列(Observable sequences) 来组合 <strong>异步行为</strong> 和 <strong>事件基础</strong> 的 库.</li>
+<li>RxJS 被称为 函数响应式编程 Function Reactive Programming(FPR) ,更确切的说是 函数编程(Functional Programming) 跟 响应式编程(Reactive Programming) 的結合.</li>
+</ul>
+<p><strong>RxJS 使用示例</strong></p>
+<p>监听点击事件,点击一次后不再监听</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//原生 JavaScript</span>
+<span class="token keyword">var</span> <span class="token function-variable function">handler</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">removeEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> handler<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 結束監聽</span>
+<span class="token punctuation">&#125;</span>
+document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 使用 Rx 大概的樣子</span>
+Rx<span class="token punctuation">.</span>Observable
+	<span class="token punctuation">.</span><span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span> <span class="token comment">// 註冊監聽</span>
+	<span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">// 只取一次</span>
+	<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>可以认为RxJS是处理异步的Lodash.<br><strong>异步行为</strong> 和 <strong>事件基础</strong> 不是很清楚具体是指什么<br>RxJS 被称为 FPR有争议, 并且 FPR 与 Functional Programming 跟 Reactive Programming 的結合 概念不同.<br>简单说就是FPR 是操作随时间<strong>连续改变的数值</strong>,而Rx则比较像随时间发出<strong>离散的数值</strong>.这部分不用太过深究,因为RPR本身的定义及其解释也存在争议.<br>30天精通RxJS 文章的作者JerryHong 认为 编程思想是想法的集合,而非严格的指南, 因而该更宽松的看待FPR的定义, 所以更偏向于 直接称其为FPR ,避免困惑.</p>
+</blockquote>
+<h3 id="4-Functional-Reactive-Programming-是什么"><a href="#4-Functional-Reactive-Programming-是什么" class="headerlink" title="4.Functional Reactive Programming 是什么"></a>4.Functional Reactive Programming 是什么</h3><p>Functional Reactive Programming 是一种编程思想(programming paradigm),就是编程的方法论.<br>比如,OOP就是一种编程思想,告诉我们使用对象的方式来思考.</p>
+<p>其 包含了 响应式编程 及 函数编程 两种编程思想.</p>
+<h4 id="1-Functional-Programming-函数式编程"><a href="#1-Functional-Programming-函数式编程" class="headerlink" title="(1) Functional Programming 函数式编程"></a>(1) Functional Programming 函数式编程</h4><p>用函数的方式来思考我们的问题.</p>
+<h4 id="2-Reactive-Programming-响应式编程"><a href="#2-Reactive-Programming-响应式编程" class="headerlink" title="(2) Reactive Programming 响应式编程"></a>(2) Reactive Programming 响应式编程</h4><p>响应式编程 就是当变量或者说资源发生变动,由变量或资源主动告诉依赖项,我发生变动了.</p>
+<p>其背后隐含两件事:</p>
+<ul>
+<li>发生变动,即非同步,因为不知道什么时候会发生变动.</li>
+<li>主动告知,表示不需要专门编写用于 通知 依赖者的代码(响应式库已经写好了)</li>
+</ul>
+<p>当我们使用Vue 开发的时候, 只要绑定的变量一改变,相关的变量及画面就会自动变化.<br>不需要开发者编写如何 <strong>通知</strong> 每个依赖者或者记录依赖者 的代码.<br>这样,开发者就只需要关注于 <strong>如果发生变化,要做什么事</strong>,这就是典型的 响应式编程.</p>
+<blockquote>
+<p>响应式编程 只是一种编程思想,很多库都有用到,不止RxJS,比如Vue就是响应式编程的典范之一</p>
+</blockquote>
+<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5.总结"></a>5.总结</h3><p>RxJS 是异步处理方案,有更优雅更便捷的书写方式.<br>RxJS 吸收了 函数式编程 和 响应式编程 的编程思想.</p>
 
                 
             </div>
@@ -479,7 +525,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/07/shen-ru-js/2.ci-fa-zuo-yong-yu-he-dong-tai-zuo-yong-yu/">https://github.com/LZY2333/LZY2333.github.io/2021/02/07/shen-ru-js/2.ci-fa-zuo-yong-yu-he-dong-tai-zuo-yong-yu/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/12/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/1.ren-shi-rxjs/">https://github.com/LZY2333/LZY2333.github.io/2021/02/12/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/1.ren-shi-rxjs/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -517,8 +563,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                                    <span class="chip bg-color">JS基础</span>
+                                <a href="/tags/RxJS/">
+                                    <span class="chip bg-color">RxJS</span>
                                 </a>
                             
                         </div>
@@ -692,13 +738,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/07/shen-ru-js/3.zhi-xing-shang-xia-wen-zhan/">
+                <a href="/2021/02/12/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/2.functional-programming/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="执行上下文栈">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="2.Functional Programming">
                         
-                        <span class="card-title">执行上下文栈</span>
+                        <span class="card-title">2.Functional Programming</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -709,14 +755,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-12
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%B7%B1%E5%85%A5JS%E7%B3%BB%E5%88%97/" class="post-category">
-                                    深入JS系列
+                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    30天精通RxJS笔记
                                 </a>
                             
                             
@@ -726,8 +772,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">JS基础</span>
+                    <a href="/tags/RxJS/">
+                        <span class="chip bg-color">RxJS</span>
                     </a>
                     
                 </div>
@@ -741,13 +787,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/07/shen-ru-js/1.cong-yuan-xing-dao-yuan-xing-lian/">
+                <a href="/2021/02/07/shen-ru-js/4.bian-liang-dui-xiang/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="深入原型到原型链">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="变量对象">
                         
-                        <span class="card-title">深入原型到原型链</span>
+                        <span class="card-title">变量对象</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
