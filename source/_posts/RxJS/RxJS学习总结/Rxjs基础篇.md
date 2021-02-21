@@ -55,9 +55,9 @@ RxJS 具有 纯净性(Purity), 流动性 (Flow), 值(Values) 三个特性
 
 ## Observable 填补了多值主动推送的空白
 
-    | 单个值 |   多个值
-拉取|Function| Interator
-推送|Promise | Observable
+|    | 单个值 |   多个值   |
+|拉取|Function| Interator |
+|推送|Promise | Observable|
 
 > Function和Interator 是调用获取值,所以是拉取
 > Promise和Observable 是提前注册事件,事件主动调用并传递值 所以是推送
@@ -70,9 +70,9 @@ RxJS 具有 纯净性(Purity), 流动性 (Flow), 值(Values) 三个特性
 
 推送,由 生产者 决定何时把数据 发送给消费者, 消费者 不知道数据何时会接收到数据.
    
-   |          生产者           |          消费者
-拉取|  被动的:当被请求时产生数据.  | 主动的:决定何时请求数据.
-推送| 主动的:按自己的节奏产生数据. | 被动的:对收到的数据做出反应.
+|   |          生产者           |          消费者          |
+|拉取|  被动的:当被请求时产生数据.  | 主动的:决定何时请求数据.   |
+|推送| 主动的:按自己的节奏产生数据. | 被动的:对收到的数据做出反应.|
 
 > JS中每个函数 都是拉取体系,调用函数即获得 单个返回值 进行消费
 > generator和 iterators 是拉取体系,调用 `iterator.next()`的代码是消费者,会从 iterator(生产者)中取出 多个值
@@ -220,4 +220,157 @@ subject.complete();
 
 RxJS 的根基是 Observable,但RxJS 最有用的是 Operators.
 
+操作符 是Observable类上的方法，被调用时 不会改变调用者Observable实例，而是返回一个基于调用者逻辑的 新的Observable.
+
+操作符 本身是一个纯函数,接收一个Observable输入,生成一个新的Observable输出.
+
 操作符像一个个基础代码单元,将复杂的异步代码封装 以声明的方式调用 能轻松组合 解决各种复杂的异步问题. 
+
+## 操作符订阅链
+
+订阅 output 会导致 input Observable 也被订阅。我们称之为“操作符订阅链”。
+```js
+// 创建一个自定义操作符函数，它将从输入 Observable 接收的每个值都乘以10
+function multiplyByTen(input) {
+  var output = Rx.Observable.create(function subscribe(observer) {
+    input.subscribe({
+      next: (v) => observer.next(10 * v),
+      error: (err) => observer.error(err),
+      complete: () => observer.complete()
+    });
+  });
+  return output;
+}
+
+var input = Rx.Observable.from([1, 2, 3, 4]);
+var output = multiplyByTen(input); //返回一个Obserable实例
+output.subscribe(x => console.log(x));
+
+// 10
+// 20
+// 30
+// 40
+```
+
+## 实例操作符 vs. 静态操作符
+
+实例操作符 是 Observable实例 上的方法.
+
+静态操作符 是直接附加到 Observable类 上的方法,内部不使用this进行实现, 而是依赖入参.
+
+实例运算符 特征是 内部实现使用this来指代输入的 Observable,通过`实例.函数()`来调用
+因为通过`observable1.multiplyByTen()`来调用,内部this 就指向调用者,而不需要传参。
+```js
+// 假设 multibplyByTen 是官方提供的实例操作符,则其 内部实现改变 如下
+Rx.Observable.prototype.multiplyByTen = function multiplyByTen() {
+  var input = this;
+  return Rx.Observable.create(function subscribe(observer) {
+    input.subscribe({
+      next: (v) => observer.next(10 * v),
+      error: (err) => observer.error(err),
+      complete: () => observer.complete()
+    });
+  });
+}
+
+var observable = Rx.Observable.from([1, 2, 3, 4]).multiplyByTen(); // 此时均未被订阅
+observable.subscribe(x => console.log(x)); // 产生订阅链,两个 observable 均被触发.
+```
+
+静态操作符 特征是 内部实现依赖传参,不使用this,通过`Rx.Observable.函数(x)`来调用.
+
+静态操作符 通常是用于从头创建实例,大部分是创建操作符,大部分接收非Observable参数,创建一个新Observalbe.
+
+> 部分 组合操作符 也是 静态操作符, 也就是说 挂载 Observable类 上,通过类来调用,但 接收的不是非 Observable 参数.
+> 这些作为 静态运算符 挂载在类上使用是有道理的, 因为他们接收多个 Observable 作为输入
+```js
+// 以下都是 静态运算符
+// 1,2 常用,接收非 Observable参数
+var observable1 = Rx.Observable.create(function(observer) { observer.next('1000') })
+var observable2 = Rx.Observable.interval(1000 /* 毫秒数 */);
+// merge 组合操作符,静态操作符, 接收 多个Observable参数
+var merged = Rx.Observable.merge(observable1, observable2);
+```
+
+## 选择操作符
+
+官网有一个可以根据你当前需求,推荐操作符的小功能很实用.
+
+## 操作符分类
+
+创建、转换、过滤、组合、多播、错误处理、工具、条件和布尔操作、数学和聚合操作 等操作符.
+
+> 以后用到了就来归类
+
+## Scheduler(调度器)
+
+调度器 让使用者可以 自由定义何时启动 subscription 以及 何时向观察者发送通知.
+
+通过下面一个例子能很好领悟调度器的作用:
+```js
+var observable1 = Rx.Observable.create(function (proxyObserver) {
+  proxyObserver.next(1);
+  proxyObserver.next(2);
+  proxyObserver.next(3);
+  proxyObserver.complete();
+})
+.observeOn(Rx.Scheduler.async);// 使用操作符 observeOn 来指定 async 调度器发送这些值。
+
+var finalObserver = {
+  next: x => console.log('got value ' + x),
+  error: err => console.error('something wrong occurred: ' + err),
+  complete: () => console.log('done'),
+};
+
+console.log('just before subscribe');
+observable1.subscribe(finalObserver);
+console.log('just after subscribe');
+
+// just before subscribe
+// just after subscribe
+// got value 1
+// got value 2
+// got value 3
+// done
+
+// async调度器 使得消息向观察者的 推送变为了异步
+```
+
+调度器 实际上是 `proxyObserver `(代理观察者).
+
+`observable1.observeOn(Rx.Scheduler.async)`也就是订阅调度器后,
+再调用`observable1.subscribe(finalObserver)` 开始了订阅链.
+
+实际上 `observable1` 的 是被调度器`async`订阅为被观察者了,然后观察者`finalObserver`,订阅是
+`.observeOn()`产生并返回的Observable,`.observeOn()`中的`next(val)`,实现如下
+```js
+var proxyObserver = {
+  next: (val) => {
+    Rx.Scheduler.async.schedule(
+      (x) => finalObserver.next(x),
+      0 /* 延迟时间 */,
+      val /* 会作为上面函数所使用的 x */
+    );
+  },
+  // ...
+}
+```
+而 观察者或者说调度者 `async`, 内部使用了 `setTimeout(fn,0)`,导致了消息在下一事件环才被传递...
+
+> 个人理解,调度器订阅可以让某个Observable实例,的所有的订阅 都经过调度器进行消息的推送控制.
+> 肯定不准确,光概念都还没有完全理解
+
+## 调度器类型
+
+async 调度器是 RxJS 提供的内置调度器中的一个。
+可以通过使用 Scheduler 对象的静态属性创建并返回其中的每种类型的调度器。
+
+等以后理解了再更
+
+## 使用调度器
+
+等以后理解了再更
+
+## 总结
+
+快乐完结,RxJS基础,结束...
