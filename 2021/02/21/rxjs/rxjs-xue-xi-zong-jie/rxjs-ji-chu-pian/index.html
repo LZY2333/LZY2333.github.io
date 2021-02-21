@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2k
+                    3.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    12 分
                 </div>
                 
 
@@ -473,16 +473,14 @@
 <blockquote>
 <p>流程控制操作符有 filter、delay、debounceTime、take、takeUntil、distinct、distinctUntilChanged 等等.<br>产生值的操作符有 pluck、pairwise、sample 等等.</p>
 </blockquote>
-<h2 id="Observable-填补了多值主动推送的空白"><a href="#Observable-填补了多值主动推送的空白" class="headerlink" title="Observable 填补了多值主动推送的空白"></a>Observable 填补了多值主动推送的空白</h2><pre><code>| 单个值 |   多个值
-</code></pre>
-<p>拉取|Function| Interator<br>推送|Promise | Observable</p>
+<h2 id="Observable-填补了多值主动推送的空白"><a href="#Observable-填补了多值主动推送的空白" class="headerlink" title="Observable 填补了多值主动推送的空白"></a>Observable 填补了多值主动推送的空白</h2><p>|    | 单个值 |   多个值   |<br>|拉取|Function| Interator |<br>|推送|Promise | Observable|</p>
 <blockquote>
 <p>Function和Interator 是调用获取值,所以是拉取<br>Promise和Observable 是提前注册事件,事件主动调用并传递值 所以是推送</p>
 </blockquote>
 <h2 id="拉取-Pull-和推送-Push"><a href="#拉取-Pull-和推送-Push" class="headerlink" title="拉取(Pull)和推送(Push)"></a>拉取(Pull)和推送(Push)</h2><p>拉取和推送是两种不同的协议,用来描述数据生产者 (Producer)如何与数据消费者 (Consumer)进行通信的.</p>
 <p>拉取,由 消费者 决定何时从 生产者 处接收数据,生产者 不知道数据是何时交到 消费者 手中的.</p>
 <p>推送,由 生产者 决定何时把数据 发送给消费者, 消费者 不知道数据何时会接收到数据.</p>
-<p>   |          生产者           |          消费者<br>拉取|  被动的:当被请求时产生数据.  | 主动的:决定何时请求数据.<br>推送| 主动的:按自己的节奏产生数据. | 被动的:对收到的数据做出反应.</p>
+<p>|   |          生产者           |          消费者          |<br>|拉取|  被动的:当被请求时产生数据.  | 主动的:决定何时请求数据.   |<br>|推送| 主动的:按自己的节奏产生数据. | 被动的:对收到的数据做出反应.|</p>
 <blockquote>
 <p>JS中每个函数 都是拉取体系,调用函数即获得 单个返回值 进行消费<br>generator和 iterators 是拉取体系,调用 <code>iterator.next()</code>的代码是消费者,会从 iterator(生产者)中取出 多个值<br>Promises 是推送体系.Promise(生产者) 将一个解析过的值传递给已注册的回调函数(消费者),由Promise来决定何时将值 推送 给回调函数<br>Observable 是推送体系.是多个值的生产者，并将值“推送”给观察者(消费者)。</p>
 </blockquote>
@@ -587,7 +585,112 @@ subject<span class="token punctuation">.</span><span class="token function">comp
 <span class="token comment">// observerA: 5</span>
 <span class="token comment">//observerB: 5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="Operators-操作符"><a href="#Operators-操作符" class="headerlink" title="Operators (操作符)"></a>Operators (操作符)</h2><p>RxJS 的根基是 Observable,但RxJS 最有用的是 Operators.</p>
+<p>操作符 是Observable类上的方法，被调用时 不会改变调用者Observable实例，而是返回一个基于调用者逻辑的 新的Observable.</p>
+<p>操作符 本身是一个纯函数,接收一个Observable输入,生成一个新的Observable输出.</p>
 <p>操作符像一个个基础代码单元,将复杂的异步代码封装 以声明的方式调用 能轻松组合 解决各种复杂的异步问题. </p>
+<h2 id="操作符订阅链"><a href="#操作符订阅链" class="headerlink" title="操作符订阅链"></a>操作符订阅链</h2><p>订阅 output 会导致 input Observable 也被订阅。我们称之为“操作符订阅链”。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 创建一个自定义操作符函数，它将从输入 Observable 接收的每个值都乘以10</span>
+<span class="token keyword">function</span> <span class="token function">multiplyByTen</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">var</span> output <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    input<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+      <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">v</span><span class="token punctuation">)</span> <span class="token operator">=></span> observer<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token number">10</span> <span class="token operator">*</span> v<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token function-variable function">error</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> observer<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token function-variable function">complete</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> output<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">var</span> input <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> output <span class="token operator">=</span> <span class="token function">multiplyByTen</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//返回一个Obserable实例</span>
+output<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 10</span>
+<span class="token comment">// 20</span>
+<span class="token comment">// 30</span>
+<span class="token comment">// 40</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="实例操作符-vs-静态操作符"><a href="#实例操作符-vs-静态操作符" class="headerlink" title="实例操作符 vs. 静态操作符"></a>实例操作符 vs. 静态操作符</h2><p>实例操作符 是 Observable实例 上的方法.</p>
+<p>静态操作符 是直接附加到 Observable类 上的方法,内部不使用this进行实现, 而是依赖入参.</p>
+<p>实例运算符 特征是 内部实现使用this来指代输入的 Observable,通过<code>实例.函数()</code>来调用<br>因为通过<code>observable1.multiplyByTen()</code>来调用,内部this 就指向调用者,而不需要传参。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 假设 multibplyByTen 是官方提供的实例操作符,则其 内部实现改变 如下</span>
+Rx<span class="token punctuation">.</span><span class="token class-name">Observable</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">multiplyByTen</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">multiplyByTen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">var</span> input <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    input<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+      <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">v</span><span class="token punctuation">)</span> <span class="token operator">=></span> observer<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token number">10</span> <span class="token operator">*</span> v<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token function-variable function">error</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> observer<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token function-variable function">complete</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">var</span> observable <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">multiplyByTen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 此时均未被订阅</span>
+observable<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 产生订阅链,两个 observable 均被触发.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>静态操作符 特征是 内部实现依赖传参,不使用this,通过<code>Rx.Observable.函数(x)</code>来调用.</p>
+<p>静态操作符 通常是用于从头创建实例,大部分是创建操作符,大部分接收非Observable参数,创建一个新Observalbe.</p>
+<blockquote>
+<p>部分 组合操作符 也是 静态操作符, 也就是说 挂载 Observable类 上,通过类来调用,但 接收的不是非 Observable 参数.<br>这些作为 静态运算符 挂载在类上使用是有道理的, 因为他们接收多个 Observable 作为输入</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 以下都是 静态运算符</span>
+<span class="token comment">// 1,2 常用,接收非 Observable参数</span>
+<span class="token keyword">var</span> observable1 <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> observer<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token string">'1000'</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> observable2 <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">1000</span> <span class="token comment">/* 毫秒数 */</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// merge 组合操作符,静态操作符, 接收 多个Observable参数</span>
+<span class="token keyword">var</span> merged <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span>observable1<span class="token punctuation">,</span> observable2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="选择操作符"><a href="#选择操作符" class="headerlink" title="选择操作符"></a>选择操作符</h2><p>官网有一个可以根据你当前需求,推荐操作符的小功能很实用.</p>
+<h2 id="操作符分类"><a href="#操作符分类" class="headerlink" title="操作符分类"></a>操作符分类</h2><p>创建、转换、过滤、组合、多播、错误处理、工具、条件和布尔操作、数学和聚合操作 等操作符.</p>
+<blockquote>
+<p>以后用到了就来归类</p>
+</blockquote>
+<h2 id="Scheduler-调度器"><a href="#Scheduler-调度器" class="headerlink" title="Scheduler(调度器)"></a>Scheduler(调度器)</h2><p>调度器 让使用者可以 自由定义何时启动 subscription 以及 何时向观察者发送通知.</p>
+<p>通过下面一个例子能很好领悟调度器的作用:</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> observable1 <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">proxyObserver</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  proxyObserver<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  proxyObserver<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  proxyObserver<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  proxyObserver<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">observeOn</span><span class="token punctuation">(</span>Rx<span class="token punctuation">.</span>Scheduler<span class="token punctuation">.</span>async<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 使用操作符 observeOn 来指定 async 调度器发送这些值。</span>
+
+<span class="token keyword">var</span> finalObserver <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token parameter">x</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'got value '</span> <span class="token operator">+</span> x<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">error</span><span class="token operator">:</span> <span class="token parameter">err</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'something wrong occurred: '</span> <span class="token operator">+</span> err<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">complete</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'just before subscribe'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+observable1<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>finalObserver<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'just after subscribe'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// just before subscribe</span>
+<span class="token comment">// just after subscribe</span>
+<span class="token comment">// got value 1</span>
+<span class="token comment">// got value 2</span>
+<span class="token comment">// got value 3</span>
+<span class="token comment">// done</span>
+
+<span class="token comment">// async调度器 使得消息向观察者的 推送变为了异步</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>调度器 实际上是 <code>proxyObserver </code>(代理观察者).</p>
+<p><code>observable1.observeOn(Rx.Scheduler.async)</code>也就是订阅调度器后,<br>再调用<code>observable1.subscribe(finalObserver)</code> 开始了订阅链.</p>
+<p>实际上 <code>observable1</code> 的 是被调度器<code>async</code>订阅为被观察者了,然后观察者<code>finalObserver</code>,订阅是<br><code>.observeOn()</code>产生并返回的Observable,<code>.observeOn()</code>中的<code>next(val)</code>,实现如下</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> proxyObserver <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    Rx<span class="token punctuation">.</span>Scheduler<span class="token punctuation">.</span>async<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span>
+      <span class="token punctuation">(</span><span class="token parameter">x</span><span class="token punctuation">)</span> <span class="token operator">=></span> finalObserver<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token number">0</span> <span class="token comment">/* 延迟时间 */</span><span class="token punctuation">,</span>
+      val <span class="token comment">/* 会作为上面函数所使用的 x */</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>而 观察者或者说调度者 <code>async</code>, 内部使用了 <code>setTimeout(fn,0)</code>,导致了消息在下一事件环才被传递…</p>
+<blockquote>
+<p>个人理解,调度器订阅可以让某个Observable实例,的所有的订阅 都经过调度器进行消息的推送控制.<br>肯定不准确,光概念都还没有完全理解</p>
+</blockquote>
+<h2 id="调度器类型"><a href="#调度器类型" class="headerlink" title="调度器类型"></a>调度器类型</h2><p>async 调度器是 RxJS 提供的内置调度器中的一个。<br>可以通过使用 Scheduler 对象的静态属性创建并返回其中的每种类型的调度器。</p>
+<p>等以后理解了再更</p>
+<h2 id="使用调度器"><a href="#使用调度器" class="headerlink" title="使用调度器"></a>使用调度器</h2><p>等以后理解了再更</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快乐完结,RxJS基础,结束…</p>
 
                 
             </div>
@@ -1060,7 +1163,7 @@ subject<span class="token punctuation">.</span><span class="token function">comp
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">11k</span>&nbsp;字
+                class="white-color">12.2k</span>&nbsp;字
             
             
             
