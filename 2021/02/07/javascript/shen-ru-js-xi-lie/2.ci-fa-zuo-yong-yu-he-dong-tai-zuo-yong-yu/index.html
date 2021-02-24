@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="变量对象, LazyYu">
+    <meta name="keywords" content="词法作用域和动态作用域, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>变量对象 | LazyYu</title>
+    <title>词法作用域和动态作用域 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">变量对象</h1>
+                    <h1 class="description center-align post-title">词法作用域和动态作用域</h1>
                 </div>
             </div>
         </div>
@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    451
+                    140
                 </div>
                 
 
@@ -446,26 +446,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="4-变量对象"><a href="#4-变量对象" class="headerlink" title="4.变量对象"></a>4.变量对象</h2><p>执行上下文三个重要属性之一,变量对象.</p>
-<h3 id="变量对象"><a href="#变量对象" class="headerlink" title="变量对象"></a>变量对象</h3><p><strong>变量对象</strong>: 存储了在上下文中定义的变量和函数声明。</p>
-<h3 id="函数上下文中的活动对象"><a href="#函数上下文中的活动对象" class="headerlink" title="函数上下文中的活动对象"></a>函数上下文中的活动对象</h3><p>在函数上下文中.一般用活动对象来表示变量对象.</p>
-<p>活动对象和变量对象其实是一个东西,只是变量对象是规范上的或者说是引擎实现上的.</p>
-<p>执行上下文生命周期: 创建阶段,执行阶段,执行完毕.</p>
-<p>创建阶段产生变量对象,执行阶段变成活动对象.</p>
-<p>活动对象真实存在,变量对象用于指代创建阶段内一个函数内定义的所有参数列表、内部变量和内部函数.</p>
-<p>这个创建变量对象的过程实际就是函数内数据(函数参数、内部变量、内部函数)初始化的过程。</p>
-<p><strong>总结</strong><br><strong>变量对象</strong>: </p>
-<ol>
-<li>在函数被调用，但是函数尚未执行的时刻被创建的.</li>
-<li>定义着执行上下文下的所有参数、变量和函数。</li>
+                <h2 id="2-词法作用域和动态作用域"><a href="#2-词法作用域和动态作用域" class="headerlink" title="2.词法作用域和动态作用域"></a>2.词法作用域和动态作用域</h2><p>这一片解释了JavaScript 采用的词法作用域，以及与词法作用域相对的动态作用域</p>
+<h3 id="词法作用域与动态作用域"><a href="#词法作用域与动态作用域" class="headerlink" title="词法作用域与动态作用域"></a>词法作用域与动态作用域</h3><ol start="0">
+<li><strong>作用域</strong>: 可访问变量，对象，函数的集合。</li>
+<li><strong>词法作用域</strong>: 函数的作用域在函数定义的时候就决定了</li>
+<li><strong>动态作用域</strong>: 函数的作用域是在函数调用的时候才决定的</li>
 </ol>
-<p><strong>活动对象</strong>: 在进入函数上下文时被创建的,它通过函数的arguments属性初始化.arguments属性值是Arguments对象。</p>
-<h3 id="全局上下文"><a href="#全局上下文" class="headerlink" title="全局上下文"></a>全局上下文</h3><p><strong>全局上下文</strong> 就是 <strong>全局对象</strong> 具有以下特点: </p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1.可以通过this应用,在客户端js中,全局对象就是Window对象.</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token keyword">instanceof</span> <span class="token class-name">Object</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 2.是由Object构造函数实例化的一个对象.</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 3.预定义了一大堆函数和属性.</span>
-<span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 4.作为全局变量的宿主.</span>
-<span class="token keyword">this</span><span class="token punctuation">.</span>window<span class="token punctuation">.</span>b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 5.客户端js中,全局对象有window属性指向自身。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>临时笔记：执行上下文是 具有生命周期，作用域链，变量对象，</p>
 
                 
             </div>
@@ -492,7 +479,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/07/shen-ru-js/4.bian-liang-dui-xiang/">https://github.com/LZY2333/LZY2333.github.io/2021/02/07/shen-ru-js/4.bian-liang-dui-xiang/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/07/javascript/shen-ru-js-xi-lie/2.ci-fa-zuo-yong-yu-he-dong-tai-zuo-yong-yu/">https://github.com/LZY2333/LZY2333.github.io/2021/02/07/javascript/shen-ru-js-xi-lie/2.ci-fa-zuo-yong-yu-he-dong-tai-zuo-yong-yu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -705,13 +692,13 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/12/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/1.ren-shi-rxjs/">
+                <a href="/2021/02/07/javascript/shen-ru-js-xi-lie/3.zhi-xing-shang-xia-wen-zhan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="1.认识Rxjs">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="执行上下文栈">
                         
-                        <span class="card-title">1.认识Rxjs</span>
+                        <span class="card-title">执行上下文栈</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -722,14 +709,14 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-07
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    30天精通RxJS笔记
+                            <a href="/categories/%E6%B7%B1%E5%85%A5JS%E7%B3%BB%E5%88%97/" class="post-category">
+                                    深入JS系列
                                 </a>
                             
                             
@@ -739,8 +726,8 @@ console<span class="token punctuation">.</span><span class="token function">log<
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RxJS/">
-                        <span class="chip bg-color">RxJS</span>
+                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">JS基础</span>
                     </a>
                     
                 </div>
@@ -754,13 +741,13 @@ console<span class="token punctuation">.</span><span class="token function">log<
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/07/shen-ru-js/3.zhi-xing-shang-xia-wen-zhan/">
+                <a href="/2021/02/07/javascript/shen-ru-js-xi-lie/1.cong-yuan-xing-dao-yuan-xing-lian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="执行上下文栈">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="深入原型到原型链">
                         
-                        <span class="card-title">执行上下文栈</span>
+                        <span class="card-title">深入原型到原型链</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -936,7 +923,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">12.2k</span>&nbsp;字
+                class="white-color">12.3k</span>&nbsp;字
             
             
             
