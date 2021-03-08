@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Angular基础知识, LazyYu">
+    <meta name="keywords" content="1.ng-组件, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Angular基础知识 | LazyYu</title>
+    <title>1.ng-组件 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Angular基础知识</h1>
+                    <h1 class="description center-align post-title">1.ng-组件</h1>
                 </div>
             </div>
         </div>
@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    210
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -445,9 +445,98 @@
 <p>分别写一篇 基础知识总结文章，照例只记录自己认为重要，让人豁然开朗的的知识点，</p>
 <p>力求以自己的话 精炼概括，尽量保证容易记忆。</p>
 <blockquote>
-<p>突然开始加班多了，任务重了，工作日学习时间有点少，还是要尽量学习+锻炼。<br>这个篇章三、四天做完吧,给自己点压力</p>
+<p>突然开始加班多了，任务重了，工作日学习时间有点少，还是要尽量学习+锻炼。<br>下面全是总结自官方文档</p>
 </blockquote>
-<h2 id="Angular-官方文档"><a href="#Angular-官方文档" class="headerlink" title="Angular 官方文档"></a>Angular 官方文档</h2>
+<h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><strong>命令创建组件</strong></p>
+<ol>
+<li><code>npm install -g @angular/cli</code></li>
+<li><code>ng new &lt;project-name&gt;</code></li>
+<li><code>ng g component &lt;module-or-file-route-name&gt;/&lt;component-name&gt;</code></li>
+</ol>
+<p><strong>手动创建组件</strong></p>
+<ol>
+<li><code>&lt;component-name&gt;.component.ts</code> app文件夹下新建文件 </li>
+<li><code>import &#123; Component &#125; from &#39;@angular/core&#39;;</code></li>
+<li><code>@Component(&#123; &#125;)</code> 添加装饰器</li>
+<li><code>@Component(&#123; selector: &#39;app-component-overview&#39;, &#125;)</code> 添加CSS选择器</li>
+<li><code>templateUrl: &#39;./component-overview.component.html&#39;,</code> 接上面装饰器内添加 HTML模板选择器</li>
+<li><code>styleUrls: [&#39;./component-overview.component.css&#39;]</code> 接上面装饰器内添加 模板的样式选择器</li>
+<li><code>export class ComponentOverviewComponent &#123; &#125;</code> 添加包含该组件代码的 class语句</li>
+</ol>
+<p>理论上还要修改 <code>xxx.module.ts</code> 文件将组件导入.</p>
+<h2 id="生命周期钩子"><a href="#生命周期钩子" class="headerlink" title="生命周期钩子"></a>生命周期钩子</h2><p>Angulr Core库中定义了声明周期钩子接口 来响应 生命周期的事件.<br>让你在适当的时机对组件或者指令进行操作.<br>每个接口都有唯一钩子方法, 由 <code>ng</code> + 接口名 构成,如<code>ngOnInit()</code>.</p>
+<p><strong>ngOnChanges()</strong><br>@input输入属性变化时会被调用.(非常频繁)<br>(被传入SimpleChange对象，属性为所有input属性,input属性又具有currentValue,previousValue两个属性)</p>
+<p><strong>ngOnInit()</strong><br>@input及变量初始化完成后调用,这里可以拿到this.data(一次)<br>(如果要根据属性对指令进行初始化，请在运行 ngOnInit() 时设置它们。)</p>
+<p><strong>ngDoCheck()</strong><br>可以检测数据变化,捕获并把它们当前的状态和之前的进行比较。(感觉每次渲染都会调用,暂不深究)<br>(不关注的数据渲染时也会调用,甚至光标在input框中切换也会调用,所以非常频繁)</p>
+<p><strong>ngAfterContentInit()</strong><br>当 外部通过插槽传入模板 在本组件 初始化视图完成 后调用(针对插槽的,一次)</p>
+<p><strong>ngAfterContentChecked()</strong><br>在 每次 插槽模板视图渲染 和 数据渲染 完毕后调用,此时可修改视图(非常频繁)<br><code>&lt;ng-content&gt;</code> 插槽位置.<br><code> @ContentChild(ChildComponent) contentChild: ChildComponent;</code> ContentChild为固定写法</p>
+<p><strong>ngAfterViewInit()</strong><br>子组件及当前组件 等视图初始化完成后 被调用 (一次)</p>
+<p><strong>ngAfterViewChecked()</strong><br>每次 组件视图或子组件视图变更完 后调用(非常频繁)<br>(这里不能直接修改绑定属性,可以异步修改,否则会报错,因为刚刚初始化完视图)</p>
+<p><strong>ngOnDestroy()</strong><br>销毁前调用<br>(取消订阅.DOM事件,计时器,取消注册的回调)</p>
+<h2 id="视图包装"><a href="#视图包装" class="headerlink" title="视图包装"></a>视图包装</h2><p>Angular 运行代码中,节点被增加了_nghost 或 _ngcontent 属性选择器,<br>这些额外的选择器,目的是保证组件间的css不相互影响.</p>
+<p>DOM节点 带<code>_nghost-组件名</code>属性,表示是 组件宿主元素<br>DOM节点 带<code>_ngcontent-组件名</code>属性,表示是 组件内的子节点元素</p>
+<h2 id="组件交互"><a href="#组件交互" class="headerlink" title="组件交互"></a>组件交互</h2><p><strong>@Input 装饰器</strong></p>
+<p>父传子<br><code>[master]=&quot;master&quot;</code> 父<br><code>@Input(&#39;别名&#39;) masterName: string</code> 子</p>
+<blockquote>
+<p>setter getter 截听输入属性</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">NameChildComponent</span> <span class="token punctuation">&#123;</span>
+  @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">get</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> string <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_name<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+  <span class="token keyword">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token parameter">name<span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_name <span class="token operator">=</span> <span class="token punctuation">(</span>name <span class="token operator">&amp;&amp;</span> name<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'&lt;no name set>'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">private</span> _name <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>ngOnChanges() 截听输入属性值的变化<br>当需要监视多个、交互式输入属性的时候，本方法比用属性的 setter 更合适。</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">ngOnChanges</span><span class="token punctuation">(</span><span class="token parameter">changes<span class="token operator">:</span> SimpleChanges</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> log<span class="token operator">:</span> string<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> propName <span class="token keyword">in</span> changes<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">const</span> changedProp <span class="token operator">=</span> changes<span class="token punctuation">[</span>propName<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> <span class="token keyword">from</span> <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>changedProp<span class="token punctuation">.</span>previousValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> to <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>changedProp<span class="token punctuation">.</span>currentValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>@Output 装饰器</strong></p>
+<p>子传父</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 父</span>
+template<span class="token operator">:</span> <span class="token punctuation">(</span>voted<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"onVoted($event)"</span>
+
+<span class="token function">onVoted</span><span class="token punctuation">(</span><span class="token parameter">agreed<span class="token operator">:</span> boolean</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    agreed <span class="token operator">?</span> <span class="token keyword">this</span><span class="token punctuation">.</span>agreed <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>disagreed<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 子</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">VoterComponent</span> <span class="token punctuation">&#123;</span>
+  @<span class="token function">Output</span><span class="token punctuation">(</span><span class="token punctuation">)</span> voted <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">EventEmitter</span><span class="token operator">&lt;</span>boolean<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">vote</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>voted<span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>模板通过#ngID直接获取子组件数据</strong><br>父获取子</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  selector<span class="token operator">:</span> <span class="token string">'app-countdown-parent-lv'</span><span class="token punctuation">,</span>
+  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+  &lt;h3>Countdown to Liftoff (via local variable)&lt;/h3>
+  &lt;button (click)="timer.start()">Start&lt;/button>
+  &lt;button (click)="timer.stop()">Stop&lt;/button>
+  &lt;div class="seconds">&#123;&#123;timer.seconds&#125;&#125;&lt;/div>
+  &lt;app-countdown-timer #timer>&lt;/app-countdown-timer>
+  </span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+  styleUrls<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'../assets/demo.css'</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>@ViewChild()</strong><br>父获取子</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> ViewChild <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> ChildComponent <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'./Child.component'</span><span class="token punctuation">;</span>
+template<span class="token operator">:</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;app-child #ChildComponentID>&lt;/app-child></span><span class="token template-punctuation string">`</span></span>
+@<span class="token function">ViewChild</span><span class="token punctuation">(</span><span class="token string">'ChildComponentID'</span><span class="token punctuation">)</span> ChildComponent123 <span class="token operator">:</span> ChildComponent
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>ngAfterViewInit() 之后才能拿到 ChildComponent123 属性</p>
+<p><strong>通过服务来通讯</strong></p>
+<h2 id="组件样式"><a href="#组件样式" class="headerlink" title="组件样式"></a>组件样式</h2>
                 
             </div>
             <hr/>
@@ -473,7 +562,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/24/angular/angular-ji-chu-zhi-shi/">https://github.com/LZY2333/LZY2333.github.io/2021/02/24/angular/angular-ji-chu-zhi-shi/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/24/angular/1.ng-zu-jian/">https://github.com/LZY2333/LZY2333.github.io/2021/02/24/angular/1.ng-zu-jian/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -687,13 +776,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2021/02/24/angular/angular-ji-chu-zhi-shi/">
+                <a href="/2021/02/24/angular/1.ng-zu-jian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Angular基础知识">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="1.ng-组件">
                         
-                        <span class="card-title">Angular基础知识</span>
+                        <span class="card-title">1.ng-组件</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -911,7 +1000,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">12.3k</span>&nbsp;字
+                class="white-color">13.3k</span>&nbsp;字
             
             
             
