@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="变量对象, LazyYu">
+    <meta name="keywords" content="2.ng-模板, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>变量对象 | LazyYu</title>
+    <title>2.ng-模板 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">变量对象</h1>
+                    <h1 class="description center-align post-title">2.ng-模板</h1>
                 </div>
             </div>
         </div>
@@ -387,23 +387,14 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                                <span class="chip bg-color">JS基础</span>
+                            <a href="/tags/Angular/">
+                                <span class="chip bg-color">Angular</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E6%B7%B1%E5%85%A5JS%E7%B3%BB%E5%88%97/" class="post-category">
-                                深入JS系列
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -412,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-02-07
+                    2021-03-17
                 </div>
                 
 
@@ -421,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    451
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -446,26 +437,97 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="4-变量对象"><a href="#4-变量对象" class="headerlink" title="4.变量对象"></a>4.变量对象</h2><p>执行上下文三个重要属性之一,变量对象.</p>
-<h3 id="变量对象"><a href="#变量对象" class="headerlink" title="变量对象"></a>变量对象</h3><p><strong>变量对象</strong>: 存储了在上下文中定义的变量和函数声明。</p>
-<h3 id="函数上下文中的活动对象"><a href="#函数上下文中的活动对象" class="headerlink" title="函数上下文中的活动对象"></a>函数上下文中的活动对象</h3><p>在函数上下文中.一般用活动对象来表示变量对象.</p>
-<p>活动对象和变量对象其实是一个东西,只是变量对象是规范上的或者说是引擎实现上的.</p>
-<p>执行上下文生命周期: 创建阶段,执行阶段,执行完毕.</p>
-<p>创建阶段产生变量对象,执行阶段变成活动对象.</p>
-<p>活动对象真实存在,变量对象用于指代创建阶段内一个函数内定义的所有参数列表、内部变量和内部函数.</p>
-<p>这个创建变量对象的过程实际就是函数内数据(函数参数、内部变量、内部函数)初始化的过程。</p>
-<p><strong>总结</strong><br><strong>变量对象</strong>: </p>
+                <h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><h2 id="模板语句"><a href="#模板语句" class="headerlink" title="模板语句"></a>模板语句</h2><p>在 HTML 中用于响应用户事件的方法或属性</p>
+<p><code>&lt;button (click)=&quot;deleteHero()&quot;&gt;Delete hero&lt;/button&gt;</code></p>
+<p>与模板表达式差不多,但 模板语句 的解析器 与 模板表达式不同 , 并且支持 基本赋值= 和 带;的串联表达式</p>
+<p>不能使用: new 自增自减 赋值运算符<code>+=/-=</code> 按位运算符<code>|</code>和<code>&amp;</code> 管道操作符<code>|</code></p>
+<p><strong>模板语句的上下文</strong></p>
+<p>与模板表达式的上下文一致,模板变量,指定的上下文属性,组件实例的变量成员,还能接收事件$event</p>
+<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>使用 管道 格式化数据, 如格式化 金额日期.</p>
+<p>管道可配置参数 <code>&#123;&#123; amount | currency:'EUR':'Euros '&#125;&#125;</code> ,参数也可为变量</p>
+<p>可串联配置多个管道 <code>&#123;&#123;  birthday | date:'fullDate' | uppercase&#125;&#125;</code></p>
+<p><strong>常见管道</strong></p>
+<p>DatePipe：根据本地环境中的规则格式化日期值。</p>
+<p>UpperCasePipe：把文本全部转换成大写。</p>
+<p>LowerCasePipe ：把文本全部转换成小写。</p>
+<p>CurrencyPipe ：把数字转换成货币字符串，根据本地环境中的规则进行格式化。</p>
+<p>DecimalPipe：把数字转换成带小数点的字符串，根据本地环境中的规则进行格式化。</p>
+<p>PercentPipe ：把数字转换成百分比字符串，根据本地环境中的规则进行格式化。</p>
+<p><strong>自定义一个管道</strong></p>
+<p>管道类名 大驼峰, name 小驼峰,不能使用连字符,<br>使用前记得加入到NgModule元数据的 declarations 属性中声明<br>Angular CLI 的 ng generate pipe 命令会自动注册该管道</p>
+<p>自定义管道,管道前 被绑定的值会作为第一个参数, 管道的参数 会从作为第二个参数开始</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//实现一种指数级转换，以指数级增加英雄的力量,基本值2,通过管道设定指数级为10,最终展示1024</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Pipe<span class="token punctuation">,</span> PipeTransform <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
+@<span class="token function">Pipe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>name<span class="token operator">:</span> <span class="token string">'exponentialStrength'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">ExponentialStrengthPipe</span> <span class="token keyword">implements</span> <span class="token class-name">PipeTransform</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">transform</span><span class="token punctuation">(</span>value<span class="token operator">:</span> number<span class="token punctuation">,</span> exponent<span class="token operator">?</span><span class="token operator">:</span> number<span class="token punctuation">)</span><span class="token operator">:</span> number <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> Math<span class="token punctuation">.</span><span class="token function">pow</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> <span class="token function">isNaN</span><span class="token punctuation">(</span>exponent<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> exponent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
+@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  selector<span class="token operator">:</span> <span class="token string">'app-power-booster'</span><span class="token punctuation">,</span>
+  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+    &lt;h2>Power Booster&lt;/h2>
+    &lt;p>Super power boost: &#123;&#123;2 | exponentialStrength: 10&#125;&#125;&lt;/p>
+  </span><span class="token template-punctuation string">`</span></span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token comment">// 1024</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">PowerBoosterComponent</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>通过管道的数据绑定特性来响应用户操作</strong></p>
+<p>Angular 会检测每次变更，并立即运行管道</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
+
+@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  selector<span class="token operator">:</span> <span class="token string">'app-power-boost-calculator'</span><span class="token punctuation">,</span>
+  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+    &lt;h2>Power Boost Calculator&lt;/h2>
+    &lt;div>Normal power: &lt;input [(ngModel)]="power">&lt;/div>
+    &lt;div>Boost factor: &lt;input [(ngModel)]="factor">&lt;/div>
+    &lt;p>
+      Super Hero Power: &#123;&#123;power | exponentialStrength: factor&#125;&#125;
+    &lt;/p>
+  </span><span class="token template-punctuation string">`</span></span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">PowerBoostCalculatorComponent</span> <span class="token punctuation">&#123;</span>
+  power <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+  factor <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token comment">// input框修改,都会影响变量power或factor,展示的值都会重新计算</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>变更检测的原理</p>
+<h2 id="NgModule-模块"><a href="#NgModule-模块" class="headerlink" title="NgModule 模块"></a>NgModule 模块</h2><p>@NgModule修饰的class 就是一个NgModule</p>
+<p>@NgModule 使用一个元数据对象来告诉Angular如何去编译和运行代码。</p>
+<p>一个模块内部可以包含组件、指令、管道，并且可以将它们的访问权限声明为公有，以使外部模块的组件可以访问和使用到它们。</p>
 <ol>
-<li>在函数被调用，但是函数尚未执行的时刻被创建的.</li>
-<li>定义着执行上下文下的所有参数、变量和函数。</li>
+<li><p>declarations 声明模块 内部 的 Components/Directives/Pipes</p>
+</li>
+<li><p>imports 声明导入 外部 模块暴露的 Components/Directives/Pipes</p>
+</li>
+<li><p>providers 声明指定应用程序的根级别需要使用的service</p>
+</li>
+<li><p>exports 声明可暴露给外部使用的内部成员</p>
+</li>
+<li><p>bootstrap 声明app启动的根组件,该组件会被自动放入entryComponents中</p>
+</li>
+<li><p>entryCompoenents 声明不会再模板中被引用的组件.一般是ng自己使用,ng会自动把bootstrap、路由组件放入其中。</p>
+</li>
 </ol>
-<p><strong>活动对象</strong>: 在进入函数上下文时被创建的,它通过函数的arguments属性初始化.arguments属性值是Arguments对象。</p>
-<h3 id="全局上下文"><a href="#全局上下文" class="headerlink" title="全局上下文"></a>全局上下文</h3><p><strong>全局上下文</strong> 就是 <strong>全局对象</strong> 具有以下特点: </p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1.可以通过this应用,在客户端js中,全局对象就是Window对象.</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token keyword">instanceof</span> <span class="token class-name">Object</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 2.是由Object构造函数实例化的一个对象.</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 3.预定义了一大堆函数和属性.</span>
-<span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 4.作为全局变量的宿主.</span>
-<span class="token keyword">this</span><span class="token punctuation">.</span>window<span class="token punctuation">.</span>b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 5.客户端js中,全局对象有window属性指向自身。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>2.imports, 如导入CommonModule后就可以使用NgIf、NgFor等指令。<br>3.providers,模块中providers的service会是单例模式,每种service,项目中所有组件公用一个service实例<br>  从angular6开始,只要使用angular-cli的命令创建service,会默认单例,service中默认增加语句<code>@Injectable(&#123; providedIn: &#39;root&#39;, &#125;)</code>.<br>4.exports,导入另一个模块时,只会导入被导入模块的 exports 内声明的成员.</p>
+</blockquote>
+<p><strong>功能模块</strong></p>
+<p>根模块的目的在于启动app，功能模块的目的在于扩展app</p>
+<p>功能模块可以根据需要暴露或隐藏具体的实现,或是延迟加载</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> ModuleWithProviders <span class="token punctuation">&#125;</span>  <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Routes<span class="token punctuation">,</span> RouterModule <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/router'</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">export</span> <span class="token keyword">const</span> routes<span class="token operator">:</span> Routes <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">&#123;</span> path<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span> redirectTo<span class="token operator">:</span> <span class="token string">'contact'</span><span class="token punctuation">,</span> pathMatch<span class="token operator">:</span> <span class="token string">'full'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> path<span class="token operator">:</span> <span class="token string">'crisis'</span><span class="token punctuation">,</span> loadChildren<span class="token operator">:</span> <span class="token string">'app/crisis/crisis.module#CrisisModule'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> path<span class="token operator">:</span> <span class="token string">'heroes'</span><span class="token punctuation">,</span> loadChildren<span class="token operator">:</span> <span class="token string">'app/hero/hero.module#HeroModule'</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> routing<span class="token operator">:</span> ModuleWithProviders <span class="token operator">=</span> RouterModule<span class="token punctuation">.</span><span class="token function">forRoot</span><span class="token punctuation">(</span>routes<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>path指明路径，loadChildren指明使用延迟加载，’app/crisis/crisis.module#CrisisModule’指明了模块的路径，和模块的名称。</p>
 
                 
             </div>
@@ -492,7 +554,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/07/javascript/shen-ru-js-xi-lie/4.bian-liang-dui-xiang/">https://github.com/LZY2333/LZY2333.github.io/2021/02/07/javascript/shen-ru-js-xi-lie/4.bian-liang-dui-xiang/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/03/17/angular/2.ng-mo-ban/">https://github.com/LZY2333/LZY2333.github.io/2021/03/17/angular/2.ng-mo-ban/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -530,8 +592,8 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                                    <span class="chip bg-color">JS基础</span>
+                                <a href="/tags/Angular/">
+                                    <span class="chip bg-color">Angular</span>
                                 </a>
                             
                         </div>
@@ -701,17 +763,18 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/02/12/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/1.ren-shi-rxjs/">
+                <a href="/2021/03/17/angular/2.ng-mo-ban/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="1.认识Rxjs">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="2.ng-模板">
                         
-                        <span class="card-title">1.认识Rxjs</span>
+                        <span class="card-title">2.ng-模板</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -721,26 +784,23 @@ console<span class="token punctuation">.</span><span class="token function">log<
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-17
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    30天精通RxJS笔记
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            罗紫宇
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RxJS/">
-                        <span class="chip bg-color">RxJS</span>
+                    <a href="/tags/Angular/">
+                        <span class="chip bg-color">Angular</span>
                     </a>
                     
                 </div>
@@ -754,13 +814,13 @@ console<span class="token punctuation">.</span><span class="token function">log<
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/07/javascript/shen-ru-js-xi-lie/3.zhi-xing-shang-xia-wen-zhan/">
+                <a href="/2021/02/24/angular/1.ng-zu-jian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="执行上下文栈">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="1.ng-组件">
                         
-                        <span class="card-title">执行上下文栈</span>
+                        <span class="card-title">1.ng-组件</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -771,16 +831,12 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-24
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%B7%B1%E5%85%A5JS%E7%B3%BB%E5%88%97/" class="post-category">
-                                    深入JS系列
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            罗紫宇
                             
                         </span>
                     </div>
@@ -788,8 +844,8 @@ console<span class="token punctuation">.</span><span class="token function">log<
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">JS基础</span>
+                    <a href="/tags/Angular/">
+                        <span class="chip bg-color">Angular</span>
                     </a>
                     
                 </div>
