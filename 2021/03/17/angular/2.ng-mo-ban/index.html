@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -437,7 +437,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><h2 id="模板语句"><a href="#模板语句" class="headerlink" title="模板语句"></a>模板语句</h2><p>在 HTML 中用于响应用户事件的方法或属性</p>
+                <h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><p><strong>模板表达式的上下文</strong></p>
+<ol>
+<li>组件实例中的属性或方法</li>
+<li>模板中的上下文属性,如模板输入变量</li>
+<li>模板引用变量,如#customerInput</li>
+</ol>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">// 2
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">*ngFor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>let customer of customers<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;customer.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+// 3
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>label</span><span class="token punctuation">></span></span>Type something:
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">#customerInput</span><span class="token punctuation">></span></span>&#123;&#123;customerInput.value&#125;&#125;
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其中优先级 模板变量 &gt; 指令的上下文属性 &gt; 组件实例的成员变量</p>
+<p>表达式的使用须遵循, 简单, 执行快速, 无可见副作用 的原则</p>
+<h2 id="模板语句"><a href="#模板语句" class="headerlink" title="模板语句"></a>模板语句</h2><p>在 HTML 中用于响应用户事件的方法或属性</p>
 <p><code>&lt;button (click)=&quot;deleteHero()&quot;&gt;Delete hero&lt;/button&gt;</code></p>
 <p>与模板表达式差不多,但 模板语句 的解析器 与 模板表达式不同 , 并且支持 基本赋值= 和 带;的串联表达式</p>
 <p>不能使用: new 自增自减 赋值运算符<code>+=/-=</code> 按位运算符<code>|</code>和<code>&amp;</code> 管道操作符<code>|</code></p>
@@ -992,7 +1008,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.3k</span>&nbsp;字
+                class="white-color">15.4k</span>&nbsp;字
             
             
             
