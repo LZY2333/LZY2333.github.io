@@ -412,7 +412,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.4k
                 </div>
                 
 
@@ -437,7 +437,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><p><strong>模板表达式的上下文</strong></p>
+                <h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><p><strong>模板表达式的特点</strong></p>
+<p>模板表达式中 不能使用 会引发副作用的JS表达式，如下:<br>赋值<code>(=,+=,-=...)</code><br>new、typeof、instanceof等运算符<br>使用;或者,串联起来的表达式<br><code>++</code> 和 <code>--</code> 自增自减<br>一些ES6 的运算符</p>
+<p>不支持位运算,如 <code>|</code> 和 <code>&amp;</code><br>angular新出了一些模板表达式运算符,如 <code>|</code>,<code>?</code>和<code>!</code></p>
+<blockquote>
+<p>模板表达式不能引用全局命名空间中的任何东西，比如 window 或 document。<br>它们也不能调用 console.log 或 Math.max。 它们只能引用表达式上下文中的成员。</p>
+</blockquote>
+<p><strong>模板表达式的上下文</strong></p>
 <ol>
 <li>组件实例中的属性或方法</li>
 <li>模板中的上下文属性,如模板输入变量</li>
@@ -1008,7 +1014,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.4k</span>&nbsp;字
+                class="white-color">15.6k</span>&nbsp;字
             
             
             

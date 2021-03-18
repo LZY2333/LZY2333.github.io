@@ -433,15 +433,9 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    模板模板表达式的上下文
-
-组件实例中的属性或方法
-模板中的上下文属性,如模板输入变量
-模板引用变量,如#customerInput
-
-// 2
-&lt;ul>
-  &lt;li *ngFor="let customer of custome
+                                    模板模板表达式的特点
+模板表达式中 不能使用 会引发副作用的JS表达式，如下:赋值(=,+=,-=...)new、typeof、instanceof等运算符使用;或者,串联起来的表达式++ 和 -- 自增自减一些ES6 的运算符
+不支持位运
                                 
                             </div>
                             <div class="publish-info">
@@ -491,7 +485,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.4k</span>&nbsp;字
+                class="white-color">15.6k</span>&nbsp;字
             
             
             
