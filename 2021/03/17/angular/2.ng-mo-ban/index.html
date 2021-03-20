@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    6 分
                 </div>
                 
 
@@ -437,7 +437,14 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><p><strong>模板表达式的特点</strong></p>
+                <h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过在模板中使用 Angular 的特有语法,增强HTML的功能.</p>
+<p>Angular不支持模板中使用 script 标签。<br>Angular 会忽略 script标签，并向浏览器控制台输出一条警告</p>
+<h2 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h2><p><strong><code>&#123;&#123;...&#125;&#125;</code> 插值及内部的模板表达式</strong></p>
+<p>Component 元数据中的 interpolation 属性可配置分隔符代替 <code>&#123;&#123;...&#125;&#125;</code></p>
+<p>里面 可写 表达式 ，可直接调用宿主组件的函数</p>
+<p>表达式最终都会被转换为 字符串<code>(.toString())</code></p>
+<p>看上去是将结果插入元素标签之间， 其实插值只是特殊语法，Angular会将其转换为 赋值 的方式</p>
+<p><strong>模板表达式的特点</strong></p>
 <p>模板表达式中 不能使用 会引发副作用的JS表达式，如下:<br>赋值<code>(=,+=,-=...)</code><br>new、typeof、instanceof等运算符<br>使用;或者,串联起来的表达式<br><code>++</code> 和 <code>--</code> 自增自减<br>一些ES6 的运算符</p>
 <p>不支持位运算,如 <code>|</code> 和 <code>&amp;</code><br>angular新出了一些模板表达式运算符,如 <code>|</code>,<code>?</code>和<code>!</code></p>
 <blockquote>
@@ -1014,7 +1021,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.6k</span>&nbsp;字
+                class="white-color">15.8k</span>&nbsp;字
             
             
             
