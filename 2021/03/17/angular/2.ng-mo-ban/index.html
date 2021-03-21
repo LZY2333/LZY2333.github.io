@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    3.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    13 分
                 </div>
                 
 
@@ -437,7 +437,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过在模板中使用 Angular 的特有语法,增强HTML的功能.</p>
+                <h1 id="HTML模板"><a href="#HTML模板" class="headerlink" title="HTML模板"></a>HTML模板</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过在模板中使用 Angular 的特有语法,增强HTML的功能.</p>
 <p>Angular不支持模板中使用 script 标签。<br>Angular 会忽略 script标签，并向浏览器控制台输出一条警告</p>
 <h2 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h2><p><strong><code>&#123;&#123;...&#125;&#125;</code> 插值及内部的模板表达式</strong></p>
 <p>Component 元数据中的 interpolation 属性可配置分隔符代替 <code>&#123;&#123;...&#125;&#125;</code></p>
@@ -452,18 +452,18 @@
 </blockquote>
 <p><strong>模板表达式的上下文</strong></p>
 <ol>
+<li>模板引用变量,如 #customerInput</li>
+<li>指令, 模板中的上下文属性,或者是 模板中创建的变量</li>
 <li>组件实例中的属性或方法</li>
-<li>模板中的上下文属性,如模板输入变量</li>
-<li>模板引用变量,如#customerInput</li>
 </ol>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">// 2
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">*ngFor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>let customer of customers<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;customer.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
-// 3
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- 1 --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>label</span><span class="token punctuation">></span></span>Type something:
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">#customerInput</span><span class="token punctuation">></span></span>&#123;&#123;customerInput.value&#125;&#125;
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!-- 2 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">*ngFor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>let customer of customers<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;customer.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其中优先级 模板变量 &gt; 指令的上下文属性 &gt; 组件实例的成员变量</p>
 <p>表达式的使用须遵循, 简单, 执行快速, 无可见副作用 的原则</p>
 <h2 id="模板语句"><a href="#模板语句" class="headerlink" title="模板语句"></a>模板语句</h2><p>在 HTML 中用于响应用户事件的方法或属性</p>
@@ -472,18 +472,28 @@
 <p>不能使用: new 自增自减 赋值运算符<code>+=/-=</code> 按位运算符<code>|</code>和<code>&amp;</code> 管道操作符<code>|</code></p>
 <p><strong>模板语句的上下文</strong></p>
 <p>与模板表达式的上下文一致,模板变量,指定的上下文属性,组件实例的变量成员,还能接收事件$event</p>
+<h2 id="模板变量"><a href="#模板变量" class="headerlink" title="模板变量"></a>模板变量</h2><p>用于帮助 在模板的另一部分 使用这部分的数据,使用井号 # 来声明.</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">#phone</span> <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>phone number<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">(click)</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>callPhone(phone.value)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Call<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>1.在 组件 上声明,该变量会应用该 组件实例.<br>2.在 HTML标签 上声明,该变量会引用该 元素.<br>3.在 <code>&lt;ng-template&gt;</code> 上声明,该变量会引用一个 TemplateRef实例 来代表该模板.<br>4.在 该变量右侧指定了名字,如<code>#var=&quot;ngModel&quot;</code>, 那么该变量会 引用 所在元素上 导出的 同名的组件或指令.</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">*ngIf</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Value: &#123;&#123; ref1.value &#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!-- 等同于 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ng-template</span> <span class="token attr-name">[ngIf]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>Value: &#123;&#123; ref1.value &#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ng-template</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>使用 管道 格式化数据, 如格式化 金额日期.</p>
 <p>管道可配置参数 <code>&#123;&#123; amount | currency:'EUR':'Euros '&#125;&#125;</code> ,参数也可为变量</p>
 <p>可串联配置多个管道 <code>&#123;&#123;  birthday | date:'fullDate' | uppercase&#125;&#125;</code></p>
-<p><strong>常见管道</strong></p>
-<p>DatePipe：根据本地环境中的规则格式化日期值。</p>
+<p>每个绑定都有自己的管道实例</p>
+<p>管道操作符要比三目运算符(?:)的优先级高，这意味着 <code>a ? b : c | x</code> 会被解析成 <code>a ? b : (c | x)</code><br>所以想用三目运算符,要用括号包裹表达式.</p>
+<h3 id="常见管道"><a href="#常见管道" class="headerlink" title="常见管道"></a>常见管道</h3><p>DatePipe：根据本地环境中的规则格式化日期值。</p>
 <p>UpperCasePipe：把文本全部转换成大写。</p>
 <p>LowerCasePipe ：把文本全部转换成小写。</p>
 <p>CurrencyPipe ：把数字转换成货币字符串，根据本地环境中的规则进行格式化。</p>
 <p>DecimalPipe：把数字转换成带小数点的字符串，根据本地环境中的规则进行格式化。</p>
 <p>PercentPipe ：把数字转换成百分比字符串，根据本地环境中的规则进行格式化。</p>
-<p><strong>自定义一个管道</strong></p>
-<p>管道类名 大驼峰, name 小驼峰,不能使用连字符,<br>使用前记得加入到NgModule元数据的 declarations 属性中声明<br>Angular CLI 的 ng generate pipe 命令会自动注册该管道</p>
+<h3 id="自定义一个管道"><a href="#自定义一个管道" class="headerlink" title="自定义一个管道"></a>自定义一个管道</h3><p>管道类名 大驼峰, name 小驼峰,不能使用连字符,<br>使用前记得加入到NgModule元数据的 declarations 属性中声明<br>Angular CLI 的 ng generate pipe 命令会自动注册该管道</p>
 <p>自定义管道,管道前 被绑定的值会作为第一个参数, 管道的参数 会从作为第二个参数开始</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//实现一种指数级转换，以指数级增加英雄的力量,基本值2,通过管道设定指数级为10,最终展示1024</span>
 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Pipe<span class="token punctuation">,</span> PipeTransform <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
@@ -521,8 +531,71 @@
   power <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
   factor <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span> <span class="token comment">// input框修改,都会影响变量power或factor,展示的值都会重新计算</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>变更检测的原理</p>
-<h2 id="NgModule-模块"><a href="#NgModule-模块" class="headerlink" title="NgModule 模块"></a>NgModule 模块</h2><p>@NgModule修饰的class 就是一个NgModule</p>
+<h3 id="管道执行时机"><a href="#管道执行时机" class="headerlink" title="管道执行时机"></a>管道执行时机</h3><p>Angular 会在每次 DOM 事件（每次按键、鼠标移动、计时器滴答和服务器响应）之后运行的变更检测过程中查找对数据绑定值的更改。检查到有更改 则执行管道</p>
+<p>但是对于每次变更， 走执行一次管道， 性能过低. 所以 真正的变更检测有一些情况没有进行检测</p>
+<p><strong>纯管道</strong>: 没有副作用 或者说没做额外的事情 或者说只要输入同输入值其输出值永远一致的管道</p>
+<p><strong>纯变更</strong>:纯变更指 七大原始类型的变更, 或 对象引用 的变更.</p>
+<p><strong>如果是 纯管道 ,则只有发生了 纯变更 时,才会执行管道.</strong></p>
+<p>比如调用 数组元素的push 方法,并不能触发 管道的更新,因为 数组的引用地址并没发生改变.</p>
+<p>此情况可以采用替换数组的额方式解决, 或者 使用 <strong>非纯管道</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">@<span class="token function">Pipe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  name<span class="token operator">:</span> <span class="token string">'flyingHeroesImpure'</span><span class="token punctuation">,</span>
+  pure<span class="token operator">:</span> <span class="token boolean">false</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>每当按键或鼠标移动时，Angular 都会检测到一次变更，从而执行一个非纯管道。</p>
+<p>只需加一个属性 <code>pure: false</code> , 但要小心使用。长时间运行非纯管道可能会大大降低你的应用速度。</p>
+<h2 id="DOM属性的绑定语法"><a href="#DOM属性的绑定语法" class="headerlink" title="DOM属性的绑定语法"></a>DOM属性的绑定语法</h2><p>所有绑定语法(除插值) 都在等号左侧有一个”目标名称”,用<code>[]</code>或<code>()</code>包裹,或带有前缀<code>bind-</code>,<code>on-</code>,<code>bindon-</code></p>
+<p>绑定语法分 数据源到视图, 从视图到数据源, 双向绑定 三类</p>
+<p>插值 属性 Attribute CSS 类 样式, 属于 数据源到视图<br><code>&#123;&#123;expression&#125;&#125; [target]=&quot;expression&quot; bind-target=&quot;expression&quot;</code></p>
+<p>事件, 属于  从视图到数据源<br><code>(target)=&quot;statement&quot; on-target=&quot;statement&quot;</code></p>
+<p>双向绑定<br><code>[(target)]=&quot;expression&quot; bindon-target=&quot;expression&quot;</code> </p>
+<p><strong>绑定的 是 DOM的property 而不是 HTML的attribute</strong></p>
+<p>Attribute 是由 HTML 定义的。Property 是从 DOM（文档对象模型）节点访问的</p>
+<p>模板绑定使用 Property 和 事件,编写数据绑定时, 只是在和  DOM Property 和事件打交道</p>
+<p>在 Angular 中，HTML Attribute 的唯一作用是 <strong>初始化</strong> 元素和指令的状态.<br>属性只负责 初始化 DOM属性,然后便完工,后续操作的都是property</p>
+<p>例如:</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">&lt;</span>input type<span class="token operator">=</span><span class="token string">"text"</span> value<span class="token operator">=</span><span class="token string">"Sarah"</span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>当用户在 <code>&lt;input&gt;</code> 中输入 Sally 时,DOM 元素的 value Property 将变为 Sally.<br>但是,如果使用 input.getAttribute(‘value’) 查看 HTML 的 Attribute value,<br>则可以看到该 attribute 保持不变 —— 它返回了 Sarah.</p>
+<p>另一个例子:</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">&lt;</span>button disabled<span class="token operator">=</span><span class="token string">"false"</span><span class="token operator">></span>仍被禁用<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在angular中, 这个按钮 的状态 将会是被禁用的.<br>因为 disabled Attribute 被设置为了false, 但是该属性的出现会使得 disabled Property 被初始化为true<br>导致 按钮最终会是禁用状态, 所以如果要控制按钮的状态 应该通过控制 disabled Property,如下:</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- 控制disabled Property --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">[disabled]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>condition ? true : false<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!-- 技术上说也可以这样控制 disabled Attribute 达到效果(注意Attribute绑定取决于该值是否为null)--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">[attr.disabled]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>condition ? <span class="token punctuation">'</span>disabled<span class="token punctuation">'</span> : null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!-- 但是不推荐,因为前者更直观(boolean值数据),语法更短,性能更高 --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>可使用该语法的目标</strong></p>
+<p>属性 (元素属性 组件属性 指令属性)<br>事件 (元素事件 组件事件 指令事件)<br>双向 (事件与属性)  <code>&lt;input [(ngModel)]=&quot;name&quot;&gt;</code><br>Attribute (少数)  <code>&lt;button [attr.aria-label]=&quot;help&quot;&gt;help&lt;/button&gt;</code><br>类   (class 属性) <code>&lt;div [class.special]=&quot;isSpecial&quot;&gt;Special&lt;/div&gt;</code><br>样式 (style 属性) <code>&lt;button [style.color]=&quot;isSpecial ? &#39;red&#39; : &#39;green&#39;&quot;&gt;</code></p>
+<blockquote>
+<p>注意: colspan Attribute 和 colSpan Property,容易混淆.后者可被绑定</p>
+</blockquote>
+<p><strong>绑定语法的作用</strong></p>
+<p>将 模板中的属性等 设置 为 组件实例data的值,设置指令的属性,设置指令的属性 等.</p>
+<p>安全,属性绑定可以帮助确保内容的安全–不处理HTML而是原样显示,不允许带有<code>&lt;script&gt;</code>标记的 HTML等.</p>
+<p>通常，插值和属性绑定可以达到相同的结果。</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>&#123;&#123;itemImageUrl&#125;&#125;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span> is the <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span><span class="token punctuation">></span></span>interpolated<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">></span></span> image.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">[src]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>itemImageUrl<span class="token punctuation">"</span></span><span class="token punctuation">></span></span> is the <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span><span class="token punctuation">></span></span>property bound<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">></span></span> image.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>"&#123;&#123;interpolationTitle&#125;&#125;" is the <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span><span class="token punctuation">></span></span>interpolated<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">></span></span> title.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>"<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">[innerHTML]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>propertyTitle<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>" is the <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span><span class="token punctuation">></span></span>property bound<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">></span></span> title.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>将数据值渲染为字符串时,都能用,<code>&#123;&#123;...&#125;&#125;</code>更易读,<br>但是将元素属性设置为 非字符串 属性时, 必须使用 属性绑定.</p>
+<p><strong>绑定到 Attribute</strong></p>
+<p>单个 class 绑定语法:<br><code>[class.sale]=&quot;true&quot;</code><br>多重 class 绑定语法:<br><code>[class]=&quot;class-1 class-2&quot;</code>,<br><code>[class]=&quot;&#123;foo: true, bar: false&#125;&quot;</code>,<br><code>[class]=&quot;[&#39;foo&#39;, &#39;bar&#39;]&quot;</code></p>
+<p>Attribute 绑定语法:<br><code>[attr.attribute-name]=&quot;expression&quot;</code><br><code>[style.width]=&quot;100px&quot;</code><br><code>[style.width.px]=&quot;100&quot;</code><br>多重 样式 绑定语法:<br><code>[class]=&quot;width: 100px; height: 100px&quot;</code>,<br><code>[class]=&quot;&#123;width: &#39;100px&#39;, height: &#39;100px&#39;&#125;&quot;</code>,<br><code>[class]=&quot;[&#39;width&#39;, &#39;100px&#39;]&quot;</code></p>
+<p><strong>双向绑定</strong></p>
+<p>双向绑定就是 <code>[()]</code></p>
+<p>子组件中指定属性名<code>@Input()</code>属性为<code>size</code>,则<code>@Output()</code>属性必须为<code>sizeChange</code></p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- 父组件调用 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-sizer</span> <span class="token attr-name">[(size)]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>fontSizePx<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-sizer</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 子组件写法</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">SizerComponent</span> <span class="token punctuation">&#123;</span>
+  @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  size<span class="token operator">:</span> number <span class="token operator">|</span> string<span class="token punctuation">;</span>
+  @<span class="token function">Output</span><span class="token punctuation">(</span><span class="token punctuation">)</span> sizeChange <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">EventEmitter</span><span class="token operator">&lt;</span>number<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h1 id="其他介绍"><a href="#其他介绍" class="headerlink" title="其他介绍"></a>其他介绍</h1><h2 id="NgModule-模块"><a href="#NgModule-模块" class="headerlink" title="NgModule 模块"></a>NgModule 模块</h2><p>@NgModule修饰的class 就是一个NgModule</p>
 <p>@NgModule 使用一个元数据对象来告诉Angular如何去编译和运行代码。</p>
 <p>一个模块内部可以包含组件、指令、管道，并且可以将它们的访问权限声明为公有，以使外部模块的组件可以访问和使用到它们。</p>
 <ol>
@@ -542,7 +615,7 @@
 <blockquote>
 <p>2.imports, 如导入CommonModule后就可以使用NgIf、NgFor等指令。<br>3.providers,模块中providers的service会是单例模式,每种service,项目中所有组件公用一个service实例<br>  从angular6开始,只要使用angular-cli的命令创建service,会默认单例,service中默认增加语句<code>@Injectable(&#123; providedIn: &#39;root&#39;, &#125;)</code>.<br>4.exports,导入另一个模块时,只会导入被导入模块的 exports 内声明的成员.</p>
 </blockquote>
-<p><strong>功能模块</strong></p>
+<p><strong>功能模块 与 根模块</strong></p>
 <p>根模块的目的在于启动app，功能模块的目的在于扩展app</p>
 <p>功能模块可以根据需要暴露或隐藏具体的实现,或是延迟加载</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">
@@ -557,6 +630,14 @@
 
 <span class="token keyword">export</span> <span class="token keyword">const</span> routing<span class="token operator">:</span> ModuleWithProviders <span class="token operator">=</span> RouterModule<span class="token punctuation">.</span><span class="token function">forRoot</span><span class="token punctuation">(</span>routes<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>path指明路径，loadChildren指明使用延迟加载，’app/crisis/crisis.module#CrisisModule’指明了模块的路径，和模块的名称。</p>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>用于 修改DOM结构 ,或用于 修改DOM属性 或 组件实例数据模型属性 的类</p>
+<p>自定义需使用 <code>@Directive()</code> 装饰器,以提供元数据.</p>
+<p>指令类几乎总与 HTML元素 或 属性(attribute) 相关,甚至把 同名属性当作指令名本身.</p>
+<p>当 Angular 执行时,在 HTML 模板中发现指令时,会创建当前指令类的实例,并传入DOM对象. </p>
+<p>指令分为三类:</p>
+<p>组件使用 @Component()（继承自 @Directive()）为某个类关联一个模板。</p>
+<p>属性型指令修改页面元素的行为和外观.<code>NgStyle</code></p>
+<p>结构型指令修改 DOM 的结构.<code>NgFor</code> <code>NgIf</code></p>
 
                 
             </div>
@@ -1021,7 +1102,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.8k</span>&nbsp;字
+                class="white-color">17.5k</span>&nbsp;字
             
             
             
