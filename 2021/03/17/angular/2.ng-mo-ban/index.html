@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.3k
+                    3.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    13 分
+                    12 分
                 </div>
                 
 
@@ -582,6 +582,9 @@
 <p><strong>绑定到 Attribute</strong></p>
 <p>单个 class 绑定语法:<br><code>[class.sale]=&quot;true&quot;</code><br>多重 class 绑定语法:<br><code>[class]=&quot;class-1 class-2&quot;</code>,<br><code>[class]=&quot;&#123;foo: true, bar: false&#125;&quot;</code>,<br><code>[class]=&quot;[&#39;foo&#39;, &#39;bar&#39;]&quot;</code></p>
 <p>Attribute 绑定语法:<br><code>[attr.attribute-name]=&quot;expression&quot;</code><br><code>[style.width]=&quot;100px&quot;</code><br><code>[style.width.px]=&quot;100&quot;</code><br>多重 样式 绑定语法:<br><code>[class]=&quot;width: 100px; height: 100px&quot;</code>,<br><code>[class]=&quot;&#123;width: &#39;100px&#39;, height: &#39;100px&#39;&#125;&quot;</code>,<br><code>[class]=&quot;[&#39;width&#39;, &#39;100px&#39;]&quot;</code></p>
+<blockquote>
+<p>同时绑定 多个style 或 class 考虑用 <code>[ngClass]=&quot;currentClasses&quot;</code> 和 <code>[ngStyle]=&quot;currentStyles&quot;</code> 两个内置指令.</p>
+</blockquote>
 <p><strong>双向绑定</strong></p>
 <p>双向绑定就是 <code>[()]</code></p>
 <p>子组件中指定属性名<code>@Input()</code>属性为<code>size</code>,则<code>@Output()</code>属性必须为<code>sizeChange</code></p>
@@ -592,10 +595,7 @@
   @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  size<span class="token operator">:</span> number <span class="token operator">|</span> string<span class="token punctuation">;</span>
   @<span class="token function">Output</span><span class="token punctuation">(</span><span class="token punctuation">)</span> sizeChange <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">EventEmitter</span><span class="token operator">&lt;</span>number<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h1 id="其他介绍"><a href="#其他介绍" class="headerlink" title="其他介绍"></a>其他介绍</h1><h2 id="NgModule-模块"><a href="#NgModule-模块" class="headerlink" title="NgModule 模块"></a>NgModule 模块</h2><p>@NgModule修饰的class 就是一个NgModule</p>
+<h2 id="NgModule-模块"><a href="#NgModule-模块" class="headerlink" title="NgModule 模块"></a>NgModule 模块</h2><p>@NgModule修饰的class 就是一个NgModule</p>
 <p>@NgModule 使用一个元数据对象来告诉Angular如何去编译和运行代码。</p>
 <p>一个模块内部可以包含组件、指令、管道，并且可以将它们的访问权限声明为公有，以使外部模块的组件可以访问和使用到它们。</p>
 <ol>
@@ -630,14 +630,6 @@
 
 <span class="token keyword">export</span> <span class="token keyword">const</span> routing<span class="token operator">:</span> ModuleWithProviders <span class="token operator">=</span> RouterModule<span class="token punctuation">.</span><span class="token function">forRoot</span><span class="token punctuation">(</span>routes<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>path指明路径，loadChildren指明使用延迟加载，’app/crisis/crisis.module#CrisisModule’指明了模块的路径，和模块的名称。</p>
-<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>用于 修改DOM结构 ,或用于 修改DOM属性 或 组件实例数据模型属性 的类</p>
-<p>自定义需使用 <code>@Directive()</code> 装饰器,以提供元数据.</p>
-<p>指令类几乎总与 HTML元素 或 属性(attribute) 相关,甚至把 同名属性当作指令名本身.</p>
-<p>当 Angular 执行时,在 HTML 模板中发现指令时,会创建当前指令类的实例,并传入DOM对象. </p>
-<p>指令分为三类:</p>
-<p>组件使用 @Component()（继承自 @Directive()）为某个类关联一个模板。</p>
-<p>属性型指令修改页面元素的行为和外观.<code>NgStyle</code></p>
-<p>结构型指令修改 DOM 的结构.<code>NgFor</code> <code>NgIf</code></p>
 
                 
             </div>
@@ -873,18 +865,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/17/angular/2.ng-mo-ban/">
+                <a href="/2021/03/22/angular/3.ng-zhi-ling/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="2.ng-模板">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="3.ng-指令">
                         
-                        <span class="card-title">2.ng-模板</span>
+                        <span class="card-title">3.ng-指令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -894,9 +885,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-17
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-22
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -905,7 +896,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1102,7 +1092,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">17.5k</span>&nbsp;字
+                class="white-color">18.6k</span>&nbsp;字
             
             
             
