@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    7 分
                 </div>
                 
 
@@ -440,6 +440,7 @@
                 <h1 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h1><p>用于 修改DOM结构 ,或用于 修改DOM属性 或 组件实例数据模型属性 的类</p>
 <p>指令类几乎总与 HTML元素 或 属性(attribute) 相关,甚至把 同名属性当作指令名本身.</p>
 <p>当 Angular 执行时,在 HTML 模板中发现指令时,会创建当前指令类的实例,并传入DOM对象. </p>
+<p>指令类名 大驼峰 UpperCamelCase, 属性名小驼峰 lowerCamelCase</p>
 <p>指令分为三类:</p>
 <p>组件 拥有模板的指令.使用 @Component()（继承自 @Directive()）为某个类关联一个模板。</p>
 <p>属性型指令 修改元素 组件 或 其他指令 的行为和外观.<code>NgStyle</code></p>
@@ -470,12 +471,6 @@
 <p><code>NgIf</code>/<code>NgFor</code>/<code>NgSwitch</code> 内置属性型指令</p>
 <p><code>&lt;div [class.hidden]=&quot;isSpecial&quot;&gt;Hide with class&lt;/div&gt;</code> 隐藏元素</p>
 <p><code>&lt;div *ngIf=&quot;currentCustomer&quot;&gt;Hello, &#123;&#123;currentCustomer.name&#125;&#125;&lt;/div&gt;</code> 防范空指针错误</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">*ngIf</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>hero<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;hero.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-<span class="token comment">&lt;!-- // 上面等同于下面 --></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ng-template</span> <span class="token attr-name">[ngIf]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>hero<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;hero.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ng-template</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>*ngFor 使用 trackBy 防止列表中已经被渲染过的DOM被全部替换</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// ts文件中</span>
 <span class="token function">trackByItems</span><span class="token punctuation">(</span>index<span class="token operator">:</span> number<span class="token punctuation">,</span> item<span class="token operator">:</span> Item<span class="token punctuation">)</span><span class="token operator">:</span> number <span class="token punctuation">&#123;</span>
@@ -573,7 +568,30 @@
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">ngNonBindable</span> <span class="token attr-name">[appHighlight]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">'</span>yellow<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   This should not evaluate: &#123;&#123; 1 +1 &#125;&#125;, but will highlight yellow.
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="结构型指令"><a href="#结构型指令" class="headerlink" title="结构型指令"></a>结构型指令</h2>
+<h2 id="自定义一个结构型指令"><a href="#自定义一个结构型指令" class="headerlink" title="自定义一个结构型指令"></a>自定义一个结构型指令</h2><p>结构型指令 都会使用(*)语法,可以操作宿主元素及其子元素</p>
+<p>一个宿主元素可以有多个 属性型指令, 但只能有一个 结构型指令</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">*ngIf</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>hero<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;hero.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!-- // 上面等同于下面 ,只有*ngIf 指令会被移到 &lt;ng-template> 元素上 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ng-template</span> <span class="token attr-name">[ngIf]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>hero<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;hero.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ng-template</span><span class="token punctuation">></span></span>
+
+<span class="token comment">&lt;!-- Angular 会在真正渲染的时候填充 &lt;ng-template> 的内容，并且把 &lt;ng-template> 替换为一个供诊断用的注释。 --></span>
+
+<span class="token comment">&lt;!-- NgFor和NgSwitch...指令也都遵循同样的模式。 --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">*ngFor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>let hero of heroes; 
+  let i=index; let odd=odd; trackBy: trackById<span class="token punctuation">"</span></span> <span class="token attr-name">[class.odd]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>odd<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  (&#123;&#123;i&#125;&#125;) &#123;&#123;hero.name&#125;&#125;
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ng-template</span> <span class="token attr-name">ngFor</span> <span class="token attr-name">let-hero</span> <span class="token attr-name">[ngForOf]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>heroes<span class="token punctuation">"</span></span> 
+  <span class="token attr-name">let-i</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>index<span class="token punctuation">"</span></span> <span class="token attr-name">let-odd</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>odd<span class="token punctuation">"</span></span> <span class="token attr-name">[ngForTrackBy]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>trackById<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">[class.odd]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>odd<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>(&#123;&#123;i&#125;&#125;) &#123;&#123;hero.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ng-template</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>微语法:  通过简短的、友好的字符串来配置一个指令。 微语法解析器把这个字符串翻译成 <ng-template> 上的属性.</p>
+<p><code>let</code> 关键字声明一个模板输入变量,让你在模板中能用到这个变量。</p>
+<p>本例子中，这个输入变量就是 hero、i 和 odd。 解析器会把 <code>let hero</code>、<code>let i</code>和<code>let odd</code>翻译成命名变量 <code>let-hero</code>、<code>let-i</code> 和 <code>let-odd</code>。</p>
+
                 
             </div>
             <hr/>
@@ -1037,7 +1055,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">18.6k</span>&nbsp;字
+                class="white-color">18.9k</span>&nbsp;字
             
             
             
