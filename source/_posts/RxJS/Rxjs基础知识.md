@@ -13,7 +13,7 @@ tags:
 ## RxJS 是什么
 
 RxJS 是一个库,它通过使用 observable 序列来编写异步和基于事件的程序.
-它提供了一个核心类型 Observable,附属类型 (Observer、 Schedulers、 Subjects) 
+它包括一个核心类型 Observable,以及三个附属类型 (Observer、 Schedulers、 Subjects) 
 和受 [Array#extras] 启发的操作符 (map、filter、reduce、every, 等等),
 这些数组操作符可以把异步事件作为集合来处理.
 
@@ -22,9 +22,9 @@ ReactiveX 结合了 观察者模式、迭代器模式 和 使用集合的函数�
 
 ## RxJS 几个基本概念
 
-- **Observable(可观察对象)**: 表示一个概念,这个概念是一个可调用的未来值或事件的集合.
-- **Observer(观察者)**: 一个回调函数的集合,它知道如何去监听由 Observable 提供的值.
-- **Subscription(订阅)**: 表示 Observable 的执行,主要用于取消 Observable 的执行.
+- **Observable(可观察对象)**: 一个未来可能 传递值 或 触发事件的 集合对象.
+- **Observer(观察者)**: 一个监听由 Observable 提供的值 或事件 的 回调函数的集合,.
+- **Subscription(订阅)**: 表示 Observable 的执行这个动作,主要用于取消 Observable 的执行.
 - **Operators(操作符)**: 采用函数式编程风格的纯函数 (pure function),使用像 map、filter、concat、 flatMap 等这样的操作符来处理集合.
 - **Subject(主体)**: 相当于 EventEmitter,并且是将值或事件多路推送给多个 Observer 的唯一方式.
 - **Schedulers(调度器)**: 用来控制并发并且是中央集权的调度员,允许我们在发生计算时进行协调,例如 setTimeout 或 requestAnimationFrame 或其他.
@@ -58,7 +58,7 @@ RxJS 具有 纯净性(Purity), 流动性 (Flow), 值(Values) 三个特性
 拉取,由 消费者 决定何时从 生产者 处接收数据,生产者 不知道数据是何时交到 消费者 手中的.
 
 推送,由 生产者 决定何时把数据 发送给消费者, 消费者 不知道数据何时会接收到数据.
-   
+
 |   |          生产者           |          消费者          |
 |拉取|  被动的:当被请求时产生数据.  | 主动的:决定何时请求数据.   |
 |推送| 主动的:按自己的节奏产生数据. | 被动的:对收到的数据做出反应.|
@@ -67,6 +67,36 @@ RxJS 具有 纯净性(Purity), 流动性 (Flow), 值(Values) 三个特性
 > generator和 iterators 是拉取体系,调用 `iterator.next()`的代码是消费者,会从 iterator(生产者)中取出 多个值
 > Promises 是推送体系.Promise(生产者) 将一个解析过的值传递给已注册的回调函数(消费者),由Promise来决定何时将值 推送 给回调函数
 > Observable 是推送体系.是多个值的生产者，并将值“推送”给观察者(消费者)。
+
+```js
+var observable = Rx.Observable.create(function (observer) {
+  observer.next(1);
+  observer.next(2);
+  observer.next(3);
+  setTimeout(() => {
+    observer.next(4);
+    observer.complete();
+  }, 1000);
+});
+
+console.log('just before subscribe');
+observable.subscribe({
+  next: x => console.log('got value ' + x),
+  error: err => console.error('something wrong occurred: ' + err),
+  complete: () => console.log('done'),
+});
+console.log('just after subscribe');
+
+// just before subscribe
+// got value 1
+// got value 2
+// got value 3
+// just after subscribe
+// got value 4
+// done
+```
+`subscribe` 后立即调用里面的function,同步执行后的值直接接收,异步的值异步接收推送.
+`subscribe` 调用是启动 “Observable 执行”的一种简单方式
 
 ## Observables 作为函数的泛化
 
@@ -87,9 +117,12 @@ Observable1订阅后才会**执行** 并发送 next/error/complete 通知给观�
 执行过程可以被**清理**
 
 **注意**
-同一 Observable 的不同观察者 的Observable传入的 subscribe函数 并不共享,是相互独立的.
+> 同一 Observable 的不同观察者 的Observable传入的 subscribe函数 并不共享,是相互独立的.
+> 与`addEventListener / removeEventListener`不同,Observable甚至不会去维护一个附加的观察者列表。
 > 同一 `Observable.create(function subscribe(observer) {...})`的不同订阅,
-> 内部都会创建 新的专门的 subscribe函数 为其订阅服务,
+> 内部都会创建 新的专门的 subscribe函数 为其订阅服务,且只有在每个观察者订阅后才会执行。
+> 相当于 `Rx.Observable.create`返回的是一个 类(Class),每次`observable1.subscribe({})`会创建一个`新的实例
+> 问题,那我想多个观察者观察同一事件怎么办?
 
 在 调用`observer.complete()` 或 `observer.error()` 之后所有调用都会失效.
 
@@ -105,27 +138,54 @@ Observable1订阅后才会**执行** 并发送 next/error/complete 通知给观�
 
 ## Observer(观察者) ubscription(订阅) Subject(主体)
 
-Observer (观察者) 是由三个对应三种Observable 通知类型的回调函数构成的对象.
+__Observer(观察者)__ 是由三个对应三种Observable 通知类型的回调函数构成的对象,是Observable 发送的值的消费者.
+> 可只提供一个函数而不是对象作为`.subscribe()`的参数,内部会创建一个观察者对象,并将该函数作为next的参数.
 
-> 可值提供一个回调函数作为`.subscribe()`的参数,内部会创建一个观察者对象,并将其作为next的参数.
-
-Subscription (订阅) 表示可清理资源的对象,通常是Observable 的执行,基本用来`.unsubscribe()`.
+__Subscription(订阅)__ 表示可清理资源的对象,通常是Observable 的执行,基本用来`.unsubscribe()`.
 
 > `subscription1.add(subscription2)`后, 调用 `subscription1.unsubscribe()`,
 > 会同时取消 1和2 的订阅, `subscription1.remove(subscription2)`,来撤销添加的子订阅.
 
-Subject (主体) 是一个可以多播给多个观察者的Observable,维护着多个监听器的注册表.
+__Subject(主体)__ 是一个可以多播给多个观察者的Observable,维护着多个监听器的注册表.
 Subject (主体) 同时是一个观察者,有着 `next(v)`、`error(e)` 和 `complete()` 方法.
 
 > `var subject = new Rx.Subject();` subject 可以被多次订阅.
 > `observable.subscribe(subject)` subject 可作为参数对其他 observable 进行订阅 
 > 通过 subject 可以将单播的 Subject 转换为多播. subject也是将Observable执行共享给多个观察者的唯一方式
 
+一般通过 `multicast()`操作符，让一个普通`observable`被`subject`订阅,个人猜测此时的订阅创建了一个observable1实例,并返回一个新的subject1,后续subcribe都是订阅了subject1,subject1不会每次被subscribe都创建新实例,而是共享同一个实例.
+```js
+var source = Rx.Observable.from([1, 2, 3]);
+var subject = new Rx.Subject();
+var multicasted = source.multicast(subject);
+
+// 在底层使用了 `subject.subscribe({...})`:
+subscription1 = multicasted.subscribe({
+  next: (v) => console.log('observerA: ' + v)
+});
+subscription2 = multicasted.subscribe({
+  next: (v) => console.log('observerB: ' + v)
+});
+
+// 在底层使用了 `source.subscribe(subject)`:
+multicasted.connect();
+```
+multicast 的返回值(也就是multicasted) ConnectableObservable,是一个有connect()方法的 Observable 。
+`connect()`决定了何时启动共享的 Observable 执行，因为内部底层执行了 source.subscribe(subject).
+并且其返回值是Subscription，用以取消共享的 Observable 执行
+
+但是,每次都要手动调用`connect()`,过于笨重,并且虽然`connect()`启动后,subscription1 2可以取消订阅,但是未曾停止subject的执行.
+
+我们希望,有了第一个订阅者后立即开始执行,最后一个订阅者取消订阅后,自动停止执行,则改为如下,
+`var multicasted = source.multicast(subject).refCount();`.
+`refCount()`返回的是普通Observable,带有`connect()`方法,自动执行,停止执行.
+
+
 ## BehaviorSubject、ReplaySubject 和 AsyncSubject 
 
 **BehaviorSubjects**, 多了当前值的概念,当有新的观察者订阅时,会立即向其推送当前值.
 
-> BehaviorSubjects 适合用来表示“随时间推移的值”
+> BehaviorSubjects 适合用来表示“随时间推移的值”,如年龄.
 
 ```js
 var subject = new Rx.BehaviorSubject(0); // 0是初始值
@@ -180,7 +240,7 @@ setTimeout(() => { // 1000毫秒后订阅B,此时应该只储存了3,4,5
 // observerA: 6
 // observerB: 6
 ```
-**AsyncSubject**,只有Observable执行完成时(complete())时执行,并发送最后一个值给观察者.
+**AsyncSubject**,只有Observable执行完成时(complete())时执行,并发送最后一个值给所有观察者.
 
 > 和操作符 `last()` 类似, 也是等待 complete 通知, 并发送最后一个值.
 ```js
@@ -232,6 +292,7 @@ function multiplyByTen(input) {
 }
 
 var input = Rx.Observable.from([1, 2, 3, 4]);
+// 这里只是把input存起来了,并未订阅input,只有output被订阅时,才会调用`function subscribe`.
 var output = multiplyByTen(input); //返回一个Obserable实例
 output.subscribe(x => console.log(x));
 
@@ -281,7 +342,7 @@ var observable2 = Rx.Observable.interval(1000 /* 毫秒数 */);
 var merged = Rx.Observable.merge(observable1, observable2);
 ```
 
-## 选择操作符
+## 查找你想要的操作符
 
 官网有一个可以根据你当前需求,推荐操作符的小功能很实用.
 
