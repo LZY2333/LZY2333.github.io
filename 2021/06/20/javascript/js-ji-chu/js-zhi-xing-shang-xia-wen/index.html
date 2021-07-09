@@ -452,7 +452,7 @@
 <li>最后全局可执行代码执行完毕，弹出 全局执行上下文</li>
 </ol>
 <p><strong>栈溢出</strong>:调用栈有大小限制，入栈执行上下文超过一定数目，JS引擎会报错<br>一般栈溢出 是 没有终止 循环调用 或 递归调用 导致的 </p>
-<h3 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h3><p><strong>执行上下文</strong>:当前JS代码 解析和执行 时所在环境的抽象概念</p>
+<h2 id="宏观角度-抽象角度"><a href="#宏观角度-抽象角度" class="headerlink" title="宏观角度(抽象角度)"></a>宏观角度(抽象角度)</h2><h3 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h3><p><strong>执行上下文</strong>:当前JS代码 解析和执行 时所在环境的抽象概念</p>
 <p>分为三种:<br><strong>全局执行上下文</strong>,1.创建全局对象(window对象) 2.this指向这个全局对象</p>
 <p><strong>函数执行上下文</strong>,1.函数被调用时创建 2.每个函数都有自己的函数执行上下文</p>
 <p><strong>Eval函数执行上下文</strong>,1.eval函数内代码的执行上下文</p>
@@ -580,7 +580,8 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
 <blockquote>
 <p>严格模式,函数被正常调用,this值为undefined</p>
 </blockquote>
-<p><strong>执行上下文</strong>:<strong>变量环境</strong>,<strong>词法环境</strong>,<strong>outer</strong>,<strong>this</strong><br>词法环境 变量环境  活动对象AO 变量对象VO</p>
+<p><strong>执行上下文</strong>:<strong>变量环境</strong>,<strong>词法环境</strong>,<strong>outer</strong>,<strong>this</strong></p>
+<h2 id="微观角度-代码角度"><a href="#微观角度-代码角度" class="headerlink" title="微观角度(代码角度)"></a>微观角度(代码角度)</h2><p>词法环境 变量环境  活动对象AO 变量对象VO</p>
 <p>参考:<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/48590085">【译】理解 Javascript 执行上下文和执行栈</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904069413224462">Damonare理解Javascript的作用域和作用域链</a></p>
 
                 
@@ -1044,7 +1045,7 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">29.7k</span>&nbsp;字
+                class="white-color">30.6k</span>&nbsp;字
             
             
             
