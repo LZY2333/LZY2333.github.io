@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="repeatWhen操作符实现轮询, LazyYu">
+    <meta name="keywords" content="数组, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>repeatWhen操作符实现轮询 | LazyYu</title>
+    <title>数组 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">repeatWhen操作符实现轮询</h1>
+                    <h1 class="description center-align post-title">数组</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RxJS/">
-                                <span class="chip bg-color">RxJS</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
                     </div>
@@ -403,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-13
+                    2021-07-12
                 </div>
                 
 
@@ -412,7 +412,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    548
+                    583
                 </div>
                 
 
@@ -437,76 +437,46 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="repeatWhen操作符实现轮询"><a href="#repeatWhen操作符实现轮询" class="headerlink" title="repeatWhen操作符实现轮询"></a>repeatWhen操作符实现轮询</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>(无关内容，可直接跳过)</p>
-<p>业务上有个轮询操作，最近又自学了RxJS，</p>
-<p>不想妥协嵌套函数，不想使用settimeout，想写一段代码检视会上大家第一眼看不懂的代码，</p>
-<p>想着憋一个轮询出来应该不难吧….</p>
-<p>结果可能是RxJS用的人相对少，或者很多地方都是能用就行，</p>
-<p>所以问了查了很多地方，问了很多人，也没有满意的答案，</p>
-<p>直到我翻到了repeatWhen这个操作符，才有了一丝希望，谁知道这又是一个新坑的开始…</p>
-<p>经过不断的尝试，搜索，翻看文档，查看源码(在公司没外网权限，手机硬查…..)，</p>
-<p>终于是写了一版(可以说是菜鸟本鸟了)，</p>
-<p>回家复现了出来，这里做个笔记，真能帮到有需要的人便是我最开心的事.</p>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>话都在注释里</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component<span class="token punctuation">,</span> OnInit <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Observable <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> repeatWhen<span class="token punctuation">,</span>delay <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span>
+                <h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><h2 id="数组的特点"><a href="#数组的特点" class="headerlink" title="数组的特点"></a>数组的特点</h2><p><strong>数组</strong>,一种线性表数据结构,用连续的存储空间存储相同类型数据</p>
+<blockquote>
+<p>线性表: 数组、链表、队列、栈, 非线性表：树 图</p>
+</blockquote>
+<p><strong>随机访问</strong>,<strong>线性表结构</strong> 以及 <strong>连续的内存空间</strong> <strong>相同的数据类型</strong>,<br>使数组支持 高效的 下标 <strong>随机访问</strong> 的能力</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 下标原理是寻址公式,找出该元素内存地址</span>
+a<span class="token punctuation">[</span>i<span class="token punctuation">]</span>_address <span class="token operator">=</span> base_address <span class="token operator">+</span> i <span class="token operator">*</span> data_type_size<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>低效的插入操作,最好O(1) 最坏O(n) 平均O(n)</p>
+<blockquote>
+<p>改善方案,若数组无序,将第K个移至末尾,新元素插入到第K个位置,复杂度O(1)</p>
+</blockquote>
+<p>低效的删除操作,最好O(1) 最坏O(n) 平均O(n)</p>
+<blockquote>
+<p>改善方案,记录删除数据,当数组无储存空间时,统一真正删除.同JVM标记清楚垃圾回收算法</p>
+</blockquote>
+<h2 id="数组的访问越界问题-C语言"><a href="#数组的访问越界问题-C语言" class="headerlink" title="数组的访问越界问题(C语言)"></a>数组的访问越界问题(C语言)</h2><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">int main(int argc, char* argv[])&#123;
+    int i &#x3D; 0;
+    int arr[3] &#x3D; &#123;0&#125;; &#x2F;&#x2F; 数组大小为3
+    for(; i&lt;&#x3D;3; i++)&#123; &#x2F;&#x2F; 访问了arr[3],已越界
+        arr[i] &#x3D; 0;
+        printf(&quot;hello world\n&quot;);
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>C语言中 数组越界属于 未决行为,没有规定数组越界时编译器应该如何处理<br>此时a[3]会根据寻址公式正常访问</p>
+</blockquote>
+<p>函数体内的局部变量保存在栈上,栈区在高地址空间,从高向低增长,<br>对栈来说 10000是栈底,i被压入 处于10000上,则arr 的base_address 为9997,<br>arr[2] 位于9999,则 arr[3],被判定为 10000,此处正好为 i的地址,<br>实际上 a[3] = 0 就是 i = 0,i又被归于0,导致无限循环</p>
+<h2 id="为何数组从0开始编号"><a href="#为何数组从0开始编号" class="headerlink" title="为何数组从0开始编号"></a>为何数组从0开始编号</h2><p>1.a[n],n代表偏移量</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 下标原理是寻址公式,a[0],代表偏移为0,就是首地址</span>
+a<span class="token punctuation">[</span>n<span class="token punctuation">]</span>_address <span class="token operator">=</span> base_address <span class="token operator">+</span> n <span class="token operator">*</span> data_type_size
+<span class="token comment">// 如果从1开始计数,则a[1],代表偏移为0</span>
+a<span class="token punctuation">[</span>n<span class="token punctuation">]</span>_address <span class="token operator">=</span> base_address <span class="token operator">+</span> <span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> data_type_size<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>每次 下表 随机访问 数组,就多了一次减肥运算,CPU就多了一道减法指令</p>
+<p>2）各类语言 效仿C语言,减少学习成本</p>
+<p>C语言设计者用了0做下标,Java JavaScript 效仿C语言.</p>
+<blockquote>
+<p>Matlab,数组不从0开始计数. Python支持负数下标.</p>
+</blockquote>
 
-@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    selector<span class="token operator">:</span> <span class="token string">'app-test'</span><span class="token punctuation">,</span>
-    templateUrl<span class="token operator">:</span> <span class="token string">'./test.component.html'</span><span class="token punctuation">,</span>
-    styleUrls<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'./test.component.css'</span><span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">TestComponent</span> <span class="token keyword">implements</span> <span class="token class-name">OnInit</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
-
-    <span class="token function">ngOnInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-        <span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">observer</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'start'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// start标记</span>
-            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// 模拟异步获取后端数据</span>
-                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// get标记</span>
-                <span class="token keyword">const</span> add <span class="token operator">=</span> <span class="token number">1</span> <span class="token comment">// 模拟拿到数据，例如 进度条进度 todo....</span>
-                observer<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span>add<span class="token punctuation">)</span> <span class="token comment">// 数据传递subscribe</span>
-                observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 请求完就complete，触发repeatWhen</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        source<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-            <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 模拟延迟4秒向后端再次请求 或 已满足条件结束轮询</span>
-            <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">x</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">observer2</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-                    x<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">a</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-                        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'atest'</span><span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// atest标记，经测试永远为undefined</span>
-                        <span class="token keyword">if</span><span class="token punctuation">(</span>count <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">)</span> observer2<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 模拟结束条件，count&lt;5 继续轮询</span>
-                        <span class="token keyword">else</span> observer2<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// count>=5 不再轮询</span>
-                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-                <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">e<span class="token operator">:</span>number</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            count <span class="token operator">=</span> count <span class="token operator">+</span> e <span class="token comment">// 模拟拿到数据进行操作，例如 进度条进度赋值 todo....</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'end'</span><span class="token punctuation">,</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// end标记</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-
-        <span class="token comment">// start</span>
-        <span class="token comment">// 1秒 (向后台请求时间)</span>
-        <span class="token comment">// get 1</span>
-        <span class="token comment">// 1秒 (设置的延迟请求时间)</span>
-        <span class="token comment">// end 1</span>
-        <span class="token comment">// atest undefined</span>
-        <span class="token comment">// start (下过一次请求开始)</span>
-
-        <span class="token comment">// .....</span>
-        <span class="token comment">// start</span>
-        <span class="token comment">// 1秒 (向后台请求时间)</span>
-        <span class="token comment">// get 5</span>
-        <span class="token comment">// 1秒 (设置的延迟请求时间)</span>
-        <span class="token comment">// end 5</span>
-        <span class="token comment">// atest undefined</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -532,7 +502,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/04/13/rxjs/rxjs-shi-xian-you-ya-lun-xun/">https://github.com/LZY2333/LZY2333.github.io/2021/04/13/rxjs/rxjs-shi-xian-you-ya-lun-xun/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/07/12/suan-fa/2.shu-zu/">https://github.com/LZY2333/LZY2333.github.io/2021/07/12/suan-fa/2.shu-zu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -570,8 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/RxJS/">
-                                    <span class="chip bg-color">RxJS</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -745,13 +715,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/06/20/javascript/js-ji-chu/js-zhi-xing-shang-xia-wen/">
+                <a href="/2021/07/12/suan-fa/1.shi-jian-fu-za-du/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="JS执行上下文">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="时间复杂度">
                         
-                        <span class="card-title">JS执行上下文</span>
+                        <span class="card-title">时间复杂度</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -762,7 +732,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-20
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-12
                         </span>
                         <span class="publish-author">
                             
@@ -775,8 +745,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">JS基础</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -790,13 +760,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/05/typescript/ts-ji-chu-zhi-shi/">
+                <a href="/2021/07/09/mian-shi-ti/v8-shi-ru-he-zhi-xing-yi-duan-js-dai-ma-de/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="1.TS基础知识">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="V8是如何执行一段JS代码的">
                         
-                        <span class="card-title">1.TS基础知识</span>
+                        <span class="card-title">V8是如何执行一段JS代码的</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -807,7 +777,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-09
                             </span>
                         <span class="publish-author">
                             
@@ -820,8 +790,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/TypeScript/">
-                        <span class="chip bg-color">TypeScript</span>
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                        <span class="chip bg-color">面试题</span>
                     </a>
                     
                 </div>
