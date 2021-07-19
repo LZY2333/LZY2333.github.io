@@ -412,7 +412,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.7k
                 </div>
                 
 
@@ -437,7 +437,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="断言库Jasmine"><a href="#断言库Jasmine" class="headerlink" title="断言库Jasmine"></a>断言库Jasmine</h1><h2 id="describe-‘’-gt"><a href="#describe-‘’-gt" class="headerlink" title="describe(‘’,()=&gt;{})"></a>describe(‘’,()=&gt;{})</h2><p>suit</p>
+                <h1 id="断言库Jasmine"><a href="#断言库Jasmine" class="headerlink" title="断言库Jasmine"></a>断言库Jasmine</h1><h2 id="三个基础API"><a href="#三个基础API" class="headerlink" title="三个基础API"></a>三个基础API</h2><h3 id="describe函数-全局API"><a href="#describe函数-全局API" class="headerlink" title="describe函数(全局API)"></a>describe函数(全局API)</h3><p><code>describe(&#39;&#39;,()=&gt;&#123;&#125;)</code>,函数参数内部被称为suit</p>
 <p>表示一群 相关的 标准(spec) 集合</p>
 <p>通常一个spec测试文件只包含一个顶层describe函数</p>
 <p>字符串参数 会与 it函数 的字符串参数 拼接形成 规范(spec)的全名</p>
@@ -447,13 +447,13 @@
       <span class="token function">expect</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBe</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="it-‘’-gt"><a href="#it-‘’-gt" class="headerlink" title="it(‘’,()=&gt;{})"></a>it(‘’,()=&gt;{})</h2><p>spec</p>
+<h3 id="it函数-全局API"><a href="#it函数-全局API" class="headerlink" title="it函数(全局API)"></a>it函数(全局API)</h3><p><code>it(&#39;&#39;,()=&gt;&#123;&#125;)</code>,函数参数内部被称为spec</p>
 <p>创建 规范(spec)</p>
 <p>一个 规范(spec) 可包含多个 期望(expectation)</p>
 <p>期望(expectation) 就是 只返回 boolean 的断言(assertion)</p>
 <p>只有所有内部 期望(expectation) 都为true 的 规范(spec) 才为成功态</p>
 <p>同一个describe中,it函数的执行是 似乎是并行的</p>
-<h2 id="expect"><a href="#expect" class="headerlink" title="expect()"></a>expect()</h2><p>expectation</p>
+<h3 id="expect函数-全局API"><a href="#expect函数-全局API" class="headerlink" title="expect函数(全局API)"></a>expect函数(全局API)</h3><p><code>expect(actual)</code>,返回值称为expectation</p>
 <p>创建 期望(expectation)</p>
 <p>接受一个值,称为 实际值(actual)</p>
 <p>通常紧跟着 链式调用 一个接收期望值的 匹配器(Matcher)</p>
@@ -497,8 +497,8 @@ el<span class="token punctuation">.</span>className <span class="token operator"
 <h3 id="toBeNaN"><a href="#toBeNaN" class="headerlink" title="toBeNaN()"></a>toBeNaN()</h3><h3 id="toBeNull"><a href="#toBeNull" class="headerlink" title="toBeNull()"></a>toBeNull()</h3><h3 id="toBeNegativeInfinity"><a href="#toBeNegativeInfinity" class="headerlink" title="toBeNegativeInfinity()"></a>toBeNegativeInfinity()</h3><p>匹配 <code>-infinity</code></p>
 <h3 id="toBePositiveInfinity"><a href="#toBePositiveInfinity" class="headerlink" title="toBePositiveInfinity()"></a>toBePositiveInfinity()</h3><p>匹配 <code>infinity</code></p>
 <h3 id="toBeGreaterThan-expected"><a href="#toBeGreaterThan-expected" class="headerlink" title="toBeGreaterThan(expected)"></a>toBeGreaterThan(expected)</h3><p>匹配 实际值 大于 期望值<br><code>expect(result).toBeGreaterThan(3);</code></p>
-<h3 id="toBeGreaterThanOrEqual-expected"><a href="#toBeGreaterThanOrEqual-expected" class="headerlink" title="toBeGreaterThanOrEqual(expected)"></a>toBeGreaterThanOrEqual(expected)</h3><h3 id="toBeLessThan-expected"><a href="#toBeLessThan-expected" class="headerlink" title="toBeLessThan(expected)"></a>toBeLessThan(expected)</h3><h3 id="toBeLessThanOrEqual-expected"><a href="#toBeLessThanOrEqual-expected" class="headerlink" title="toBeLessThanOrEqual(expected)"></a>toBeLessThanOrEqual(expected)</h3><h2 id="beforeEach-gt"><a href="#beforeEach-gt" class="headerlink" title="beforeEach(()=&gt;{})"></a>beforeEach(()=&gt;{})</h2><p>beforeAll(() =&gt; {})<br>在当前describe中的 所有 specs 执行前 执行一次<br>afterAll(() =&gt; {})<br>在一个describe中的 所有 specs 执行后 执行一次</p>
-<p>beforeEach(()=&gt;{})<br>在一个describe中的 每一 spec 执行前 执行一次<br>afterEach(()=&gt;{})<br>在一个describe中的 每一 spec 执行后 执行一次</p>
+<h3 id="toBeGreaterThanOrEqual-expected"><a href="#toBeGreaterThanOrEqual-expected" class="headerlink" title="toBeGreaterThanOrEqual(expected)"></a>toBeGreaterThanOrEqual(expected)</h3><h3 id="toBeLessThan-expected"><a href="#toBeLessThan-expected" class="headerlink" title="toBeLessThan(expected)"></a>toBeLessThan(expected)</h3><h3 id="toBeLessThanOrEqual-expected"><a href="#toBeLessThanOrEqual-expected" class="headerlink" title="toBeLessThanOrEqual(expected)"></a>toBeLessThanOrEqual(expected)</h3><h2 id="beforeEach系列函数-全局API"><a href="#beforeEach系列函数-全局API" class="headerlink" title="beforeEach系列函数(全局API)"></a>beforeEach系列函数(全局API)</h2><p><code>beforeAll(() =&gt; &#123;&#125;)</code><br>在当前describe中的 所有 specs 执行前 执行一次<br><code>afterAll(() =&gt; &#123;&#125;)</code><br>在一个describe中的 所有 specs 执行后 执行一次</p>
+<p><code>beforeEach(()=&gt;&#123;&#125;)</code><br>在一个describe中的 每一 spec 执行前 执行一次<br><code>afterEach(()=&gt;&#123;&#125;)</code><br>在一个describe中的 每一 spec 执行后 执行一次</p>
 <p>以上函数在一个describe中可定义多个,执行时</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"A suite"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
@@ -524,7 +524,7 @@ el<span class="token punctuation">.</span>className <span class="token operator"
 <blockquote>
 <p>如果在调用 beforeEach 以及 it 时使用的不是 箭头函数,<br>则 beforeEach 与对应 it函数共享this,即在beforeEach中给this赋值,可在it中的this拿到,共享变量.<br>注意,此法不同 it 间的 this 不共享(不是同一个this),afterEach同理.</p>
 </blockquote>
-<h2 id="fail-‘’"><a href="#fail-‘’" class="headerlink" title="fail(‘’)"></a>fail(‘’)</h2><p>手动使spec(it函数)失败</p>
+<h2 id="fail函数-全局API"><a href="#fail函数-全局API" class="headerlink" title="fail函数(全局API)"></a>fail函数(全局API)</h2><p><code>fail(&#39;&#39;)</code>,手动使spec(it函数)失败</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"A spec using the fail function"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">var</span> <span class="token function-variable function">foo</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">x<span class="token punctuation">,</span> callBack</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -555,7 +555,7 @@ el<span class="token punctuation">.</span>className <span class="token operator"
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="禁用describe-和spec"><a href="#禁用describe-和spec" class="headerlink" title="禁用describe 和spec"></a>禁用describe 和spec</h2><p>使用xdescribe,当前suites(describe函数) 及 里面的specs 在测试时会被跳过,并展示状态为pending(待处理)</p>
+<h2 id="禁用describe-和spec-全局API"><a href="#禁用describe-和spec-全局API" class="headerlink" title="禁用describe 和spec (全局API)"></a>禁用describe 和spec (全局API)</h2><p>使用xdescribe,当前suites(describe函数) 及 里面的specs 在测试时会被跳过,并展示状态为pending(待处理)</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">xdescribe</span><span class="token punctuation">(</span><span class="token string">'pending describe'</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
   <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'pending spec'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
     <span class="token function">expect</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBeTruthy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
