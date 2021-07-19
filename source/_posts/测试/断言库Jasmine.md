@@ -7,15 +7,17 @@ tags:
 
 # 断言库Jasmine
 
-## describe('',()=>{})
-suit
+
+## 三个基础API
+
+### describe函数(全局API)
+`describe('',()=>{})`,函数参数内部被称为suit
 
 表示一群 相关的 标准(spec) 集合
 
 通常一个spec测试文件只包含一个顶层describe函数
 
 字符串参数 会与 it函数 的字符串参数 拼接形成 规范(spec)的全名
-
 ```js
 describe("A suite", function() {
   it("contains spec with an expectation", function() {
@@ -25,8 +27,8 @@ describe("A suite", function() {
 });
 ```
 
-## it('',()=>{})
-spec
+### it函数(全局API)
+`it('',()=>{})`,函数参数内部被称为spec
 
 创建 规范(spec)
 
@@ -38,8 +40,8 @@ spec
 
 同一个describe中,it函数的执行是 似乎是并行的
 
-## expect()
-expectation
+### expect函数(全局API)
+`expect(actual)`,返回值称为expectation
 
 创建 期望(expectation)
 
@@ -170,16 +172,16 @@ expect(function() {throw 'a'}).toThrow('a')
 ### toBeLessThan(expected)
 ### toBeLessThanOrEqual(expected)
 
-## beforeEach(()=>{})
+## beforeEach系列函数(全局API)
 
-beforeAll(() => {})
+`beforeAll(() => {})`
 在当前describe中的 所有 specs 执行前 执行一次
-afterAll(() => {})
+`afterAll(() => {})`
 在一个describe中的 所有 specs 执行后 执行一次
 
-beforeEach(()=>{})
+`beforeEach(()=>{})`
 在一个describe中的 每一 spec 执行前 执行一次
-afterEach(()=>{})
+`afterEach(()=>{})`
 在一个describe中的 每一 spec 执行后 执行一次
 
 以上函数在一个describe中可定义多个,执行时
@@ -211,8 +213,8 @@ describe("A suite", function() {
 > 则 beforeEach 与对应 it函数共享this,即在beforeEach中给this赋值,可在it中的this拿到,共享变量.
 > 注意,此法不同 it 间的 this 不共享(不是同一个this),afterEach同理.
 
-## fail('')
-手动使spec(it函数)失败
+## fail函数(全局API)
+`fail('')`,手动使spec(it函数)失败
 ```js
 describe("A spec using the fail function", function() {
   var foo = function(x, callBack) {
@@ -252,7 +254,7 @@ describe("describe1", function() {
 });
 ```
 
-## 禁用describe 和spec
+## 禁用describe 和spec (全局API)
 使用xdescribe,当前suites(describe函数) 及 里面的specs 在测试时会被跳过,并展示状态为pending(待处理)
 ```js
 xdescribe('pending describe',()=>{
