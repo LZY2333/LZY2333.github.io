@@ -279,7 +279,7 @@ describe('describe',()=>{
 })
 ```
 
-## spies
+## spy的创建
 spy 用于函数监控,可以捕获到 受监控函数的调用 及 调用时传入的参数 的对象
 
 spy的作用域仅限于其定义的describe代码块 或 it代码块,生命周期跟随spec
@@ -327,8 +327,8 @@ describe("A spy", () => {
 
 spy的创建方式有以下三种
 `spyOn`: 监控一个对象下的function.(该对象该function得确实存在)
-`jasmine.createSpyObj`: 监控一个对象下的多个function.(函数可以不存在)
-`jasmine.createSpy`: 监控一个function.(函数可以不存在)
+`jasmine.createSpyObj`: 监控一个对象下的多个function.(函数可以不存在,返回一个对象)
+`jasmine.createSpy`: 监控一个function.(函数可以不存在,返回一个函数)
 ```js
 describe("A spy", () => {
   var foo, bar = null;
@@ -569,29 +569,27 @@ it不会被执行,除非之前的beforeEach已经执行并改变状态
 
 如果beforeEach中被调用了reject 则当前subscribe的所有specs都会fail
 ```js
-describe("Using promises", function() {
-  if(typeof Promise === undefined){
+describe("Using promises", function () {
+  if (typeof Promise === undefined) {
     return
   }
-  let value = 0
+  let value = null
   function soon() {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(1)
       }, 1000);
     })
   }
   beforeEach(() => {
-    return soon().then(() => {
-      value = 0;
+    return soon().then((result) => {
+      value = result;
     });
   });
 
   it("should support async execution of test preparation and expectations", () => {
-    return soon().then(() => {
       value++;
-      expect(value).toBeGreaterThan(0);
-    });
+      expect(value).toBe(2);
   });
 });
 ```
@@ -641,3 +639,91 @@ describe("Using async/await", function () {
   });
 });
 ```
+## spy监控策略设置
+spy 间谍,意味着监控,当监控到被监控者(一般是函数)被调用时,该如何触发事件,触发怎样的事件.
+
+这个 如何触发,以及 触发事件事件的定义 称为 监控策略(SpyStrategy)
+
+### callThrough()
+被监控函数被调用时 让被监控函数真正执行(真正执行?)
+调用方式 `spyOn(foo, 'setBar').and.callThrough()`
+
+### stub()
+默认策略,代表啥也不干
+也就是说 __被spy监控的函数在被调用时不会被真正执行！！__
+```js
+describe("spy监控策略设置", () => {
+  var foo, bar = null;
+  beforeEach(() => {
+    foo = { setBar: (value) => { bar = value; } }
+    spyOn(foo, 'setBar');
+    //默认监控foo的setBar方法并在其调用时啥也不干(但其调用这个动作会被spy记录)
+    foo.setBar('truth');
+  });
+
+  it("test stub()", () => {
+    expect(bar).toBe(null)
+  });
+});
+```
+
+### callFake(fn)
+被监控函数被调用时 用fn代替被监控函数被调用,传入的参数会传给fn
+```js
+describe("spy监控策略设置", () => {
+  var foo, bar = null;
+  beforeEach(() => {
+    foo = { setBar: (value) => { bar = value; } }
+    spyOn(foo, 'setBar').and.callFake((value) => { bar = 'fake' });
+
+    foo.setBar('truth');
+  });
+
+  it("test callFake", () => {
+    expect(bar).toBe('fake')
+  });
+});
+```
+
+### rejectWith(value)
+被监控函数被调用时 返回一个`rejected`状态的`promise`
+```js
+describe("spy监控策略设置", function () {
+  let value = null
+  // function soon() {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       rejected('rejected')
+  //     }, 0);
+  //   })
+  // }
+  let soon = jasmine.createSpy('soon').and.rejectWith('rejected')
+  beforeEach(() => {
+    soon().then((result)=>{ // ------r
+      value = 'resolved'
+    })
+    .catch((error) => {
+      value = error;
+    });
+  });
+  it('test rejectWith',() => {
+    expect(value).toBe('rejected')
+  })
+});
+```
+
+### resolveTo(value)
+被监控函数被调用时 返回一个`resolved`状态的`promise`
+
+### returnValue(value)
+被监控函数被调用时 直接返回value
+
+### returnValues(…values)
+被监控函数被调用时 每次调用依次返回values其中一项
+```js
+jasmine.createSpy('setValue').and.returnValues([1,2,3])
+jasmine.createSpy('setValue').and.returnValues(1,2,3)
+```
+
+### throwError(something)
+被监控函数被调用时 抛错
