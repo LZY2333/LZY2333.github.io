@@ -358,6 +358,7 @@ describe("A spy", () => {
 ```
 ## 模糊期望值
 非对称等值测试器
+创建一个 期望值，这个 期望值 代表一个范围，而非特定实际值。
 ### jasmine.any(Type)
 ### jasmine.anything()
 jasmine.any(Type) 代表具有特定type的任意期望值
@@ -450,7 +451,7 @@ describe("custom asymmetry", function() {
 ## Clock
 用于测试时间相关的代码 的对象
 测试时调用`jasmine.clock().install`方法,
-`jasmine.clock().tick(number)`阻塞it number秒
+`jasmine.clock().tick(number)`阻塞it number毫秒
 测试结束一定要`jasmine.clock().uninstall()`,
 ```js
 describe("Manually ticking the Jasmine Clock", function() {
@@ -727,3 +728,13 @@ jasmine.createSpy('setValue').and.returnValues(1,2,3)
 
 ### throwError(something)
 被监控函数被调用时 抛错
+
+
+## 其他笔记
+
+只运行指定文件的的测试时
+```js
+// 修改test.ts文件
+const FILE = ['./app/main/test/test.component.spec.ts']
+context.keys().filter( name => !!FILE.includes(name)).map(context);
+```
