@@ -412,7 +412,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.2k
+                    3.3k
                 </div>
                 
 
@@ -637,7 +637,7 @@ el<span class="token punctuation">.</span>className <span class="token operator"
     <span class="token function">expect</span><span class="token punctuation">(</span>foo<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveBeenCalled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="模糊期望值"><a href="#模糊期望值" class="headerlink" title="模糊期望值"></a>模糊期望值</h2><p>非对称等值测试器</p>
+<h2 id="模糊期望值"><a href="#模糊期望值" class="headerlink" title="模糊期望值"></a>模糊期望值</h2><p>非对称等值测试器<br>创建一个 期望值，这个 期望值 代表一个范围，而非特定实际值。</p>
 <h3 id="jasmine-any-Type"><a href="#jasmine-any-Type" class="headerlink" title="jasmine.any(Type)"></a>jasmine.any(Type)</h3><h3 id="jasmine-anything"><a href="#jasmine-anything" class="headerlink" title="jasmine.anything()"></a>jasmine.anything()</h3><p>jasmine.any(Type) 代表具有特定type的任意期望值<br>jasmine.anything() 代表不为null/undefined的任意期望值</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"jasmine.any"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
   <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"matches any value"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
@@ -709,7 +709,7 @@ el<span class="token punctuation">.</span>className <span class="token operator"
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="Clock"><a href="#Clock" class="headerlink" title="Clock"></a>Clock</h2><p>用于测试时间相关的代码 的对象<br>测试时调用<code>jasmine.clock().install</code>方法,<br><code>jasmine.clock().tick(number)</code>阻塞it number秒<br>测试结束一定要<code>jasmine.clock().uninstall()</code>,</p>
+<h2 id="Clock"><a href="#Clock" class="headerlink" title="Clock"></a>Clock</h2><p>用于测试时间相关的代码 的对象<br>测试时调用<code>jasmine.clock().install</code>方法,<br><code>jasmine.clock().tick(number)</code>阻塞it number毫秒<br>测试结束一定要<code>jasmine.clock().uninstall()</code>,</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"Manually ticking the Jasmine Clock"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">var</span> timerCallback<span class="token punctuation">;</span>
   <span class="token function">beforeEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -927,7 +927,10 @@ el<span class="token punctuation">.</span>className <span class="token operator"
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">jasmine<span class="token punctuation">.</span><span class="token function">createSpy</span><span class="token punctuation">(</span><span class="token string">'setValue'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>and<span class="token punctuation">.</span><span class="token function">returnValues</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 jasmine<span class="token punctuation">.</span><span class="token function">createSpy</span><span class="token punctuation">(</span><span class="token string">'setValue'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>and<span class="token punctuation">.</span><span class="token function">returnValues</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h3 id="throwError-something"><a href="#throwError-something" class="headerlink" title="throwError(something)"></a>throwError(something)</h3><p>被监控函数被调用时 抛错</p>
-
+<h2 id="其他笔记"><a href="#其他笔记" class="headerlink" title="其他笔记"></a>其他笔记</h2><p>只运行指定文件的的测试时</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 修改test.ts文件</span>
+<span class="token keyword">const</span> <span class="token constant">FILE</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'./app/main/test/test.component.spec.ts'</span><span class="token punctuation">]</span>
+context<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span> <span class="token parameter">name</span> <span class="token operator">=></span> <span class="token operator">!</span><span class="token operator">!</span><span class="token constant">FILE</span><span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -1162,18 +1165,17 @@ jasmine<span class="token punctuation">.</span><span class="token function">crea
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/07/15/ce-shi/duan-yan-ku-jasmine/">
+                <a href="/2021/08/17/suan-fa/4.zhan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="断言库Jasmine">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="栈">
                         
-                        <span class="card-title">断言库Jasmine</span>
+                        <span class="card-title">栈</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1183,9 +1185,9 @@ jasmine<span class="token punctuation">.</span><span class="token function">crea
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-15
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-17
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -1194,12 +1196,11 @@ jasmine<span class="token punctuation">.</span><span class="token function">crea
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                        <span class="chip bg-color">测试</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -1391,7 +1392,7 @@ jasmine<span class="token punctuation">.</span><span class="token function">crea
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">35.7k</span>&nbsp;字
+                class="white-color">37.8k</span>&nbsp;字
             
             
             

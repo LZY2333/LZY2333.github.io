@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="1.TS基础知识, LazyYu">
+    <meta name="keywords" content="栈, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>1.TS基础知识 | LazyYu</title>
+    <title>栈 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">1.TS基础知识</h1>
+                    <h1 class="description center-align post-title">栈</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/TypeScript/">
-                                <span class="chip bg-color">TypeScript</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
                     </div>
@@ -403,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-05
+                    2021-08-17
                 </div>
                 
 
@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    621
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    2 分
                 </div>
                 
 
@@ -437,157 +437,20 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS基础知识"><a href="#TS基础知识" class="headerlink" title="TS基础知识"></a>TS基础知识</h1><p>又开始啃官方文档了，学完这部分，开始研究 antd-zorro</p>
-<h2 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h2><p>简单的</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let isDone: boolean &#x3D; false; &#x2F;&#x2F; 布尔值
+                <h1 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h1><p>栈,一种 操作受限 的线性表, 只允许在一端插入和删除数据</p>
+<p>适用于,某个数据集合,只在一端插入和删除数据,且满足 后进先出,先进后出的特性 时</p>
+<p><strong>顺序栈</strong>:用数组实现的栈</p>
+<p><strong>链式栈</strong>:用链表实现的栈</p>
+<blockquote>
+<p>入栈 出栈 及 只涉及栈顶个别数据的操作,时间复杂度都是O(1)<br>储存大小为n的数组,不能说空间复杂度为O(n),因为n是必须的,无法省略的<br>空间复杂度,是指原本的数据储存空间外,算法运行还需要的额外储存空间</p>
+</blockquote>
+<h2 id="支持动态扩容的顺序栈"><a href="#支持动态扩容的顺序栈" class="headerlink" title="支持动态扩容的顺序栈"></a>支持动态扩容的顺序栈</h2><p>基于数组 实现支持动态扩容的栈,只需要底层依赖一个支持动态扩容的数组就行</p>
+<p>练习均摊时间复杂度:<br>假设栈空间不够时 入栈 需要申请一个原来两倍大小的空间,且只考虑入栈不考虑出栈</p>
+<p>则 假设栈空间为n,每经过n次 入栈操作 会产生一次扩容,<br>则 需将栈内所有元素入栈到新地址(不考出栈)<br>则, 每次扩容会产生n次 扩容入栈,每次扩容时间复杂度为O(n)<br>均摊到每次 入栈操作后,相当于除以n,则 每次入栈 的均摊时间复杂度为O(1)</p>
+<h2 id="栈的应用"><a href="#栈的应用" class="headerlink" title="栈的应用"></a>栈的应用</h2><p><strong>函数调用栈</strong> </p>
+<p><strong>表达式求值</strong><br>两个栈,一个保存数字 一个保存运算符;<br>如果 遇到 数字,直接压入 操作数栈;<br>如果 遇到 运算符 就与栈顶元素 进行比较:<br>如果 比 运算符栈 栈顶元素 优先级高 就 将当前运算符压入栈;<br>如果 比 运算符栈 栈顶元素 优先级低 就 先放着当前运算符<br>从操作数栈 取出栈顶2个操作数,<br>从运算符栈 取出栈顶1个运算符,<br>进行计算,再把计算完的结果插入操作数栈顶,<br>然后 当前运算符 继续与 运算符栈 顶元素进行比较</p>
+<p><strong>括号匹配</strong><br>用栈来保存未匹配的 左括号,从左往右扫描字符,<br>当扫描到左括号时压入栈中<br>当扫描到右括号时从栈顶取出一个左括号进行比较,<br>如果匹配,继续扫描剩下的字符,如果不匹配,则说明为非法格式</p>
 
-let decLiteral: number &#x3D; 6; &#x2F;&#x2F; 数字
-
-let name: string &#x3D; &quot;bob&quot;; &#x2F;&#x2F; 字符串
-
-let list: number[] &#x3D; [1, 2, 3]; &#x2F;&#x2F; 数组
-let list: Array&lt;number&gt; &#x3D; [1, 2, 3]; &#x2F;&#x2F; 数组<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>TS扩展的类型</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">
-&#x2F;&#x2F; [string, number]
-let x: [string, number]; &#x2F;&#x2F; 元组
-x &#x3D; [&#39;hello&#39;, 10]; &#x2F;&#x2F; OK，表示一个已知元素数量和类型的数组
-x &#x3D; [10, &#39;hello&#39;]; &#x2F;&#x2F; Error
-
-&#x2F;&#x2F; enum x &#123;a，b&#125;
-enum Color &#123;Red &#x3D; 1, Green, Blue&#125; &#x2F;&#x2F; 枚举
-let c: Color &#x3D; Color.Green; &#x2F;&#x2F; 默认0开始编号，上面改为1开始
-let colorName: string &#x3D; Color[2]; &#x2F;&#x2F; 可以通过数值，便利的获得名字
-console.log(colorName) &#x2F;&#x2F; Green
-
-&#x2F;&#x2F; any
-let notSure: any &#x3D; 4; &#x2F;&#x2F; Any
-&#x2F;&#x2F; 相当于移除了类型检查，可以从此变量获取任意值或方法而不报错
-
-&#x2F;&#x2F; void
-function warnUser(): void &#123; &#x2F;&#x2F; void类型像是与any类型相反，表示没有任何类型
-    console.log(&quot;Void&quot;);
-&#125;
-let unusable: void &#x3D; undefined; &#x2F;&#x2F; void变量只能是 undefined和null
-
-&#x2F;&#x2F; Null 和 Undefined
-let u: undefined &#x3D; undefined;
-let n: null &#x3D; null;
-&#x2F;&#x2F; 默认null和undefined是所有类型的子类型，可以赋值给number类型的变量
-&#x2F;&#x2F; 除非指定了--strictNullChecks，只能赋值给void和它们各自。
-&#x2F;&#x2F; 建议开启此选项，因为想传入null给number可以使用联合类型string | null | undefined。
-
-&#x2F;&#x2F; Never
-&#x2F;&#x2F; Never是任何类型的子类，可以赋值给任何类型，任何类型不可被赋值给Never类型
-function error(message: string): never &#123;
-    throw new Error(message);
-&#125;&#x2F;&#x2F; 返回never的函数必须存在无法达到的终点，就像上下这两个函数
-function infiniteLoop(): never &#123;
-    while (true) &#123; &#125;
-&#125;
-
-&#x2F;&#x2F; Object
-&#x2F;&#x2F; object表示非原始类型，也就是除number，string，boolean，symbol，null或undefined之外的类型。
-
-&#x2F;&#x2F; 类型断言
-&#x2F;&#x2F; 相当于类型转换，表示告诉编译器，我确定这里必然是这个类型，由抽象变具体
-let someValue: any &#x3D; &quot;this is a string&quot;;
-let strLength: number &#x3D; (&lt;string&gt;someValue).length;
-let strLength2: number &#x3D; (someValue as string).length;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><p>讲let 和 const，数组解构语法，对象解构语法</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let [, second, , fourth] &#x3D; [1, 2, 3, 4];
-
-let o &#x3D; &#123; a: &quot;foo&quot;, b: 12, c: &quot;bar&quot; &#125;;
-let &#123; a, ...passthrough &#125; &#x3D; o;
-let &#123; a, d &#x3D; 1000 &#125; &#x3D; o; &#x2F;&#x2F; 缺省值默认值,函数形参也可使用
-let &#123; a: newName1, b: newName2 &#125; &#x3D; o; &#x2F;&#x2F;解构并重命名,不是指定类型
-let &#123;a, b&#125;: &#123;a: string, b: number&#125; &#x3D; o; &#x2F;&#x2F;结构并指定类型
-
-&#x2F;&#x2F; 函数声明中使用解构加指定类型会很复杂
-type C &#x3D; &#123; a: string, b?: number &#125;
-function f(&#123; a, b &#125;: C): void &#123; &#125;
-
-function f(&#123; a, b &#x3D; 0 &#125; &#x3D; &#123; a: &quot;&quot; &#125;): void &#123; &#125; &#x2F;&#x2F;默认传入一个&#123; a: &quot;&quot; &#125;并解构
-f(&#123; a: &quot;yes&quot; &#125;); &#x2F;&#x2F; ok, default b &#x3D; 0
-f(); &#x2F;&#x2F; ok, default to &#123;a: &quot;&quot;&#125;, which then defaults b &#x3D; 0
-f(&#123;&#125;); &#x2F;&#x2F; error, &#39;a&#39; is required if you supply an argument
-
-&#x2F;&#x2F; ...展开操作符,可展开对象,但只包括可枚举属性,比如展开后,对象上的方法会丢失.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p><strong>简单示例</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface LabelledValue &#123;
-  label: string;
-&#125;
-
-function printLabel(labelledObj: LabelledValue) &#123;
-  console.log(labelledObj.label);
-&#125;
-
-let myObj &#x3D; &#123;size: 10, label: &quot;Size 10 Object&quot;&#125;;
-printLabel(myObj);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>LabelledValue 代表 必须是一个具有string类型的label属性的对象<br>TS中的接口不代表着 ‘实现了该接口’,而只关注是否符合接口定义的规范,满足条件就行</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Test &#123;
-  color?: string; &#x2F;&#x2F; 可选属性
-  &#x2F;&#x2F; 优点,对可能存在的属性进行预定义,捕获引用了不存在的属性时的错误
-  readonly x: number; &#x2F;&#x2F; 只读属性
-  &#x2F;&#x2F; 被赋值后就不能再修改,相当于属性中的const,const用于变量
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>额外属性的检查</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
-    color?: string;
-    width?: number;
-&#125;
-function createSquare(config: SquareConfig): &#123; color: string; area: number &#125; &#123; &#125;
-let mySquare &#x3D; createSquare(&#123; colour: &quot;red&quot;, width: 100 &#125;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>上面写错了colour,会报错,error: ‘colour’ not expected in type ‘SquareConfig’<br>而如果就是想加额外属性,绕过额外属性检查,该怎么做</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 1. 使用类型断言
-let mySquare &#x3D; createSquare(&#123; width: 100, opacity: 0.5 &#125; as SquareConfig);
-&#x2F;&#x2F; 2. 给接口添加一个字符串索引签名,前提是知道这个接口可能具有特殊用途的额外属性(推荐)
-interface SquareConfig &#123;
-    color?: string;
-    width?: number;
-    [propName: string]: any;
-&#125;
-&#x2F;&#x2F; 3. 将这个对象赋值给一个另一个变量,因为变量不会经过额外属性检查,就像上面简单示例中一样
-let squareOptions &#x3D; &#123; colour: &quot;red&quot;, width: 100 &#125;;
-let mySquare &#x3D; createSquare(squareOptions);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>函数类型</strong><br>接口可以表述 对象类型, 也可以描述 函数类型</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SearchFunc &#123;
-  (source: string, subString: string): boolean;
-&#125;
-let mySearch: SearchFunc;
-
-mySearch &#x3D; function(source: string, subString: string) &#123;
-  let result &#x3D; source.search(subString);
-  return result &gt; -1;
-&#125;
-&#x2F;&#x2F; 函数参数名 可以不与接口定义的参数名一致,只检查 对应位置类型(形状)一致
-mySearch &#x3D; function(src: string, sub: string): boolean &#123;
-  let result &#x3D; src.search(sub);
-  return result &gt; -1;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>可索引的类型</strong><br>没看完,以后再复习</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface StringArray &#123;
-  [index: number]: string;
-&#125;
-
-let myArray: StringArray;
-myArray &#x3D; [&quot;Bob&quot;, &quot;Fred&quot;];
-
-let myStr: string &#x3D; myArray[0];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>类类型</strong></p>
-<p>与C#或Java里接口的基本作用一样，TypeScript也能够用它来明确的强制一个类去符合某种契约。</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface ClockInterface &#123;
-    currentTime: Date;
-    setTime(d: Date);
-&#125;
-
-class Clock implements ClockInterface &#123;
-    currentTime: Date;
-    setTime(d: Date) &#123;
-        this.currentTime &#x3D; d;
-    &#125;
-    constructor(h: number, m: number) &#123; &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -613,7 +476,7 @@ class Clock implements ClockInterface &#123;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/04/05/typescript/ts-ji-chu-zhi-shi/">https://github.com/LZY2333/LZY2333.github.io/2021/04/05/typescript/ts-ji-chu-zhi-shi/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/08/17/suan-fa/4.zhan/">https://github.com/LZY2333/LZY2333.github.io/2021/08/17/suan-fa/4.zhan/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -651,8 +514,8 @@ class Clock implements ClockInterface &#123;
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/TypeScript/">
-                                    <span class="chip bg-color">TypeScript</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -826,13 +689,13 @@ class Clock implements ClockInterface &#123;
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/04/13/rxjs/rxjs-shi-xian-you-ya-lun-xun/">
+                <a href="/2021/08/17/suan-fa/5.dui-lie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="repeatWhen操作符实现轮询">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="队列">
                         
-                        <span class="card-title">repeatWhen操作符实现轮询</span>
+                        <span class="card-title">队列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -843,7 +706,7 @@ class Clock implements ClockInterface &#123;
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-13
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-17
                         </span>
                         <span class="publish-author">
                             
@@ -856,8 +719,8 @@ class Clock implements ClockInterface &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RxJS/">
-                        <span class="chip bg-color">RxJS</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -871,13 +734,13 @@ class Clock implements ClockInterface &#123;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/22/angular/3.ng-zhi-ling/">
+                <a href="/2021/07/15/ce-shi/duan-yan-ku-jasmine/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="3.ng-指令">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="断言库Jasmine">
                         
-                        <span class="card-title">3.ng-指令</span>
+                        <span class="card-title">断言库Jasmine</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -888,7 +751,7 @@ class Clock implements ClockInterface &#123;
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-15
                             </span>
                         <span class="publish-author">
                             
@@ -901,8 +764,8 @@ class Clock implements ClockInterface &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Angular/">
-                        <span class="chip bg-color">Angular</span>
+                    <a href="/tags/%E6%B5%8B%E8%AF%95/">
+                        <span class="chip bg-color">测试</span>
                     </a>
                     
                 </div>
