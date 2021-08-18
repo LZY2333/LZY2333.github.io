@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="排序, LazyYu">
+    <meta name="keywords" content="排序(冒泡,插入,选择), LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>排序 | LazyYu</title>
+    <title>排序(冒泡,插入,选择) | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">排序</h1>
+                    <h1 class="description center-align post-title">排序(冒泡,插入,选择)</h1>
                 </div>
             </div>
         </div>
@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    86
+                    1.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -438,8 +438,117 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><p>八大经典排序:<br>冒泡排序 插入排序 选择排序 归并排序 快速排序 计数排序 基数排序 桶排序</p>
-<p>冒泡 插入 选择    O(n²)    基于比较<br>   快排 归并    O(nlogn)   基于比较<br>计数 基数 桶      O(n)    不基于比较       </p>
-<h2 id="如何评价一个排序算法的优劣"><a href="#如何评价一个排序算法的优劣" class="headerlink" title="如何评价一个排序算法的优劣"></a>如何评价一个排序算法的优劣</h2>
+<p>冒泡 插入 选择    O(n²)    基于比较<br>  快排 归并     O(nlogn)   基于比较<br>计数 基数 桶      O(n)    不基于比较       </p>
+<h2 id="如何评价一个排序算法的优劣"><a href="#如何评价一个排序算法的优劣" class="headerlink" title="如何评价一个排序算法的优劣"></a>如何评价一个排序算法的优劣</h2><p>排序算法的 <strong>执行效率</strong> 指时间复杂度,比较次数,移动次数<br>排序算法的 <strong>内存消耗</strong> 指空间复杂度<br>排序算法的 <strong>稳定性</strong> 指 排序后序列中 相等元素 的 原有先后顺序不变</p>
+<blockquote>
+<p>原地排序(Sorted in place),特指 空间复杂度 为O(1)的排序算法<br>排序后相等元素顺序不变,称为 稳定的排序算法,相反 称为 不稳定的排序算法</p>
+</blockquote>
+<p><strong>稳定的排序算法</strong> 的优势</p>
+<p>真实的软件开发中,进行排序的不是单纯的整数,而是一组对象,依赖某个key进行排序.</p>
+<p>假设某个 订单系统中,存在 下单时间 订单金额 两个属性,<br>我们希望按 金额从小到大 进行排序,金额相同的订单按 下单时间从早到晚 排序,</p>
+<p>则 先按 <strong>下单时间</strong>(注意是先时间) 进行排序,之后再用 <strong>稳定排序算法</strong> 按订单金额排序<br>稳定排序算法可以保证 金额相同的两个对象 在排序之后 前后顺序不变</p>
+<h2 id="冒泡排序-Bubble-Sort"><a href="#冒泡排序-Bubble-Sort" class="headerlink" title="冒泡排序(Bubble Sort)"></a>冒泡排序(Bubble Sort)</h2><p>冒泡排序 进行多轮,<br>每一轮 从头到尾对相邻两个数进行比较,看是否满足大小关系要求<br>如果 不满足 则交换两个数的位置,<br>每一轮 的最终结果 会使得一个数 ‘冒泡’,位于正确的位置,进行n轮</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 冒泡排序</span>
+<span class="token keyword">const</span> <span class="token function-variable function">bubbleSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> hasChange <span class="token operator">=</span> <span class="token boolean">false</span>
+        <span class="token comment">// 每次冒泡最末尾的数已经位于正确的位置,后续不需要参与比较所以-i</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length <span class="token operator">-</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 从小到大进行排序</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">const</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+                arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span>
+                arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp
+                hasChange <span class="token operator">=</span> <span class="token boolean">true</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 如果某次冒泡没进行任何交换 说明所有元素已经到位</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>hasChange<span class="token punctuation">)</span> <span class="token keyword">break</span>
+    <span class="token punctuation">&#125;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">const</span> test <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token function">bubbleSort</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>冒泡排序 空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>相邻元素大小相等时不会进行交换 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong></p>
+<p>最好情况 全为顺序 只要一轮冒泡(只需检查一轮),时间复杂度 O(n)<br>最好情况 全为逆序 需要n轮冒泡(需检查n轮),时间复杂度 O(n²)</p>
+<p><strong>有序度</strong> 和 <strong>逆序度</strong>:<br>有序度是数组中具有有序关系的元素对的个数<br>如:2,4,3,1,5,6,有序度为 11(一个个从前往后找,如24,23,25,26都是有序对,再找4*,3*,1*)</p>
+<p>对于1,2,3,4,5,6 这种叫 <strong>满有序度</strong>,</p>
+<p>还可以得出 <strong>逆序度 = 满有序度 - 有序度</strong></p>
+<p>n位数组满有序度 为 <strong>n*(n-1)/2</strong><br>(如上例123456,1往后可找5对,2找4对,最后得5+4+3+2+1满序度)</p>
+<p><strong>冒泡排序中每一个逆序度都代表一次交换</strong></p>
+<p>最坏情况下 有序度为0,逆序度为n*(n-1)/2,最好情况下 相反,平均交换n*(n-1)/4次<br>所以复杂度为 O(n²)</p>
+<h2 id="插入排序-Insertion-Sort"><a href="#插入排序-Insertion-Sort" class="headerlink" title="插入排序(Insertion Sort)"></a>插入排序(Insertion Sort)</h2><p>插入排序 将数据分为两个区间,<strong>已排序区间</strong> 和 <strong>未排序区间</strong>,<br>初始 已排序区间 就是第一个元素,<br>每轮 取 未排序区间 的元素,在 已排序区间 中找合适的位置插入,<br>直到 未排序区间为空</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 插入排序</span>
+<span class="token keyword">const</span> <span class="token function-variable function">insertionSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
+    <span class="token comment">// (0,i) 代表有序区间 i代表无序区间这轮即将要插入有序区间的数</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token keyword">let</span> j <span class="token operator">=</span> i <span class="token operator">-</span> <span class="token number">1</span>
+        <span class="token comment">// j 属于 [0,i-1],从后向前比较,比temp大的就后移</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>j<span class="token punctuation">;</span> j <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> temp<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">break</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 直到 找到第一个&lt;j或=j的数下标 或循环完j=-1,</span>
+        <span class="token comment">// temp放这个数后面(j+1)</span>
+        arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp
+    <span class="token punctuation">&#125;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">const</span> testSort <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token function">insertionSort</span><span class="token punctuation">(</span>testSort<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>插入排序 空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>发现值相同的元素时插入 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong> (n轮,每轮移动n个数)</p>
+<p>最好情况时间复杂度为O(n)</p>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>也区分 <strong>已排序区间</strong> 和 <strong>未排序区间</strong>,<br>每轮 找到 未排序区间 最小的数,与 已排序区间的末尾 的数交换,</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 选择排序</span>
+<span class="token keyword">const</span> <span class="token function-variable function">selectionSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
+    <span class="token comment">// 需要注意这里的边界, 因为需要在内层进行 i+1后的循环，所以外层需要 数组长度-1</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> minIndex <span class="token operator">=</span> i
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> arr<span class="token punctuation">[</span>minIndex<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                minIndex <span class="token operator">=</span> j <span class="token comment">// 找到整个数组的最小值</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">const</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>minIndex<span class="token punctuation">]</span>
+        arr<span class="token punctuation">[</span>minIndex<span class="token punctuation">]</span> <span class="token operator">=</span> temp
+    <span class="token punctuation">&#125;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">const</span> testSelect <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">]</span>
+<span class="token function">selectionSort</span><span class="token punctuation">(</span>testSelect<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>插入排序 空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>是 <strong>不!稳定的排序算法</strong>,<br>任何情况时间复杂度 为 <strong>O(n²)</strong></p>
+<p>选择排序好理解,但是相比上面两个,略显逊色</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>冒泡排序 不管怎么优化 元素交换次数都是 原始数据的逆序度<br>插入排序 不管怎么优化 元素移动次数都是 元素数据的逆序度</p>
+<p>但是 插入排序 更受欢迎,因为:</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 冒泡排序的交换操作</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ---每次交换三次赋值---</span>
+    <span class="token keyword">const</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+    arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span>
+    arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp
+    hasChange <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 插入排序的移动操作</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> temp<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ---每次移动一次赋值---</span>
+    arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">break</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>所以 冒泡排序 虽然和插入排序时间复杂度一样,但 赋值操作 占用了额外三倍的时间.</p>
+<p>排序排序 还具有优化后的 <strong>希尔排序</strong></p>
+<h2 id="额外-当数据结构为链表"><a href="#额外-当数据结构为链表" class="headerlink" title="额外:当数据结构为链表"></a>额外:当数据结构为链表</h2><p>考虑只能改变节点位置，<br>冒泡排序相比于数组实现，比较次数一致，但交换时操作更复杂；<br>插入排序，比较次数一致，不需要再有后移操作，找到位置后可以直接插入，<br>但排序完毕后可能需要倒置链表；<br>选择排序比较次数一致，交换操作同样比较麻烦。</p>
+<p>综上，时间复杂度和空间复杂度并无明显变化，<br>若追求极致性能，<br>冒泡排序的时间复杂度系数会变大，插入排序系数会减小，选择排序无明显变化。</p>
+
                 
             </div>
             <hr/>
@@ -465,7 +574,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/08/17/suan-fa/6.pai-xu/">https://github.com/LZY2333/LZY2333.github.io/2021/08/17/suan-fa/6.pai-xu/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/08/17/suan-fa/6.pai-xu-mou-pao-cha-ru-xuan-ze/">https://github.com/LZY2333/LZY2333.github.io/2021/08/17/suan-fa/6.pai-xu-mou-pao-cha-ru-xuan-ze/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -679,13 +788,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2021/08/17/suan-fa/6.pai-xu/">
+                <a href="/2021/08/17/suan-fa/6.pai-xu-mou-pao-cha-ru-xuan-ze/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="排序">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="排序(冒泡,插入,选择)">
                         
-                        <span class="card-title">排序</span>
+                        <span class="card-title">排序(冒泡,插入,选择)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -903,7 +1012,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">37.8k</span>&nbsp;字
+                class="white-color">39.5k</span>&nbsp;字
             
             
             
