@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    1.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
 
@@ -437,7 +437,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><p>八大经典排序:<br>冒泡排序 插入排序 选择排序 归并排序 快速排序 计数排序 基数排序 桶排序</p>
+                <h1 id="排序-冒泡-插入-选择"><a href="#排序-冒泡-插入-选择" class="headerlink" title="排序(冒泡,插入,选择)"></a>排序(冒泡,插入,选择)</h1><p>八大经典排序:<br>冒泡排序 插入排序 选择排序 归并排序 快速排序 计数排序 基数排序 桶排序</p>
 <p>冒泡 插入 选择    O(n²)    基于比较<br>  快排 归并     O(nlogn)   基于比较<br>计数 基数 桶      O(n)    不基于比较       </p>
 <h2 id="如何评价一个排序算法的优劣"><a href="#如何评价一个排序算法的优劣" class="headerlink" title="如何评价一个排序算法的优劣"></a>如何评价一个排序算法的优劣</h2><p>排序算法的 <strong>执行效率</strong> 指时间复杂度,比较次数,移动次数<br>排序算法的 <strong>内存消耗</strong> 指空间复杂度<br>排序算法的 <strong>稳定性</strong> 指 排序后序列中 相等元素 的 原有先后顺序不变</p>
 <blockquote>
@@ -526,7 +526,9 @@
 <span class="token function">selectionSort</span><span class="token punctuation">(</span>testSelect<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>插入排序 空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>是 <strong>不!稳定的排序算法</strong>,<br>任何情况时间复杂度 为 <strong>O(n²)</strong></p>
 <p>选择排序好理解,但是相比上面两个,略显逊色</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>冒泡排序 不管怎么优化 元素交换次数都是 原始数据的逆序度<br>插入排序 不管怎么优化 元素移动次数都是 元素数据的逆序度</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>冒泡、插入、选择排序都有一个共同点，将待排序数列分为已排序和未排序两部分。<br>在未排序的部分中查找一个最值，放到已排序数列的恰当位置。</p>
+<p>具体到代码层面，外层循环的变量用于分割已排序和未排序数，<br>内层循环的变量用于在未排序数中查找。<br>从思路上看，这三种算法其实是一样的，所以时间复杂度也相同</p>
+<p>冒泡排序 不管怎么优化 元素交换次数都是 原始数据的逆序度<br>插入排序 不管怎么优化 元素移动次数都是 元素数据的逆序度</p>
 <p>但是 插入排序 更受欢迎,因为:</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 冒泡排序的交换操作</span>
 <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -783,18 +785,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/08/17/suan-fa/6.pai-xu-mou-pao-cha-ru-xuan-ze/">
+                <a href="/2021/08/18/suan-fa/7.pai-xu-gui-bing-kuai-pai/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="排序(冒泡,插入,选择)">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="排序(归并,快排)">
                         
-                        <span class="card-title">排序(冒泡,插入,选择)</span>
+                        <span class="card-title">排序(归并,快排)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -804,9 +805,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-17
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-18
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -815,7 +816,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1012,7 +1012,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">39.5k</span>&nbsp;字
+                class="white-color">40.8k</span>&nbsp;字
             
             
             

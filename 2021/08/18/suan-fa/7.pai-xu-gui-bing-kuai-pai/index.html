@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="1.TS基础知识, LazyYu">
+    <meta name="keywords" content="排序(归并,快排), LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>1.TS基础知识 | LazyYu</title>
+    <title>排序(归并,快排) | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -271,7 +271,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">1.TS基础知识</h1>
+                    <h1 class="description center-align post-title">排序(归并,快排)</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/TypeScript/">
-                                <span class="chip bg-color">TypeScript</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
                     </div>
@@ -403,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-05
+                    2021-08-18
                 </div>
                 
 
@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    4 分
                 </div>
                 
 
@@ -437,157 +437,118 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS基础知识"><a href="#TS基础知识" class="headerlink" title="TS基础知识"></a>TS基础知识</h1><p>又开始啃官方文档了，学完这部分，开始研究 antd-zorro</p>
-<h2 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h2><p>简单的</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let isDone: boolean &#x3D; false; &#x2F;&#x2F; 布尔值
+                <h1 id="排序-归并-快排"><a href="#排序-归并-快排" class="headerlink" title="排序(归并,快排)"></a>排序(归并,快排)</h1><p>归并排序 和 快速排序 都用到了 分治思想,</p>
+<p>时间复杂度都为 O(nlogn)</p>
+<h2 id="归并排序-mergeSort"><a href="#归并排序-mergeSort" class="headerlink" title="归并排序(mergeSort)"></a>归并排序(mergeSort)</h2><p>分析出递推公式，找到终止条件</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+<span class="token comment">// 这里将mergeArr函数执行成多层嵌套,</span>
+<span class="token comment">// 直到数组被拆分为只有0或1个元素的多个数组,类似金字塔的结构</span>
+<span class="token comment">// 然后 自下而上 开始层层执行mergeArr进行排序合并,直到金字塔顶端合二为一</span>
+<span class="token comment">// 最底层 排序合并 为 具有1或2个(0+1或1+1)元素的数组,</span>
+<span class="token comment">// 之后作为参数推送给倒数第二层的mergeArr,执行</span>
+<span class="token comment">// 合并为具有3或4个(1+2或2+2)元素的数组,</span>
+<span class="token comment">// 继续作为参数推送给倒数第三层的mergeArr</span>
+<span class="token keyword">const</span> <span class="token function-variable function">mergeSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// 递归分解函数</span>
+    <span class="token comment">// 终止条件:当任意数组分解到只有一个时返回。</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> arr
+    <span class="token keyword">const</span> middle <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token comment">// 找到中间值</span>
+    <span class="token keyword">const</span> left <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> middle<span class="token punctuation">)</span> <span class="token comment">// 分割数组</span>
+    <span class="token keyword">const</span> right <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>middle<span class="token punctuation">)</span>
+    <span class="token comment">// mergeSort进行递归分解,嵌套调用mergeArr,</span>
+    <span class="token comment">// mergeArr 多层执行,排序合并</span>
+    <span class="token comment">// 每一层mergeArr执行结束代表一半的数组合并完成,传递给上一层</span>
+    <span class="token comment">// 直到只剩一个数组</span>
+    <span class="token keyword">return</span> <span class="token function">mergeArr</span><span class="token punctuation">(</span><span class="token function">mergeSort</span><span class="token punctuation">(</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">mergeSort</span><span class="token punctuation">(</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
 
-let decLiteral: number &#x3D; 6; &#x2F;&#x2F; 数字
+<span class="token comment">// 对传入的 l数组 r数组 从左往右进行比较</span>
+<span class="token comment">// 由于是多次二等份 最底层的的l数组和r数组</span>
+<span class="token comment">// 必然是仅含1个元素或0个元素(传入数组为奇数时等分后会存在一个0元素数组)</span>
+<span class="token comment">// 创建一个新数组temp,第一次比较, 对比l与r 最左端的元素</span>
+<span class="token comment">// (由于l和r都是从底层1元素数组排序合并而来,所以都是左小右大的有序数组)</span>
+<span class="token comment">// 比较内的小的数据(l和r最左侧是各自最小的元素,比较内小者就是当前最小数据)</span>
+<span class="token comment">// push进新数组,并 当前侧index+1(相当于删除当前侧元素,剩下的继续比较)</span>
+<span class="token comment">// 第二次比较 继续取l和r最左端元素进行比较,小的那个push进temp(第二小元素)</span>
+<span class="token comment">// 第三次比较 继续取l和r最左端元素进行比较,小的那个push进temp(第三小元素)</span>
+<span class="token comment">// 直到,l或r其中一个数组的元素被取完,剩下另一个数组的元素必然是</span>
+<span class="token comment">// 有序(l和r本就有序且左小右大),且大于temp数组的,</span>
+<span class="token comment">// 直接拼接到temp数组最后,排序合并结束</span>
+<span class="token keyword">const</span> <span class="token function-variable function">mergeArr</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token comment">// 合并子序列函数</span>
+    <span class="token comment">// 递推公式</span>
+    <span class="token keyword">let</span> temp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">let</span> leftIndex <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> rightIndex <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment">// 判断2个数组中元素大小，依次插入数组 11 9</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>left<span class="token punctuation">.</span>length <span class="token operator">></span> leftIndex <span class="token operator">&amp;&amp;</span> right<span class="token punctuation">.</span>length <span class="token operator">></span> rightIndex<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>left<span class="token punctuation">[</span>leftIndex<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> right<span class="token punctuation">[</span>rightIndex<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            temp<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>left<span class="token punctuation">[</span>leftIndex<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            leftIndex<span class="token operator">++</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            temp<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>right<span class="token punctuation">[</span>rightIndex<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            rightIndex<span class="token operator">++</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 合并 多余数组</span>
+    <span class="token keyword">return</span> temp<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>left<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>leftIndex<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>right<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>rightIndex<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
 
-let name: string &#x3D; &quot;bob&quot;; &#x2F;&#x2F; 字符串
+<span class="token keyword">const</span> testArr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    testArr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    i<span class="token operator">++</span>
+<span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序前:'</span><span class="token punctuation">,</span>testArr<span class="token punctuation">)</span>
+<span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token function">mergeSort</span><span class="token punctuation">(</span>testArr<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序后:'</span><span class="token punctuation">,</span>res<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>稳定的排序算法</strong><br><code>mergeArr()</code>递归分解函数中:<br><code>left[leftIndex] &lt;= right[rightIndex]</code>中的等号<br><code>temp.concat(left.slice(leftIndex)).concat(right.slice(rightIndex))</code><br>中的temp与concat顺序,left.concat与right的顺序<br>保证了 归并排序 是 稳定的排序</p>
+<p><strong>时间复杂度:O(nlogn)</strong><br>公式推演太复杂,高中和大学的基本忘了.<br>自己想了一个思路,</p>
+<p><strong>空间复杂度:O(n)</strong></p>
+<p>归并排序 没有 快排 应用广泛,因为 <strong>归并排序不是原地排序算法</strong></p>
+<p>合并两个 有序数组 为一个 有序数组 时,需要借助额外的储存空间(temp数组)</p>
+<p>但又由于合并完后,临时开辟的内存空间就会被释放,且CPU任意时刻只执行一个函数</p>
+<p>所以,临时内存空间最大的时候也就是 n个数据的大小(最后一次合并时temp.length),</p>
+<p>所以,O(n)</p>
+<h2 id="快速排序-quickSort"><a href="#快速排序-quickSort" class="headerlink" title="快速排序(quickSort)"></a>快速排序(quickSort)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">swap</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> i<span class="token punctuation">,</span> j</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+    arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+    arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> temp
+<span class="token punctuation">&#125;</span>
 
-let list: number[] &#x3D; [1, 2, 3]; &#x2F;&#x2F; 数组
-let list: Array&lt;number&gt; &#x3D; [1, 2, 3]; &#x2F;&#x2F; 数组<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>TS扩展的类型</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">
-&#x2F;&#x2F; [string, number]
-let x: [string, number]; &#x2F;&#x2F; 元组
-x &#x3D; [&#39;hello&#39;, 10]; &#x2F;&#x2F; OK，表示一个已知元素数量和类型的数组
-x &#x3D; [10, &#39;hello&#39;]; &#x2F;&#x2F; Error
+<span class="token comment">// 获取 pivot 交换完后的index</span>
+<span class="token keyword">const</span> <span class="token function-variable function">partition</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> pivot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> pivotVal <span class="token operator">=</span> arr<span class="token punctuation">[</span>pivot<span class="token punctuation">]</span>
+    <span class="token keyword">let</span> startIndex <span class="token operator">=</span> left
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> left<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> right<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> pivotVal<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">swap</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> i<span class="token punctuation">,</span> startIndex<span class="token punctuation">)</span>
+            startIndex<span class="token operator">++</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> startIndex<span class="token punctuation">,</span> pivot<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> startIndex
+<span class="token punctuation">&#125;</span>
 
-&#x2F;&#x2F; enum x &#123;a，b&#125;
-enum Color &#123;Red &#x3D; 1, Green, Blue&#125; &#x2F;&#x2F; 枚举
-let c: Color &#x3D; Color.Green; &#x2F;&#x2F; 默认0开始编号，上面改为1开始
-let colorName: string &#x3D; Color[2]; &#x2F;&#x2F; 可以通过数值，便利的获得名字
-console.log(colorName) &#x2F;&#x2F; Green
+<span class="token keyword">const</span> <span class="token function-variable function">quickSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> pivot <span class="token operator">=</span> right
+        <span class="token keyword">let</span> partitionIndex <span class="token operator">=</span> <span class="token function">partition</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> pivot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+        <span class="token function">quickSort</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> partitionIndex <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">&lt;</span> left <span class="token operator">?</span> left <span class="token operator">:</span> partitionIndex <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">quickSort</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> partitionIndex <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">></span> right <span class="token operator">?</span> right <span class="token operator">:</span> partitionIndex <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
 
-&#x2F;&#x2F; any
-let notSure: any &#x3D; 4; &#x2F;&#x2F; Any
-&#x2F;&#x2F; 相当于移除了类型检查，可以从此变量获取任意值或方法而不报错
+<span class="token punctuation">&#125;</span>
 
-&#x2F;&#x2F; void
-function warnUser(): void &#123; &#x2F;&#x2F; void类型像是与any类型相反，表示没有任何类型
-    console.log(&quot;Void&quot;);
-&#125;
-let unusable: void &#x3D; undefined; &#x2F;&#x2F; void变量只能是 undefined和null
 
-&#x2F;&#x2F; Null 和 Undefined
-let u: undefined &#x3D; undefined;
-let n: null &#x3D; null;
-&#x2F;&#x2F; 默认null和undefined是所有类型的子类型，可以赋值给number类型的变量
-&#x2F;&#x2F; 除非指定了--strictNullChecks，只能赋值给void和它们各自。
-&#x2F;&#x2F; 建议开启此选项，因为想传入null给number可以使用联合类型string | null | undefined。
-
-&#x2F;&#x2F; Never
-&#x2F;&#x2F; Never是任何类型的子类，可以赋值给任何类型，任何类型不可被赋值给Never类型
-function error(message: string): never &#123;
-    throw new Error(message);
-&#125;&#x2F;&#x2F; 返回never的函数必须存在无法达到的终点，就像上下这两个函数
-function infiniteLoop(): never &#123;
-    while (true) &#123; &#125;
-&#125;
-
-&#x2F;&#x2F; Object
-&#x2F;&#x2F; object表示非原始类型，也就是除number，string，boolean，symbol，null或undefined之外的类型。
-
-&#x2F;&#x2F; 类型断言
-&#x2F;&#x2F; 相当于类型转换，表示告诉编译器，我确定这里必然是这个类型，由抽象变具体
-let someValue: any &#x3D; &quot;this is a string&quot;;
-let strLength: number &#x3D; (&lt;string&gt;someValue).length;
-let strLength2: number &#x3D; (someValue as string).length;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><p>讲let 和 const，数组解构语法，对象解构语法</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let [, second, , fourth] &#x3D; [1, 2, 3, 4];
-
-let o &#x3D; &#123; a: &quot;foo&quot;, b: 12, c: &quot;bar&quot; &#125;;
-let &#123; a, ...passthrough &#125; &#x3D; o;
-let &#123; a, d &#x3D; 1000 &#125; &#x3D; o; &#x2F;&#x2F; 缺省值默认值,函数形参也可使用
-let &#123; a: newName1, b: newName2 &#125; &#x3D; o; &#x2F;&#x2F;解构并重命名,不是指定类型
-let &#123;a, b&#125;: &#123;a: string, b: number&#125; &#x3D; o; &#x2F;&#x2F;结构并指定类型
-
-&#x2F;&#x2F; 函数声明中使用解构加指定类型会很复杂
-type C &#x3D; &#123; a: string, b?: number &#125;
-function f(&#123; a, b &#125;: C): void &#123; &#125;
-
-function f(&#123; a, b &#x3D; 0 &#125; &#x3D; &#123; a: &quot;&quot; &#125;): void &#123; &#125; &#x2F;&#x2F;默认传入一个&#123; a: &quot;&quot; &#125;并解构
-f(&#123; a: &quot;yes&quot; &#125;); &#x2F;&#x2F; ok, default b &#x3D; 0
-f(); &#x2F;&#x2F; ok, default to &#123;a: &quot;&quot;&#125;, which then defaults b &#x3D; 0
-f(&#123;&#125;); &#x2F;&#x2F; error, &#39;a&#39; is required if you supply an argument
-
-&#x2F;&#x2F; ...展开操作符,可展开对象,但只包括可枚举属性,比如展开后,对象上的方法会丢失.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p><strong>简单示例</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface LabelledValue &#123;
-  label: string;
-&#125;
-
-function printLabel(labelledObj: LabelledValue) &#123;
-  console.log(labelledObj.label);
-&#125;
-
-let myObj &#x3D; &#123;size: 10, label: &quot;Size 10 Object&quot;&#125;;
-printLabel(myObj);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>LabelledValue 代表 必须是一个具有string类型的label属性的对象<br>TS中的接口不代表着 ‘实现了该接口’,而只关注是否符合接口定义的规范,满足条件就行</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Test &#123;
-  color?: string; &#x2F;&#x2F; 可选属性
-  &#x2F;&#x2F; 优点,对可能存在的属性进行预定义,捕获引用了不存在的属性时的错误
-  readonly x: number; &#x2F;&#x2F; 只读属性
-  &#x2F;&#x2F; 被赋值后就不能再修改,相当于属性中的const,const用于变量
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>额外属性的检查</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
-    color?: string;
-    width?: number;
-&#125;
-function createSquare(config: SquareConfig): &#123; color: string; area: number &#125; &#123; &#125;
-let mySquare &#x3D; createSquare(&#123; colour: &quot;red&quot;, width: 100 &#125;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>上面写错了colour,会报错,error: ‘colour’ not expected in type ‘SquareConfig’<br>而如果就是想加额外属性,绕过额外属性检查,该怎么做</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 1. 使用类型断言
-let mySquare &#x3D; createSquare(&#123; width: 100, opacity: 0.5 &#125; as SquareConfig);
-&#x2F;&#x2F; 2. 给接口添加一个字符串索引签名,前提是知道这个接口可能具有特殊用途的额外属性(推荐)
-interface SquareConfig &#123;
-    color?: string;
-    width?: number;
-    [propName: string]: any;
-&#125;
-&#x2F;&#x2F; 3. 将这个对象赋值给一个另一个变量,因为变量不会经过额外属性检查,就像上面简单示例中一样
-let squareOptions &#x3D; &#123; colour: &quot;red&quot;, width: 100 &#125;;
-let mySquare &#x3D; createSquare(squareOptions);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>函数类型</strong><br>接口可以表述 对象类型, 也可以描述 函数类型</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SearchFunc &#123;
-  (source: string, subString: string): boolean;
-&#125;
-let mySearch: SearchFunc;
-
-mySearch &#x3D; function(source: string, subString: string) &#123;
-  let result &#x3D; source.search(subString);
-  return result &gt; -1;
-&#125;
-&#x2F;&#x2F; 函数参数名 可以不与接口定义的参数名一致,只检查 对应位置类型(形状)一致
-mySearch &#x3D; function(src: string, sub: string): boolean &#123;
-  let result &#x3D; src.search(sub);
-  return result &gt; -1;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>可索引的类型</strong><br>没看完,以后再复习</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface StringArray &#123;
-  [index: number]: string;
-&#125;
-
-let myArray: StringArray;
-myArray &#x3D; [&quot;Bob&quot;, &quot;Fred&quot;];
-
-let myStr: string &#x3D; myArray[0];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>类类型</strong></p>
-<p>与C#或Java里接口的基本作用一样，TypeScript也能够用它来明确的强制一个类去符合某种契约。</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface ClockInterface &#123;
-    currentTime: Date;
-    setTime(d: Date);
-&#125;
-
-class Clock implements ClockInterface &#123;
-    currentTime: Date;
-    setTime(d: Date) &#123;
-        this.currentTime &#x3D; d;
-    &#125;
-    constructor(h: number, m: number) &#123; &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">const</span> testArr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    testArr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    i<span class="token operator">++</span>
+<span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'unsort'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span>
+<span class="token function">quickSort</span><span class="token punctuation">(</span>testArr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> testArr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'sort'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -613,7 +574,7 @@ class Clock implements ClockInterface &#123;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/04/05/typescript/ts-ji-chu-zhi-shi/">https://github.com/LZY2333/LZY2333.github.io/2021/04/05/typescript/ts-ji-chu-zhi-shi/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/08/18/suan-fa/7.pai-xu-gui-bing-kuai-pai/">https://github.com/LZY2333/LZY2333.github.io/2021/08/18/suan-fa/7.pai-xu-gui-bing-kuai-pai/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -651,8 +612,8 @@ class Clock implements ClockInterface &#123;
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/TypeScript/">
-                                    <span class="chip bg-color">TypeScript</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -826,13 +787,13 @@ class Clock implements ClockInterface &#123;
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/04/13/rxjs/rxjs-shi-xian-you-ya-lun-xun/">
+                <a href="/2021/08/30/suan-fa/er-fen-cha-zhao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="repeatWhen操作符实现轮询">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">repeatWhen操作符实现轮询</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -843,7 +804,7 @@ class Clock implements ClockInterface &#123;
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-13
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-30
                         </span>
                         <span class="publish-author">
                             
@@ -852,14 +813,6 @@ class Clock implements ClockInterface &#123;
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/RxJS/">
-                        <span class="chip bg-color">RxJS</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -871,13 +824,13 @@ class Clock implements ClockInterface &#123;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/22/angular/3.ng-zhi-ling/">
+                <a href="/2021/08/17/suan-fa/6.pai-xu-mou-pao-cha-ru-xuan-ze/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="3.ng-指令">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="排序(冒泡,插入,选择)">
                         
-                        <span class="card-title">3.ng-指令</span>
+                        <span class="card-title">排序(冒泡,插入,选择)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -888,7 +841,7 @@ class Clock implements ClockInterface &#123;
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-17
                             </span>
                         <span class="publish-author">
                             
@@ -901,8 +854,8 @@ class Clock implements ClockInterface &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Angular/">
-                        <span class="chip bg-color">Angular</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
