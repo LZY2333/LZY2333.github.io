@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="V8是如何执行一段JS代码的, LazyYu">
+    <meta name="keywords" content="哈希算法, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>V8是如何执行一段JS代码的 | LazyYu</title>
+    <title>哈希算法 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">V8是如何执行一段JS代码的</h1>
+                    <h1 class="description center-align post-title">哈希算法</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                                <span class="chip bg-color">面试题</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
                     </div>
@@ -403,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-09
+                    2021-09-16
                 </div>
                 
 
@@ -412,7 +412,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    853
+                    907
                 </div>
                 
 
@@ -437,45 +437,36 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="V8是如何执行一段JS代码的"><a href="#V8是如何执行一段JS代码的" class="headerlink" title="V8是如何执行一段JS代码的"></a>V8是如何执行一段JS代码的</h1><p>编译器(Compiler),解释器(Interpreter),抽象语法树(AST),<br>字节码(Bytecode),即时编译器(JIT)</p>
-<h2 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h2><p>编译型语言,经过 <strong>编译器</strong> 编译,生成机器能读懂的二进制文件,可直接运行.(C/C++,GO)</p>
-<blockquote>
-<p>编译器:源代码 &gt; AST &gt; 中间代码 &gt; (代码优化)二进制 &gt; 直接执行<br>解释型语言,运行时 需要 <strong>解释器</strong> 对程序进行动态解释和执行(JS,Python)<br>解释器:源代码 &gt; (词法分析/语法分析) AST &gt; (词义分析) 字节码 &gt; 解释执行<br>前两步都是 词法分析/语法分析 生成SAT, 词义分析 生成 中间代码(字节码)<br>解释型语言生成字节码后就靠解释器执行了,字节码面向解释器,解释器驱动CPU<br>解释器就是JAVA里的虚拟机,一套代码,不同解释器就能面向不同计算机.</p>
-</blockquote>
-<h2 id="V8如何执行一段JS"><a href="#V8如何执行一段JS" class="headerlink" title="V8如何执行一段JS"></a>V8如何执行一段JS</h2><p>V8 同时具有 <strong>Ignition解释器</strong> 和 <strong>TurboFan编译器</strong></p>
-<p>第一步,将源代码转换为 <strong>抽象语法树</strong>,并生成 <strong>执行上下文</strong></p>
-<h3 id="AST抽象语法树"><a href="#AST抽象语法树" class="headerlink" title="AST抽象语法树"></a>AST抽象语法树</h3><p>高级语言 供开发者理解, AST语法树 供 编译器或解释器理解</p>
-<p>高级语言 编译过程中 会生生成一个 AST (JS:和执行上下文)</p>
-<p>AST 类似于 可执行代码的结构化表示, 编译器或解释器 的后续工作都依赖于AST</p>
-<blockquote>
-<p>AST是一种非常重要的数据结构,Babel可以将ES6代码转换为ES5代码,<br>核心原理就是, ES6 转 AST, AST 转 ES5的AST,ES5的AST 转 JS源码<br>ESLint 检查JS编写规范,也是 JS 转 AST,利用AST检查代码规范</p>
-</blockquote>
-<p><strong>AST的生成,分为两个阶段</strong></p>
-<p><strong>tokenize分词</strong>,<strong>词法分析</strong></p>
-<p>将源代码拆解为 <strong>token</strong>,指语法上 不可再分的 最小单个字符或字符串,<br>var(关键字keyword) myName(标识符identifier) =(token:赋值assignment) “罗紫宇”(字符串Literal),<br>四个都是token,并且代表的属性还不一样</p>
-<p><strong>parse解析</strong>,<strong>语法分析</strong></p>
-<p>将 <strong>token</strong> 数据根据语法规则转换为 <strong>AST</strong></p>
-<blockquote>
-<p>如果存在语法错误,在这一步会终止,并抛出”语法错误”<br>这之后会生成该段代码的 执行上下文</p>
-</blockquote>
-<p>第二步,生成字节码</p>
-<h3 id="字节码"><a href="#字节码" class="headerlink" title="字节码"></a>字节码</h3><p>字节码 介于 AST 和 机器码 之间,需要通过解释器将其转换为机器码才能执行.</p>
-<blockquote>
-<p>最初的V8 直接将AST转换为机器码,执行效率高,但是机器码内存占用太高</p>
-</blockquote>
-<h3 id="执行代码"><a href="#执行代码" class="headerlink" title="执行代码"></a>执行代码</h3><p><strong>Ignition解释器</strong> 逐行执行字节码,</p>
-<p>热点代码,被重复执行多次的代码,TurboFan编译器会将热点代码编译为高效的机器码</p>
-<p>字节码+解释器+编译器,Java/Python 的虚拟机也是基于此实现的,称为即时编译(JIT)</p>
-<p>V8 对此的具体实现,就是 Ignition 解释执行代码,并在发现 部分代码变热时,<br>TurboFan 把热点代码转换为机器码,保存起来下次使用</p>
-<p><strong>总结</strong></p>
+                <h1 id="哈希算法"><a href="#哈希算法" class="headerlink" title="哈希算法"></a>哈希算法</h1><p>将任意长度的二进制值串映射为固定长度的二进制值串</p>
+<p>笔记:<br>哈希算法能将任何数据映射为 固定长度ID,<br>几乎可保证 同一数据 同一ID,不同数据 不同ID 的特性<br>相当于数据自带了一串具有辨识度的唯一ID,<br>通过这个 ID 能做很多事情</p>
+<h2 id="优秀的哈希算法要求"><a href="#优秀的哈希算法要求" class="headerlink" title="优秀的哈希算法要求"></a>优秀的哈希算法要求</h2><p><strong>不能反向推到出数据</strong>(单向算法)</p>
+<p><strong>对输入数据非常敏感</strong>, 1Bit的修改 哈希值也大不同.</p>
+<p><strong>散列冲突概率小</strong></p>
+<p>执行效率 <strong>要高效</strong> ,较长文本也要快速算出哈希值</p>
+<h2 id="哈希算法的应用"><a href="#哈希算法的应用" class="headerlink" title="哈希算法的应用"></a>哈希算法的应用</h2><p>安全加密 唯一标识 数据校验 散列函数 负载均衡 数据分片 分布式储存</p>
+<h3 id="1-安全加密"><a href="#1-安全加密" class="headerlink" title="1.安全加密"></a>1.安全加密</h3><p>MD5(消息摘要算法) SHA(安全散列算法) DES(数据加密标准) AES(高级加密标准)</p>
+<p>哈希算法要求:<br><strong>很难反向推导出原石数据</strong> (目的:防止数据泄露)<br><strong>散列冲突概率要小</strong> (无法零冲突,因为抽屉原理)</p>
+<p>越复杂越难破解的加密算法,计算时间也越长</p>
+<h3 id="2-唯一标识"><a href="#2-唯一标识" class="headerlink" title="2.唯一标识"></a>2.唯一标识</h3><p>利用哈希值做唯一标识</p>
+<p>问题:如何快速判断图片是否在库中?<br>取图片摘要信息,计算哈希值做唯一标识,与图片路径信息 一起储存在散列表<br>插入图片时,<br>先 通过 计算哈希值唯一标识,查找 散列表 判断是否存在.<br>唯一标识不存在则 代表图片不存在; 唯一标识存在,继续全量比较图片</p>
+<h3 id="3-数据校验"><a href="#3-数据校验" class="headerlink" title="3.数据校验"></a>3.数据校验</h3><p>举例:<br>BT下载 基于 P2P协议,网络传输不安全,<br>通过哈希算法 对100个文件块 分别取哈希值,存在种子文件中.<br>由于 <strong>哈希算法对数据很敏感</strong> ,对下载好的文件块逐一求哈希值,对比种子文件.</p>
+<h3 id="4-散列函数"><a href="#4-散列函数" class="headerlink" title="4.散列函数"></a>4.散列函数</h3><p>散列函数 决定了 散列表的 冲突概率 和 性能</p>
+<p><strong>散列冲突要求相对低</strong> ,<strong>不关心能否反向解密</strong>,</p>
+<p>但 <strong>追求高效率</strong></p>
+<h2 id="哈希算法在分布式系统中的应用"><a href="#哈希算法在分布式系统中的应用" class="headerlink" title="哈希算法在分布式系统中的应用"></a>哈希算法在分布式系统中的应用</h2><h3 id="5-负载均衡"><a href="#5-负载均衡" class="headerlink" title="5.负载均衡"></a>5.负载均衡</h3><p>负载均衡算法很多: 随机 轮询 加权轮询</p>
+<p>问题:如何实现<br><strong>会话粘滞(session sticky)</strong><br>(同一个客户端,依次会话中的所有请求都路由到同一个服务器)<br>的负载均衡算法?<br>简单做法:维护一张映射关系表,客户端IP/会话ID 与 服务器编号 映射<br>弊端:</p>
 <ol>
-<li><p>源代码经过 词法分析/语法分析 生成 <strong>AST</strong> 和 <strong>执行上下文</strong></p>
-</li>
-<li><p><strong>Ignition解释器</strong> 逐行解释执行代码 ,</p>
-</li>
-<li><p>期间碰见被多次执行的代码,则通过 <strong>TurboFan编译器</strong> 编译优化成 执行效率更高的 机器码,以便后续调用</p>
-</li>
+<li>客户端多,映射表就大,浪费内存空间</li>
+<li>客户端 下线/上线,服务器 扩容/缩容 会导致映射失效.</li>
 </ol>
+<p>哈希算法做法完美避开了这两个问题:</p>
+<p>对 客户端IP/会话ID 计算哈希值, 哈希值 对 服务器列表大小 进行取模运算,<br>最终得到 被路由到的服务器编号.</p>
+<h3 id="6-数据分片"><a href="#6-数据分片" class="headerlink" title="6.数据分片"></a>6.数据分片</h3><p>问题:计算出 1T 的用户搜索关键词日志数据 中 每个关键词被搜索的次数?<br>难点:1.日志大到内存放不下,2.处理时间会很长</p>
+<p>解决:数据分片,再多台机器处理<br>从 搜索记录日志文件 中读出每个关键词,计算哈希值 在跟N(机器数)取模,得到机器号<br>这样 <strong>相同的搜索关键词必在同一台机器上</strong></p>
+<blockquote>
+<p>这里的处理过程 也是 MapReduce 的基本设计思想</p>
+</blockquote>
+<h3 id="7-分布式储存"><a href="#7-分布式储存" class="headerlink" title="7.分布式储存"></a>7.分布式储存</h3><p>网络协议的CRC校验   Git commit id</p>
 
                 
             </div>
@@ -502,7 +493,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/07/09/mian-shi-ti/v8-shi-ru-he-zhi-xing-yi-duan-js-dai-ma-de/">https://github.com/LZY2333/LZY2333.github.io/2021/07/09/mian-shi-ti/v8-shi-ru-he-zhi-xing-yi-duan-js-dai-ma-de/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/09/16/suan-fa/11.ha-xi-suan-fa/">https://github.com/LZY2333/LZY2333.github.io/2021/09/16/suan-fa/11.ha-xi-suan-fa/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -540,8 +531,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                                    <span class="chip bg-color">面试题</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -711,17 +702,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/07/12/suan-fa/1.shi-jian-fu-za-du/">
+                <a href="/2021/09/16/suan-fa/11.ha-xi-suan-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="时间复杂度">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="哈希算法">
                         
-                        <span class="card-title">时间复杂度</span>
+                        <span class="card-title">哈希算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -731,9 +723,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-16
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -742,6 +734,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -760,13 +753,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/07/javascript/js-ji-chu/js-bian-liang-cun-chu-zhan-he-dui/">
+                <a href="/2021/09/14/suan-fa/10.san-lie-biao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="JS变量存储(栈和堆)">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="散列表">
                         
-                        <span class="card-title">JS变量存储(栈和堆)</span>
+                        <span class="card-title">散列表</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -777,7 +770,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-14
                             </span>
                         <span class="publish-author">
                             
@@ -790,8 +783,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">JS基础</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
