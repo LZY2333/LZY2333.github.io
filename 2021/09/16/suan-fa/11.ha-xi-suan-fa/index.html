@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    907
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 
@@ -466,7 +466,10 @@
 <blockquote>
 <p>这里的处理过程 也是 MapReduce 的基本设计思想</p>
 </blockquote>
-<h3 id="7-分布式储存"><a href="#7-分布式储存" class="headerlink" title="7.分布式储存"></a>7.分布式储存</h3><p>网络协议的CRC校验   Git commit id</p>
+<p>问题:如何快速判断 1亿 张图片是否在 图库中<br>难点:无法像之前一样 在单台机器上构建散列表</p>
+<p>解决:多机处理,通过哈希算法计算唯一标识,对计算机数N取模,<br>得到机器号,再去对应机器的散列表中查找</p>
+<h3 id="7-分布式储存"><a href="#7-分布式储存" class="headerlink" title="7.分布式储存"></a>7.分布式储存</h3><p>问题:假设原本有10台机器 采用数据分片 储存数据,现在要扩容 1 台机器<br>难点:原版对10取模,现在开始对11取模,数据会混乱.<br>例如:则原本13/10会放置在3,现在13/11放在2.<br>    除非对所有数据重新计算哈希值,并取模,显然不合理.<br>解决: <strong>一致性哈希算法</strong><br>k台机器 每台机器 分得 哈希值范围 的一部分区间.(一台机器负责一个区间的哈希值)<br>新机器加入时,从其他机器那 分得 管理一部分区间的哈希值,<br>并 获得 被分得的哈希值区间的数据.</p>
+<h3 id="其他用到了哈希算法的地方"><a href="#其他用到了哈希算法的地方" class="headerlink" title="其他用到了哈希算法的地方"></a>其他用到了哈希算法的地方</h3><p>网络协议的CRC校验   Git commit id</p>
 
                 
             </div>
@@ -702,18 +705,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/16/suan-fa/11.ha-xi-suan-fa/">
+                <a href="/2021/09/17/suan-fa/12.er-cha-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="哈希算法">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="二叉树">
                         
-                        <span class="card-title">哈希算法</span>
+                        <span class="card-title">二叉树</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -723,9 +725,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-16
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-17
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -734,7 +736,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -931,7 +932,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">46.6k</span>&nbsp;字
+                class="white-color">47.1k</span>&nbsp;字
             
             
             
