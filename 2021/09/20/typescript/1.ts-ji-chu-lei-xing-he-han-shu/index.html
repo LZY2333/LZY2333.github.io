@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="数组, LazyYu">
+    <meta name="keywords" content="TS基础类型和函数, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>数组 | LazyYu</title>
+    <title>TS基础类型和函数 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数组</h1>
+                    <h1 class="description center-align post-title">TS基础类型和函数</h1>
                 </div>
             </div>
         </div>
@@ -387,14 +387,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/TypeScript/">
+                                <span class="chip bg-color">TypeScript</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/TS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                TS笔记
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -403,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-12
+                    2021-09-20
                 </div>
                 
 
@@ -412,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    574
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    7 分
                 </div>
                 
 
@@ -437,50 +446,144 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><h2 id="速记"><a href="#速记" class="headerlink" title="速记"></a>速记</h2><h2 id="数组的特点"><a href="#数组的特点" class="headerlink" title="数组的特点"></a>数组的特点</h2><p><strong>数组</strong>,一种线性表数据结构,用连续的存储空间存储相同类型数据</p>
-<p>特点：</p>
-<ol>
-<li><strong>线性表结构</strong> 以及 <strong>连续的内存空间</strong> <strong>相同的数据类型</strong>,使数组支持 高效的 下标 <strong>随机访问</strong> 的能力</li>
-</ol>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 下标原理是寻址公式,找出该元素内存地址</span>
-a<span class="token punctuation">[</span>i<span class="token punctuation">]</span>_address <span class="token operator">=</span> base_address <span class="token operator">+</span> i <span class="token operator">*</span> data_type_size<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>缺点：<br>2. 低效的插入操作,最好O(1) 最坏O(n) 平均O(n)</p>
-<blockquote>
-<p>优化方案,若数组无序,将第K个移至末尾,新元素插入到第K个位置,复杂度O(1)</p>
-</blockquote>
-<ol start="3">
-<li><p>低效的删除操作,最好O(1) 最坏O(n) 平均O(n)</p>
-<blockquote>
-<p>优化方案,记录删除数据,当数组无储存空间时,统一真正删除.同JVM标记清楚垃圾回收算法</p>
-</blockquote>
-</li>
-<li><p>大小固定</p>
-</li>
-</ol>
-<h2 id="数组的访问越界问题-C语言"><a href="#数组的访问越界问题-C语言" class="headerlink" title="数组的访问越界问题(C语言)"></a>数组的访问越界问题(C语言)</h2><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">int main(int argc, char* argv[])&#123;
-    int i &#x3D; 0;
-    int arr[3] &#x3D; &#123;0&#125;; &#x2F;&#x2F; 数组大小为3
-    for(; i&lt;&#x3D;3; i++)&#123; &#x2F;&#x2F; 访问了arr[3],已越界
-        arr[i] &#x3D; 0;
-        printf(&quot;hello world\n&quot;);
+                <h1 id="TS笔记"><a href="#TS笔记" class="headerlink" title="TS笔记"></a>TS笔记</h1><p>计划三天看完TS课程,此为课程笔记</p>
+<p>2021-09-22 - 2021-09-24</p>
+<h2 id="一点准备"><a href="#一点准备" class="headerlink" title="一点准备"></a>一点准备</h2><p><code>npm i typescript -g</code> 全局安装TS编译器<br><code>npm i ts-node -g</code> 安装好后可在vscode右键run直接运行ts<br><code>tsc hello.ts</code>可运行编译文件<br><code>tsc --init</code>生成TS配置文件</p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p><strong>布尔</strong> <strong>数字</strong> <strong>字符串</strong> <strong>数组</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let married: boolean &#x3D; false;   &#x2F;&#x2F; bolean
+let age: number &#x3D; 25;           &#x2F;&#x2F; number
+let firstname: string &#x3D; &#39;lzy&#39;; &#x2F;&#x2F; string
+
+let arr2: number[]&#x3D;[4,5,6];     &#x2F;&#x2F; array
+let arr3: Array&lt;number&gt;&#x3D;[7,8,9];&#x2F;&#x2F; array<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>元组</strong>: 表示 类型 和 数量 固定的 数组<br>与数组的区别: 每一项可以是不同类型, 有预定义的长度, </p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const animal:[string,number,boolean] &#x3D; [&#39;lzy&#39;,25,true];  &#x2F;&#x2F; tuple
+let lzy:[string,number] &#x3D; [&#39;lzy&#39;,5]; &#x2F;&#x2F; tuple
+lzy[0].length; &#x2F;&#x2F; OK
+lzy[1].toFixed(2); &#x2F;&#x2F; OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>枚举</strong>: 该数据类型的变量 只能为事先写好的几个类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 普通枚举
+enum Color &#123;
+    Red,&#x2F;&#x2F; 默认值为 0 
+    Yellow,&#x2F;&#x2F; 默认值为1
+    Blue&#x2F;&#x2F; 默认值为2
+&#125;
+&#x2F;&#x2F; 常量枚举
+const enum Color2 &#123;
+    Red,&#x2F;&#x2F; 默认值为 0 
+    Yellow,&#x2F;&#x2F; 默认值为1
+    Blue&#x2F;&#x2F; 默认值为2
+&#125;
+&#x2F;&#x2F; 常量枚举的变量名(如Red)会在编译时被删除,节省变量名开销,因为是常量,必然是固定值
+let myColors &#x3D; [Colors.Red, Colors.Yellow, Colors.Blue];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>any</strong><br>任意类型,可以被赋值任何类型数据的类型</p>
+<p><strong>null</strong> <strong>undefined</strong><br>null 和 undefined 是其他类型的子类型,可以赋值给任意类型.<br>但,TS配置文件设置了strictNullChecks:true时,直接这样赋值会报错</p>
+<p><strong>void</strong><br>表示没有任何类型,当函数没有返回值时,被认为是void类型</p>
+<p><strong>never</strong><br>never 是其他类型的子类型,表示永远不会被执行到的值</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function error(message: string): never &#123;
+    throw new Error(message);
+&#125;
+function fn(x: number | string) &#123;
+  if (typeof x &#x3D;&#x3D;&#x3D; &#39;number&#39;) &#123;
+    &#x2F;&#x2F; x: number 类型
+  &#125; else if (typeof x &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
+    &#x2F;&#x2F; x: string 类型
+  &#125; else &#123;
+    &#x2F;&#x2F; x: never 类型
+    &#x2F;&#x2F; --strictNullChecks 模式下，这里的代码将不会被执行，x 无法被观察
+  &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>never 和 void 的区别: void 可以是 null 或 undefined<br>拥有 never 返回值类型的函数无法正常返回，无法终止，或会抛出异常。</p>
+<p><strong>symbol</strong><br>表示唯一不变的类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const sym1 &#x3D; Symbol(&#39;key&#39;);
+const sym2 &#x3D; Symbol(&#39;key&#39;);
+Symbol(&#39;key&#39;) &#x3D;&#x3D;&#x3D; Symbol(&#39;key&#39;) &#x2F;&#x2F; false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>使用Symbol 需要 ES6 编译辅助库</p>
+<p><strong>bigint</strong><br>可以安全的 储存 和 操作 大整数</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const max &#x3D; Number.MAX_SAFE_INTEGER;&#x2F;&#x2F; 2**53-1
+console.log(max + 1 &#x3D;&#x3D;&#x3D; max + 2); &#x2F;&#x2F; true,因为溢出了
+
+const max:bigint &#x3D; BigInt(Number.MAX_SAFE_INTEGER);
+console.log(max + 1 &#x3D;&#x3D;&#x3D; max + 2); &#x2F;&#x2F; 报错,BigInt 不能直接 + number类型
+console.log(max + 1n &#x3D;&#x3D;&#x3D; max + 2n); &#x2F;&#x2F; 代表BigInt(1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用 BigInt 需要 ESNext 的编译辅助库<br>JS 原始数据类型 BigInt Number,ts 里的类型 bigint number</p>
+<h2 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h2><p>指 编程语言中 能自动推导出 值 的类型的能力,一般强类型语言才有<br>定义未赋值时,会推论为any类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let username2;
+username2 &#x3D; 25; &#x2F;&#x2F; 自动推理为number类型
+username2 &#x3D; &#39;lzy&#39;;&#x2F;&#x2F; string类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="包装对象"><a href="#包装对象" class="headerlink" title="包装对象"></a>包装对象</h2><p>JS有两类数据类型, 原始数据类型(null undefined boolean number string Symbol) 和 对象类型<br>所有原始数据类型都没有 属性 或 方法 可供使用,仅仅是储存一个数据.</p>
+<p>但字符串数据 却可以直接调用 splice等方法,<br>这是因为 当 调用 基本数据类型 的方法时, JS 会把 原始数据类型 强制性切换为 对象类型,<br>c# Java中都有这个概念,叫 <strong>自动装箱</strong>,</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let isOK: boolean &#x3D; true; &#x2F;&#x2F; 编译通过
+let isOK: boolean &#x3D; Boolean(1) &#x2F;&#x2F; 编译通过
+let isOK: boolean &#x3D; new Boolean(1); &#x2F;&#x2F; 编译失败 期望的 isOK 是一个原始数据类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型"></a>联合类型</h2><p>表示 取值可以时多种类型中的一种<br>未赋值时 联合类型 上只能访问 两个类型共有的 属性或方法</p>
+<pre class="line-numbers language-TS" data-language="TS"><code class="language-TS">let name: string | number
+console.log(name!.toString()); &#x2F;&#x2F; 调用两者共有的方法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h2><p>将联合类型的变量 指定为 更加具体的类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let name: string | number;
+console.log((name as string).length);
+console.log((name as boolean).length); &#x2F;&#x2F; 报错,不能指定为联合类型外的类型
+console.log((name as any as boolean).length); &#x2F;&#x2F; 双重断言,OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="字面量类型和类型字面量"><a href="#字面量类型和类型字面量" class="headerlink" title="字面量类型和类型字面量"></a>字面量类型和类型字面量</h2><p><strong>字面量类型</strong> 一个字面量就是一个类型,类型和值必须一致.</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const up:&#39;Up&#39; &#x3D; &#39;Up&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>类型字面量</strong> 写法很像一个对象</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Person &#x3D; &#123;
+  name:string,
+  age:number
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>字符串字面量类型 和 联合类型 的区别</p>
+<p>字面量类型 限定了 变量中的 值 只能是 某几个字符串 中的一个<br>联合类型   限定了 变量中的 值 只能算 某几个类型  中的一种</p>
+<h2 id="TS函数"><a href="#TS函数" class="headerlink" title="TS函数"></a>TS函数</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 简单定义方法
+function hello(name:string):void &#123;
+    console.log(&#39;hello&#39;,name);
+&#125;
+
+&#x2F;&#x2F; 定义 函数类型
+type GetUsernameFunction &#x3D; (x:string,y:string)&#x3D;&gt;string;
+let getUsername:GetUsernameFunction &#x3D; 
+function(firstName,lastName)&#123;
+  return firstName + lastName;
+&#125;
+
+&#x2F;&#x2F; 默认参数,可选参数 和 ES6一样
+function print(name:string &#x3D; &#39;lzy&#39;,age?:number):void &#123;
+    console.log(name,age);
+&#125;
+
+&#x2F;&#x2F; 函数重载
+&#x2F;&#x2F; TS中的函数重载,表现为 同一个函数提供多个函数类型定义
+&#x2F;&#x2F; Java中的重载,表现为 同名函数 参数不一样
+let obj: any&#x3D;&#123;&#125;;
+function attr(val: string): void;
+function attr(val: number): void;
+function attr(val: any): void &#123;
+    if (typeof val &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
+        obj.name&#x3D;val;
+    &#125; else &#123;
+        obj.age&#x3D;val;
     &#125;
-    return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>C语言中 数组越界属于 未决行为,没有规定数组越界时编译器应该如何处理<br>此时a[3]会根据寻址公式正常访问</p>
-</blockquote>
-<p>函数体内的局部变量保存在栈上,栈区在高地址空间,从高向低增长,<br>对栈来说 10000是栈底,i被压入 处于10000上,则arr 的base_address 为9997,<br>arr[2] 位于9999,则 arr[3],被判定为 10000,此处正好为 i的地址,<br>实际上 a[3] = 0 就是 i = 0,i又被归于0,导致无限循环</p>
-<h2 id="为何数组从0开始编号"><a href="#为何数组从0开始编号" class="headerlink" title="为何数组从0开始编号"></a>为何数组从0开始编号</h2><p>1.a[n],n代表偏移量</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 下标原理是寻址公式,a[0],代表偏移为0,就是首地址</span>
-a<span class="token punctuation">[</span>n<span class="token punctuation">]</span>_address <span class="token operator">=</span> base_address <span class="token operator">+</span> n <span class="token operator">*</span> data_type_size
-<span class="token comment">// 如果从1开始计数,则a[1],代表偏移为0</span>
-a<span class="token punctuation">[</span>n<span class="token punctuation">]</span>_address <span class="token operator">=</span> base_address <span class="token operator">+</span> <span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> data_type_size<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>每次 下表 随机访问 数组,就多了一次减肥运算,CPU就多了一道减法指令</p>
-<p>2）各类语言 效仿C语言,减少学习成本</p>
-<p>C语言设计者用了0做下标,Java JavaScript 效仿C语言.</p>
-<blockquote>
-<p>Matlab,数组不从0开始计数. Python支持负数下标.</p>
-</blockquote>
+&#125;
+attr(&#39;lzy&#39;); &#x2F;&#x2F; ok
+attr(25); &#x2F;&#x2F; ok
+attr(true); &#x2F;&#x2F; 报错
+
+&#x2F;&#x2F; 上面的重载和这里一样的效果,那这样看重载好像也没什么用?
+function attr2(val: string|number): void &#123;
+    if (typeof val &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
+        obj.name&#x3D;val;
+    &#125; else &#123;
+        obj.age&#x3D;val;
+    &#125;
+&#125;
+&#x2F;&#x2F; 重载解决了下面这种情况
+&#x2F;&#x2F; 要求两个参数,要不都是string,要不都是string[]
+function attr3(a: string,b: string): void;
+function attr3(a: string[],b: string[]): void;
+function attr3(a: any,b: any): void &#123;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="其它笔记"><a href="#其它笔记" class="headerlink" title="其它笔记"></a>其它笔记</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 非空断言,表示让TS编译器不用操心,这里a必然不为null
+a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>类 也是一个 类型(就像symbol,number,boolean一样),<br>构造完一个类后得到两个类型,一个构造函数类型 一个实例类型.</p>
 
                 
             </div>
@@ -507,7 +610,7 @@ a<span class="token punctuation">[</span>n<span class="token punctuation">]</spa
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/07/12/suan-fa/2.shu-zu/">https://github.com/LZY2333/LZY2333.github.io/2021/07/12/suan-fa/2.shu-zu/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/09/20/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">https://github.com/LZY2333/LZY2333.github.io/2021/09/20/typescript/1.ts-ji-chu-lei-xing-he-han-shu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -545,8 +648,8 @@ a<span class="token punctuation">[</span>n<span class="token punctuation">]</spa
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/TypeScript/">
+                                    <span class="chip bg-color">TypeScript</span>
                                 </a>
                             
                         </div>
@@ -720,13 +823,13 @@ a<span class="token punctuation">[</span>n<span class="token punctuation">]</spa
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/07/13/suan-fa/3.lian-biao/">
+                <a href="/2021/09/21/typescript/2.ts-lei/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="链表">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="TS类">
                         
-                        <span class="card-title">链表</span>
+                        <span class="card-title">TS类</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -737,12 +840,16 @@ a<span class="token punctuation">[</span>n<span class="token punctuation">]</spa
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-13
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-21
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            罗紫宇
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/TS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    TS笔记
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -750,8 +857,8 @@ a<span class="token punctuation">[</span>n<span class="token punctuation">]</spa
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/TypeScript/">
+                        <span class="chip bg-color">TypeScript</span>
                     </a>
                     
                 </div>
@@ -765,13 +872,13 @@ a<span class="token punctuation">[</span>n<span class="token punctuation">]</spa
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/12/suan-fa/1.shi-jian-fu-za-du/">
+                <a href="/2021/09/17/suan-fa/12.er-cha-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="时间复杂度">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="二叉树">
                         
-                        <span class="card-title">时间复杂度</span>
+                        <span class="card-title">二叉树</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -782,7 +889,7 @@ a<span class="token punctuation">[</span>n<span class="token punctuation">]</spa
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-17
                             </span>
                         <span class="publish-author">
                             
