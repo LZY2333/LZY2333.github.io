@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    5 分
                 </div>
                 
 
@@ -446,7 +446,143 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS类"><a href="#TS类" class="headerlink" title="TS类"></a>TS类</h1>
+                <h1 id="TS类"><a href="#TS类" class="headerlink" title="TS类"></a>TS类</h1><p>在TS中声明了一个类的时候,实际上声明了两个东西<br>一个是创建了 <strong>类的实例的类型</strong><br>一个是创建了 <strong>一个叫构造函数的值</strong><br>这个 构造函数 会在创建类实例的时候被调用</p>
+<h2 id="如何定义类"><a href="#如何定义类" class="headerlink" title="如何定义类"></a>如何定义类</h2><p>简单定义</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Person&#123;
+    name:string;
+    getName():void&#123;
+        console.log(this.name);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>存取器 构造函数</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class User &#123;
+    private myName:string;
+    constructor(myName: string) &#123; &#x2F;&#x2F; 构造函数，初始化成员属性
+        this.myName &#x3D; myName;
+    &#125;
+    get name() &#123; &#x2F;&#x2F; 存取器，用于修改类中属性，
+        return this.myName;
+    &#125;
+    set name(value) &#123;
+        this.myName &#x3D; value;
+    &#125;
+&#125;
+存取器只有get 没有set 的private属性,会被自动推断为readonly<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>public: 默认,可以在任何地方使用<br>private: 不可为声明的类的外部访问<br>protected: 在自己和子类中可以访问,其他地方不可以访问</p>
+<p>在 构造函数 参数 前添加修饰符,<br>会自动 声明并初始化 该参数 为类私有成员属性</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class User2 &#123;
+    constructor(public myName: string) &#123;&#125;
+    get name() &#123;
+        return this.myName;
+    &#125;
+    set name(value) &#123;
+        this.myName &#x3D; value;
+    &#125;
+&#125;
+let user &#x3D; new User2(&#39;lzy&#39;);
+console.log(user.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>readonly</strong><br>readonly 修饰的变量 只能在构造函数中初始化<br>readonly 在编译时被检查 const 在运行时被检查</p>
+<p><strong>兼容性</strong><br>在TS中,<br>正常情况 Animal类 的变量 可接收 Employee类型的数据,<br>因为他们类型检查一样(二者都有且仅有name,且假设二者的name是public)<br>但是,比较类型的时候, 如果出现了 private/protected成员,<br>则同时需满足 另一个类也存在这样一个private成员, 且来自于同一处.<br>public修饰的成员则不要求来自同一处</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Animal &#123;
+    private name: string;
+    constructor(theName: string) &#123; this.name &#x3D; theName; &#125;
+&#125;
+
+class Rhino extends Animal &#123;
+    constructor() &#123; super(&quot;Rhino&quot;); &#125;
+&#125;
+
+class Employee &#123;
+    private name: string;
+    constructor(theName: string) &#123; this.name &#x3D; theName; &#125;
+&#125;
+
+let animal &#x3D; new Animal(&quot;Goat&quot;);
+let rhino &#x3D; new Rhino();
+let employee &#x3D; new Employee(&quot;Bob&quot;);
+
+animal &#x3D; rhino;
+animal &#x3D; employee; &#x2F;&#x2F; 错误: Animal 与 Employee 不兼容.
+&#x2F;&#x2F;  尽管Employee里也有一个私有成员name，但它明显不是Animal里面定义的那个<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>子类(派生类) 继承 父类(基类/超类) 有用 父类的 属性和方法,增强复用性<br>子类 公用方法 抽象出来放在父类,在子类 写更具体的逻辑 重写父类的方法<br>super 调用 父类的 方法和属性<br>子类 构造函数 必须使用 super() 以执行父类的构造函数 </p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Person &#123;
+    name: string;&#x2F;&#x2F;定义实例的属性，默认省略public修饰符
+    age: number;
+    constructor(name:string,age:number) &#123;&#x2F;&#x2F;构造函数
+        this.name&#x3D;name;
+        this.age&#x3D;age;
+    &#125;
+    getName():string &#123;
+        return this.name;
+    &#125;
+    setName(name:string): void&#123;
+        this.name&#x3D;name;
+    &#125;
+&#125;
+class Student extends Person&#123;
+    no: number;
+    constructor(name:string,age:number,no:number) &#123;
+        super(name,age);
+        this.no&#x3D;no;
+    &#125;
+    getNo():number &#123;
+        return this.no;
+    &#125;
+&#125;
+let s1&#x3D;new Student(&#39;lzy&#39;,25,1);
+console.log(s1);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="静态属性和静态方法"><a href="#静态属性和静态方法" class="headerlink" title="静态属性和静态方法"></a>静态属性和静态方法</h2><p>静态属性 一般代表所有实例会共同用到的 属性<br>可通过 类名.静态属性名访问<br>可通过 类的实例.静态属性名访问<br>不需要 创建类实例可直接获取</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Father &#123;
+    static className&#x3D;&#39;Father&#39;;
+    static getClassName() &#123;
+        return Father.className;
+    &#125;
+    public name: string;
+    constructor(name:string) &#123;&#x2F;&#x2F;构造函数
+        this.name&#x3D;name;
+    &#125;
+
+&#125;
+console.log(Father.className);
+console.log(Father.getClassName());<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>作为其他派生类的基类使用,代表一种抽象的概念.<br>无法被实例化,只能被继承.<br>抽象类中的抽象方法,不能在抽象类中实现,<br>只能在派生类中实现,且必须在派生类中实现.</p>
+<p>一般不会被直接实例化.<br>抽象方法 和 接口方法 都定义方法前面 当不包含方法体.<br>不同于接口,抽象类可以包含成员的实现细节.</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">abstract class Department &#123;
+
+    constructor(public name: string) &#123; &#125;
+
+    printName(): void &#123;
+        console.log(&#39;Department name: &#39; + this.name);
+    &#125;
+
+    abstract printMeeting(): void; &#x2F;&#x2F; 必须在派生类中实现
+&#125;
+
+class AccountingDepartment extends Department &#123;
+
+    constructor() &#123;
+        super(&#39;Accounting and Auditing&#39;); &#x2F;&#x2F; 在派生类的构造函数中必须调用 super()
+    &#125;
+
+    printMeeting(): void &#123;
+        console.log(&#39;The Accounting Department meets each Monday at 10am.&#39;);
+    &#125;
+
+    generateReports(): void &#123;
+        console.log(&#39;Generating accounting reports...&#39;);
+    &#125;
+&#125;
+
+let department: Department; &#x2F;&#x2F; 允许创建一个对抽象类型的引用
+department &#x3D; new Department(); &#x2F;&#x2F; 错误: 不能创建一个抽象类的实例
+department &#x3D; new AccountingDepartment(); &#x2F;&#x2F; 允许对一个抽象子类进行实例化和赋值
+department.printName();
+department.printMeeting();
+department.generateReports(); &#x2F;&#x2F; 错误: 方法在声明的抽象类中不存在<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h2><p>装饰器是一种特殊类型的声明,<br>它能够被附加到类声明、方法、属性或参数上,可以修改类的行为</p>
+<p>常见的装饰器有 <strong>类装饰器</strong> <strong>属性装饰器</strong> <strong>方法装饰器</strong> <strong>参数装饰器</strong></p>
+<p>装饰器的写法分为普通装饰器和装饰器工厂</p>
+
                 
             </div>
             <hr/>
@@ -918,7 +1054,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">48.7k</span>&nbsp;字
+                class="white-color">50.2k</span>&nbsp;字
             
             
             

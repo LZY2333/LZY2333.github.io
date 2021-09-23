@@ -412,7 +412,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    225
+                    402
                 </div>
                 
 
@@ -444,6 +444,11 @@
 <p>节点的<br><strong>高度(Height)</strong>:当前节点到叶子节点的边数(叶子节点为0,根节点为 层数-1)<br><strong>深度(Depth)</strong>:根节点到这个节点的边数(根节点为0,叶子节点为 层数-1)<br><strong>层(Level)</strong>:节点的深度 +1(根节点为1,叶子节点为 深度+1)</p>
 <p>深度 从上往下数(如水深),初始0; 高度 从下往上数(如楼房),初始0.<br>层数 同深度,但初始为1<br><strong>树的高度</strong>:根节点的高度</p>
 <h2 id="二叉树-1"><a href="#二叉树-1" class="headerlink" title="二叉树"></a>二叉树</h2><p>由一个空节点 或 两颗不相交二叉树组成(递归定义)</p>
+<p><strong>满二叉树</strong> 除了叶子节点 每个节点都有左右两个节点组成</p>
+<p><strong>完全二叉树</strong> 除了最后一层,其他层都是满节点,叶子节点都在左边.</p>
+<h2 id="如何储存一个二叉树"><a href="#如何储存一个二叉树" class="headerlink" title="如何储存一个二叉树"></a>如何储存一个二叉树</h2><p><strong>链式储存法</strong> 基于链表,每个节点三个字段,一个存数据,两个存左右节点的指针.</p>
+<p><strong>顺序储存法</strong><br>完全二叉树:<br>1.基于数组,根节点放在i=1的位置,一层一层从左往下,依次放入数组.<br>2.此时,如果节点X在i位置,左子节点就是2 * i,右子节点就是2 * i + 1.</p>
+<p>非完全二叉树:<br>按照上面 (2.)的方式放入数组,</p>
 
                 
             </div>
@@ -910,7 +915,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">48.7k</span>&nbsp;字
+                class="white-color">50.2k</span>&nbsp;字
             
             
             

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="散列表, LazyYu">
+    <meta name="keywords" content="把鸣鸣记小本本, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>散列表 | LazyYu</title>
+    <title>把鸣鸣记小本本 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">散列表</h1>
+                    <h1 class="description center-align post-title">把鸣鸣记小本本</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/%E9%B8%A3%E9%B8%A3%E9%B8%A3%E9%B8%A3/">
+                                <span class="chip bg-color">鸣鸣鸣鸣</span>
                             </a>
                         
                     </div>
@@ -403,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-14
+                    2021-08-31
                 </div>
                 
 
@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    9
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    1 分
                 </div>
                 
 
@@ -437,90 +437,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="散列表-HashTable"><a href="#散列表-HashTable" class="headerlink" title="散列表(HashTable)"></a>散列表(HashTable)</h1><p>散列表本质:<br>散列表 将数组下标扩展为 被称为 <strong>键(key)</strong> 的其他形式使其能储存更多信息,<br>且通过 <strong>散列函数映射</strong> 使得 <strong>键</strong> 不丢失原本的数据位置信息.</p>
-<p>散列表优势:<br>散列表 利用了 数组支持 按照下标访问数据的特性,以空间换时间,提升存取效率.</p>
-<p>散列表原理:<br>用数组储存数据,通过 数组下标 标记 数据位置<br>要获取数据位置,需传入 <strong>键(key)</strong> (或称 <strong>关键字</strong>)<br><strong>散列函数</strong> 将key转换为数组下标,从而将key映射到真正的数组中数据位置,<br><strong>散列函数</strong> 计算得到的值(数组下标)就叫做 <strong>散列值</strong> 或称 <strong>Hash值</strong></p>
-<p>散列函数本质是:<br>一个位置计算算法,已知key,通过 散列函数计算 生成数据位置(数组下标),<br>外部不需要关注数据位置.</p>
-<h2 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h2><p>散列函数 在 散列表 中起着非常关键得作用, 数组下标 = hash(key)</p>
-<p>散列函数 设计基本要求:</p>
-<ol>
-<li>计算返回值是一个非负整数</li>
-<li>需要是一个纯函数(不同输入,必然不同输出;相同输入,必然相同输出;不产生额外影响)</li>
-</ol>
-<blockquote>
-<p> 如果 key1 ≠ key2，那 hash(key1) ≠ hash(key2),不同输入 完全 不同输出<br> 实际上是 输入值,最后给这个值计算出的位置已经给之前的值给过了<br> 实际 几乎无法做到,且散列预设数组越小,越容易产生撞车,称为散列冲突.</p>
-</blockquote>
-<h2 id="散列冲突"><a href="#散列冲突" class="headerlink" title="散列冲突"></a>散列冲突</h2><p>解决散列冲突 有两种方法 </p>
-<h3 id="开放寻址法"><a href="#开放寻址法" class="headerlink" title="开放寻址法"></a>开放寻址法</h3><p><strong>开放寻址法</strong> 的核心思想是 如果出现了 散列冲突,就重新探测一个位置插入.</p>
-<p><strong>线性探测</strong>:<br>当往 散列表 中插入数据时,如果储存位置已被占用,<br>则依次向后寻找 知道找到空余位置为止</p>
-<p><strong>线性探测的删除操作</strong>:<br>线性探测的删除操作 不能直接把元素置为空,<br>因为 一旦把某个位置置为空 则在查找时,通过线性探测原则,<br>一找到空闲位置就会认定散列表不存在此元素.<br>解决办法是 将删除的元素 标记为delete,当线性探测查找时,遇到delete继续探测.</p>
-<p><strong>线性探测的缺点</strong>:<br>当列表中插入的数据越来越多,散列表冲突发生的可能性越来越大,探测时间越来越久<br>极端情况下 甚至需要线性探测整个标,则存取时间复杂度变为 O(n)</p>
-<p><strong>二次探测(Quadratic probing)</strong>:<br>二次探测 就是线性探测 步长的二次方,不是一步步向后找空位,而是1²步,2²步</p>
-<p><strong>双重散列(Double hashing)</strong><br>双重散列 就是使用 一组散列函数 先使用第一个散列函数 重复则 再使用第二个散列函数</p>
-<p>当表中空闲位置不多时,散列冲突概率大大提高.<br>需要尽可能保证散列中有一定比例的空闲空间,因此使用装载来表示空位多少.<br><strong>装载因子(Load Factor)</strong> = 填入表中的元素个数/散列表的长度</p>
-<h3 id="链表法"><a href="#链表法" class="headerlink" title="链表法"></a>链表法</h3><p>每个数组位置对应一个链表,所有 散列值 相同的元素 都放在相同槽位对应的列表中</p>
-<p>当数据量小,装载因子小时,适合使用开放寻址法.(Java中的ThreadLocalMap)<br>当数据量大,数据为大对象时,适合使用链表法,甚至使用红黑树代替链表</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/*
-最基本的散列表
-*/</span>
-
-<span class="token keyword">class</span> <span class="token class-name">HashTable</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>table<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">//散列函数</span>
-    <span class="token function">loseHashCode</span><span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">var</span> hash<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token comment">//从ASCII表中查到的ASCII值加到hash中</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>key<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            hash<span class="token operator">+=</span>key<span class="token punctuation">.</span><span class="token function">charCodeAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">//为了得到比较小的数值，我们会用hash和任意数除余</span>
-        <span class="token keyword">return</span> hash<span class="token operator">%</span><span class="token number">37</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">//向散列表增加一个新的项</span>
-    <span class="token function">put</span><span class="token punctuation">(</span><span class="token parameter">key<span class="token punctuation">,</span>value</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">var</span> position<span class="token operator">=</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">loseHashCode</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>position<span class="token operator">+</span><span class="token string">'-'</span><span class="token operator">+</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>table<span class="token punctuation">[</span>position<span class="token punctuation">]</span><span class="token operator">=</span>value<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">//根据键从散列表删除值</span>
-    <span class="token function">remove</span><span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>table<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">loseHashCode</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token keyword">undefined</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">//返回根据键值检索到的特定的值</span>
-    <span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>table<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">loseHashCode</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token keyword">this</span><span class="token punctuation">.</span>table<span class="token punctuation">.</span>length<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>table<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">!==</span><span class="token keyword">undefined</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token string">':'</span><span class="token operator">+</span><span class="token keyword">this</span><span class="token punctuation">.</span>table<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">var</span> hash <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashTable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-hash<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">'Gandalf'</span><span class="token punctuation">,</span> <span class="token string">'gandalf@email.com'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-hash<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">'John'</span><span class="token punctuation">,</span> <span class="token string">'johnsnow@email.com'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-hash<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">'Tyrion'</span><span class="token punctuation">,</span> <span class="token string">'tyrion@email.com'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-hash<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">'Gandalf'</span><span class="token punctuation">)</span>
-hash<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'Gandalf'</span><span class="token punctuation">)</span>
-hash<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'Tyrion'</span><span class="token punctuation">)</span>
-hash<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="一个工业化散列表"><a href="#一个工业化散列表" class="headerlink" title="一个工业化散列表"></a>一个工业化散列表</h2><p>散列函数不能太复杂 (过多计算浪费性能)<br>散列函数生成的值要尽可能随机且均匀分布<br>装载因子过大时 动态扩容<br>使用 开放寻址法 或 链表法 解决散列冲突</p>
-<h2 id="散列表将LRU缓存淘汰算法时间复杂度降为O-1"><a href="#散列表将LRU缓存淘汰算法时间复杂度降为O-1" class="headerlink" title="散列表将LRU缓存淘汰算法时间复杂度降为O(1)"></a>散列表将LRU缓存淘汰算法时间复杂度降为O(1)</h2><p>LRU缓存淘汰算法 需要维护一个 按访问瞬间从大到小的 有序链表结构<br>当缓存空间不够时 就从链表头删除结点<br>当要添加某个数据时，先在链表中查找该数据，没找到就插入到尾部，找到了移到尾部</p>
-<p>查找链表的时间复杂度很高为O(n)<br>添加/删除/查找 都需要查找链表</p>
-<p>现在在 缓存数据的双向链表 的基础上 加上 链表法解决冲突的散列表</p>
-<p>把缓存数据的位置计算交给 散列表,散列表标记数据位置</p>
-<p>查找时利用散列表,直接定位数据,时间复杂度为O(1)</p>
-<p>删除时利用散列表,直接定位数据,删除结点(注意原本双向链表删除节点的链计算)</p>
-<p>添加时 和以前没有不同.</p>
-<h2 id="散列表-和-链表结合使用"><a href="#散列表-和-链表结合使用" class="headerlink" title="散列表 和 链表结合使用"></a>散列表 和 链表结合使用</h2><p>散列表支持 非常高效的 数据插入 删除 查找操作,<br>但数据都是无规律储存的,无法支持按某种顺序快速遍历数据<br>如果想 顺序遍历,需要把数据 拷贝到数组中 然后排序,然后遍历<br>为了解决这个问题,将 散列表与链表结合使用,在增删时 同时保持 顺序<br>(如:按插入顺序排序)</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>数组占据随机访问的优势，却有需要连续内存的缺点。</p>
-<p>链表具有可不连续存储的优势，但访问查找是线性的。</p>
-<p>散列表和链表、跳表的混合使用，是为了结合数组和链表的优势，规避它们的不足。</p>
-<p>我们可以得出数据结构和算法的重要性排行榜：连续空间 &gt; 时间 &gt; 碎片空间</p>
+                <h1 id="把鸣鸣记小本本"><a href="#把鸣鸣记小本本" class="headerlink" title="把鸣鸣记小本本"></a>把鸣鸣记小本本</h1><p>记录</p>
 
                 
             </div>
@@ -547,7 +464,7 @@ hash<span class="token punctuation">.</span><span class="token function">print</
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/09/14/suan-fa/10.san-lie-biao/">https://github.com/LZY2333/LZY2333.github.io/2021/09/14/suan-fa/10.san-lie-biao/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/08/31/ming-ming/ba-ming-ming-ji-xiao-ben-ben/">https://github.com/LZY2333/LZY2333.github.io/2021/08/31/ming-ming/ba-ming-ming-ji-xiao-ben-ben/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -585,8 +502,8 @@ hash<span class="token punctuation">.</span><span class="token function">print</
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/%E9%B8%A3%E9%B8%A3%E9%B8%A3%E9%B8%A3/">
+                                    <span class="chip bg-color">鸣鸣鸣鸣</span>
                                 </a>
                             
                         </div>
@@ -760,51 +677,6 @@ hash<span class="token punctuation">.</span><span class="token function">print</
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/16/suan-fa/11.ha-xi-suan-fa/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="哈希算法">
-                        
-                        <span class="card-title">哈希算法</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-16
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            罗紫宇
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2021/09/13/bai-ri-ji-hua/">
                     <div class="card-image">
                         
@@ -821,8 +693,45 @@ hash<span class="token punctuation">.</span><span class="token function">print</
                         
                     </div>
                     <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-13
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            罗紫宇
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/08/31/ming-ming/dan-ru-guo-mei-you-xian-gei-ni/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="但如果没有献给你">
+                        
+                        <span class="card-title">但如果没有献给你</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-31
                             </span>
                         <span class="publish-author">
                             
@@ -831,6 +740,14 @@ hash<span class="token punctuation">.</span><span class="token function">print</
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%B8%A3%E9%B8%A3%E9%B8%A3%E9%B8%A3/">
+                        <span class="chip bg-color">鸣鸣鸣鸣</span>
+                    </a>
+                    
                 </div>
                 
             </div>
