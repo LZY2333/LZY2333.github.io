@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="TS兼容性与类型保护, LazyYu">
+    <meta name="keywords" content="TS类型保护, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>TS兼容性与类型保护 | LazyYu</title>
+    <title>TS类型保护 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">TS兼容性与类型保护</h1>
+                    <h1 class="description center-align post-title">TS类型保护</h1>
                 </div>
             </div>
         </div>
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    708
+                    5
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    1 分
                 </div>
                 
 
@@ -446,71 +446,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS兼容性"><a href="#TS兼容性" class="headerlink" title="TS兼容性"></a>TS兼容性</h1><h2 id="接口的兼容性"><a href="#接口的兼容性" class="headerlink" title="接口的兼容性"></a>接口的兼容性</h2><p>函数传入的 变量类型 与 声明类型 不匹配TS会进行兼容性检查</p>
-<p>原理是Duck-Check,就是说只要目标类型中的属性变量在源类型中都存在就是兼容的</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Animal &#123;
-    name: string;
-    age: number;
-&#125;
-
-interface Person &#123;
-    name: string;
-    age: number;
-    gender: number
-&#125;
-&#x2F;&#x2F; 要判断目标类型&#96;Person&#96;是否能够兼容输入的源类型&#96;Animal&#96;
-function getName(animal: Animal): string &#123;
-    return animal.name;
-&#125;
-
-let p &#x3D; &#123;
-    name: &#39;lzy&#39;,
-    age: 25,
-    gender: 0
-&#125;
-
-getName(p);
-&#x2F;&#x2F; 只有在传参的时候两个变量之间才会进行兼容性的比较，
-&#x2F;&#x2F; 赋值的时候并不会比较,会直接报错
-let a: Animal &#x3D; &#123;
-    name: &#39;lzy&#39;,
-    age: 25,
-    gender: 0 &#x2F;&#x2F; 报错
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>在第三篇文章 TS接口 中有写道,<br><strong>对象字面量 直接作为参数时 会经历 额外属性检查</strong><br><strong>而改写成 对象 再作为参数 传入函数调用,则不会 检查对象上的额外属性</strong>,</p>
-<p>很显然,调用函数直接传入 对象字面量,相当于是对形参(对变量)的直接赋值,而<br><strong>对 变量赋值 不会进行兼容性检查,不容许额外属性,直接报错</strong>,<br>函数调用 传参,对于 传入一个 值为对象的变量 这种情况,却是宽容的,允许兼容</p>
-<p>猜测:<br>具有额外属性字面量作为对象 赋值给参数,再作为参数传入函数调用,TS不报错,<br>是因为TS认为在对象赋值的时候,已经做过变量检查了,是安全的,所以允许兼容.</p>
-<h2 id="基本类型的兼容性"><a href="#基本类型的兼容性" class="headerlink" title="基本类型的兼容性"></a>基本类型的兼容性</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;基本数据类型也有兼容性判断
-let num : string|number;
-let str:string&#x3D;&#39;zhufeng&#39;;
-num &#x3D; str;
-
-&#x2F;&#x2F;只要有toString()方法就可以赋给字符串变量
-let num2 : &#123;
-  toString():string
-&#125;
-
-let str2:string&#x3D;&#39;jiagou&#39;;
-num2 &#x3D; str2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="类的兼容性"><a href="#类的兼容性" class="headerlink" title="类的兼容性"></a>类的兼容性</h2><p><strong>在TS中是结构类型系统，只会对比结构而不在意类型</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Animal&#123; name:string &#125;
-class Bird extends Animal&#123; swing:number &#125;
-
-let a:Animal &#x3D; new Bird();
-
-&#x2F;&#x2F;并不是java的那套 &#39;父类兼容子类，但子类不兼容父类&#39;
-&#x2F;&#x2F;仅仅是因为bird 需要的属性 swing:number, new Animal()没有
-let b:Bird &#x3D; new Animal(); &#x2F;&#x2F;报错<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>下面举例说明 与 类型是不是子类父类 无关,只要结构符合就行</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Animal&#123; name:string &#125;
-&#x2F;&#x2F;如果父类和子类结构一样，也可以的
-class Bird extends Animal&#123;&#125;
-
-let a:Animal &#x3D; new Bird();
-
-let b:Bird &#x3D; new Animal();
-&#x2F;&#x2F; 两个完全无关的类也一样,可以相互赋值,只要结构符合<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="函数的兼容性"><a href="#函数的兼容性" class="headerlink" title="函数的兼容性"></a>函数的兼容性</h2><h2 id="泛型的兼容性"><a href="#泛型的兼容性" class="headerlink" title="泛型的兼容性"></a>泛型的兼容性</h2><h2 id="枚举的兼容性"><a href="#枚举的兼容性" class="headerlink" title="枚举的兼容性"></a>枚举的兼容性</h2><h1 id="TS类型保护"><a href="#TS类型保护" class="headerlink" title="TS类型保护"></a>TS类型保护</h1>
+                <h1 id="TS类型保护"><a href="#TS类型保护" class="headerlink" title="TS类型保护"></a>TS类型保护</h1>
                 
             </div>
             <hr/>
@@ -536,7 +472,7 @@ let b:Bird &#x3D; new Animal();
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/09/25/typescript/5.ts-jian-rong-xing-yu-lei-xing-bao-hu/">https://github.com/LZY2333/LZY2333.github.io/2021/09/25/typescript/5.ts-jian-rong-xing-yu-lei-xing-bao-hu/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/09/25/typescript/6.ts-lei-xing-bao-hu/">https://github.com/LZY2333/LZY2333.github.io/2021/09/25/typescript/6.ts-lei-xing-bao-hu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -750,13 +686,13 @@ let b:Bird &#x3D; new Animal();
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2021/09/25/typescript/5.ts-jian-rong-xing-yu-lei-xing-bao-hu/">
+                <a href="/2021/09/25/typescript/6.ts-lei-xing-bao-hu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="TS兼容性与类型保护">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="TS类型保护">
                         
-                        <span class="card-title">TS兼容性与类型保护</span>
+                        <span class="card-title">TS类型保护</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -800,13 +736,13 @@ let b:Bird &#x3D; new Animal();
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/24/typescript/4.ts-fan-xing/">
+                <a href="/2021/09/25/typescript/5.ts-jian-rong-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="TS泛型">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="TS兼容性">
                         
-                        <span class="card-title">TS泛型</span>
+                        <span class="card-title">TS兼容性</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -817,7 +753,7 @@ let b:Bird &#x3D; new Animal();
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-25
                             </span>
                         <span class="publish-author">
                             
@@ -982,7 +918,7 @@ let b:Bird &#x3D; new Animal();
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">53.2k</span>&nbsp;字
+                class="white-color">54.9k</span>&nbsp;字
             
             
             
