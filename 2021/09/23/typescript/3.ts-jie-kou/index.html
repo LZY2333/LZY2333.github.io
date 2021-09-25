@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.3k
                 </div>
                 
 
@@ -446,11 +446,12 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS接口"><a href="#TS接口" class="headerlink" title="TS接口"></a>TS接口</h1><p>接口定义一个类型,类型检查器会以接口类型为标准对值的结构进行类型检查.<br>“鸭式辨型法”:如果它走起 路来像鸭子,叫起来也是鸭子,那么它就是鸭子</p>
+                <h1 id="TS接口"><a href="#TS接口" class="headerlink" title="TS接口"></a>TS接口</h1><p><strong>接口</strong> 定义一个类型,以 <strong>约束变量</strong> 或 <strong>约束类</strong>,<br>类型检查器会以接口类型为标准对值的结构进行类型检查.<br>“鸭式辨型法”:如果它走起 路来像鸭子,叫起来也是鸭子,那么它就是鸭子</p>
 <blockquote>
 <p>一个类可以 继承另一个类 并实现多个接口<br>一个类可以 <strong>实现多个接口</strong> ，一个接口也可以 <strong>被多个类实现</strong><br>一个类可以只能 <strong>继承一个父类</strong> , 可以 <strong>被多个子类继承</strong></p>
 </blockquote>
-<h2 id="接口的简单使用"><a href="#接口的简单使用" class="headerlink" title="接口的简单使用"></a>接口的简单使用</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束对象
+<p>变量后面<code>:xxx</code>可能是,<code>type</code>定义的类型,可能是<code>class</code>定义的类,<br>可能是 <code>interface</code> 定义的接口,可能是 字面量,可能是 js原始类型</p>
+<h2 id="接口约束-变量的值-为特定Object"><a href="#接口约束-变量的值-为特定Object" class="headerlink" title="接口约束 变量的值 为特定Object"></a>接口约束 变量的值 为特定Object</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束变量 接收的值 必须为对象
 interface Speakable&#123;
     speak():void;
     name:string;
@@ -544,7 +545,7 @@ let square &#x3D; &lt;Square&gt;&#123;&#125;; &#x2F;&#x2F; Square类型的对象
 square.color &#x3D; &quot;blue&quot;;
 square.sideLength &#x3D; 10;
 square.penWidth &#x3D; 5.0;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口约束-变量-为-函数类型"><a href="#接口约束-变量-为-函数类型" class="headerlink" title="接口约束 变量 为 函数类型"></a>接口约束 变量 为 函数类型</h2><p>约束 变量 的值为 特定类型函数</p>
+<h2 id="接口约束-变量的值-为-函数类型"><a href="#接口约束-变量的值-为-函数类型" class="headerlink" title="接口约束 变量的值 为 函数类型"></a>接口约束 变量的值 为 函数类型</h2><p>约束 变量 的值为 特定类型函数</p>
 <p>对于约束 函数变量 的值时,值(函数) 的参数名不需要和接口中一致,<br><strong>只要求 对应位置上的参数类型是兼容的</strong></p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SearchFunc &#123;
   (source: string, subString: string): boolean;
@@ -555,7 +556,8 @@ mySearch &#x3D; function(src: string, sub: string): boolean &#123;
   let result &#x3D; src.search(sub);
   return result &gt; -1;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口约束-变量-为-类类型"><a href="#接口约束-变量-为-类类型" class="headerlink" title="接口约束 变量 为 类类型"></a>接口约束 变量 为 类类型</h2><p><strong>创建一个类可代表两个类型,静态部分的类型,实例部分的类型</strong></p>
+<h2 id="接口约束-类的值-的定义"><a href="#接口约束-类的值-的定义" class="headerlink" title="接口约束 类的值 的定义"></a>接口约束 类的值 的定义</h2><p><strong>类 实现(implements) 接口,即完成 接口 对类的约束</strong></p>
+<p><strong>创建一个类可代表两个类型,静态部分的类型,实例部分的类型</strong></p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable &#123;
     name: string;               &#x2F;&#x2F;约束具有某属性
     speak(words: string): void  &#x2F;&#x2F;约束具有某方法 
@@ -569,8 +571,8 @@ class Dog implements Speakable &#123;
 let dog &#x3D; new Dog();
 dog.speak(&#39;汪汪汪&#39;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>但上面的接口Speakable 只约束的是 类的定义(静态类型)</p>
-<h2 id="接口约束-类的实例-为特定-构造函数创建"><a href="#接口约束-类的实例-为特定-构造函数创建" class="headerlink" title="接口约束 类的实例 为特定 构造函数创建"></a>接口约束 类的实例 为特定 构造函数创建</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;不加new是修饰函数的,加new是修饰类的
-interface WithNameClass&#123;
+<h2 id="接口约束-变量的值-为特定-的构造函数-类"><a href="#接口约束-变量的值-为特定-的构造函数-类" class="headerlink" title="接口约束 变量的值 为特定 的构造函数(类)"></a>接口约束 变量的值 为特定 的构造函数(类)</h2><p><strong>不加new是约束变量为函数的,加new是约束变量为 特定(通过约束构造函数)类的</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface WithNameClass&#123;
   new(name:string):Animal
 &#125;
 class Animal&#123;
@@ -582,8 +584,8 @@ function createAnimal(clazz:WithNameClass,name:string)&#123;
    return new clazz(name);
 &#125;
 let a &#x3D; createAnimal(Animal,&#39;zhufeng&#39;);
-console.log(a.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="可索引接口"><a href="#可索引接口" class="headerlink" title="可索引接口"></a>可索引接口</h2><p>对数组和对象进行约束</p>
+console.log(a.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="接口约束-变量的值-为特定的-索引"><a href="#接口约束-变量的值-为特定的-索引" class="headerlink" title="接口约束 变量的值 为特定的 索引"></a>接口约束 变量的值 为特定的 索引</h2><p>对数组和对象进行约束</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 表示index必须为number,值必须为string
 interface UserInterface &#123;
   [index:number]:string
@@ -600,7 +602,7 @@ let obj:UserInterface2 &#x3D; &#123;name:&#39;lzy&#39;&#125;;<span aria-hidden="
   length: number;    &#x2F;&#x2F; 可以，length是number类型
   name: string       &#x2F;&#x2F; 错误，&#96;name&#96;的类型与索引类型返回值的类型不匹配
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口-约束混合类型"><a href="#接口-约束混合类型" class="headerlink" title="接口 约束混合类型"></a>接口 约束混合类型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束一个函数,同时这个函数还作为对象加了两个属性
+<h2 id="接口约束-变量的值-为-混合类型"><a href="#接口约束-变量的值-为-混合类型" class="headerlink" title="接口约束 变量的值 为 混合类型"></a>接口约束 变量的值 为 混合类型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束一个函数,同时这个函数还作为对象加了两个属性
 interface Counter &#123;
     (start: number): string;
     interval: number;
@@ -848,18 +850,17 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/23/typescript/3.ts-jie-kou/">
+                <a href="/2021/09/24/typescript/4.ts-fan-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="TS接口">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="TS泛型">
                         
-                        <span class="card-title">TS接口</span>
+                        <span class="card-title">TS泛型</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -869,9 +870,9 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-23
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-24
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -884,7 +885,6 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1085,7 +1085,7 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">51.4k</span>&nbsp;字
+                class="white-color">53.2k</span>&nbsp;字
             
             
             

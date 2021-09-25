@@ -605,6 +605,105 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2021/09/25/typescript/5.ts-jian-rong-xing-yu-lei-xing-bao-hu/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="TS兼容性与类型保护">
+                            
+                            <span class="card-title">TS兼容性与类型保护</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                TS兼容性接口的兼容性函数传入的 变量类型 与 声明类型 不匹配TS会进行兼容性检查
+原理是Duck-Check,就是说只要目标类型中的属性变量在源类型中都存在就是兼容的
+interface Animal &#123;
+    name: 
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-25
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/TS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    TS笔记
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/TypeScript/">
+                            <span class="chip bg-color">TypeScript</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/09/24/typescript/4.ts-fan-xing/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="TS泛型">
+                            
+                            <span class="card-title">TS泛型</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                TS泛型泛型（Generics）是指在定义函数、接口或类的时候，不预先指定具体的类型，而在使用的时候再指定类型的一种特性
+泛型函数&#x2F;&#x2F; 泛型简单使用
+function createArray&lt;T&gt;(lengt
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-24
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/TS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    TS笔记
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/TypeScript/">
+                            <span class="chip bg-color">TypeScript</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2021/09/23/typescript/3.ts-jie-kou/">
                         <div class="card-image">
                             
@@ -618,9 +717,9 @@
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                TS接口接口定义一个类型,类型检查器会以接口类型为标准对值的结构进行类型检查.“鸭式辨型法”:如果它走起 路来像鸭子,叫起来也是鸭子,那么它就是鸭子
+                                TS接口接口 定义一个类型,以 约束变量 或 约束类,类型检查器会以接口类型为标准对值的结构进行类型检查.“鸭式辨型法”:如果它走起 路来像鸭子,叫起来也是鸭子,那么它就是鸭子
 
-一个类可以 继承另一个类 并实现多个接口一个类可以 实现多个接口 ，一个接口也可以 被多
+一个类可以 继承另一个类 并实现多个接口一个类可以 实现多个
                             
                         </div>
                         <div class="publish-info">
@@ -1062,99 +1161,6 @@ const BinarySearch = (sortedArr, target) => &#123;
                 </div>
             </div>
             
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/08/31/suan-fa/8.pai-xu-ji-shu-ji-shu-tong/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="排序(计数,基数,桶)">
-                            
-                            <span class="card-title">排序(计数,基数,桶)</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                排序(计数,基数,桶)对数据有要求,但时间复杂度为O(n)
-桶排序(BucketSort)桶排序实际上是一种思想,主要用于排序 大批量数据(10GB),进行外部排序(数据储存在外部磁盘中),进行分批次排序
-先扫描一遍文件,确定数据范围,如1
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-31
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                罗紫宇
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%AE%97%E6%B3%95/">
-                            <span class="chip bg-color">算法</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/08/18/suan-fa/7.pai-xu-gui-bing-kuai-pai/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="排序(归并,快排)">
-                            
-                            <span class="card-title">排序(归并,快排)</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                排序(归并,快排)归并排序 和 快速排序 都用到了 分治思想,
-时间复杂度都为 O(nlogn)
-归并排序(mergeSort)分析出递推公式，找到终止条件
-
-// 这里将mergeArr函数执行成多层嵌套,
-// 直到数组被拆分为只有0或
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-18
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                罗紫宇
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%AE%97%E6%B3%95/">
-                            <span class="chip bg-color">算法</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
         </div>
     </article>
 
@@ -1202,7 +1208,7 @@ const BinarySearch = (sortedArr, target) => &#123;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">51.4k</span>&nbsp;字
+                class="white-color">53.2k</span>&nbsp;字
             
             
             

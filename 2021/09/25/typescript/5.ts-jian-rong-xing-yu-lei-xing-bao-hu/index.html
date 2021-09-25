@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="7.Operators操作函数, LazyYu">
+    <meta name="keywords" content="TS兼容性与类型保护, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>7.Operators操作函数 | LazyYu</title>
+    <title>TS兼容性与类型保护 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">7.Operators操作函数</h1>
+                    <h1 class="description center-align post-title">TS兼容性与类型保护</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RxJS/">
-                                <span class="chip bg-color">RxJS</span>
+                            <a href="/tags/TypeScript/">
+                                <span class="chip bg-color">TypeScript</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
-                                30天精通RxJS笔记
+                            <a href="/categories/TS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                TS笔记
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-02-19
+                    2021-09-25
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    830
+                    708
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    2 分
                 </div>
                 
 
@@ -446,111 +446,71 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="七-Operators-操作函数"><a href="#七-Operators-操作函数" class="headerlink" title="七.Operators 操作函数"></a>七.Operators 操作函数</h2><p>前面讲完了用于创建Observable实例的 operator 内置操作函数,</p>
-<p>接下来要讲关于转换(Transformation),过滤(Filter),合并(Combination)的 操作函数.</p>
-<h3 id="Operator-是什么样的"><a href="#Operator-是什么样的" class="headerlink" title="Operator 是什么样的"></a>Operator 是什么样的</h3><p>Operators 就是 Observable 内置的操作函数 ,例如像是 map, filter, contactAll…</p>
-<p>重点是,这些函数内部都会创建一个新 Observable 对象并返回,以实现链式调用.</p>
-<blockquote>
-<p>其实和promise 的思想几乎一样,把 视为Observable,subscribe是为then 一切都好理解了</p>
-</blockquote>
-<p>例如下面这样的 简单写一个map方法</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">callback</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>
-            <span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> 
-                <span class="token keyword">try</span><span class="token punctuation">&#123;</span>
-                    observer<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token function">callback</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                    observer<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-            <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> observer<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-Rx<span class="token punctuation">.</span><span class="token class-name">Observable</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>map <span class="token operator">=</span> map<span class="token punctuation">;</span>
-<span class="token keyword">var</span> people <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">'Jerry'</span><span class="token punctuation">,</span> <span class="token string">'Anna'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> helloPeople <span class="token operator">=</span> people<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item</span><span class="token punctuation">)</span> <span class="token operator">=></span> item <span class="token operator">+</span> <span class="token string">' Hello~'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <h1 id="TS兼容性"><a href="#TS兼容性" class="headerlink" title="TS兼容性"></a>TS兼容性</h1><h2 id="接口的兼容性"><a href="#接口的兼容性" class="headerlink" title="接口的兼容性"></a>接口的兼容性</h2><p>函数传入的 变量类型 与 声明类型 不匹配TS会进行兼容性检查</p>
+<p>原理是Duck-Check,就是说只要目标类型中的属性变量在源类型中都存在就是兼容的</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Animal &#123;
+    name: string;
+    age: number;
+&#125;
 
-helloPeople<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// Jerry Hello~</span>
-<span class="token comment">// Anna Hello~</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里调用了 people 的map 方式, 其实内部 就是使用<code>Rx.Observable.create</code>创建了一个新的 Observable2 ,</p>
-<p>并传入了一个函数 <code>(observer) =&gt; &#123;...&#125;</code>, 该函数会在 <code>Rx.Observable.create</code> 内立即执行.</p>
-<p>该函数 立即执行 并 return 了 <code>this.subscribe</code> ,其实就是 <code>people.subscribe</code>,</p>
-<p><code>people.subscribe</code> 被调用, <code>Rx.Observable.of(&#39;Jerry&#39;, &#39;Anna&#39;)</code> 执行 ,调用两次next,</p>
-<p>也就是<code>(value) =&gt; &#123;...&#125;</code>,每次 <code>(value) =&gt; &#123;...&#125;</code> 内部都调用了 Observable2 的next 方法,</p>
-<p>并传入了 callback 也就是 <code>(item) =&gt; item + &#39; Hello~&#39;)</code>,该状态被 Observable2 记录,</p>
-<p>然后Observable2 被 return 赋值给了 helloPeople,并调用了 subscribe 方法,</p>
-<p><code>helloPeople.subscribe</code>执行时,根据 helloPeople 记录的状态, 调用 subscribe 中传入的 方法,</p>
-<p>也就是调用了两次next ,在 helloPeople 中 代表的就是 <code>console.log</code>,</p>
-<p>调用 <code>console.log</code> ,并传入 <code>observer.next(callback(value))</code> 时记录的 <code>callback(value)</code>,</p>
-<h3 id="Marble-diagrams-描绘observable行为的图"><a href="#Marble-diagrams-描绘observable行为的图" class="headerlink" title="Marble diagrams 描绘observable行为的图"></a>Marble diagrams 描绘observable行为的图</h3><p>用 <code>-</code> 来代表一小段时间, 用 一连串<code>-</code> 来代表一个Observable</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>用 <code>X</code> 来代表 Observable 执行发生错误</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token constant">X</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>用 <code>|</code> 来代表 Observable 执行结束</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>用 数字或相近的符号 代表 Observable 向下传递的值</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// var source = Rx.Observable.interval(1000);</span>
-<span class="token operator">--</span><span class="token operator">--</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token number">3</span><span class="token operator">--</span><span class="token operator">...</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>用 <code>()</code> 代表内部发生的是同步操作</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// var source = Rx.Observable.of(1,2,3,4);</span>
-<span class="token punctuation">(</span><span class="token number">1234</span><span class="token punctuation">)</span><span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>特殊: 表达 使用 operator 产生的 前后转换<br>上面是observable,中间是operator,下面是新的observable</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> newest <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+interface Person &#123;
+    name: string;
+    age: number;
+    gender: number
+&#125;
+&#x2F;&#x2F; 要判断目标类型&#96;Person&#96;是否能够兼容输入的源类型&#96;Animal&#96;
+function getName(animal: Animal): string &#123;
+    return animal.name;
+&#125;
 
-source<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">3</span><span class="token operator">--</span><span class="token operator">...</span>
-            <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
-newest<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">3</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">4</span><span class="token operator">--</span><span class="token operator">...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Operator-简单举例"><a href="#Operator-简单举例" class="headerlink" title="Operator 简单举例"></a>Operator 简单举例</h3><p><strong>map</strong></p>
-<p><code>.map(callback)</code> 会把next调用传递过来的数值数组,进行 callback 再处理一遍</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> newest <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+let p &#x3D; &#123;
+    name: &#39;lzy&#39;,
+    age: 25,
+    gender: 0
+&#125;
 
-newest<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 2</span>
-<span class="token comment">// 3</span>
-<span class="token comment">// 4</span>
-<span class="token comment">// 5..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>Marble diagrams 表示:</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">source<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">3</span><span class="token operator">--</span><span class="token operator">...</span>
-            <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
-newest<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">3</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">4</span><span class="token operator">--</span><span class="token operator">...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><strong>mapTo</strong></p>
-<p><code>.map(x)</code> 直接把next调用传递过来的值数组 重置 为 x.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> newest <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">mapTo</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+getName(p);
+&#x2F;&#x2F; 只有在传参的时候两个变量之间才会进行兼容性的比较，
+&#x2F;&#x2F; 赋值的时候并不会比较,会直接报错
+let a: Animal &#x3D; &#123;
+    name: &#39;lzy&#39;,
+    age: 25,
+    gender: 0 &#x2F;&#x2F; 报错
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在第三篇文章 TS接口 中有写道,<br><strong>对象字面量 直接作为参数时 会经历 额外属性检查</strong><br><strong>而改写成 对象 再作为参数 传入函数调用,则不会 检查对象上的额外属性</strong>,</p>
+<p>很显然,调用函数直接传入 对象字面量,相当于是对形参(对变量)的直接赋值,而<br><strong>对 变量赋值 不会进行兼容性检查,不容许额外属性,直接报错</strong>,<br>函数调用 传参,对于 传入一个 值为对象的变量 这种情况,却是宽容的,允许兼容</p>
+<p>猜测:<br>具有额外属性字面量作为对象 赋值给参数,再作为参数传入函数调用,TS不报错,<br>是因为TS认为在对象赋值的时候,已经做过变量检查了,是安全的,所以允许兼容.</p>
+<h2 id="基本类型的兼容性"><a href="#基本类型的兼容性" class="headerlink" title="基本类型的兼容性"></a>基本类型的兼容性</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;基本数据类型也有兼容性判断
+let num : string|number;
+let str:string&#x3D;&#39;zhufeng&#39;;
+num &#x3D; str;
 
-newest<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 2</span>
-<span class="token comment">// 2</span>
-<span class="token comment">// 2</span>
-<span class="token comment">// 2..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>Marble diagrams 表示:</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">source<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">3</span><span class="token operator">--</span><span class="token operator">...</span>
-            <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
-newest<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><strong>filter</strong></p>
-<p><code>.filter(callback)</code> 直接把next调用传递过来的值数组,根据传入callback执行返回值 是否为true过滤一遍.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> newest <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+&#x2F;&#x2F;只要有toString()方法就可以赋给字符串变量
+let num2 : &#123;
+  toString():string
+&#125;
 
-newest<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 2</span>
-<span class="token comment">// 4</span>
-<span class="token comment">// 6..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>Marble diagrams 表示:</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">source<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">3</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">4</span><span class="token operator">-</span><span class="token operator">...</span>
-            <span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span>
-newest<span class="token operator">:</span> <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">0</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token number">4</span><span class="token operator">-</span><span class="token operator">...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Operators 就是 Observable 内置的 操作函数,每个这种函数都会返回一个新的 Observable</p>
-<p>Marble diagrams 各种符号的含义</p>
-<p>认识 Observable 的 几个简单 Operators, map mapTo filter .</p>
+let str2:string&#x3D;&#39;jiagou&#39;;
+num2 &#x3D; str2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="类的兼容性"><a href="#类的兼容性" class="headerlink" title="类的兼容性"></a>类的兼容性</h2><p><strong>在TS中是结构类型系统，只会对比结构而不在意类型</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Animal&#123; name:string &#125;
+class Bird extends Animal&#123; swing:number &#125;
 
+let a:Animal &#x3D; new Bird();
+
+&#x2F;&#x2F;并不是java的那套 &#39;父类兼容子类，但子类不兼容父类&#39;
+&#x2F;&#x2F;仅仅是因为bird 需要的属性 swing:number, new Animal()没有
+let b:Bird &#x3D; new Animal(); &#x2F;&#x2F;报错<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>下面举例说明 与 类型是不是子类父类 无关,只要结构符合就行</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Animal&#123; name:string &#125;
+&#x2F;&#x2F;如果父类和子类结构一样，也可以的
+class Bird extends Animal&#123;&#125;
+
+let a:Animal &#x3D; new Bird();
+
+let b:Bird &#x3D; new Animal();
+&#x2F;&#x2F; 两个完全无关的类也一样,可以相互赋值,只要结构符合<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="函数的兼容性"><a href="#函数的兼容性" class="headerlink" title="函数的兼容性"></a>函数的兼容性</h2><h2 id="泛型的兼容性"><a href="#泛型的兼容性" class="headerlink" title="泛型的兼容性"></a>泛型的兼容性</h2><h2 id="枚举的兼容性"><a href="#枚举的兼容性" class="headerlink" title="枚举的兼容性"></a>枚举的兼容性</h2><h1 id="TS类型保护"><a href="#TS类型保护" class="headerlink" title="TS类型保护"></a>TS类型保护</h1>
                 
             </div>
             <hr/>
@@ -576,7 +536,7 @@ newest<span class="token operator">:</span> <span class="token operator">--</spa
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/19/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/7.operators-nei-zhi-han-shu/">https://github.com/LZY2333/LZY2333.github.io/2021/02/19/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/7.operators-nei-zhi-han-shu/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/09/25/typescript/5.ts-jian-rong-xing-yu-lei-xing-bao-hu/">https://github.com/LZY2333/LZY2333.github.io/2021/09/25/typescript/5.ts-jian-rong-xing-yu-lei-xing-bao-hu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -614,8 +574,8 @@ newest<span class="token operator">:</span> <span class="token operator">--</spa
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/RxJS/">
-                                    <span class="chip bg-color">RxJS</span>
+                                <a href="/tags/TypeScript/">
+                                    <span class="chip bg-color">TypeScript</span>
                                 </a>
                             
                         </div>
@@ -785,17 +745,18 @@ newest<span class="token operator">:</span> <span class="token operator">--</spa
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/02/19/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/8.take-first-takeuntil-concatall/">
+                <a href="/2021/09/25/typescript/5.ts-jian-rong-xing-yu-lei-xing-bao-hu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="8.take,first,takeUntil,concatAll">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="TS兼容性与类型保护">
                         
-                        <span class="card-title">8.take,first,takeUntil,concatAll</span>
+                        <span class="card-title">TS兼容性与类型保护</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -805,26 +766,27 @@ newest<span class="token operator">:</span> <span class="token operator">--</spa
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-25
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    30天精通RxJS笔记
+                            <a href="/categories/TS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    TS笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RxJS/">
-                        <span class="chip bg-color">RxJS</span>
+                    <a href="/tags/TypeScript/">
+                        <span class="chip bg-color">TypeScript</span>
                     </a>
                     
                 </div>
@@ -838,13 +800,13 @@ newest<span class="token operator">:</span> <span class="token operator">--</spa
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/17/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/6.observable-chuang-jian-fang-shi/">
+                <a href="/2021/09/24/typescript/4.ts-fan-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="6.Observerble创建方式">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="TS泛型">
                         
-                        <span class="card-title">6.Observerble创建方式</span>
+                        <span class="card-title">TS泛型</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -855,14 +817,14 @@ newest<span class="token operator">:</span> <span class="token operator">--</spa
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-17
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-24
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/30%E5%A4%A9%E7%B2%BE%E9%80%9ARxJS%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    30天精通RxJS笔记
+                            <a href="/categories/TS%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    TS笔记
                                 </a>
                             
                             
@@ -872,8 +834,8 @@ newest<span class="token operator">:</span> <span class="token operator">--</spa
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RxJS/">
-                        <span class="chip bg-color">RxJS</span>
+                    <a href="/tags/TypeScript/">
+                        <span class="chip bg-color">TypeScript</span>
                     </a>
                     
                 </div>
