@@ -1,5 +1,5 @@
 ---
-title: TS基础知识
+title: TS基础知识(已废弃)
 date: 2021-04-05 19:07:25
 tags: 
     - TypeScript
