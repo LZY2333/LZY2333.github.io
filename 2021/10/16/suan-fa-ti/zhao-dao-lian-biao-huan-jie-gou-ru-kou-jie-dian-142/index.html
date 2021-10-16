@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="JS执行上下文, LazyYu">
+    <meta name="keywords" content="LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>JS执行上下文 | LazyYu</title>
+    <title>LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">JS执行上下文</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -385,13 +385,9 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                                <span class="chip bg-color">JS基础</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -403,7 +399,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-20
+                    2021-10-16
                 </div>
                 
 
@@ -412,14 +408,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    4 分
                 </div>
                 
 
@@ -437,152 +433,97 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="JS执行上下文"><a href="#JS执行上下文" class="headerlink" title="JS执行上下文"></a>JS执行上下文</h1><h3 id="JS代码执行流程"><a href="#JS代码执行流程" class="headerlink" title="JS代码执行流程"></a>JS代码执行流程</h3><p>代码被 JS引擎放入内存，先编译阶段，再执行阶段<br><strong>特点:先编译后执行</strong><br>编译阶段 会生成两部分内容，执行上下文(Execution context) 和 可执行代码<br>编译阶段 变量 函数 放在执行上下文(变量环境)中，变量默认值被设为undefined</p>
-<p>执行阶段 按顺序一行一行执行 可执行代码<br>执行阶段 执行过程， JS引擎从 变量环境 中查找 变量和函数</p>
-<blockquote>
-<p>实际上 两个阶段非常复杂，包括词法分析，语法解析，代码优化，代码生成等</p>
-</blockquote>
-<p><strong>从调用栈角度</strong></p>
-<p>JS使用 栈结构 管理 执行上下文，这个栈称为 执行上下文栈(调用栈)</p>
-<ol>
-<li>编译JS文件，得到 全局执行上下文 和 全局可执行代码，将 全局执行上下文 压入栈底，执行 全局可执行代码，</li>
-<li>碰到函数调用，将 函数编译，得到 函数执行上下文 和 函数可执行代码 ，将 函数执行上下文 压入栈中， 执行函数可执行代码</li>
-<li>如果 碰到函数执行重复上一步 否则继续执行，</li>
-<li>直到 函数return，函数执行上下文栈 弹出，继续回到上一次执行可执行代码</li>
-<li>最后全局可执行代码执行完毕，弹出 全局执行上下文</li>
-</ol>
-<p><strong>栈溢出</strong>:调用栈有大小限制，入栈执行上下文超过一定数目，JS引擎会报错<br>一般栈溢出 是 没有终止 循环调用 或 递归调用 导致的 </p>
-<h2 id="宏观角度-抽象角度"><a href="#宏观角度-抽象角度" class="headerlink" title="宏观角度(抽象角度)"></a>宏观角度(抽象角度)</h2><h3 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h3><p><strong>执行上下文</strong>:当前JS代码 解析和执行 时所在环境的抽象概念</p>
-<p>分为三种:<br><strong>全局执行上下文</strong>,1.创建全局对象(window对象) 2.this指向这个全局对象</p>
-<p><strong>函数执行上下文</strong>,1.函数被调用时创建 2.每个函数都有自己的函数执行上下文</p>
-<p><strong>Eval函数执行上下文</strong>,1.eval函数内代码的执行上下文</p>
-<h3 id="执行栈"><a href="#执行栈" class="headerlink" title="执行栈"></a>执行栈</h3><p>执行栈(调用栈),LIFO(后进先出),储存 代码执行期间创建的所有执行上下文</p>
-<p>JS引擎 首次读取脚本,创建 全局执行上下文,推入 执行栈,</p>
-<p>执行到函数调用, 会为该函数创建 函数执行上下文,推入 执行栈顶端.</p>
-<p>JS引擎 会执行 其执行上下文位于执行栈顶端的函数,完成后 当前执行上下文弹出,</p>
-<p>上下文控制权 移到 下一个执行上下文</p>
-<h3 id="执行上下文的创建"><a href="#执行上下文的创建" class="headerlink" title="执行上下文的创建"></a>执行上下文的创建</h3><p>执行上下文分为两个阶段创建: 1. <strong>创建阶段</strong> 2. <strong>执行阶段</strong></p>
-<p><strong>创建阶段</strong>:</p>
-<ol>
-<li>绑定this(This Binding)</li>
-<li>创建 <strong>词法环境</strong>(LexicalEnvironment)</li>
-<li>创建 <strong>变量环境</strong>(VariableEnvironment)</li>
-</ol>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 执行上下文伪代码</span>
-ExecutionContext <span class="token operator">=</span> <span class="token punctuation">&#123;</span>  
-  ThisBinding <span class="token operator">=</span> <span class="token operator">&lt;</span><span class="token keyword">this</span> value<span class="token operator">></span><span class="token punctuation">,</span>  
-  LexicalEnvironment <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>  
-  VariableEnvironment <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>  
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="词法环境-和-变量环境"><a href="#词法环境-和-变量环境" class="headerlink" title="词法环境 和 变量环境"></a>词法环境 和 变量环境</h3><p><strong>词法环境</strong>(Lexical Environment),<br>一个 标识符(变量/函数的名称) 与 变量(实际对象/原始值的引用) 相映射的结构,<br>包括<br>1.<strong>环境记录</strong>(environment record) 储存变量和函数生命的实际位置<br>2. <strong>对外部环境的引用</strong> 意味着可以访问外部词法环境,</p>
-<p><strong>词法环境</strong> 存在两种类型<br>1.<strong>全局环境</strong>(在全局上下文中)对外部的环境引用为null<br>2.<strong>函数环境</strong>(在函数环境中)包含了一个 <strong>arguments对象</strong></p>
-<p><strong>环境记录</strong>,存在两种类型<br>2.<strong>对象环境记录</strong>(在全局环境中)用于定义 全局执行上下文出现的变量和函数的关联<br>1.<strong>声明性环境记录</strong>(在函数环境中) 储存 变量/函数/参数 </p>
-<p><strong>arguments对象</strong>,伪数组,包含了 函数参数 与 索引 的映射,及 参数个数.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 词法环境伪代码</span>
-GlobalExectionContext <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 全局执行上下文</span>
-  LexicalEnvironment<span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 词法环境(全局环境)</span>
-    EnvironmentRecord<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 环境记录(对象)</span>
-      Type<span class="token operator">:</span> <span class="token string">"Object"</span><span class="token punctuation">,</span>  
-      <span class="token comment">// 标识符绑定在这里 </span>
-    outer<span class="token operator">:</span> <span class="token operator">&lt;</span><span class="token keyword">null</span><span class="token operator">></span>  
-  <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span>
+                <h1 id="查找链表环结构的入口结点"><a href="#查找链表环结构的入口结点" class="headerlink" title="查找链表环结构的入口结点"></a>查找链表环结构的入口结点</h1><p>上吴师兄的算法课,刷leetcode时,遇到了 ‘查找链表环结构的入口结点’这题.</p>
+<p>看完 leetcode 的 <strong>‘快慢指针,两次赛跑’</strong>(我取的名) 的解法时,一脸懵逼.</p>
+<p>结合 吴师兄给的 示例动图/解析, 并 划水整整研究一上午后,</p>
+<p>(注:此时作者处于,当前迭代末期,活相对较少,好学生请不要模仿)</p>
+<p>总结出了这版 <strong>文字纯享,无需公式,让你的直觉接受这种设定!</strong> 版 算法解析</p>
+<p>大家可以先直接去做做原题</p>
+<p>(AlgoMooc:环形链表2)[<a target="_blank" rel="noopener" href="https://www.algomooc.com/746.html]">https://www.algomooc.com/746.html]</a></p>
+<p>(力扣:环形链表2(142题))[<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle-ii]">https://leetcode-cn.com/problems/linked-list-cycle-ii]</a></p>
+<h2 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h2><p>给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。</p>
+<p>为了表示给定链表中的环，</p>
+<p>我们使用整数 pos 来表示链表尾连接到链表中的位置(索引从 0 开始).</p>
+<p>如果 pos 是 -1，则在该链表中没有环。</p>
+<p>注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。</p>
+<h2 id="懵逼树上懵逼果-懵逼树下你和我"><a href="#懵逼树上懵逼果-懵逼树下你和我" class="headerlink" title="懵逼树上懵逼果,懵逼树下你和我"></a>懵逼树上懵逼果,懵逼树下你和我</h2><p>看到这题,第一反应是 在结点上做标记,路过一个结点,标记一下.</p>
+<p>当然,此时leetcode给出了更优的set储存解法,不影响原本数据.</p>
+<p>此处也略提一下,理解简单</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 我想的是在节点上做标记，显然用set更好，记住这思路</span>
+<span class="token keyword">var</span> <span class="token function-variable function">detectCycle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> visited <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>head <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>visited<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        visited<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        head <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>重点</strong></p>
+<p>此时还给出了第二个更优解法 空间复杂度为O(1)</p>
+<p>诠释了什么叫 我不理解,但我大受震撼.jpg</p>
+<p>这里直接讲 解法 <strong>‘快慢指针,两次赛跑’</strong></p>
+<p>思路是,</p>
+<p>第一次, 使用 快慢指针, 快指针每次移动2节点, 慢指针每次移动1节点.</p>
+<p>当 快指针与慢指针 第一次相遇时, 当前节点 称为 相遇点.</p>
+<p>第二次, 使用 两个慢指针, 慢指针1 从 相遇点出发, 慢指针2 从 节点头出发,</p>
+<p>当 两个慢指针 第一次相遇时, 此时相遇节点 即为 环入口点.</p>
+<h2 id="无需公式-看完后-让你的直觉接受这种设定"><a href="#无需公式-看完后-让你的直觉接受这种设定" class="headerlink" title="无需公式,看完后,让你的直觉接受这种设定!"></a>无需公式,看完后,让你的直觉接受这种设定!</h2><p>话不多说,直接上解析,代码在后面</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 要理解 快慢指针 找链的环结构入口,要理解两个重要结论,</span>
+<span class="token comment">// 1.慢指针 走过的的长度 等于 环的长度</span>
+<span class="token comment">// 2.慢指针 从头走到环入口的长度 等于 慢指针 从相遇点走完剩余环的长度</span>
 
-FunctionExectionContext <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 函数执行上下文</span>
-  LexicalEnvironment<span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 词法环境(函数环境)</span>
-    EnvironmentRecord<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 环境记录(声明性)</span>
-      Type<span class="token operator">:</span> <span class="token string">"Declarative"</span><span class="token punctuation">,</span>  
-      <span class="token comment">// 标识符绑定在这里 </span>
-    outer<span class="token operator">:</span> <span class="token operator">&lt;</span>Global or outer <span class="token keyword">function</span> environment reference<span class="token operator">></span>  
-  <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>变量环境</strong>(VariableEnvironment)</p>
-<p>1.变量环境 就是 词法环境,具有 词法环境 的所有属性<br>2.在ES6中, 变量环境 与 词法环境 的区别在于,<br>    <strong>词法环境</strong> 储存 函数声明/变量(let和const)的绑定,<br>    <strong>变量环境</strong> 仅储存 变量(var)的绑定</p>
-<p>总结</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>  
-<span class="token keyword">const</span> b <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">;</span>  
-<span class="token keyword">var</span> c<span class="token punctuation">;</span>
+<span class="token comment">// 假设 快指针 一次走 2个节点,慢指针 一次走 1个节点</span>
+<span class="token comment">// 假设 头到环入口长度 a, 环长度 b.</span>
+<span class="token comment">// 第 1 次相遇时, 快指针总路程 f,慢指针总路程 s,此时可得到两个等式</span>
+<span class="token comment">// (注意是第1次相遇,如果继续跑,第1次相遇后,s每跑1圈,f会跑2圈,会再次在这相遇,算法只需要考虑第1次相遇就行)</span>
+<span class="token comment">// f(快指针路程) = 2s(慢指针走的路程) (快指针是慢指针两倍速)</span>
+<span class="token comment">// f(快指针路程) = s(慢指针走的路程) + b(环的长度)</span>
+<span class="token comment">// 得到 s = b (慢指针走的路程 就是 环的长度b)</span>
+<span class="token comment">// 可理解为,第一次相遇的时候,s还刚进 第1圈,f已经多走了1圈环,所以 s=b</span>
+<span class="token comment">// 所以得到 重要结论 (1) 慢指针路程 s = b 环的节点数</span>
 
-<span class="token keyword">function</span> <span class="token function">multiply</span><span class="token punctuation">(</span><span class="token parameter">e<span class="token punctuation">,</span> f</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  
- <span class="token keyword">var</span> g <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>  
- <span class="token keyword">return</span> e <span class="token operator">*</span> f <span class="token operator">*</span> g<span class="token punctuation">;</span>  
-<span class="token punctuation">&#125;</span>
+<span class="token comment">// 接下来要思考,直觉上来说,为什么再次从头开始走一个 慢指针2</span>
+<span class="token comment">// 同时从第一次相遇处 走 慢指针1,两个慢指针必然会在 环入口处相遇?</span>
+<span class="token comment">// 换句话说 为什么 慢指针1 走完 剩余环的长度(y),会等于 从头到入环 的长度?</span>
 
-c <span class="token operator">=</span> <span class="token function">multiply</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>执行上下文如下</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">GlobalExectionContext <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+<span class="token comment">// 此时,我们整理下, 头到环入口a, 环入口到相遇处(x), 环长度b</span>
+<span class="token comment">// 很显然 环的长度(b) = x(入口到相遇处) + y(相遇处到环入口)</span>
+<span class="token comment">// 同时由结论(1) 环的长度(b) = s(慢指针路径) = a(头到环入口) + x(入口到相遇处)</span>
+<span class="token comment">// x(入口到相遇处) + y(相遇处到环入口) = a(头到环入口) + x(入口到相遇处)</span>
 
-  ThisBinding<span class="token operator">:</span> <span class="token operator">&lt;</span>Global Object<span class="token operator">></span><span class="token punctuation">,</span>
+<span class="token comment">// 语言解释就是, 头到相遇处, 相遇处再到环入口,是等长的,重合部分就是 入口到相遇处</span>
+<span class="token comment">// 路径上来说,都减去重合部分(入口到相遇处x),剩余部分路径相等</span>
+<span class="token comment">// 如果 假设两个慢指针,都不走重合部分,一个从头开始走,一个跳过重合部分从相遇处开始走</span>
+<span class="token comment">// 相同速度,走过相同路径时,便会相遇在入口</span>
 
-  LexicalEnvironment<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  
-    EnvironmentRecord<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  
-      Type<span class="token operator">:</span> <span class="token string">"Object"</span><span class="token punctuation">,</span>  
-      <span class="token comment">// 标识符绑定在这里  </span>
-      a<span class="token operator">:</span> <span class="token operator">&lt;</span> uninitialized <span class="token operator">></span><span class="token punctuation">,</span>  
-      b<span class="token operator">:</span> <span class="token operator">&lt;</span> uninitialized <span class="token operator">></span><span class="token punctuation">,</span>  
-      multiply<span class="token operator">:</span> <span class="token operator">&lt;</span> func <span class="token operator">></span>  
-    <span class="token punctuation">&#125;</span>  
-    outer<span class="token operator">:</span> <span class="token operator">&lt;</span><span class="token keyword">null</span><span class="token operator">></span>  
-  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-
-  VariableEnvironment<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  
-    EnvironmentRecord<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  
-      Type<span class="token operator">:</span> <span class="token string">"Object"</span><span class="token punctuation">,</span>  
-      <span class="token comment">// 标识符绑定在这里  </span>
-      c<span class="token operator">:</span> <span class="token keyword">undefined</span><span class="token punctuation">,</span>  
-    <span class="token punctuation">&#125;</span>  
-    outer<span class="token operator">:</span> <span class="token operator">&lt;</span><span class="token keyword">null</span><span class="token operator">></span>  
-  <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span>
-
-FunctionExectionContext <span class="token operator">=</span> <span class="token punctuation">&#123;</span>  
-
-  ThisBinding<span class="token operator">:</span> <span class="token operator">&lt;</span>Global Object<span class="token operator">></span><span class="token punctuation">,</span>
-
-  LexicalEnvironment<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  
-    EnvironmentRecord<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  
-      Type<span class="token operator">:</span> <span class="token string">"Declarative"</span><span class="token punctuation">,</span>  
-      <span class="token comment">// 标识符绑定在这里  </span>
-      Arguments<span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token operator">:</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token operator">:</span> <span class="token number">30</span><span class="token punctuation">,</span> length<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>  
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>  
-    outer<span class="token operator">:</span> <span class="token operator">&lt;</span>GlobalLexicalEnvironment<span class="token operator">></span>  
-  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-
-  VariableEnvironment<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  
-    EnvironmentRecord<span class="token operator">:</span> <span class="token punctuation">&#123;</span>  
-      Type<span class="token operator">:</span> <span class="token string">"Declarative"</span><span class="token punctuation">,</span>  
-      <span class="token comment">// 标识符绑定在这里  </span>
-      g<span class="token operator">:</span> <span class="token keyword">undefined</span>  
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>  
-    outer<span class="token operator">:</span> <span class="token operator">&lt;</span>GlobalLexicalEnvironment<span class="token operator">></span>  
-  <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>执行上下文的第二个创建阶段,<strong>执行阶段</strong>,此几段完成所有变量的分配,再执行代码.</p>
-<blockquote>
-<p>执行阶段 找不到 给 let变量的赋值,则会为其赋值 undefined</p>
-</blockquote>
-<p><strong>词法环境栈</strong> 每个词法环境，内部都维护了一个小型栈结构,栈底是最外层的执行上下文的变量,进入一个作用域块(如if)后,该作用域块内的变量压到栈顶,作用域执行完后,作用域从栈顶弹出,这就词法环境的结构.</p>
-<p><strong>总结</strong><br>块级作用域 通过 词法环境 和栈结构来实现<br>变量提升 通过 变量环境 来实现</p>
-<p>当前 执行上下文 内的变量查找顺序,<br>沿着当前 执行上下文 内的词法环境栈 顶向下查找,找到栈底,再找 变量环境,<br>如果 没找到,则通过 <strong>作用域</strong> 链,查找外层 执行上下文</p>
-<h3 id="作用域链-和-this链"><a href="#作用域链-和-this链" class="headerlink" title="作用域链 和 this链"></a>作用域链 和 this链</h3><h4 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h4><p><strong>作用域链</strong> 查找变量时,JS引擎会尝试在当前作用域下查找，如果没有找到，会再到外层作用域查找，以此类推直到找到，或到了全局作用域还没找到，报错。这样查找的 执行上下文链条 叫作用域链。</p>
-<p>而JS在执行过程中,其作用域链(外层执行上下文是谁)由词法作用域决定<br><strong>词法作用域(静态作用域)</strong>  作用域链在 词法化阶段(编译阶段)决定,也就是由 函数声明的位置 决定,与 函数调用位置无关</p>
-<blockquote>
-<p>不要混淆了词法环境和词法作用域，<br>词法作用域是在代码编译阶段确定的作用域(一个抽象的概念)，<br>词法环境是Javascript引擎用来存储变量和对象引用的地方(一个具象的概念)。<br>变量环境/词法环境 中的 外部引用(outer) 就说用来指向外层的 执行上下文,产生作用域链</p>
-</blockquote>
-<p>变量查找顺序:<br>1.沿着当前 执行上下文内 的 词法环境栈 顶向下查找,找到栈底,再找 变量环境，<br>2.沿着 作用域链，在外部作用域中查找 外一层 的执行上下文，重复第一步。</p>
-<p>理解闭包的产生比理解闭包的概念更重要,<br><strong>闭包的产生</strong>,根据词法作用域规则,函数的作用域链由函数声明位置决定,声明位置在内部的函数总是可以访问外部函数的变量,即使内部函数的调用位置,不在其声明的外层函数内,甚至外部函数已经执行结束,但内部函数 引用的外部函数变量依旧保存在内存中,这些变量的集合称为闭包.<br><strong>闭包</strong>,函数与其外部函数词法环境的集合.(函数,自己内部的变量,外部词法环境,可访问的外部变量)</p>
-<h4 id="this链"><a href="#this链" class="headerlink" title="this链"></a>this链</h4><p>首先,<strong>作用域链</strong> 和 <strong>this</strong> 是两套 <strong>完全不同</strong> 的系统,<br><strong>作用域链</strong> 用于 函数语句执行查找变量值,由函数声明位置决定,受函数嵌套影响<br><strong>this</strong> 与 <strong>this链</strong> 用于 对象内部查找对象属性值(函数也是对象),受调用链影响,默认指向window,不受函数嵌套影响</p>
-<p>全局执行上下文中的this,指向window对象,作用域链的最底端也包含window对象<br><strong>函数执行上下文的this</strong>,默认调用时指向window对象,以下三种情况将改变this指向,<br>1.<strong>call</strong>,<strong>apply</strong>,<strong>bind</strong>,设置函数执行上下文的this<br>2.<code>对象.函数()</code>,通过对象调用,this指向对象本身<br>3.构造函数的this,指向new关键词构建的新对象.</p>
-<blockquote>
-<p>全局调用函数相当于<code>window.函数()</code></p>
-</blockquote>
-<p>缺陷,嵌套函数的this,不继承外层函数的this,反直觉.<br>解决方案,1.self保存this,在内层函数中调用self,把this体系转换为作用域体系,<br>解决方案,2.ES6箭头函数,箭头函数 不会创建自身指向上下文,所以this取决于外部函数</p>
-<blockquote>
-<p>严格模式,函数被正常调用,this值为undefined</p>
-</blockquote>
-<p><strong>执行上下文</strong>:<strong>变量环境</strong>,<strong>词法环境</strong>,<strong>outer</strong>,<strong>this</strong></p>
-<h2 id="微观角度-代码角度"><a href="#微观角度-代码角度" class="headerlink" title="微观角度(代码角度)"></a>微观角度(代码角度)</h2><p>词法环境 变量环境  活动对象AO 变量对象VO</p>
-<p>参考:<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/48590085">【译】理解 Javascript 执行上下文和执行栈</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904069413224462">Damonare理解Javascript的作用域和作用域链</a></p>
+<span class="token keyword">var</span> <span class="token function-variable function">detectCycle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>head <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">let</span> slow <span class="token operator">=</span> head<span class="token punctuation">,</span> fast <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fast<span class="token punctuation">.</span>next <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            fast <span class="token operator">=</span> fast<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fast <span class="token operator">===</span> slow<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">let</span> ptr <span class="token operator">=</span> head<span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>ptr <span class="token operator">!==</span> slow<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                ptr <span class="token operator">=</span> ptr<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+                slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">return</span> ptr<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如有疵漏,大佬轻喷,同时感谢指点.</p>
+<p>如果这篇文章能帮到大家,就是我最大的快乐!!!</p>
 
                 
             </div>
@@ -609,7 +550,7 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/06/20/javascript/js-ji-chu/js-zhi-xing-shang-xia-wen/">https://github.com/LZY2333/LZY2333.github.io/2021/06/20/javascript/js-ji-chu/js-zhi-xing-shang-xia-wen/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/16/suan-fa-ti/zhao-dao-lian-biao-huan-jie-gou-ru-kou-jie-dian-142/">https://github.com/LZY2333/LZY2333.github.io/2021/10/16/suan-fa-ti/zhao-dao-lian-biao-huan-jie-gou-ru-kou-jie-dian-142/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -646,11 +587,7 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                                    <span class="chip bg-color">JS基础</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -822,13 +759,13 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/06/22/mian-shi-ti/shu-ru-wang-zhi-dao-shou-ping-xuan-ran/">
+                <a href="/2021/10/16/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="从输入网址到首屏渲染">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">从输入网址到首屏渲染</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -839,7 +776,7 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-22
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-16
                         </span>
                         <span class="publish-author">
                             
@@ -848,14 +785,6 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -867,13 +796,13 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/15/mian-shi-ti/liu-chong-shu-zu-qu-chong/">
+                <a href="/2021/10/13/suan-fa-ti/lian-biao-suan-fa-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="六种数组去重">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="链表算法题">
                         
-                        <span class="card-title">六种数组去重</span>
+                        <span class="card-title">链表算法题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -884,7 +813,7 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-13
                             </span>
                         <span class="publish-author">
                             
@@ -897,8 +826,8 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
+                        <span class="chip bg-color">算法题</span>
                     </a>
                     
                 </div>
