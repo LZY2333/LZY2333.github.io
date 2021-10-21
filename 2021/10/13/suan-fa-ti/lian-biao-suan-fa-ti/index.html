@@ -412,7 +412,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2k
+                    2.1k
                 </div>
                 
 
@@ -721,6 +721,22 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> result<span class="token punctuation">.</span>next
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="移除链表元素（-LeetCode-203-）"><a href="#移除链表元素（-LeetCode-203-）" class="headerlink" title="移除链表元素（ LeetCode 203 ）"></a>移除链表元素（ LeetCode 203 ）</h2><p>简单题</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-linked-list-elements/submissions/">leetcode</a></p>
+<p>```js<br>var removeElements = function(head, val) {<br>    if(head === null) return null<br>    let tmpHead = new ListNode(-1) // 可能删除头节点的都得先设置伪头部<br>    tmpHead.next = head</p>
+<pre><code>let cur = tmpHead
+while(cur.next) &#123;
+    if(cur.next.val === val) &#123; // 删除了下一个就不用跳
+        cur.next = cur.next.next || null
+    &#125; else &#123;
+        cur = cur.next
+    &#125;
+&#125;
+
+return tmpHead.next
+</code></pre>
+<p>};</p>
+
                 
             </div>
             <hr/>
@@ -1186,7 +1202,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">63.6k</span>&nbsp;字
+                class="white-color">64.5k</span>&nbsp;字
             
             
             
