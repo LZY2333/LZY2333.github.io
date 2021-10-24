@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    987
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    6 分
                 </div>
                 
 
@@ -526,7 +526,57 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="部分排序-（面试题-16）"><a href="#部分排序-（面试题-16）" class="headerlink" title="部分排序 （面试题 16）"></a>部分排序 （面试题 16）</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sub-sort-lcci/submissions/">leetcode</a></p>
-<p>标准做法是：找两个数，<br>一个是 最靠左的 满足右边存在小于自己的数 的数， 最右边记为min，往左遇到 比min小的就替换min，遇到比min大的就是 左边界<br>一个是 最靠右的 满足左边存在小于自己的数 的数， 最左边记为max，往右遇到 比max大的就替换max，遇到比max小的 就是右边界</p>
+<p>标准做法是：找两个数，m n，[m,n]区间内是乱序需要排序的数组</p>
+<p>m是满足 其右侧 <strong>存在</strong> 小于自己的数(表示此数以右边未递增，需要排序) 的数</p>
+<p>m右侧最小数记为min，往左遇到 比min小的就替换min(不需要更新边界m)，遇到比min大的 就是 更新m</p>
+<p>n是满足 其左侧 <strong>存在</strong> 大于自己的数(表示此数以左未递增，需要排序) 的数 </p>
+<p>n左侧最大数记为max，往右遇到 比max大的就替换max(不需要更新边界n)，遇到比max小的 就是 更新n</p>
+<p><strong>无注释版</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">subSort</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>array<span class="token punctuation">.</span>length <span class="token operator">||</span> array<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">const</span> last <span class="token operator">=</span> array<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">let</span> m <span class="token operator">=</span> last
+    <span class="token keyword">let</span> n <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> max <span class="token operator">=</span> <span class="token operator">-</span> Number<span class="token punctuation">.</span><span class="token constant">MAX_VALUE</span>
+    <span class="token keyword">let</span> min <span class="token operator">=</span> Number<span class="token punctuation">.</span><span class="token constant">MAX_VALUE</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> last<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+        <span class="token keyword">if</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> max<span class="token punctuation">)</span> n <span class="token operator">=</span> i
+        <span class="token keyword">else</span>  max <span class="token operator">=</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        
+        <span class="token keyword">if</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>last <span class="token operator">-</span> i<span class="token punctuation">]</span> <span class="token operator">></span> min<span class="token punctuation">)</span> m <span class="token operator">=</span> last <span class="token operator">-</span> i 
+        <span class="token keyword">else</span> min <span class="token operator">=</span> array<span class="token punctuation">[</span>last <span class="token operator">-</span> i<span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> n <span class="token operator">===</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token punctuation">[</span>m<span class="token punctuation">,</span>n<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 注意到成为 左边界m 的条件是，</span>
+<span class="token comment">// 1.所有自己左侧的数 必须开始递减</span>
+<span class="token comment">// 2.所有自己左侧的数 必须小于 右侧最小的数min</span>
+<span class="token keyword">var</span> <span class="token function-variable function">subSort</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>array<span class="token punctuation">.</span>length <span class="token operator">||</span> array<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">const</span> last <span class="token operator">=</span> array<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">let</span> m <span class="token operator">=</span> last <span class="token comment">// 左边界m 初始指向最右边</span>
+    <span class="token keyword">let</span> n <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment">// 右边界n 初始指向最左边</span>
+    <span class="token keyword">let</span> max <span class="token operator">=</span> <span class="token operator">-</span> Number<span class="token punctuation">.</span><span class="token constant">MAX_VALUE</span> <span class="token comment">// 初始为JS最小值</span>
+    <span class="token keyword">let</span> min <span class="token operator">=</span> Number<span class="token punctuation">.</span><span class="token constant">MAX_VALUE</span> <span class="token comment">// 初始为JS最大值</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> last<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+        <span class="token comment">// 从左往右找 右边界n，n右边的数必须大于n左边的数max</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> max<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果发现小于max的，就更新右边界n</span>
+            n <span class="token operator">=</span> i
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果正常，n右边的数 大于max，则不用更新n，且max更新</span>
+            max <span class="token operator">=</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 同时从右往左找 左边界m，注意 因为是从右往左，并且复用for循环，所以是last-i</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>last <span class="token operator">-</span> i<span class="token punctuation">]</span> <span class="token operator">></span> min<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            m <span class="token operator">=</span> last <span class="token operator">-</span> i
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            min <span class="token operator">=</span> array<span class="token punctuation">[</span>last <span class="token operator">-</span> i<span class="token punctuation">]</span>
+        <span class="token punctuation">&#125;</span> 
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// n边界没有动表示 从左到右，找不到一个数小于前一个数，即本就是递增</span>
+    <span class="token keyword">return</span> n <span class="token operator">===</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token punctuation">[</span>m<span class="token punctuation">,</span>n<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="我的解法"><a href="#我的解法" class="headerlink" title="我的解法"></a>我的解法</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 我是从左往右一个个判断这个数是不是当前最小的数，找到左边界，右边界同理。</span>
 <span class="token keyword">var</span> <span class="token function-variable function">subSort</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> start <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>end <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
@@ -796,13 +846,13 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/21/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/">
+                <a href="/2021/10/23/suan-fa-ti/zhao-dao-lian-biao-huan-jie-gou-ru-kou-jie-dian-142/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="查找链表环结构的入口结点">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">查找链表环结构的入口结点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -813,7 +863,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
                         </span>
                         <span class="publish-author">
                             
@@ -822,6 +872,14 @@ console<span class="token punctuation">.</span><span class="token function">log<
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
+                        <span class="chip bg-color">算法题</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -1011,7 +1069,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">64.5k</span>&nbsp;字
+                class="white-color">64.9k</span>&nbsp;字
             
             
             

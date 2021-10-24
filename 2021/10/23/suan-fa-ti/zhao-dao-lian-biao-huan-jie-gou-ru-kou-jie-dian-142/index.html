@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="把鸣鸣记小本本, LazyYu">
+    <meta name="keywords" content="查找链表环结构的入口结点, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>把鸣鸣记小本本 | LazyYu</title>
+    <title>查找链表环结构的入口结点 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">把鸣鸣记小本本</h1>
+                    <h1 class="description center-align post-title">查找链表环结构的入口结点</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%B8%A3%E9%B8%A3%E9%B8%A3%E9%B8%A3/">
-                                <span class="chip bg-color">鸣鸣鸣鸣</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
+                                <span class="chip bg-color">算法题</span>
                             </a>
                         
                     </div>
@@ -403,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-31
+                    2021-10-23
                 </div>
                 
 
@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    9
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -437,7 +437,97 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="把鸣鸣记小本本"><a href="#把鸣鸣记小本本" class="headerlink" title="把鸣鸣记小本本"></a>把鸣鸣记小本本</h1><p>记录</p>
+                <h1 id="查找链表环结构的入口结点"><a href="#查找链表环结构的入口结点" class="headerlink" title="查找链表环结构的入口结点"></a>查找链表环结构的入口结点</h1><p>上吴师兄的算法课,刷leetcode时,遇到了 ‘查找链表环结构的入口结点’这题.</p>
+<p>看完 leetcode 的 <strong>‘快慢指针,两次赛跑’</strong>(我取的名) 的解法时,一脸懵逼.</p>
+<p>结合 吴师兄给的 示例动图/解析, 并 划水整整研究一上午后,</p>
+<p>(注:此时作者处于,当前迭代末期,活相对较少,好学生请不要模仿)</p>
+<p>总结出了这版 <strong>文字纯享,无需公式,让你的直觉接受这种设定!</strong> 版 算法解析</p>
+<p>大家可以先直接去做做原题</p>
+<p>(AlgoMooc:环形链表2)[<a target="_blank" rel="noopener" href="https://www.algomooc.com/746.html]">https://www.algomooc.com/746.html]</a></p>
+<p>(力扣:环形链表2(142题))[<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle-ii]">https://leetcode-cn.com/problems/linked-list-cycle-ii]</a></p>
+<h2 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h2><p>给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。</p>
+<p>为了表示给定链表中的环，</p>
+<p>我们使用整数 pos 来表示链表尾连接到链表中的位置(索引从 0 开始).</p>
+<p>如果 pos 是 -1，则在该链表中没有环。</p>
+<p>注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。</p>
+<h2 id="懵逼树上懵逼果-懵逼树下你和我"><a href="#懵逼树上懵逼果-懵逼树下你和我" class="headerlink" title="懵逼树上懵逼果,懵逼树下你和我"></a>懵逼树上懵逼果,懵逼树下你和我</h2><p>看到这题,第一反应是 在结点上做标记,路过一个结点,标记一下.</p>
+<p>当然,此时leetcode给出了更优的set储存解法,不影响原本数据.</p>
+<p>此处也略提一下,理解简单</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 我想的是在节点上做标记，显然用set更好，记住这思路</span>
+<span class="token keyword">var</span> <span class="token function-variable function">detectCycle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> visited <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>head <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>visited<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        visited<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        head <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>重点</strong></p>
+<p>此时还给出了第二个更优解法 空间复杂度为O(1)</p>
+<p>诠释了什么叫 我不理解,但我大受震撼.jpg</p>
+<p>这里直接讲 解法 <strong>‘快慢指针,两次赛跑’</strong></p>
+<p>思路是,</p>
+<p>第一次, 使用 快慢指针, 快指针每次移动2节点, 慢指针每次移动1节点.</p>
+<p>当 快指针与慢指针 第一次相遇时, 当前节点 称为 相遇点.</p>
+<p>第二次, 使用 两个慢指针, 慢指针1 从 相遇点出发, 慢指针2 从 节点头出发,</p>
+<p>当 两个慢指针 第一次相遇时, 此时相遇节点 即为 环入口点.</p>
+<h2 id="无需公式-看完后-让你的直觉接受这种设定"><a href="#无需公式-看完后-让你的直觉接受这种设定" class="headerlink" title="无需公式,看完后,让你的直觉接受这种设定!"></a>无需公式,看完后,让你的直觉接受这种设定!</h2><p>话不多说,直接上解析,代码在后面</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 要理解 快慢指针 找链的环结构入口,要理解两个重要结论,</span>
+<span class="token comment">// 1.慢指针 走过的的长度 等于 环的长度</span>
+<span class="token comment">// 2.慢指针 从头走到环入口的长度 等于 慢指针 从相遇点走完剩余环的长度</span>
+
+<span class="token comment">// 假设 快指针 一次走 2个节点,慢指针 一次走 1个节点</span>
+<span class="token comment">// 假设 头到环入口长度 a, 环长度 b.</span>
+<span class="token comment">// 第 1 次相遇时, 快指针总路程 f,慢指针总路程 s,此时可得到两个等式</span>
+<span class="token comment">// (注意是第1次相遇,如果继续跑,第1次相遇后,s每跑1圈,f会跑2圈,会再次在这相遇,算法只需要考虑第1次相遇就行)</span>
+<span class="token comment">// f(快指针路程) = 2s(慢指针走的路程) (快指针是慢指针两倍速)</span>
+<span class="token comment">// f(快指针路程) = s(慢指针走的路程) + b(环的长度)</span>
+<span class="token comment">// 得到 s = b (慢指针走的路程 就是 环的长度b)</span>
+<span class="token comment">// 可理解为,第一次相遇的时候,s还刚进 第1圈,f已经多走了1圈环,所以 s=b</span>
+<span class="token comment">// 所以得到 重要结论 (1) 慢指针路程 s = b 环的节点数</span>
+
+<span class="token comment">// 接下来要思考,直觉上来说,为什么再次从头开始走一个 慢指针2</span>
+<span class="token comment">// 同时从第一次相遇处 走 慢指针1,两个慢指针必然会在 环入口处相遇?</span>
+<span class="token comment">// 换句话说 为什么 慢指针1 走完 剩余环的长度(y),会等于 从头到入环 的长度?</span>
+
+<span class="token comment">// 此时,我们整理下, 头到环入口a, 环入口到相遇处(x), 环长度b</span>
+<span class="token comment">// 很显然 环的长度(b) = x(入口到相遇处) + y(相遇处到环入口)</span>
+<span class="token comment">// 同时由结论(1) 环的长度(b) = s(慢指针路径) = a(头到环入口) + x(入口到相遇处)</span>
+<span class="token comment">// x(入口到相遇处) + y(相遇处到环入口) = a(头到环入口) + x(入口到相遇处)</span>
+
+<span class="token comment">// 语言解释就是, 头到相遇处, 相遇处再到环入口,是等长的,重合部分就是 入口到相遇处</span>
+<span class="token comment">// 路径上来说,都减去重合部分(入口到相遇处x),剩余部分路径相等</span>
+<span class="token comment">// 如果 假设两个慢指针,都不走重合部分,一个从头开始走,一个跳过重合部分从相遇处开始走</span>
+<span class="token comment">// 相同速度,走过相同路径时,便会相遇在入口</span>
+
+<span class="token keyword">var</span> <span class="token function-variable function">detectCycle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>head <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">let</span> slow <span class="token operator">=</span> head<span class="token punctuation">,</span> fast <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fast<span class="token punctuation">.</span>next <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            fast <span class="token operator">=</span> fast<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fast <span class="token operator">===</span> slow<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">let</span> ptr <span class="token operator">=</span> head<span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>ptr <span class="token operator">!==</span> slow<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                ptr <span class="token operator">=</span> ptr<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+                slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">return</span> ptr<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如有疵漏,大佬轻喷,同时感谢指点.</p>
+<p>如果这篇文章能帮到大家,就是我最大的快乐!!!</p>
 
                 
             </div>
@@ -464,7 +554,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/08/31/ming-ming/ba-ming-ming-ji-xiao-ben-ben/">https://github.com/LZY2333/LZY2333.github.io/2021/08/31/ming-ming/ba-ming-ming-ji-xiao-ben-ben/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/23/suan-fa-ti/zhao-dao-lian-biao-huan-jie-gou-ru-kou-jie-dian-142/">https://github.com/LZY2333/LZY2333.github.io/2021/10/23/suan-fa-ti/zhao-dao-lian-biao-huan-jie-gou-ru-kou-jie-dian-142/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -502,8 +592,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%B8%A3%E9%B8%A3%E9%B8%A3%E9%B8%A3/">
-                                    <span class="chip bg-color">鸣鸣鸣鸣</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
+                                    <span class="chip bg-color">算法题</span>
                                 </a>
                             
                         </div>
@@ -677,13 +767,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/13/bai-ri-ji-hua/">
+                <a href="/2021/10/24/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="百日计划">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">百日计划</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -694,7 +784,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-13
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-24
                         </span>
                         <span class="publish-author">
                             
@@ -714,13 +804,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/08/31/ming-ming/dan-ru-guo-mei-you-xian-gei-ni/">
+                <a href="/2021/10/21/suan-fa-ti/pai-xu-suan-fa-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="但如果没有献给你">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="排序算法题">
                         
-                        <span class="card-title">但如果没有献给你</span>
+                        <span class="card-title">排序算法题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -731,7 +821,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-21
                             </span>
                         <span class="publish-author">
                             
@@ -744,8 +834,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%B8%A3%E9%B8%A3%E9%B8%A3%E9%B8%A3/">
-                        <span class="chip bg-color">鸣鸣鸣鸣</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
+                        <span class="chip bg-color">算法题</span>
                     </a>
                     
                 </div>
@@ -892,7 +982,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">64.5k</span>&nbsp;字
+                class="white-color">64.9k</span>&nbsp;字
             
             
             
