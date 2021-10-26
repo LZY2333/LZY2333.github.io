@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="算法题(1), LazyYu">
+    <meta name="keywords" content="37.贪心算法, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>算法题(1) | LazyYu</title>
+    <title>37.贪心算法 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">算法题(1)</h1>
+                    <h1 class="description center-align post-title">37.贪心算法</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                                <span class="chip bg-color">算法题</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
                     </div>
@@ -403,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-13
+                    2021-10-26
                 </div>
                 
 
@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    551
+                    900
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -437,60 +437,52 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="算法题-1"><a href="#算法题-1" class="headerlink" title="算法题(1)"></a>算法题(1)</h1><h2 id="合并两个有序数组"><a href="#合并两个有序数组" class="headerlink" title="合并两个有序数组"></a>合并两个有序数组</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/merge-sorted-array">力扣 merge-sorted-array</a></p>
-<p>给你两个按 非递减顺序 排列的整数数组 nums1 和 nums2，另有两个整数 m 和 n ，分别表示 nums1 和 nums2 中的元素数目。</p>
-<p>请你 合并 nums2 到 nums1 中，使合并后的数组同样按 非递减顺序 排列。</p>
-<p><strong>我的题解</strong><br>1.目的是排完数组2 =&gt; 以<code>index2 &gt;= 0</code>为结束条件<br>2.注意数组1越界会返回undefined,undefined &gt; 某数组 是返回false,直接包含在了if判断内不需要额外判断</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">merge</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums1<span class="token punctuation">,</span> m<span class="token punctuation">,</span> nums2<span class="token punctuation">,</span> n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> index1 <span class="token operator">=</span> m <span class="token operator">-</span> <span class="token number">1</span>
-    <span class="token keyword">let</span> index2 <span class="token operator">=</span> n <span class="token operator">-</span> <span class="token number">1</span>
-    <span class="token keyword">let</span> pointer <span class="token operator">=</span> m <span class="token operator">+</span> n <span class="token operator">-</span> <span class="token number">1</span>
+                <h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h1><p><strong>贪心算法</strong> <strong>分治算法</strong> <strong>回溯算法</strong> <strong>动态规划</strong> 四个算法思想</p>
+<p>greedy algorithm</p>
+<p><strong>适用场景</strong>:</p>
+<p>一组数据,定义了 限制值 和 期望值, 在满足限制值的情况下,期望值最大</p>
+<p><strong>典型应用</strong>:</p>
+<p>霍夫曼编码(Huffman Coding)</p>
+<p>Prim 和 Kruskal 最小生成树算法</p>
+<p>Dijkstra 单源最短路径算法</p>
+<h2 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h2><p>第一步, <strong>一组数据</strong> <strong>限制值</strong> <strong>期望值</strong> 三个关键字</p>
+<p>第二步, 运用贪心思想, 每次都选择 当次情况下 同等限制资源对期望贡献最高的数据</p>
+<p>第三步, 举几个例子试下 贪心思想是否最优解</p>
+<p><strong>当前面的选择 影响 后面的选择时</strong>, 贪心算法并不是全局最优解,不能用.</p>
+<p>例如,多条路径多分叉的最短路径,可能第一条路选了最短的,</p>
+<p>但由于选了这条路,导致这条路后面的每一步都比其他路糟糕.</p>
+<h2 id="贪心算法实战"><a href="#贪心算法实战" class="headerlink" title="贪心算法实战"></a>贪心算法实战</h2><p>贪心算法关键是多联系,记住 其核心是 <strong>保证 每一步做出当前 性价比最高的选择</strong></p>
+<h3 id="1-分糖果"><a href="#1-分糖果" class="headerlink" title="(1)分糖果"></a>(1)分糖果</h3><p>m个糖果 n个孩子, m &lt; n,所以糖果只能分给一部分孩子.</p>
+<p>每个糖果大小不等(s1,s2,s3…sm),</p>
+<p>每个孩子对糖果大小的需求也不等(g1,g2,g3…gn),</p>
+<p>只有 孩子得到的糖果大小 s &gt; g 需求大小 时才能满足,</p>
+<p>如何分配 满足最多数量 的孩子? </p>
+<p>限制条件: 加起来m个糖果, 期望值: 满足数量最多的孩子,</p>
+<p>性价比: 需求最小的孩子 恰好满足需求的糖果</p>
+<h3 id="2-钱币找零"><a href="#2-钱币找零" class="headerlink" title="(2)钱币找零"></a>(2)钱币找零</h3><p>有 c1 c2 c5 c10 c20 c50 c100 面额的纸币,用来付 k 元,</p>
+<p>如何用最少张钱币来支付k元?</p>
+<p>限制条件: 加起来为k元, 期望值: 使用的钱币最少</p>
+<p>性价比: 面额越大的钱币</p>
+<h3 id="3-区间覆盖"><a href="#3-区间覆盖" class="headerlink" title="(3)区间覆盖"></a>(3)区间覆盖</h3><p>有n个区间,例如:[6,8] [2,4] [3,5] [1,5] [5,9] [8,10]</p>
+<p>从这n个区间中找出一部分区间,这部分区间 两两不相交(端点不算),</p>
+<p>最多选出多少个区间呢?</p>
+<p>限制条件: 区间最左端到最右端[1,10], 期望值: 选出的区间最多</p>
+<p>性价比: 自身区间越短的区间</p>
+<p>解法:找出区间最左端与最右端例如[1,10],</p>
+<p>每次选择 左端点与之前不重合 右端点尽量小.</p>
+<h3 id="4-移除k个数组"><a href="#4-移除k个数组" class="headerlink" title="(4)移除k个数组"></a>(4)移除k个数组</h3><p>非负整数a,移除其中k个数字,让剩下的数字值最小,移除哪k个数字?</p>
+<p>限制条件: 共移除k个数字, 期望值: 移除完后的结果最小</p>
+<p>性价比: 高位且大于下一位的数字(靠左却大于右侧数字 的数字)</p>
+<h3 id="5-等待时间最短"><a href="#5-等待时间最短" class="headerlink" title="(5)等待时间最短"></a>(5)等待时间最短</h3><p>n个人等待服务,每个人需要的服务时间长度不同,</p>
+<p>如何安排顺序,使n个人总等待时间最短?</p>
+<p>限制条件: 顺序(?我也不确定), 期望值: 总等待时间最短</p>
+<p>性价比: 服务时间短的人</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>贪心算法的使用场景比较有限,这种算法思想更多的是 指导设计基础算法.</p>
+<p>比如: 最小生成树算法,单源最短路径算法.</p>
+<p>贪心算法的 关键 是多练习, 难点 是将问题抽象成贪心算法模型,</p>
+<p>贪心算法的编码一般很简单.</p>
+<p>贪心算法的正确性是显而易见的,但证明需要严谨复杂的数学论证.</p>
 
-    <span class="token keyword">while</span><span class="token punctuation">(</span>index2 <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>nums1<span class="token punctuation">[</span>index1<span class="token punctuation">]</span> <span class="token operator">></span> nums2<span class="token punctuation">[</span>index2<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            nums1<span class="token punctuation">[</span>pointer<span class="token punctuation">]</span> <span class="token operator">=</span> nums1<span class="token punctuation">[</span>index1<span class="token punctuation">]</span>
-            pointer <span class="token operator">--</span>
-            index1 <span class="token operator">--</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            nums1<span class="token punctuation">[</span>pointer<span class="token punctuation">]</span> <span class="token operator">=</span> nums2<span class="token punctuation">[</span>index2<span class="token punctuation">]</span>
-            pointer <span class="token operator">--</span>
-            index2 <span class="token operator">--</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> nums1
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="部分排序"><a href="#部分排序" class="headerlink" title="部分排序"></a>部分排序</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sub-sort-lcci">力扣 sub-sort-lcci</a></p>
-<p>给定一个整数数组，编写一个函数，找出索引m和n，只要将索引区间[m,n]的元素排好序，整个数组就是有序的。注意：n-m尽量最小，也就是说，找出符合条件的最短序列。函数返回值为[m,n]，若不存在这样的m和n（例如整个数组是有序的），请返回[-1,-1]。</p>
-<p><strong>我的题解</strong></p>
-<p>1.注意到 分为 左有序列 中无序列 右有序列<br>2.注意到 左有序列中 每一个数 的 右边的数 必然都大于此数,反之亦然<br>3.如果 左有序列中 存在某个数的右边的数 小于此数,则此数应属于 中无序列</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">subSort</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> start <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
-    <span class="token keyword">let</span> end <span class="token operator">=</span> <span class="token operator">-</span> <span class="token number">1</span>
-    <span class="token comment">// 从左往右 一个个数遍历</span>
-    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> array<span class="token punctuation">.</span>length <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 如果 这个数右边存在比他小的数，那么这个数就是无序列的左边界</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> array<span class="token punctuation">.</span>length <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                start <span class="token operator">=</span> i<span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>start <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">// 再从右往左 一个个遍历</span>
-    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> array<span class="token punctuation">.</span>length <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">></span> start<span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 如果 这个数 左边 存在比他大的数，那么这个数就是 无序列的右边界</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">></span> start<span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                end <span class="token operator">=</span> i
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>end <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">return</span> <span class="token punctuation">[</span>start<span class="token punctuation">,</span>end<span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -516,7 +508,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/13/suan-fa-ti/suan-fa-ti-1-qi/">https://github.com/LZY2333/LZY2333.github.io/2021/10/13/suan-fa-ti/suan-fa-ti-1-qi/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/26/suan-fa/37.tan-xin-suan-fa/">https://github.com/LZY2333/LZY2333.github.io/2021/10/26/suan-fa/37.tan-xin-suan-fa/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -554,8 +546,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                                    <span class="chip bg-color">算法题</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -725,17 +717,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/13/suan-fa-ti/lian-biao-suan-fa-ti/">
+                <a href="/2021/10/26/suan-fa/37.tan-xin-suan-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="链表算法题">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="37.贪心算法">
                         
-                        <span class="card-title">链表算法题</span>
+                        <span class="card-title">37.贪心算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -745,9 +738,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -756,11 +749,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                        <span class="chip bg-color">算法题</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -774,13 +768,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/25/typescript/6.ts-lei-xing-bao-hu-he-lei-xing-bian-huan/">
+                <a href="/2021/10/26/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="6.TS类型保护和类型变换">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">6.TS类型保护和类型变换</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -791,27 +785,15 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/TS%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    TS笔记
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            罗紫宇
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/TypeScript/">
-                        <span class="chip bg-color">TypeScript</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -956,7 +938,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">64.9k</span>&nbsp;字
+                class="white-color">66.1k</span>&nbsp;字
             
             
             

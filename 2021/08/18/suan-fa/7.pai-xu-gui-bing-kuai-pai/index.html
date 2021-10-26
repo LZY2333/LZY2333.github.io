@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    8 分
                 </div>
                 
 
@@ -439,7 +439,8 @@
             <div id="articleContent">
                 <h1 id="排序-归并-快排"><a href="#排序-归并-快排" class="headerlink" title="排序(归并,快排)"></a>排序(归并,快排)</h1><p>归并排序 和 快速排序 都用到了 分治思想,</p>
 <p>时间复杂度都为 O(nlogn)</p>
-<h2 id="归并排序-mergeSort"><a href="#归并排序-mergeSort" class="headerlink" title="归并排序(mergeSort)"></a>归并排序(mergeSort)</h2><p>分析出递推公式，找到终止条件</p>
+<h2 id="归并排序-mergeSort"><a href="#归并排序-mergeSort" class="headerlink" title="归并排序(mergeSort)"></a>归并排序(mergeSort)</h2><p>就一直拆分到底，只剩1个元素或0个元素，再合并后往上返回。<br>合并时两个数组都从最左边元素开始比较，谁小谁进temp，再对应index++</p>
+<p>分析出递推公式，找到终止条件</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">
 <span class="token comment">// 这里将mergeArr函数执行成多层嵌套,</span>
 <span class="token comment">// 直到数组被拆分为只有0或1个元素的多个数组,类似金字塔的结构</span>
@@ -509,51 +510,46 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <p>但又由于合并完后,临时开辟的内存空间就会被释放,且CPU任意时刻只执行一个函数</p>
 <p>所以,临时内存空间最大的时候也就是 n个数据的大小(最后一次合并时temp.length),</p>
 <p>所以,O(n)</p>
-<h2 id="快速排序-quickSort"><a href="#快速排序-quickSort" class="headerlink" title="快速排序(quickSort)"></a>快速排序(quickSort)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">swap</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> i<span class="token punctuation">,</span> j</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<h2 id="快速排序-quickSort"><a href="#快速排序-quickSort" class="headerlink" title="快速排序(quickSort)"></a>快速排序(quickSort)</h2><h3 id="正经原地排序版"><a href="#正经原地排序版" class="headerlink" title="正经原地排序版"></a>正经原地排序版</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js">
+<span class="token comment">// 负责拆分数组</span>
+<span class="token keyword">const</span> <span class="token function-variable function">quickSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 表示还可继续拆分,否则表示已拆分到最小单位</span>
+        <span class="token keyword">let</span> pivot <span class="token operator">=</span> right
+        <span class="token keyword">let</span> partitionIndex <span class="token operator">=</span> <span class="token function">partition</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> pivot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+        <span class="token comment">// 对pivot左侧数组(不包括当前pivot)进行快排</span>
+        <span class="token function">quickSort</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> partitionIndex <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token comment">// 对pivot右侧数组(不包括当前pivot)进行快排</span>
+        <span class="token function">quickSort</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> partitionIndex <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 负责根据pivot分左右区</span>
+<span class="token keyword">const</span> <span class="token function-variable function">partition</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> pivot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> pivotVal <span class="token operator">=</span> arr<span class="token punctuation">[</span>pivot<span class="token punctuation">]</span>
+    <span class="token keyword">let</span> startIndex <span class="token operator">=</span> left <span class="token comment">// 指针指向分界点</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> left<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> right<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 找到比pivotVal小的数放指针左边</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> pivotVal<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">swap</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> i<span class="token punctuation">,</span> startIndex<span class="token punctuation">)</span>
+            <span class="token comment">// startIndex走过的区域是已处理区间(小于pivot的数)</span>
+            <span class="token comment">// startIndex更新为指向 下一个数,等待被交换(已处理区间不包含startIndex点)</span>
+            startIndex<span class="token operator">++</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 最后将pivot(中间数)数据放在startIndex上,</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> startIndex<span class="token punctuation">,</span> pivot<span class="token punctuation">)</span>
+    <span class="token comment">// 此时left-startIndex之间均为 小于等于arr[startIndex]的数</span>
+    <span class="token keyword">return</span> startIndex
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 负责交换元素位置</span>
+<span class="token keyword">const</span> <span class="token function-variable function">swap</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> i<span class="token punctuation">,</span> j</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<span class="token comment">// 这里节省时间使用 交换 导致成为了不稳定算法,</span>
+<span class="token comment">// 如果使用插入排序的思路可转换为稳定排序,但也需要更多时间加一层循环</span>
     <span class="token keyword">const</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
     arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
     arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> temp
 <span class="token punctuation">&#125;</span>
-
-<span class="token comment">// 获取 pivot 交换完后的index</span>
-<span class="token keyword">const</span> <span class="token function-variable function">partition</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> pivot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">const</span> pivotVal <span class="token operator">=</span> arr<span class="token punctuation">[</span>pivot<span class="token punctuation">]</span>
-    <span class="token keyword">let</span> startIndex <span class="token operator">=</span> left
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> left<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> right<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> pivotVal<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">// 使用交换(O(1)),而不使用插入(O(n))</span>
-            <span class="token function">swap</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> i<span class="token punctuation">,</span> startIndex<span class="token punctuation">)</span>
-            <span class="token comment">// startIndex走过的区域是已处理区间(小于pivot的数)</span>
-            <span class="token comment">// startIndex当前指向必为 大于等于pivot 的数,等待被交换</span>
-            startIndex<span class="token operator">++</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">// 最后将pivot(中间点)数据放在startIndex上,</span>
-    <span class="token comment">// 此时left-startIndex之间均为 小于等于arr[startIndex]的数</span>
-    <span class="token function">swap</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> startIndex<span class="token punctuation">,</span> pivot<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> startIndex
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">const</span> <span class="token function-variable function">quickSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> pivot <span class="token operator">=</span> right
-        <span class="token keyword">let</span> partitionIndex <span class="token operator">=</span> <span class="token function">partition</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> pivot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">)</span>
-        <span class="token comment">// 1.当 partitionIndex - 1 &lt; left 此时left其实就等于 partitionIndex</span>
-        <span class="token comment">// 相当于quickSort(arr, left, left),代表左侧已无数可排,结束</span>
-        <span class="token comment">// 2.当 partitionIndex - 1 > left,表示左侧还能继续分</span>
-        <span class="token comment">// 相当于quickSort(arr, left,  partitionIndex - 1)</span>
-        <span class="token comment">// 对pivot左侧数组(不包括当前pivot)进行快排</span>
-        <span class="token function">quickSort</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> partitionIndex <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">&lt;</span> left <span class="token operator">?</span> left <span class="token operator">:</span> partitionIndex <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
-        <span class="token comment">// 1.当 partitionIndex + 1 > right 此时left其实就等于 partitionIndex</span>
-        <span class="token comment">// 相当于quickSort(arr, right, right),代表右侧已无数可排,结束</span>
-        <span class="token comment">// 2.当 partitionIndex + 1 > right,表示右侧还能继续分</span>
-        <span class="token comment">// 相当于quickSort(arr, partitionIndex - 1, right)</span>
-        <span class="token comment">// 对pivot右侧数组(不包括当前pivot)进行快排</span>
-        <span class="token function">quickSort</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> partitionIndex <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">></span> right <span class="token operator">?</span> right <span class="token operator">:</span> partitionIndex <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>
-
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
 
 <span class="token keyword">const</span> testArr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 <span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span>
@@ -563,7 +559,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token punctuation">&#125;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序前:'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span>
 <span class="token function">quickSort</span><span class="token punctuation">(</span>testArr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> testArr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序后:'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序后:'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>不稳定的排序算法</strong></p>
 <p><strong>原地排序</strong></p>
 <p><strong>时间复杂度O(nlogn)</strong><br>极端情况下时间复杂度退化成O(n²),例如选中有序数组的最后一位做为pivot<br>防止极端情况:<br>三数取中法(每次从要排序的区间中 首 尾 中 取数 中值作为pivot,可5数取中,等)<br>随机法(每次从要排序的区间中随机选择pivot)</p>
@@ -571,6 +567,24 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <blockquote>
 <p>归并 自下而上, 快排 自上而下</p>
 </blockquote>
+<h3 id="5行代码版-非原地排序-分归排序"><a href="#5行代码版-非原地排序-分归排序" class="headerlink" title="5行代码版(非原地排序,分归排序)"></a>5行代码版(非原地排序,分归排序)</h3><p>这个版本便于理解快排原理，但存在导致空间复杂度提升的缺点，不建议实际使用。</p>
+<p>确实不该算快排，应该就叫分归排序，非常贴切</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903938290876430">老姚–掘金</a></p>
+<p>作者称为，分归排序</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">quickSort</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>array<span class="token punctuation">.</span>length <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">return</span> array
+  <span class="token keyword">let</span> pivot <span class="token operator">=</span> array<span class="token punctuation">[</span>array<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>
+  <span class="token keyword">let</span> left <span class="token operator">=</span> array<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">v<span class="token punctuation">,</span> i</span><span class="token punctuation">)</span> <span class="token operator">=></span> v <span class="token operator">&lt;=</span> pivot <span class="token operator">&amp;&amp;</span> i <span class="token operator">!=</span> array<span class="token punctuation">.</span>length <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">let</span> right <span class="token operator">=</span> array<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">v</span> <span class="token operator">=></span> v <span class="token operator">></span> pivot<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token function">quickSort</span><span class="token punctuation">(</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> pivot<span class="token punctuation">,</span> <span class="token operator">...</span><span class="token function">quickSort</span><span class="token punctuation">(</span>right<span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>稳定排序</strong></p>
+<p><strong>非原地排序</strong></p>
+<p><strong>空间复杂度O(nlogn)</strong></p>
+<p>每层递归 占用O(n)空间，</p>
+<p>且由于 使用了return(确实该叫分归)，导致了 最后一层结果返回前 会产生O(lgn)层 函数调用栈</p>
+<p>因此总体空间复杂度是O(nlogn)</p>
+<p><strong>时间复杂度O(nlogn)</strong></p>
 <h2 id="找到第K大的数"><a href="#找到第K大的数" class="headerlink" title="找到第K大的数"></a>找到第K大的数</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
  * 第k大的数
  * 思路,类似快速排序,每次排完pivot点所在的位置就是其最终的排序位置
@@ -1075,7 +1089,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">64.9k</span>&nbsp;字
+                class="white-color">66.1k</span>&nbsp;字
             
             
             
