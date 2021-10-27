@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="LazyYu">
+    <meta name="keywords" content="39.回溯算法, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>LazyYu</title>
+    <title>39.回溯算法 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">39.回溯算法</h1>
                 </div>
             </div>
         </div>
@@ -385,9 +385,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -408,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    26
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    5 分
                 </div>
                 
 
@@ -433,7 +437,95 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="永生是否是一种酷刑"><a href="#永生是否是一种酷刑" class="headerlink" title="永生是否是一种酷刑"></a>永生是否是一种酷刑</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31756387/answer/2146825423">永生是否是一种酷刑？ - 也说的回答 - 知乎</a><br>fdfdfdfddgjoivoinoifnofidjfoisjdfiocioijdoiasjdoisdjcnoisjdisjdidjoacnscscssdasdasdasdasjdoiasjdoasidjoasiasofsafsaifaosijsaoidjsidjsidjsidjsdijsddfdfcsccicjdijc</p>
+                <h1 id="39-回溯算法"><a href="#39-回溯算法" class="headerlink" title="39.回溯算法"></a>39.回溯算法</h1><p>回溯算法的本质是枚举，<strong>有规律</strong> <strong>分步骤</strong> 的枚举所有解，</p>
+<p>每一步 有多个岔路口，当发现当前路走不通时，回到上一个路口，换条路继续走。</p>
+<p>适用于缺乏规律，或还不了解其规律的搜索场景中。</p>
+<h2 id="分治算法实战"><a href="#分治算法实战" class="headerlink" title="分治算法实战"></a>分治算法实战</h2><h3 id="八皇后问题"><a href="#八皇后问题" class="headerlink" title="八皇后问题"></a>八皇后问题</h3><p>8 * 8 的期盼,放8个棋子(皇后),棋子所在的 行 列 对角线 都不能有其他棋子.</p>
+<p>八皇后问题 要求找到 所有 满足这种要求的摆放方式.</p>
+<p>首先我们知道,8个棋子,必然在8列上,于是我们只需要找到每列的棋子各属于第几行.</p>
+<p>把问题划分成 8 个阶段,依次把棋子放在 第1 到 第8行.</p>
+<p>放置的过程中,不停地检索当前放法是否符合要求,</p>
+<p>如果满足,则继续跳下一行防止,如果不满足,则换一种放法继续尝试.</p>
+<p><strong>回溯算法非常适合递归实现</strong></p>
+<p>(后续补充代码,及leetcode题)</p>
+<h3 id="0-1背包"><a href="#0-1背包" class="headerlink" title="0-1背包"></a>0-1背包</h3><p><strong>经典算法问题,很多场景可以抽象成这个问题模型</strong></p>
+<p>这个问题 经典解法是 <strong>动态规划</strong>,</p>
+<p>同时也可使用 <strong>回溯算法</strong>,更为简单 但没那么高效.</p>
+<p>0-1背包问题有多个变体,这里介绍最基础的.</p>
+<p>一个背包总承载重量为Wkg,要存放有n个物体,重量不同 不可分割.</p>
+<p>要求在不超过总承载重量的情况下,存放尽可能多的物体.</p>
+<p>对于每个物体都有两个选择,装或不装, n个物体 2的n次方种装法.</p>
+<p>去掉 总重量超过Wkg的装法,剩下的就是接近Wkg的.</p>
+<p>要穷举出 这些装法,把物品的装与不装视为n个阶段,对每个物品穷举</p>
+<p>所有情况,当发现 已选择的物品重量超过Wkg,就停止继续探测.具体看代码</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 先复制了一波java代码,回头理解了补充上自己的</span>
+<span class="token keyword">public</span> <span class="token keyword">int</span> maxW <span class="token operator">=</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span>MIN_VALUE<span class="token punctuation">;</span> <span class="token comment">//存储背包中物品总重量的最大值</span>
+<span class="token comment">// cw表示当前已经装进去的物品的重量和；i表示考察到哪个物品了；</span>
+<span class="token comment">// w背包重量；items表示每个物品的重量；n表示物品个数</span>
+<span class="token comment">// 假设背包可承受重量100，物品个数10，物品重量存储在数组a中，那可以这样调用函数：</span>
+<span class="token comment">// f(0, 0, a, 10, 100)</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> cw<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> items<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">,</span> <span class="token keyword">int</span> w<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>cw <span class="token operator">==</span> w <span class="token operator">||</span> i <span class="token operator">==</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// cw==w表示装满了;i==n表示已经考察完所有的物品</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cw <span class="token operator">></span> maxW<span class="token punctuation">)</span> maxW <span class="token operator">=</span> cw<span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token function">f</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> cw<span class="token punctuation">,</span> items<span class="token punctuation">,</span> n<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//当前物品不装进背包</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>cw <span class="token operator">+</span> items<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> w<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token comment">// 已经超过可以背包承受的重量的时候，就不要再装了</span>
+    <span class="token function">f</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>cw <span class="token operator">+</span> items<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> items<span class="token punctuation">,</span> n<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//当前物品装进背包</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>(后续补充代码,及leetcode题)</p>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p>假设正则表达式中, 只有</p>
+<p>‘*’ 匹配 0-任意多 个任意字符(与现实不同,现实是前面的字符),</p>
+<p>“.” 匹配 0或1 个任意字符(与现实不同,现实是前面的字符).</p>
+<p>给一个字符串,再给一个正则表达式,返回字符串与表达式是否匹配.</p>
+<p>依次考察正则表达式中每个字符,当 不是通配符时,就直接跟字符串进行匹配,</p>
+<p>如果相同则继续往下处理,如果不同,则回溯.</p>
+<p>遇到通配符时,”*”匹配任意个字符串中的字符,</p>
+<p>发现匹配不下去,就回到岔路口,重新选择一种匹配方案,再继续匹配.(这里没看懂)</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 先复制了一波java代码,回头理解了补充上自己的</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Pattern</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">private</span> <span class="token keyword">boolean</span> matched <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> pattern<span class="token punctuation">;</span> <span class="token comment">// 正则表达式</span>
+  <span class="token keyword">private</span> <span class="token keyword">int</span> plen<span class="token punctuation">;</span> <span class="token comment">// 正则表达式长度</span>
+
+  <span class="token keyword">public</span> <span class="token class-name">Pattern</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> pattern<span class="token punctuation">,</span> <span class="token keyword">int</span> plen<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>pattern <span class="token operator">=</span> pattern<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>plen <span class="token operator">=</span> plen<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">match</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> text<span class="token punctuation">,</span> <span class="token keyword">int</span> tlen<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 文本串及长度</span>
+    matched <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token function">rmatch</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> text<span class="token punctuation">,</span> tlen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> matched<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">rmatch</span><span class="token punctuation">(</span><span class="token keyword">int</span> ti<span class="token punctuation">,</span> <span class="token keyword">int</span> pj<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> text<span class="token punctuation">,</span> <span class="token keyword">int</span> tlen<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>matched<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span> <span class="token comment">// 如果已经匹配了，就不要继续递归了</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pj <span class="token operator">==</span> plen<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 正则表达式到结尾了</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>ti <span class="token operator">==</span> tlen<span class="token punctuation">)</span> matched <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment">// 文本串也到结尾了</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pattern<span class="token punctuation">[</span>pj<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'*'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// *匹配任意个字符</span>
+      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> k <span class="token operator">&lt;=</span> tlen<span class="token operator">-</span>ti<span class="token punctuation">;</span> <span class="token operator">++</span>k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">rmatch</span><span class="token punctuation">(</span>ti<span class="token operator">+</span>k<span class="token punctuation">,</span> pj<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> text<span class="token punctuation">,</span> tlen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>pattern<span class="token punctuation">[</span>pj<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'?'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// ?匹配0个或者1个字符</span>
+      <span class="token function">rmatch</span><span class="token punctuation">(</span>ti<span class="token punctuation">,</span> pj<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> text<span class="token punctuation">,</span> tlen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">rmatch</span><span class="token punctuation">(</span>ti<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> pj<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> text<span class="token punctuation">,</span> tlen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>ti <span class="token operator">&lt;</span> tlen <span class="token operator">&amp;&amp;</span> pattern<span class="token punctuation">[</span>pj<span class="token punctuation">]</span> <span class="token operator">==</span> text<span class="token punctuation">[</span>ti<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 纯字符匹配才行</span>
+      <span class="token function">rmatch</span><span class="token punctuation">(</span>ti<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> pj<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> text<span class="token punctuation">,</span> tlen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>(后续补充代码,及leetcode题)</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>回溯算法 的思想简单,大部分请客下,都是用来解决广义的搜索问题,</p>
+<p>即 从一组可能的解种,选择出一个满足要求的解.</p>
+<p>适合用 <strong>递归实现</strong>,同时利用 <strong>剪枝</strong> 提高搜索效率.</p>
+<p>回溯算法简单,但可以解决很多问题,如</p>
+<p><strong>深度优先搜索</strong> <strong>八皇后</strong> <strong>0-1背包问题</strong> <strong>正则表达式匹配</strong></p>
+<p><strong>图的着色</strong> <strong>旅行商问题</strong> <strong>数独</strong> <strong>全排列</strong></p>
+<p>这几个问题都能 代码实现的话,就是掌握了回溯算法</p>
 
                 
             </div>
@@ -460,7 +552,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/27/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/">https://github.com/LZY2333/LZY2333.github.io/2021/10/27/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/27/suan-fa/39.hui-su-suan-fa/">https://github.com/LZY2333/LZY2333.github.io/2021/10/27/suan-fa/39.hui-su-suan-fa/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -497,7 +589,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -669,13 +765,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/27/suan-fa-ti/test/">
+                <a href="/2021/10/27/suan-fa/38.fen-zhi-suan-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="38.分治算法">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">38.分治算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -697,6 +793,14 @@
                     </div>
                 </div>
                 
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                </div>
+                
             </div>
         </div>
         
@@ -706,13 +810,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/27/suan-fa/38.fen-zhi-suan-fa/">
+                <a href="/2021/10/26/suan-fa/37.tan-xin-suan-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="38.分治算法">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="37.贪心算法">
                         
-                        <span class="card-title">38.分治算法</span>
+                        <span class="card-title">37.贪心算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -723,7 +827,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                             </span>
                         <span class="publish-author">
                             
