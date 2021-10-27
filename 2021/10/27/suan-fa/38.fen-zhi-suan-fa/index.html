@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="LazyYu">
+    <meta name="keywords" content="38.分治算法, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>LazyYu</title>
+    <title>38.分治算法 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">38.分治算法</h1>
                 </div>
             </div>
         </div>
@@ -385,9 +385,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -399,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-26
+                    2021-10-27
                 </div>
                 
 
@@ -408,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    26
+                    973
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -433,7 +437,61 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="永生是否是一种酷刑"><a href="#永生是否是一种酷刑" class="headerlink" title="永生是否是一种酷刑"></a>永生是否是一种酷刑</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31756387/answer/2146825423">永生是否是一种酷刑？ - 也说的回答 - 知乎</a><br>fdfdfdfddgjoivoinoifnofidjfoisjdfiocioijdoiasjdoisdjcnoisjdisjdidjoacnscscssdasdasdasdasjdoiasjdoasidjoasiasofsafsaifaosijsaoidjsidjsidjsidjsdijsddfdfcsccicjdijc</p>
+                <h1 id="分治算法"><a href="#分治算法" class="headerlink" title="分治算法"></a>分治算法</h1><p>divide and conquer</p>
+<p><strong>核心</strong>: <strong>分而治之</strong></p>
+<p>将原问题分成n个规模较小,且结构与原问题相似的子问题,</p>
+<p>递归解决子问题,合并其结果,得到原问题的解.</p>
+<blockquote>
+<p>递归的定义类似于分治<br>分治是一种处理问题的思想,递归是一种编程技巧<br>分治算法 一般都比较适合 用递归来实现</p>
+</blockquote>
+<h2 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h2><p><strong>题目满足条件</strong></p>
+<ol>
+<li><p>原问题 与 子问题 具有相同的模式</p>
+</li>
+<li><p>子问题之间无相关性(这一点是 分治 与 动态规划 的明细区别)</p>
+</li>
+<li><p>具有 分解终止条件 (问题足够小时,可以直接得解)</p>
+</li>
+<li><p>子问题 的合并操作复杂度不能太高</p>
+</li>
+</ol>
+<p><strong>解题步骤</strong></p>
+<p>分解: 将问题分解为 一系列结构类似的子问题</p>
+<p>解决: 递归 求解各个子问题, 若问题足够小,直接返回解</p>
+<p>合并: 将子问题的结果合并成原问题</p>
+<h2 id="分治算法实战"><a href="#分治算法实战" class="headerlink" title="分治算法实战"></a>分治算法实战</h2><p>分治算法的原理不难,但灵活应用并不容易</p>
+<h3 id="求出一组数的逆序度"><a href="#求出一组数的逆序度" class="headerlink" title="求出一组数的逆序度"></a>求出一组数的逆序度</h3><p><strong>逆序度基础知识</strong></p>
+<p>n 个数据,期望递增排列,</p>
+<p>则完全有序的数据 有序度为n(n-1)/2,逆序度为0</p>
+<p>倒序排列的数据 有序度为0,逆序度为n(n-1)/2</p>
+<blockquote>
+<p>数学满逆序度的计算思路,如 倒序排列的数据<br>每个数可以与另外(n-1)个数构成对,共n个数,有n(n-1)对数<br>每两个数 之间都会被 凑对两次,<br>但其中只有 当前数与其右侧数 的顺序组成的对,才是逆序,<br>即n(n-1)/2 就是所有逆序对的总和.</p>
+</blockquote>
+<p><strong>如何求出一组数据的 逆序对个数,或 有序对个数?</strong></p>
+<p>例如<code>[2,4,3,1,5,6]</code>,逆序对<code>(2,1)``(4,3)``(4,1)``(3,1)</code></p>
+<p>最简单的办法,拿每个数字与后面的数比较,看有几个比他小,记为k,</p>
+<p>每个数轮一遍后,每个数字的k值之和就是逆序对.时间复杂度O(n²).</p>
+<p><strong>分治思路</strong>:</p>
+<p>将数组分为前半A1,后半A2,</p>
+<p>计算 A1,A2 内各自的逆序对个数,k1,k2,</p>
+<p>再计算A1,A2 间 的逆序对个数k3,</p>
+<p>A的逆序度就是 k1 + k2 + k3.</p>
+<p><strong>分治解题</strong>: 用归并排序的算法改装</p>
+<h3 id="找出距离最近的点对"><a href="#找出距离最近的点对" class="headerlink" title="找出距离最近的点对"></a>找出距离最近的点对</h3><p>二维平面上n个点,设计算法快速找出 距离最近的两点(点对)</p>
+<h3 id="矩阵乘积"><a href="#矩阵乘积" class="headerlink" title="矩阵乘积"></a>矩阵乘积</h3><p>两个 n * n 的矩阵 A B,设计算法快速求解两个矩阵的乘积 C = A * B</p>
+<h2 id="MapReduce的分治思想应用"><a href="#MapReduce的分治思想应用" class="headerlink" title="MapReduce的分治思想应用"></a>MapReduce的分治思想应用</h2><p>分治算法 将任务拆分成多个子任务,子任务可在多台机器上处理</p>
+<p>例如 10GB 甚至 10T的数据,</p>
+<p>对于谷歌搜索来说, 网页爬取,清洗,分析,分词,权重计算,倒排索引 等各个环节</p>
+<p>都会面临海量的数据,采用 MapReduce框架 做任务调度器,</p>
+<p>底层依赖 GFS来储存数据, Borg管理机器.</p>
+<p>它从GFS中拿数据,交给Borg中的机器执行,Borg监控机器执行的进度,</p>
+<p>一旦出现机器宕机 进度卡壳等,就重新从 Borg中调度一台机器执行.</p>
+<p>其中 <strong>MapReduce</strong> 负责提供 高可靠,高性能,高容错的 并行框架计算,</p>
+<p>并行处理 几十亿 上百亿 的网页.</p>
+<p>既可以处理 数据与数据之间存在关系的任务,如 统计文件(网页)中单词的出现频率.</p>
+<p>又可以处理 数据与数据之间没有关系的任务,如 网页分析,分词,每个网页独立分析.</p>
+<p>用的就是 分治思想.</p>
+<p>拆解任务,多机并行处理,再合并结果(存在关系的任务),也可纯拆不合并(无关系的任务)</p>
 
                 
             </div>
@@ -460,7 +518,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/26/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/">https://github.com/LZY2333/LZY2333.github.io/2021/10/26/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/27/suan-fa/38.fen-zhi-suan-fa/">https://github.com/LZY2333/LZY2333.github.io/2021/10/27/suan-fa/38.fen-zhi-suan-fa/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -497,7 +555,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -665,17 +727,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/26/suan-fa/37.tan-xin-suan-fa/">
+                <a href="/2021/10/27/suan-fa/38.fen-zhi-suan-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="37.贪心算法">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="38.分治算法">
                         
-                        <span class="card-title">37.贪心算法</span>
+                        <span class="card-title">38.分治算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -685,9 +748,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -696,6 +759,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -714,13 +778,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/23/suan-fa-ti/zhao-dao-lian-biao-huan-jie-gou-ru-kou-jie-dian-142/">
+                <a href="/2021/10/27/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="查找链表环结构的入口结点">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">查找链表环结构的入口结点</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -731,7 +795,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
                             </span>
                         <span class="publish-author">
                             
@@ -740,14 +804,6 @@
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                        <span class="chip bg-color">算法题</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -892,7 +948,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">66.1k</span>&nbsp;字
+                class="white-color">67.1k</span>&nbsp;字
             
             
             
