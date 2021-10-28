@@ -412,14 +412,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    796
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    6 分
                 </div>
                 
 
@@ -438,6 +438,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="贪心算法题"><a href="#贪心算法题" class="headerlink" title="贪心算法题"></a>贪心算法题</h1><p><strong>学到的解题方法</strong></p>
+<p>假设某道题需要 找到一堆 单增 或 单减，数据中 相反的那个，则用栈。</p>
 <h2 id="分发饼干-LeetCode-455"><a href="#分发饼干-LeetCode-455" class="headerlink" title="分发饼干(LeetCode 455)"></a>分发饼干(LeetCode 455)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/assign-cookies/">leetcode</a></p>
 <p>假设你是一位很棒的家长，想要给你的孩子们一些小饼干。</p>
 <p>但是，每个孩子最多只能给一块饼干。</p>
@@ -492,23 +493,33 @@
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="用最少数量的箭引爆气球-leetcode-452"><a href="#用最少数量的箭引爆气球-leetcode-452" class="headerlink" title="用最少数量的箭引爆气球(leetcode 452)"></a>用最少数量的箭引爆气球(leetcode 452)</h2><p>其实就是区间覆盖,给几个区间,每个区间存在重复与不充分,找出最多的重复区间</p>
 <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/">leetcode</a></p>
-<p>答案没太看懂,靠右,射左的方式,我想改成靠左射右</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">findMinArrowShots</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">points</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>points<span class="token punctuation">.</span>length <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-
+    <span class="token comment">// 首先，按右边界从小到大排列，保证每 后一个气球 右边界 必在 当前气球 右边界 的右边</span>
+    <span class="token comment">// 同时设置 箭位置为 1球右边(贪婪，射中1的同时又尽量能射中后面的球,射中后面的球的条件需要箭位置尽可能大)</span>
+    <span class="token comment">// 这样 2球右边 > 1球右 = 箭位置，那么只需要判断 2球左边 &lt; 箭位置 就代表必然同时射中2球</span>
+    <span class="token comment">// 如果 不能射中 2球，即 2球左 > 1球右,例如:[1,2] [3,4]</span>
+    <span class="token comment">// 则需 箭+1,并设置 新箭位置 为 2球右(如:4)</span>
+    <span class="token comment">// 如果 能射中 2球,则继续判断下一个球是否也能射中，直到找到不能射中的，加新箭</span>
+    <span class="token comment">// 这里的精妙之处就在于,每次都拿出新的一支箭,并设置其位置为当前球右边界时，</span>
+    <span class="token comment">// 假设这支箭最多能射穿n个气球,那么这支箭的位置,"必然在这n个气球中最靠左的右边界位置"</span>
+    <span class="token comment">// 而完成这一精妙操作关键一步是开头的 按右边界从小到大排列，同时 从左向右遍历</span>
+    <span class="token comment">// 每一次 增加新箭，都是在气球右边界上，而由于是 右边界从小到大排序，所以碰到是第一个气球必然就是</span>
+    <span class="token comment">// "必然在这n个气球中最靠左的右边界位置"</span>
     points<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> b<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">let</span> pos <span class="token operator">=</span> points<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>points<span class="token punctuation">)</span>
+    <span class="token keyword">let</span> pos <span class="token operator">=</span> points<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token comment">// 当前区间的 右边,位射箭位置</span>
     <span class="token keyword">let</span> ans <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> balloon <span class="token keyword">of</span> points<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>balloon<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">></span> pos<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            pos <span class="token operator">=</span> balloon<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            ans<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>balloon<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">></span> pos<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果当前 区间的 左边 比 射箭位置 大</span>
+            pos <span class="token operator">=</span> balloon<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// </span>
+            ans<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token comment">// 则需要多射一支箭</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="我的解法"><a href="#我的解法" class="headerlink" title="我的解法"></a>我的解法</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">findMinArrowShots</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">points</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     points <span class="token operator">=</span> points<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">l<span class="token punctuation">,</span>r</span><span class="token punctuation">)</span> <span class="token operator">=></span> l<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> r<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">||</span> l<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> r<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// 左端点相等要按右端点最小的来</span>
     <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -527,6 +538,40 @@
     <span class="token keyword">return</span> count
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="移掉K位数字-leetcode-402"><a href="#移掉K位数字-leetcode-402" class="headerlink" title="移掉K位数字(leetcode 402)"></a>移掉K位数字(leetcode 402)</h2><p><a target="_blank" rel="noopener" href="https://www.algomooc.com/algocamp2">leetcode</a></p>
+<p>这样从递增里找减少的，从递减里找增加的，就用栈！！！！</p>
+<p><strong>无注释版</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">removeKDigits</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">num<span class="token punctuation">,</span> k</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> now <span class="token keyword">of</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> stack<span class="token punctuation">[</span>stack<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">></span> now <span class="token operator">&amp;&amp;</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            k <span class="token operator">-=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>now<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>k<span class="token operator">--</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>stack<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">'0'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> stack<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'0'</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>注释版</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">removeKDigits</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">num<span class="token punctuation">,</span> k</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 维护一个单调递减栈(越栈底的数越小)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> now <span class="token keyword">of</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 从左往右一个个遍历数</span>
+        <span class="token comment">// 如果 栈不为空 栈顶元素大于当前元素 还需要删数</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> stack<span class="token punctuation">[</span>stack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">></span> now <span class="token operator">&amp;&amp;</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 删了</span>
+            k <span class="token operator">-=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>now<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 把当前数放进去</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 如果轮完还有k没删够，就删后面的大数字</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>k<span class="token operator">--</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 删掉前面的0</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>stack<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">'0'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> stack<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 拼接并防止空字符串</span>
+    <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'0'</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="跳跃游戏-leetcode-55"><a href="#跳跃游戏-leetcode-55" class="headerlink" title="跳跃游戏(leetcode 55)"></a>跳跃游戏(leetcode 55)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/jump-game/">leetcode</a></p>
 
                 
             </div>
@@ -762,58 +807,11 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
-            <div class="card">
-                <a href="/2021/10/27/suan-fa-ti/tan-xin-suan-fa-ti/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="贪心算法题">
-                        
-                        <span class="card-title">贪心算法题</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            罗紫宇
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                        <span class="chip bg-color">算法题</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/27/suan-fa-ti/test/">
+                <a href="/2021/10/28/sheng-huo/yong-sheng-shi-fou-shi-yi-chong-ku-xing/">
                     <div class="card-image">
                         
                         
@@ -829,6 +827,43 @@
                         
                     </div>
                     <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            罗紫宇
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/10/27/suan-fa/39.hui-su-suan-fa/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="39.回溯算法">
+                        
+                        <span class="card-title">39.回溯算法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
                             </span>
@@ -839,6 +874,14 @@
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -983,7 +1026,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">69.4k</span>&nbsp;字
+                class="white-color">70k</span>&nbsp;字
             
             
             
