@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="50.二分查找, LazyYu">
+    <meta name="keywords" content="如果没有献给你, LazyYu">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>50.二分查找 | LazyYu</title>
+    <title>如果没有献给你 | LazyYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">50.二分查找</h1>
+                    <h1 class="description center-align post-title">如果没有献给你</h1>
                 </div>
             </div>
         </div>
@@ -387,14 +387,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/%E9%B8%A3%E9%B8%A3%E9%B8%A3%E9%B8%A3/">
+                                <span class="chip bg-color">鸣鸣鸣鸣</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
+                                生活区
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -403,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-30
+                    2021-08-31
                 </div>
                 
 
@@ -412,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    268
+                    222
                 </div>
                 
 
@@ -437,42 +446,17 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="50-二分查找"><a href="#50-二分查找" class="headerlink" title="50.二分查找"></a>50.二分查找</h1><p>这篇也是笔记,主要来自</p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903955252805645">神三元大佬的二分查找</a></p>
-<p>二分查找的思想不难理解 要注意两点 <strong>边界判断</strong> <strong>目标值重复</strong></p>
-<p>二分查找的前提是 <strong>数组有序</strong></p>
-<h2 id="基本二分查找"><a href="#基本二分查找" class="headerlink" title="基本二分查找"></a>基本二分查找</h2><p>记住 <code>begin &lt;= end</code> <code>end = mid - 1;</code> <code>begin = mid + 1</code></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> <span class="token function-variable function">search</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> begin <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">let</span> end <span class="token operator">=</span> arr<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>begin <span class="token operator">&lt;=</span> end<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>begin <span class="token operator">+</span> end<span class="token punctuation">)</span> <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> <span class="token keyword">return</span> mid
-        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> end <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> begin <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>递归</strong></p>
-<p>记住 <code>helpSearch = (nums, begin, end, target)</code></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> <span class="token function-variable function">search</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">nums<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> <span class="token function-variable function">helpSearch</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">nums<span class="token punctuation">,</span> begin<span class="token punctuation">,</span> end<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-      <span class="token keyword">if</span><span class="token punctuation">(</span>begin <span class="token operator">></span> end<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-      <span class="token keyword">let</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>begin <span class="token operator">+</span> end<span class="token punctuation">)</span> <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span>
-      <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> <span class="token keyword">return</span> mid<span class="token punctuation">;</span>
-      <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> 
-        <span class="token keyword">return</span> <span class="token function">helpSearch</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> begin<span class="token punctuation">,</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">else</span> 
-        <span class="token keyword">return</span> <span class="token function">helpSearch</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> end<span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token function">helpSearch</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>  nums<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><code>(begin + end) &gt;&gt;&gt; 1</code> 位运算,位运算性能更高<br>该操作符会将第一个操作数向右移动指定的位数,<br>此处效果同<code>Math.floor((begin+end)/2)</code></p>
-</blockquote>
-<p>有时间看下位运算</p>
-<h2 id="边界判断"><a href="#边界判断" class="headerlink" title="边界判断"></a>边界判断</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/solution/tu-jie-er-fen-zui-qing-xi-yi-dong-de-jia-ddvc/">回头看看</a></p>
-<h2 id="目标值重复"><a href="#目标值重复" class="headerlink" title="目标值重复"></a>目标值重复</h2>
+                <h1 id="但如果没有献给你"><a href="#但如果没有献给你" class="headerlink" title="但如果没有献给你"></a>但如果没有献给你</h1><p>Every time I see you all the rays of the sun are all<br>每一次我看着你 阳光流过你</p>
+<p>streaming through the waves in your hair<br>如水波般舞动的的发丝</p>
+<p>And every star in the sky<br>而夜空的每颗星星都如聚光灯般</p>
+<p>is taking aim at your e yes like a spotlight<br>汇入你的双眼</p>
+<p>The beating of my heart is a drum<br>我的心跳纷乱如鼓点</p>
+<p>and its lost and its looking for a rhythm like you<br>陷入迷失，全都循着你的节奏而去</p>
+<p>You can take the darkness from the pit of the night<br>只要有你 哪怕在最深的黑夜</p>
+<p>And turn into a beacon burning endlessly bright<br>也如耀眼的灯塔 永湛光明</p>
+<p>Ive gotta follow it cause everything I know<br>我必须追随着这一切，因为即使我世事洞明</p>
+<p>Well, its nothing till I give it to you<br>但如果没有献给你，一切也都没有了意义</p>
+
                 
             </div>
             <hr/>
@@ -498,7 +482,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/30/suan-fa/50.er-fen-cha-zhao/">https://github.com/LZY2333/LZY2333.github.io/2021/10/30/suan-fa/50.er-fen-cha-zhao/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/08/31/sheng-huo/ru-guo-mei-you-xian-gei-ni/">https://github.com/LZY2333/LZY2333.github.io/2021/08/31/sheng-huo/ru-guo-mei-you-xian-gei-ni/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -536,8 +520,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/%E9%B8%A3%E9%B8%A3%E9%B8%A3%E9%B8%A3/">
+                                    <span class="chip bg-color">鸣鸣鸣鸣</span>
                                 </a>
                             
                         </div>
@@ -711,13 +695,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/30/suan-fa-ti/er-fen-cha-zhao-suan-fa-ti/">
+                <a href="/2021/09/14/suan-fa/10.san-lie-biao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="二分查找算法题">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="散列表">
                         
-                        <span class="card-title">二分查找算法题</span>
+                        <span class="card-title">散列表</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -728,12 +712,16 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-30
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-14
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            罗紫宇
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                    技术栈
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -756,13 +744,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/27/suan-fa-ti/tan-xin-suan-fa-ti/">
+                <a href="/2021/08/31/suan-fa/9.er-fen-cha-zhao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="贪心算法题">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="二分查找">
                         
-                        <span class="card-title">贪心算法题</span>
+                        <span class="card-title">二分查找</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -773,12 +761,16 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-31
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            罗紫宇
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                    技术栈
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -786,8 +778,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                        <span class="chip bg-color">算法题</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -934,7 +926,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">71.1k</span>&nbsp;字
+                class="white-color">69.7k</span>&nbsp;字
             
             
             

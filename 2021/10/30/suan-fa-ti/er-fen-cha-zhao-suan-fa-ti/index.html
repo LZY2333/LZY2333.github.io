@@ -396,6 +396,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                技术栈
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -412,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    542
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -437,7 +446,68 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="二分查找算法题"><a href="#二分查找算法题" class="headerlink" title="二分查找算法题"></a>二分查找算法题</h1><p>笔记篇,看的掘金文章</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903955252805645">神三元大佬的二分查找</a></p>
+<p>空间复杂度O(1),时间复杂度O(lgn)</p>
+<blockquote>
+<p>注意二分查找要求 必须 <strong>数据有序</strong> <strong>无重复</strong>,换句话说 单增 或 单减<br>且最好是 数组,因为数组随机访问时间复杂度为O(1),<br>链表则为O(n),链表二分查找时间复杂度为O(nlgn)</p>
+</blockquote>
+<h2 id="基本二分查找"><a href="#基本二分查找" class="headerlink" title="基本二分查找"></a>基本二分查找</h2><p><strong>题目</strong></p>
+<p>给定一个无重复的有序整型数组,数组大小在 [1,10000] 之间,</p>
+<p>查找目标数 target 在数组中的索引,不存在则返回 -1。</p>
+<p><strong>思路</strong></p>
+<p>1、一开始,数组范围是整个原数组；</p>
+<p>2、将目标数与数组的中位数比较,如果中位数等于目标数,则返回</p>
+<p>如果中位数大于目标数,则抛弃数组的后半部分,反之抛弃前半部分；</p>
+<p>3、重复这个过程,直到找到目标数 t 或者数组范围为空为止。</p>
+<p><strong>标准解法</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> <span class="token function-variable function">search</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> left <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> right <span class="token operator">=</span> arr<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>left <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> <span class="token keyword">return</span> mid
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>target <span class="token operator">&lt;</span> arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> right <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>target <span class="token operator">></span> arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> left <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>记住 <code>left &lt;= right</code> <code>right = mid - 1;</code> <code>left = mid + 1</code></p>
+<p><strong>递归解法</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> <span class="token function-variable function">search</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">nums<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> <span class="token function-variable function">helpSearch</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">nums<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>left <span class="token operator">></span> right<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+      <span class="token keyword">let</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> <span class="token keyword">return</span> mid<span class="token punctuation">;</span>
+      <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> 
+        <span class="token keyword">return</span> <span class="token function">helpSearch</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> left<span class="token punctuation">,</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">else</span> 
+        <span class="token keyword">return</span> <span class="token function">helpSearch</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token function">helpSearch</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>  nums<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>记住 <code>helpSearch = (nums, left, right, target)</code></p>
+<blockquote>
+<p>相当于不断二分,由一条路走到黑,再一路返回结果</p>
+</blockquote>
+<p>标准解法里可以做一些修改,省点代码</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> <span class="token function-variable function">search</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> begin <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> end <span class="token operator">=</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> <span class="token comment">// 这里不-1</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>begin <span class="token operator">&lt;</span> end<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 这里也不写=</span>
+        <span class="token keyword">let</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>begin <span class="token operator">+</span> end<span class="token punctuation">)</span> <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> mid<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 这里也不用-1,因为while那里无=,所以最后一个right不会被包括进去</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> end <span class="token operator">=</span> mid<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+        <span class="token comment">// left则需要+1,因为left会被包括进去</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> begin <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>mid = left + (right - left) / 2,防止溢出</p>
+</blockquote>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
                 
             </div>
             <hr/>
@@ -672,30 +742,29 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/30/suan-fa-ti/er-fen-cha-zhao-suan-fa-ti/">
+                <a href="/2021/10/31/wei-shi-me-qian-duan-yao-xue-zhe-me-duo-dong-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="二分查找算法题">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="为什么前端要学这么多东西">
                         
-                        <span class="card-title">二分查找算法题</span>
+                        <span class="card-title">为什么前端要学这么多东西</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            技术栈
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-30
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-31
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -703,15 +772,6 @@
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -723,13 +783,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/30/suan-fa/50.er-fen-cha-zhao/">
+                <a href="/2021/10/27/suan-fa-ti/tan-xin-suan-fa-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="50.二分查找">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="贪心算法题">
                         
-                        <span class="card-title">50.二分查找</span>
+                        <span class="card-title">贪心算法题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -740,12 +800,16 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            罗紫宇
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                    技术栈
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -753,8 +817,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
+                        <span class="chip bg-color">算法题</span>
                     </a>
                     
                 </div>
@@ -901,7 +965,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">71.1k</span>&nbsp;字
+                class="white-color">69.7k</span>&nbsp;字
             
             
             
