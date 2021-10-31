@@ -1,6 +1,7 @@
 ---
 title: V8是如何执行一段JS代码的
 date: 2021-07-09 07:35:25
+categories: 知识点
 tags: 
     - 面试题
 ---

@@ -1,6 +1,7 @@
 ---
 title: JS数据回收机制
 date: 2021-07-01 00:04:15
+categories: 知识点
 tags: 
     - JS基础
 ---

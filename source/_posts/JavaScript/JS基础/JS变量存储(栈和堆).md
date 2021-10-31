@@ -1,6 +1,7 @@
 ---
 title: JS变量存储(栈和堆)
 date: 2021-07-07 02:04:15
+categories: 知识点
 tags: 
     - JS基础
 ---

@@ -1,6 +1,7 @@
 ---
 title: 断言库Jasmine
 date: 2021-07-15 19:27:36
+categories: 技术栈
 tags: 
     - 测试
 ---

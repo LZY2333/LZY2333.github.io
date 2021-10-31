@@ -1,6 +1,7 @@
 ---
 title: Rxjs基础知识
 date: 2021-02-21 02:53:45
+categories: 技术栈
 tags: 
     - RxJS
 ---

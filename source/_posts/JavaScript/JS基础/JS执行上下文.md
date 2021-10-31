@@ -1,6 +1,7 @@
 ---
 title: JS执行上下文
 date: 2021-06-20 20:23:04
+categories: 知识点
 tags: 
     - JS基础
 ---

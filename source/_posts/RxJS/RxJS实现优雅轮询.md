@@ -1,11 +1,13 @@
-
 ---
 title: repeatWhen操作符实现轮询
 date: 2021-04-13 23:35:14
+categories: 知识点
 tags: 
     - RxJS
 ---
 # repeatWhen操作符实现轮询
+
+这里写的有点问题，回头修改！！！！！
 
 ## 前言
 
