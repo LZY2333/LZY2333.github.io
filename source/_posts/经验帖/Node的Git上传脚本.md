@@ -20,6 +20,8 @@ tags:
 
 [npm包](https://www.npmjs.com/package/simple-git)
 
+新建一个文件,我这里教 bin.js
+
 ```js
 const simpleGit = require('simple-git');
 const git = simpleGit();
