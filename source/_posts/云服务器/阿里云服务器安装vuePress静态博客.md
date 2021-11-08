@@ -22,14 +22,55 @@ tags:
 
 计划是，
 
-1.搞定vuepress静态网站,知识点主要涉及：linux vuePress nginx 
+1.搞定vuePress静态网站,知识点主要涉及：linux vuePress nginx 
 
 2.域名备案，据说得弄一个月
 
+## 连接阿里云
 
-## linux基本操作
+__1.下载一个 用于ssh连接的客户机__,
 
-首先了解一下阿里云服务器的操作系统 __Alibaba Cloud Linux 3__
+相比直接命令行链接服务器，最大的好处是可以保存会话账号密码，
+
+同时还提供可视化文件管理,我这里用的是 XShell.
+
+__2.新建会话__
+
+安装好后打开XShell,点击左上角有绿色+的网页图标,新建会话框.
+
+填写表单上的 主机(云服务器实例界面的公网IP),点击确定,新建会话成功.
+
+左侧出现新的会话卡,以后点击此处就可链接上你的云服务器了.
+
+__3.开启会话__
+
+第一次连接会话,需填写用户名,用户名写root,并勾选记住用户名,点击下一步,
+
+要求输入 用户密码,这个密码就是阿里云的 __实例密码__,实例就代表你的云服务器,
+
+并勾选记住密码,点击确定,就连接上你的云服务器了.
+
+__如果不知道实例密码的话__,
+
+需登录阿里云服务器控制台,找到你的ECS云服务器实例列表.
+
+右侧操作栏找到 `更多`选项,
+
+更多 -> 密码/密匙 -> 重置实例密码 -> 修改密码
+
+修改成功后重启你的 __实例__,
+
+返回XShell,__重新打开__ 会话,再做一遍第三步就行.
+
+[linux指令教程,无账号是看不到的,仅供自己参考](http://www.zhufengpeixun.com/strong/html/125.1.linux.html)
+
+## 安装nginx
+
+要安装软件,首先得了解自己的操作系统,选择软件管理工具
+
+### Alibaba Cloud Linux 3
+
+阿里云服务器的默认操作系统是 __Alibaba Cloud Linux 3__
 
 Alibaba Cloud Linux 2（没找到3的找到了2的介绍）是阿里云官方操作系统，
 
@@ -41,4 +82,92 @@ Alibaba Cloud Linux 2（没找到3的找到了2的介绍）是阿里云官方操
 
 总之，就是说 __操作阿里云服务器 和 CentOS 7 是几乎没有区别的__.
 
-(未完待续)
+> 似乎是由于RedHat提供商业化支持,所以阿里选择了RedHat系
+> 购买阿里云服务器的选择CentOS7的居多
+
+### yum和apt-get
+
+在和朋友讨论的时候发现我们使用的安装命令不同 __apt-get__ 和 __yum__ 
+
+__apt-get__ __yum__ 都是高级软件包管理工具,类似于前端的 __npm__
+
+linux系统分为两大类:
+
+RedHat系列(yum)：Redhat、CentOS、Fedora等
+
+Debian系列(apt-get)：Debian、Ubuntu等
+
+__yum是RedHat系列的高级软件包管理工具__
+
+- 主要功能是更方便的添加/删除/更新RPM包。
+- 它能自动解决包的依赖性问题。
+- 它能便于管理大量系统的更新问题。
+
+__yum的特点__
+
+- 可以同时配置多个资源库(Repository)
+- 简洁的配置文件(/etc/yum.conf)
+- 自动解决增加或删除rpm包时遇到的倚赖性问题
+- 保持与RPM数据库的一致性
+
+转自[小菜鸟的博客园<yum和apt-get用法及区别>](https://www.cnblogs.com/garinzhang/p/diff_between_yum_apt-get_in_linux.html)
+
+
+## nginx 的使用
+
+安装nginx 
+
+```
+
+
+
+```js
+nginx   启动
+
+nginx -t  测试命令
+
+nginx -s reload 修改nginx.conf之后，可以重载
+```
+
+## vim编辑器的使用
+
+
+## 常见问题
+
+### 阿里云连接短时间频繁断开
+
+1.修改配置文件
+```js
+vim /etc/ssh/sshd_config
+
+ClientAliveInterval 60 // 每隔60秒向客户端发送请求消息,并等待客户端响应
+ClientAliveCountMax 10 // 客户端超过10次没响应,自动断开(10分钟)
+```
+
+2.重启SSH服务
+```js
+systemctl restart sshd
+```
+
+### 输入visudo显示busy
+
+问题:linux命令中输入`visudo`显示`visudo: /etc/sudoers is busy, try again later`
+
+找到进程号`ps -ef|grep visudo`
+
+根据进程号杀掉进程`kill -9 (进程号)`
+
+### 输入visudo显示swap file
+
+问题:Linux下想编辑/etc/sudoers文件,出现`Found a swap file`
+
+丢弃修改`rm /etc/.sudoers.tmp.swp`
+
+### nginx 已开启但输入ip无法访问?
+
+特别感谢下面这位大佬,我的最终原因是没配置阿里云的安全组
+
+[渐暖大佬的<nginx无法访问完整排除方案>](https://blog.csdn.net/yujing1314/article/details/105225325?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link)
+
+
+

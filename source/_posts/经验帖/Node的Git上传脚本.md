@@ -18,9 +18,9 @@ tags:
 
 ## Simple Git
 
-[npm包](https://www.npmjs.com/package/simple-git)
+[Simple Git npm包介绍页](https://www.npmjs.com/package/simple-git)
 
-新建一个文件,我这里教 bin.js
+新建一个文件,我这里叫`bin.js`
 
 ```js
 const simpleGit = require('simple-git');
@@ -33,5 +33,7 @@ git
     console.log("Push to master success");
 })
 ```
+
+`npm i` 更新一下包,自动下载simple-git
 
 命令行敲 `node bin my-message` 就OK了，详细的以后再去研究
