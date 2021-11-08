@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    335
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -453,15 +453,79 @@
 <p>经常有同学说你网站怎么进不去，毕竟本质上访问的还是github……</p>
 <p>加上我还有个<a href="luoziyu.com">luoziyu.com</a>域名没用起来，这不是巧了嘛，一波安排上。</p>
 <p>计划是，</p>
-<p>1.搞定vuepress静态网站,知识点主要涉及：linux vuePress nginx </p>
+<p>1.搞定vuePress静态网站,知识点主要涉及：linux vuePress nginx </p>
 <p>2.域名备案，据说得弄一个月</p>
-<h2 id="linux基本操作"><a href="#linux基本操作" class="headerlink" title="linux基本操作"></a>linux基本操作</h2><p>首先了解一下阿里云服务器的操作系统 <strong>Alibaba Cloud Linux 3</strong></p>
+<h2 id="连接阿里云"><a href="#连接阿里云" class="headerlink" title="连接阿里云"></a>连接阿里云</h2><p><strong>1.下载一个 用于ssh连接的客户机</strong>,</p>
+<p>相比直接命令行链接服务器，最大的好处是可以保存会话账号密码，</p>
+<p>同时还提供可视化文件管理,我这里用的是 XShell.</p>
+<p><strong>2.新建会话</strong></p>
+<p>安装好后打开XShell,点击左上角有绿色+的网页图标,新建会话框.</p>
+<p>填写表单上的 主机(云服务器实例界面的公网IP),点击确定,新建会话成功.</p>
+<p>左侧出现新的会话卡,以后点击此处就可链接上你的云服务器了.</p>
+<p><strong>3.开启会话</strong></p>
+<p>第一次连接会话,需填写用户名,用户名写root,并勾选记住用户名,点击下一步,</p>
+<p>要求输入 用户密码,这个密码就是阿里云的 <strong>实例密码</strong>,实例就代表你的云服务器,</p>
+<p>并勾选记住密码,点击确定,就连接上你的云服务器了.</p>
+<p><strong>如果不知道实例密码的话</strong>,</p>
+<p>需登录阿里云服务器控制台,找到你的ECS云服务器实例列表.</p>
+<p>右侧操作栏找到 <code>更多</code>选项,</p>
+<p>更多 -&gt; 密码/密匙 -&gt; 重置实例密码 -&gt; 修改密码</p>
+<p>修改成功后重启你的 <strong>实例</strong>,</p>
+<p>返回XShell,<strong>重新打开</strong> 会话,再做一遍第三步就行.</p>
+<p><a target="_blank" rel="noopener" href="http://www.zhufengpeixun.com/strong/html/125.1.linux.html">linux指令教程,无账号是看不到的,仅供自己参考</a></p>
+<h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>要安装软件,首先得了解自己的操作系统,选择软件管理工具</p>
+<h3 id="Alibaba-Cloud-Linux-3"><a href="#Alibaba-Cloud-Linux-3" class="headerlink" title="Alibaba Cloud Linux 3"></a>Alibaba Cloud Linux 3</h3><p>阿里云服务器的默认操作系统是 <strong>Alibaba Cloud Linux 3</strong></p>
 <p>Alibaba Cloud Linux 2（没找到3的找到了2的介绍）是阿里云官方操作系统，</p>
 <p>在全面兼容CentOS 7生态的同时，为云上应用程序提供安全、稳定、高性能的定制化运行环境，</p>
 <p>并针对云基础设施进行了深度优化，为您打造更好的运行时体验。</p>
 <p>您可以免费使用Alibaba Cloud Linux 2公共镜像，并免费获得阿里云针对该操作系统的长期支持。</p>
 <p>总之，就是说 <strong>操作阿里云服务器 和 CentOS 7 是几乎没有区别的</strong>.</p>
-<p>(未完待续)</p>
+<blockquote>
+<p>似乎是由于RedHat提供商业化支持,所以阿里选择了RedHat系<br>购买阿里云服务器的选择CentOS7的居多</p>
+</blockquote>
+<h3 id="yum和apt-get"><a href="#yum和apt-get" class="headerlink" title="yum和apt-get"></a>yum和apt-get</h3><p>在和朋友讨论的时候发现我们使用的安装命令不同 <strong>apt-get</strong> 和 <strong>yum</strong> </p>
+<p><strong>apt-get</strong> <strong>yum</strong> 都是高级软件包管理工具,类似于前端的 <strong>npm</strong></p>
+<p>linux系统分为两大类:</p>
+<p>RedHat系列(yum)：Redhat、CentOS、Fedora等</p>
+<p>Debian系列(apt-get)：Debian、Ubuntu等</p>
+<p><strong>yum是RedHat系列的高级软件包管理工具</strong></p>
+<ul>
+<li>主要功能是更方便的添加/删除/更新RPM包。</li>
+<li>它能自动解决包的依赖性问题。</li>
+<li>它能便于管理大量系统的更新问题。</li>
+</ul>
+<p><strong>yum的特点</strong></p>
+<ul>
+<li>可以同时配置多个资源库(Repository)</li>
+<li>简洁的配置文件(/etc/yum.conf)</li>
+<li>自动解决增加或删除rpm包时遇到的倚赖性问题</li>
+<li>保持与RPM数据库的一致性</li>
+</ul>
+<p>转自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/garinzhang/p/diff_between_yum_apt-get_in_linux.html">小菜鸟的博客园&lt;yum和apt-get用法及区别&gt;</a></p>
+<h2 id="nginx-的使用"><a href="#nginx-的使用" class="headerlink" title="nginx 的使用"></a>nginx 的使用</h2><p>安装nginx </p>
+<pre class="line-numbers language-none"><code class="language-none">
+
+
+&#96;&#96;&#96;js
+nginx   启动
+
+nginx -t  测试命令
+
+nginx -s reload 修改nginx.conf之后，可以重载<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="vim编辑器的使用"><a href="#vim编辑器的使用" class="headerlink" title="vim编辑器的使用"></a>vim编辑器的使用</h2><h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="阿里云连接短时间频繁断开"><a href="#阿里云连接短时间频繁断开" class="headerlink" title="阿里云连接短时间频繁断开"></a>阿里云连接短时间频繁断开</h3><p>1.修改配置文件</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">vim <span class="token operator">/</span>etc<span class="token operator">/</span>ssh<span class="token operator">/</span>sshd_config
+
+ClientAliveInterval <span class="token number">60</span> <span class="token comment">// 每隔60秒向客户端发送请求消息,并等待客户端响应</span>
+ClientAliveCountMax <span class="token number">10</span> <span class="token comment">// 客户端超过10次没响应,自动断开(10分钟)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>2.重启SSH服务</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">systemctl restart sshd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="输入visudo显示busy"><a href="#输入visudo显示busy" class="headerlink" title="输入visudo显示busy"></a>输入visudo显示busy</h3><p>问题:linux命令中输入<code>visudo</code>显示<code>visudo: /etc/sudoers is busy, try again later</code></p>
+<p>找到进程号<code>ps -ef|grep visudo</code></p>
+<p>根据进程号杀掉进程<code>kill -9 (进程号)</code></p>
+<h3 id="输入visudo显示swap-file"><a href="#输入visudo显示swap-file" class="headerlink" title="输入visudo显示swap file"></a>输入visudo显示swap file</h3><p>问题:Linux下想编辑/etc/sudoers文件,出现<code>Found a swap file</code></p>
+<p>丢弃修改<code>rm /etc/.sudoers.tmp.swp</code></p>
+<h3 id="nginx-已开启但输入ip无法访问"><a href="#nginx-已开启但输入ip无法访问" class="headerlink" title="nginx 已开启但输入ip无法访问?"></a>nginx 已开启但输入ip无法访问?</h3><p>特别感谢下面这位大佬,我的最终原因是没配置阿里云的安全组</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yujing1314/article/details/105225325?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link">渐暖大佬的&lt;nginx无法访问完整排除方案&gt;</a></p>
 
                 
             </div>
@@ -697,18 +761,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/11/07/yun-fu-wu-qi/a-li-yun-fu-wu-qi-an-zhuang-vuepress-jing-tai-bo-ke/">
+                <a href="/2021/11/08/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="阿里云服务器安装vuePress静态博客">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
                         
-                        <span class="card-title">阿里云服务器安装vuePress静态博客</span>
+                        <span class="card-title">Node的Git上传脚本</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -718,27 +781,26 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-07
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-08
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
-                                    知识点
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">
-                        <span class="chip bg-color">云服务器</span>
+                    <a href="/tags/node/">
+                        <span class="chip bg-color">node</span>
                     </a>
                     
                 </div>
@@ -752,31 +814,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/07/rxjs/rxjs-shi-xian-you-ya-lun-xun/">
+                <a href="/2021/10/31/wei-shi-me-qian-duan-yao-xue-zhe-me-duo-dong-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="RxJS repeatWhen实现轮询">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="为什么前端要学这么多东西">
                         
-                        <span class="card-title">RxJS repeatWhen实现轮询</span>
+                        <span class="card-title">为什么前端要学这么多东西</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            前端要学的东西真的好多，感觉要来不及了。今天又是焦虑，本来打算学习却又没学习的一天。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-31
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
-                                    知识点
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                    技术栈
                                 </a>
                             
                             
@@ -786,8 +848,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RxJS/">
-                        <span class="chip bg-color">RxJS</span>
+                    <a href="/tags/%E6%8A%80%E6%9C%AF%E6%A0%88%E6%B1%87%E6%80%BB/">
+                        <span class="chip bg-color">技术栈汇总</span>
                     </a>
                     
                 </div>
@@ -934,7 +996,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">71.9k</span>&nbsp;字
+                class="white-color">73.6k</span>&nbsp;字
             
             
             
