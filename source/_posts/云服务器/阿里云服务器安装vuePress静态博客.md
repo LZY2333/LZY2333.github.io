@@ -139,6 +139,20 @@ curl http://120.24.169.47/  // 测试是否出现nginx默认页面
 
 我这里是 `120.24.169.47`
 
+## VuePress
+
+第一步,看完[VuePress官网](https://vuepress.vuejs.org/zh/guide/getting-started.html)
+
+第二部,选择一个VuePress主题[vuepress-theme-reco](https://vuepress.vuejs.org/zh/guide/getting-started.html)
+
+这里用的是yarn的指令,回头再细看,又是一篇笔记,
+
+学!都可以学!难整嗷,要学的东西真多..
+
+[Yarn vs npm：你需要知道的一切](https://zhuanlan.zhihu.com/p/23493436)
+
+后续会慢慢记录一些遇见的问题,和常用的指令操作
+
 ## 我遇见的问题
 
 ### nginx 已开启但输入ip无法访问?
