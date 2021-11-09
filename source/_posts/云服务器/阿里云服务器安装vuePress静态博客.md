@@ -62,8 +62,6 @@ __如果不知道实例密码的话__,
 
 返回XShell,__重新打开__ 会话,再做一遍第三步就行.
 
-[linux指令教程,无账号是看不到的,仅供自己参考](http://www.zhufengpeixun.com/strong/html/125.1.linux.html)
-
 ## 安装nginx
 
 要安装软件,首先得了解自己的操作系统,选择软件管理工具
@@ -115,24 +113,39 @@ __yum的特点__
 
 ## nginx 的使用
 
-安装nginx 
+真正安装nginx其实才几步,遇到的问题反而更多,都记录在后面了.
 
-```
+其实这其中还涉及linux目录结构,linux指令,yum指令,vim编辑器用法,nginx配置等,
 
+以后做持续集成的时候八成还得学,会各个专门开篇.
 
+[linux指令教程,无账号是看不到的,仅供自己参考](http://www.zhufengpeixun.com/strong/html/125.1.linux.html)
 
 ```js
-nginx   启动
+yum install nginx  -y
 
-nginx -t  测试命令
+whereis nginx // 查看安装位置
 
-nginx -s reload 修改nginx.conf之后，可以重载
+nginx   // 启动
+
+nginx -t  // 测试nginx.conf是否符合语法
+
+nginx -s reload // 修改nginx.conf之后，可以重载
+
+curl http://120.24.169.47/  // 测试是否出现nginx默认页面
 ```
 
-## vim编辑器的使用
+这个时候就可以在自己本地的浏览器里输入 公网IP 访问了
 
+我这里是 `120.24.169.47`
 
-## 常见问题
+## 我遇见的问题
+
+### nginx 已开启但输入ip无法访问?
+
+特别感谢下面这位大佬,我的最终原因是没配置阿里云的安全组
+
+[渐暖大佬的<nginx无法访问完整排除方案>](https://blog.csdn.net/yujing1314/article/details/105225325?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link)
 
 ### 阿里云连接短时间频繁断开
 
@@ -163,11 +176,6 @@ systemctl restart sshd
 
 丢弃修改`rm /etc/.sudoers.tmp.swp`
 
-### nginx 已开启但输入ip无法访问?
-
-特别感谢下面这位大佬,我的最终原因是没配置阿里云的安全组
-
-[渐暖大佬的<nginx无法访问完整排除方案>](https://blog.csdn.net/yujing1314/article/details/105225325?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link)
 
 
 
