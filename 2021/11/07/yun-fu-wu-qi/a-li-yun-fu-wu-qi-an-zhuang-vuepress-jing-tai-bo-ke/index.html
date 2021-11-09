@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="阿里云服务器安装vuePress静态博客, LazyYu">
+    <meta name="keywords" content="阿里云服务器安装vuePress静态博客, Lazy">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>阿里云服务器安装vuePress静态博客 | LazyYu</title>
+    <title>阿里云服务器安装vuePress静态博客 | Lazy</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -43,7 +43,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">LazyYu</span>
+                    <span class="logo-span">Lazy</span>
                 </a>
             </div>
             
@@ -120,7 +120,7 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">LazyYu</div>
+        <div class="logo-name">Lazy</div>
         <div class="logo-desc">
             
             Had I not seen the sun, I could have borne the shade.
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -472,7 +472,6 @@
 <p>更多 -&gt; 密码/密匙 -&gt; 重置实例密码 -&gt; 修改密码</p>
 <p>修改成功后重启你的 <strong>实例</strong>,</p>
 <p>返回XShell,<strong>重新打开</strong> 会话,再做一遍第三步就行.</p>
-<p><a target="_blank" rel="noopener" href="http://www.zhufengpeixun.com/strong/html/125.1.linux.html">linux指令教程,无账号是看不到的,仅供自己参考</a></p>
 <h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>要安装软件,首先得了解自己的操作系统,选择软件管理工具</p>
 <h3 id="Alibaba-Cloud-Linux-3"><a href="#Alibaba-Cloud-Linux-3" class="headerlink" title="Alibaba Cloud Linux 3"></a>Alibaba Cloud Linux 3</h3><p>阿里云服务器的默认操作系统是 <strong>Alibaba Cloud Linux 3</strong></p>
 <p>Alibaba Cloud Linux 2（没找到3的找到了2的介绍）是阿里云官方操作系统，</p>
@@ -502,17 +501,32 @@
 <li>保持与RPM数据库的一致性</li>
 </ul>
 <p>转自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/garinzhang/p/diff_between_yum_apt-get_in_linux.html">小菜鸟的博客园&lt;yum和apt-get用法及区别&gt;</a></p>
-<h2 id="nginx-的使用"><a href="#nginx-的使用" class="headerlink" title="nginx 的使用"></a>nginx 的使用</h2><p>安装nginx </p>
-<pre class="line-numbers language-none"><code class="language-none">
+<h2 id="nginx-的使用"><a href="#nginx-的使用" class="headerlink" title="nginx 的使用"></a>nginx 的使用</h2><p>真正安装nginx其实才几步,遇到的问题反而更多,都记录在后面了.</p>
+<p>其实这其中还涉及linux目录结构,linux指令,yum指令,vim编辑器用法,nginx配置等,</p>
+<p>以后做持续集成的时候八成还得学,会各个专门开篇.</p>
+<p><a target="_blank" rel="noopener" href="http://www.zhufengpeixun.com/strong/html/125.1.linux.html">linux指令教程,无账号是看不到的,仅供自己参考</a></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">yum install nginx  <span class="token operator">-</span>y
 
+whereis nginx <span class="token comment">// 查看安装位置</span>
 
-&#96;&#96;&#96;js
-nginx   启动
+nginx   <span class="token comment">// 启动</span>
 
-nginx -t  测试命令
+nginx <span class="token operator">-</span>t  <span class="token comment">// 测试nginx.conf是否符合语法</span>
 
-nginx -s reload 修改nginx.conf之后，可以重载<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="vim编辑器的使用"><a href="#vim编辑器的使用" class="headerlink" title="vim编辑器的使用"></a>vim编辑器的使用</h2><h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="阿里云连接短时间频繁断开"><a href="#阿里云连接短时间频繁断开" class="headerlink" title="阿里云连接短时间频繁断开"></a>阿里云连接短时间频繁断开</h3><p>1.修改配置文件</p>
+nginx <span class="token operator">-</span>s reload <span class="token comment">// 修改nginx.conf之后，可以重载</span>
+
+curl http<span class="token operator">:</span><span class="token operator">/</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">120.24.169.47</span><span class="token regex-delimiter">/</span></span>  <span class="token comment">// 测试是否出现nginx默认页面</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个时候就可以在自己本地的浏览器里输入 公网IP 访问了</p>
+<p>我这里是 <code>120.24.169.47</code></p>
+<h2 id="VuePress"><a href="#VuePress" class="headerlink" title="VuePress"></a>VuePress</h2><p>第一步,看完<a target="_blank" rel="noopener" href="https://vuepress.vuejs.org/zh/guide/getting-started.html">VuePress官网</a></p>
+<p>第二部,选择一个VuePress主题<a target="_blank" rel="noopener" href="https://vuepress.vuejs.org/zh/guide/getting-started.html">vuepress-theme-reco</a></p>
+<p>这里用的是yarn的指令,回头再细看,又是一篇笔记,</p>
+<p>学!都可以学!难整嗷,要学的东西真多..</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23493436">Yarn vs npm：你需要知道的一切</a></p>
+<p>后续会慢慢记录一些遇见的问题,和常用的指令操作</p>
+<h2 id="我遇见的问题"><a href="#我遇见的问题" class="headerlink" title="我遇见的问题"></a>我遇见的问题</h2><h3 id="nginx-已开启但输入ip无法访问"><a href="#nginx-已开启但输入ip无法访问" class="headerlink" title="nginx 已开启但输入ip无法访问?"></a>nginx 已开启但输入ip无法访问?</h3><p>特别感谢下面这位大佬,我的最终原因是没配置阿里云的安全组</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yujing1314/article/details/105225325?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link">渐暖大佬的&lt;nginx无法访问完整排除方案&gt;</a></p>
+<h3 id="阿里云连接短时间频繁断开"><a href="#阿里云连接短时间频繁断开" class="headerlink" title="阿里云连接短时间频繁断开"></a>阿里云连接短时间频繁断开</h3><p>1.修改配置文件</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">vim <span class="token operator">/</span>etc<span class="token operator">/</span>ssh<span class="token operator">/</span>sshd_config
 
 ClientAliveInterval <span class="token number">60</span> <span class="token comment">// 每隔60秒向客户端发送请求消息,并等待客户端响应</span>
@@ -524,8 +538,6 @@ ClientAliveCountMax <span class="token number">10</span> <span class="token comm
 <p>根据进程号杀掉进程<code>kill -9 (进程号)</code></p>
 <h3 id="输入visudo显示swap-file"><a href="#输入visudo显示swap-file" class="headerlink" title="输入visudo显示swap file"></a>输入visudo显示swap file</h3><p>问题:Linux下想编辑/etc/sudoers文件,出现<code>Found a swap file</code></p>
 <p>丢弃修改<code>rm /etc/.sudoers.tmp.swp</code></p>
-<h3 id="nginx-已开启但输入ip无法访问"><a href="#nginx-已开启但输入ip无法访问" class="headerlink" title="nginx 已开启但输入ip无法访问?"></a>nginx 已开启但输入ip无法访问?</h3><p>特别感谢下面这位大佬,我的最终原因是没配置阿里云的安全组</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yujing1314/article/details/105225325?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link">渐暖大佬的&lt;nginx无法访问完整排除方案&gt;</a></p>
 
                 
             </div>
@@ -765,13 +777,13 @@ ClientAliveCountMax <span class="token number">10</span> <span class="token comm
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/11/08/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                <a href="/2021/11/09/rxjs/rxjs-shi-xian-you-ya-lun-xun/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="RxJS repeatWhen实现轮询">
                         
-                        <span class="card-title">Node的Git上传脚本</span>
+                        <span class="card-title">RxJS repeatWhen实现轮询</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -782,14 +794,14 @@ ClientAliveCountMax <span class="token number">10</span> <span class="token comm
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-08
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-09
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
-                                    经验帖
+                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
+                                    知识点
                                 </a>
                             
                             
@@ -799,8 +811,8 @@ ClientAliveCountMax <span class="token number">10</span> <span class="token comm
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/node/">
-                        <span class="chip bg-color">node</span>
+                    <a href="/tags/RxJS/">
+                        <span class="chip bg-color">RxJS</span>
                     </a>
                     
                 </div>
@@ -996,7 +1008,7 @@ ClientAliveCountMax <span class="token number">10</span> <span class="token comm
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">73.6k</span>&nbsp;字
+                class="white-color">73.9k</span>&nbsp;字
             
             
             
