@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.1k
+                    3.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    13 分
+                    14 分
                 </div>
                 
 
@@ -854,6 +854,27 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> nowN <span class="token operator">-</span> <span class="token number">1</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="链表的中间节点-LeetCode-876"><a href="#链表的中间节点-LeetCode-876" class="headerlink" title="链表的中间节点(LeetCode 876)"></a>链表的中间节点(LeetCode 876)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/middle-of-the-linked-list/">leetcode</a></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">middleNode</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> s <span class="token operator">=</span> f <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>head<span class="token punctuation">)</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>f <span class="token operator">&amp;&amp;</span> f<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        s <span class="token operator">=</span> s<span class="token punctuation">.</span>next
+        f <span class="token operator">=</span> f<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> f <span class="token operator">?</span> s<span class="token punctuation">.</span>next <span class="token operator">:</span> s <span class="token comment">// f当前节点存在代表是偶数个</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="判断链表中存在环结构-LeetCode-141"><a href="#判断链表中存在环结构-LeetCode-141" class="headerlink" title="判断链表中存在环结构(LeetCode 141)"></a>判断链表中存在环结构(LeetCode 141)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle/">leetcode</a><br><strong>快慢指针</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">hasCycle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> f <span class="token operator">=</span> s <span class="token operator">=</span> head
+    <span class="token keyword">while</span><span class="token punctuation">(</span>s <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        f <span class="token operator">=</span> f<span class="token punctuation">.</span>next
+        s <span class="token operator">=</span> s<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next
+        <span class="token keyword">if</span><span class="token punctuation">(</span>s <span class="token operator">===</span> f<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>HashSet</strong><br>(回头写下，也不复杂)</p>
+
                 
             </div>
             <hr/>
@@ -1323,7 +1344,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">74.7k</span>&nbsp;字
+                class="white-color">74.9k</span>&nbsp;字
             
             
             
