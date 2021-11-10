@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    2.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    13 分
                 </div>
                 
 
@@ -450,6 +450,10 @@
 <p>链表考什么？就是哨兵节点+虚拟节点+链表指针的移动</p>
 <p>双指针</p>
 <p>头部可能插值的问题都需要一个头空结点</p>
+<p>所有的反转链表都要记住三步:</p>
+<p>1.记录next节点,</p>
+<p>2.修改cur.next指向,</p>
+<p>3.反转next节点指向cur.</p>
 <h2 id="反转链表-LeetCode-206"><a href="#反转链表-LeetCode-206" class="headerlink" title="反转链表(LeetCode 206)"></a>反转链表(LeetCode 206)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">reverseList</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// root 可以直接改为 = null</span>
     <span class="token keyword">let</span> currentNode <span class="token operator">=</span> head
@@ -467,11 +471,12 @@
     <span class="token keyword">const</span> newHead <span class="token operator">=</span> <span class="token function">reverseList</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 从最后一个结点开始轮，此处返回最后一个结点</span>
     head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">=</span> head<span class="token punctuation">;</span> <span class="token comment">// 倒数第二个 的下一个结点 的next 指向当前结点</span>
     head<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// 当前结点 也就是 倒数第二个结点 next为null</span>
-    <span class="token comment">// 每一层 递归都记录了当前结点，所以直接把next置为null也没关系</span>
+    <span class="token comment">// 注意，newHead永远都是最后一个节点</span>
+    <span class="token comment">// 每一层递归都记录了当前结点，以及当前节点的next节点，所以在上一层中直接把next置为null也不会丢失下一层的next</span>
     <span class="token comment">// 外层会继续将next 置为前一个数</span>
     <span class="token keyword">return</span> newHead<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="相交链表-LeetCode-160-未解出"><a href="#相交链表-LeetCode-160-未解出" class="headerlink" title="相交链表(LeetCode 160)(未解出)"></a>相交链表(LeetCode 160)(未解出)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 反转链表</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="相交链表-LeetCode-160"><a href="#相交链表-LeetCode-160" class="headerlink" title="相交链表(LeetCode 160)"></a>相交链表(LeetCode 160)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 反转链表</span>
 <span class="token keyword">var</span> <span class="token function-variable function">getIntersectionNode</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">headA<span class="token punctuation">,</span> headB</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>headA <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> headB <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
@@ -776,6 +781,52 @@
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>leetcode提供的解法是头尾相接。</p>
 <h2 id="两两交换链表中的节点-LeetCode-24"><a href="#两两交换链表中的节点-LeetCode-24" class="headerlink" title="两两交换链表中的节点(LeetCode 24)"></a>两两交换链表中的节点(LeetCode 24)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/">leetcode</a></p>
+<p><strong>递归</strong></p>
+<p>只考虑头两个节点,首先知道,应当返回<code>head.next</code>作为<code>newHead</code>,</p>
+<p>然后开始反转第一二节点,</p>
+<p>先记录<code>head.next</code>节点为<code>newHead</code>(否则下一步会丢失<code>newHead</code>节点),</p>
+<p>再马上修改<code>head.next</code>指向(相当于头反转为尾部),其指向为后续节点的<code>new newHead</code>,</p>
+<p>即<code>swapPairs(newHead.next)</code>第三个节点为首的反转,</p>
+<p>最后修改<code>newHead.next</code>指向<code>head</code>,完成一二节点的反转.结束.</p>
+<p>注意:此处第一层(第一二节点)返回的是真正newHead,后续层返回的都是两两一对中的的next</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">swapPairs</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>head <span class="token operator">||</span> <span class="token operator">!</span>head<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token keyword">return</span> head
+    <span class="token keyword">let</span> newHead <span class="token operator">=</span> head<span class="token punctuation">.</span>next <span class="token comment">// 先把当前节点的next节点记录下来</span>
+    head<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token function">swapPairs</span><span class="token punctuation">(</span>newHead<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token comment">// 再修改当前节点的next指向</span>
+    newHead<span class="token punctuation">.</span>next <span class="token operator">=</span> head <span class="token comment">// 最后修改next节点指向当前节点</span>
+    <span class="token keyword">return</span> newHead
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>回头有空看看这个<a target="_blank" rel="noopener" href="https://lyl0724.github.io/2020/01/25/1/">递归解题三部曲</a></p>
+<p><strong>迭代</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">swapPairs</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> p <span class="token operator">=</span> <span class="token constant">H</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>p<span class="token punctuation">.</span>next <span class="token operator">!==</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> p<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> node1 <span class="token operator">=</span> p<span class="token punctuation">.</span>next<span class="token punctuation">;</span> <span class="token comment">// 当前对的前节点(1节点)</span>
+        <span class="token keyword">const</span> node2 <span class="token operator">=</span> p<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token punctuation">;</span> <span class="token comment">// 当前对的后节点(2节点)</span>
+        node1<span class="token punctuation">.</span>next <span class="token operator">=</span> node2<span class="token punctuation">.</span>next<span class="token punctuation">;</span> <span class="token comment">// (1节点).next指向(2节点)下节点,同时丢失(2节点)(这就是为什么记录node2)</span>
+        node2<span class="token punctuation">.</span>next <span class="token operator">=</span> node1<span class="token punctuation">;</span> <span class="token comment">// (2节点).next指向(1节点),反转链表</span>
+        p<span class="token punctuation">.</span>next <span class="token operator">=</span> node2<span class="token punctuation">;</span> <span class="token comment">// 这一行没看懂,下面都直接改变p了,这里改的还有用吗,这一句又是干什么的</span>
+        p <span class="token operator">=</span> node1<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token constant">H</span><span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>我的错误解答</strong></p>
+<p>我把题目写成了 反转链表，每隔一个不反转……</p>
+<p>且正好是答案的反转链表,写成反转的原因(仅仅指链表为什么被反转了)是,</p>
+<p>返回的不是最初的head,而是将最后的节点作为结果层层传递了出去</p>
+<p>我的错误解答 从后向前传递最后一层的newHead,而 正确答案 从后向前传递当前层newHead</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">swapPairs</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>head <span class="token operator">||</span> <span class="token operator">!</span>head<span class="token punctuation">.</span>next <span class="token operator">||</span> <span class="token operator">!</span>head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token keyword">return</span> head
+    <span class="token keyword">let</span> newHead <span class="token operator">=</span> <span class="token function">swapPairs</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> last <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">?</span> head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">:</span> head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next
+    last<span class="token punctuation">.</span>next <span class="token operator">=</span> head
+    head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">return</span> newHead
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token comment">// 输入:[1,2,3,4,5]</span>
+<span class="token comment">// 输出:[5,3,4,1,2]</span>
+<span class="token comment">// leetcode题目的正确输出:[2,1,4,3,5]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="删除链表的倒数第-N-个结点-LeetCode-19"><a href="#删除链表的倒数第-N-个结点-LeetCode-19" class="headerlink" title="删除链表的倒数第 N 个结点(LeetCode 19)"></a>删除链表的倒数第 N 个结点(LeetCode 19)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/">leetcode</a></p>
 
                 
             </div>
@@ -1246,7 +1297,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">73.9k</span>&nbsp;字
+                class="white-color">74.6k</span>&nbsp;字
             
             
             
