@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="2.Functional Programming, Lazy">
+    <meta name="keywords" content="Lazy">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>2.Functional Programming | Lazy</title>
+    <title>Lazy</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">2.Functional Programming</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -385,25 +385,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/RxJS/">
-                                <span class="chip bg-color">RxJS</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                技术栈
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -412,7 +399,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-02-12
+                    2021-11-11
                 </div>
                 
 
@@ -421,14 +408,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    949
+                    409
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    1 分
                 </div>
                 
 
@@ -446,71 +433,79 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="二-Functional-Programming"><a href="#二-Functional-Programming" class="headerlink" title="二. Functional Programming"></a>二. Functional Programming</h2><p>函数式编程 是Rx最重要的概念之一,学会FP 再上手Rx就不难了.</p>
-<p>函数式编程 同时可以说是16年来的显学,各个语言都有加强对FP的支持.</p>
-<h3 id="1-Functional-Programming-是什么"><a href="#1-Functional-Programming-是什么" class="headerlink" title="1.Functional Programming 是什么"></a>1.Functional Programming 是什么</h3><p>函数式编程(Functional Programming) 是一种编程思想.</p>
-<p>函数式编程的核心思想就是做运算处理,从 函数 的角度来思考问题.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// (5 + 6) - 1 * 3</span>
-<span class="token comment">// 写成如下</span>
-<span class="token keyword">const</span> <span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">+</span> b
-<span class="token keyword">const</span> <span class="token function-variable function">mul</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">*</span> b
-<span class="token keyword">const</span> <span class="token function-variable function">sub</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">-</span> b
+                class TreeNode {
+    constructor(val,left,right) {
+        this.val = val
+        this.left = left
+        this.right = right
+    }
+}
+class BinarySearchTree {
+    constructor() {
+        this.root = null
+    }
+    // 插入
+    insert(val) {
+        const newNode = new TreeNode(val)
+        if(!this.root) {
+            this.root = newNode
+            return
+        }
+        let p = this.root
+        while(p) {
+            if(val < p.val) {
+                if(!p.left) p.left = newNode
+                else p = p.left
+            } else {
+                if(!p.right) p.right = newNode
+                else p = p.right
+            }
+        }
+    }
+    // 查找
+    find(val) {
+        if(!this.root) return null
+        let p = this.root
+        while(p && p.val !== val) {
+            if(val < p.val) p.left
+            else p.right
+        }
+        return p
+    }
+    // 删除
+    delete(val) {
+        let p = this.root // 要删除的节点 p
+        let pp = null // 要删除的节点的父节点 pp
+        while(p && p.val !== val) { // 找到p,每轮while结束,pp都指向p父节点
+            pp = p
+            p = val < p.val ? p.left : p.right
+        }
 
-<span class="token function">sub</span><span class="token punctuation">(</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">mul</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ol>
-<li>每一步骤包装成一个个不同的函数</li>
-<li>调用函数,<strong>组合</strong>完成复杂的计算<br>这就是最简单的 函数式编程.</li>
-</ol>
-<blockquote>
-<p>就像 面向对象 Object-oriented Programming(OOP)一样, 一种编程的方法论,告诉我们如何思考和解决问题.<br>同时函数更语义话,读函数名即知其效果.</p>
-</blockquote>
-<h3 id="2-什么样的语言可以使用-Functional-Programming-思想"><a href="#2-什么样的语言可以使用-Functional-Programming-思想" class="headerlink" title="2.什么样的语言可以使用 Functional Programming 思想"></a>2.什么样的语言可以使用 Functional Programming 思想</h3><p><strong>函数为一等公民(First Class)</strong></p>
-<p>指,拥有和其他变量类型同等的地位.能被赋值给变量,能作为参数,能作为返回值.</p>
-<h3 id="3-Functional-Programming-的特点"><a href="#3-Functional-Programming-的特点" class="headerlink" title="3.Functional Programming 的特点"></a>3.Functional Programming 的特点</h3><h4 id="1-Expression-no-Statement-使用表达式"><a href="#1-Expression-no-Statement-使用表达式" class="headerlink" title="(1) Expression, no Statement 使用表达式"></a>(1) Expression, no Statement 使用表达式</h4><p>Functional Programming 都是 表达式 (Expression) 不會是 称述式(Statement).</p>
-<p><strong>表达式</strong> 是一个运算过程, 一定会有返回值, 例如执行一个function</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><strong>陈述式</strong> 则表现某种行为, 例如给一个变量赋值</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<blockquote>
-<p>有时候表达式也可能是合法的陈述式,这里只讲了基本的判断方式.更深入的了解区别,<a target="_blank" rel="noopener" href="https://2ality.com/2012/09/expressions-vs-statements.html"> Expressions versus statements in JavaScript</a><br>这一块基本没看懂.</p>
-</blockquote>
-<h4 id="2-Pure-Function-必须是纯函数"><a href="#2-Pure-Function-必须是纯函数" class="headerlink" title="(2) Pure Function 必须是纯函数"></a>(2) Pure Function 必须是纯函数</h4><p>纯函数 是指 一个函数传入相同的参数并执行,永远返回相同的值,并且没做任何额外操作.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
-arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
-arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
-<span class="token comment">// 不管执行多少次,返回值都相同,并且除了返回值,没有任何额外操作.</span>
-<span class="token comment">// 所以slice是一个 纯函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-arr<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
-arr<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [4, 5]</span>
-arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// []</span>
-<span class="token comment">// splice 每次执行都影响了arr本身,做了额外操作,并且导致每次结果不同</span>
-<span class="token comment">// 所以splice不是一个 纯函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>修改全局变量, 修改传入参数的值,甚至执行console.log,都不能算纯函数<br>纯函数 不管外部环境如何,只要参数相同,其返回值必定相同.这种不依赖任何外部状态,只依赖传入参数的特性也称为 引用透明</p>
-</blockquote>
-<h4 id="3-可利用参数保存状态"><a href="#3-可利用参数保存状态" class="headerlink" title="(3) 可利用参数保存状态"></a>(3) 可利用参数保存状态</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">findIndex</span><span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> predicate<span class="token punctuation">,</span> start <span class="token operator">=</span> <span class="token number">0</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token number">0</span> <span class="token operator">&lt;=</span> start <span class="token operator">&amp;&amp;</span> start <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">predicate</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>start<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> start<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> <span class="token function">findIndex</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> predicate<span class="token punctuation">,</span> start<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token function">findIndex</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">===</span> <span class="token string">'b'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 找陣列中 'b' 的 index</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>findeIndex</code>中第三个参数就是利用参数保存状态</p>
-<h3 id="4-Functional-Programming-有什么优势"><a href="#4-Functional-Programming-有什么优势" class="headerlink" title="4.Functional Programming 有什么优势"></a>4.Functional Programming 有什么优势</h3><p><strong>可读性高</strong>,透过一系列函数封装,代码能非常简洁易懂</p>
-<p><strong>可维护性高</strong>,不依赖外部环境，不影响外部环境，一个函数维持一小个功能，可直接单独修改。</p>
-<p><strong>易于并行/平行的处理</strong>, 因为只运算,不碰I/O,没有额外操作,所以不用担心锁死</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// 合并</span>
-      <span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">// 排序</span>
-      <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">></span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token comment">// 过滤出大于5的.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>第三条 易于并行/平行的处理 没懂,意思是都是同步操作所以不担心锁死,所以方便处理并行操作?</p>
-</blockquote>
-<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5.总结"></a>5.总结</h3><p>Functional Programming 的特性,必须表达式,必须是纯函数,易于参数保存<br>Functional Programming 的优势,可读性高,可维护性强,易于并行/平行的处理.</p>
+        if(!p) return null
+        if(p.left && p.right) { // 1. 要删除的节点p 左右子树均存在
+            let minP = p.right // p右子节点中最小的数,刚好大于P的数minP
+            let minPP = P // minP的父节点
 
+            while(minP.left) { // 找出minP接替被删除的P
+                minPP = minP
+                minP = minP.left
+            }
+
+            p.val = minP.val // minP接替p,删除p
+            p = minP // p指向minP,要删除的节点变为minP,因为minP已接替了p
+            pp = minPP // 继续指向p的父节点,此时的p必然无左子节点,归入情况2去删除
+        }
+
+        let child = null // 2. 要删除的节点p 左子树或右子树之一存在,null都不存在
+        if(p.left) child = p.left
+        else if(p.right) child = p.right
+        
+        // 左子树或右子树之一存在,或都不存在,只要拿p子节点代替p位置就行,不需要考虑child来着p哪个子树
+        if(pp === null) this.root = child // pp等于null代表,p就是根节点,同时p不是左右子树都存在
+        else if(pp.left = p) pp.left = child
+        else pp.right = child
+    }
+}
                 
             </div>
             <hr/>
@@ -536,7 +531,7 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/02/12/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/2.functional-programming/">https://github.com/LZY2333/LZY2333.github.io/2021/02/12/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/2.functional-programming/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/11/11/suan-fa/test/">https://github.com/LZY2333/LZY2333.github.io/2021/11/11/suan-fa/test/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -573,11 +568,7 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/RxJS/">
-                                    <span class="chip bg-color">RxJS</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -749,13 +740,13 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/14/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/4.observable-shi-shi-me/">
+                <a href="/2021/11/11/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="4.Observerble 是什么">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
                         
-                        <span class="card-title">4.Observerble 是什么</span>
+                        <span class="card-title">Node的Git上传脚本</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -766,14 +757,14 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-14
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-11
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
@@ -783,8 +774,8 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RxJS/">
-                        <span class="chip bg-color">RxJS</span>
+                    <a href="/tags/node/">
+                        <span class="chip bg-color">node</span>
                     </a>
                     
                 </div>
@@ -798,13 +789,13 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/12/rxjs/30-tian-jing-tong-rxjs-xi-lie-bi-ji/1.ren-shi-rxjs/">
+                <a href="/2021/11/11/rxjs/rxjs-shi-xian-you-ya-lun-xun/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="1.认识Rxjs">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="RxJS repeatWhen实现轮询">
                         
-                        <span class="card-title">1.认识Rxjs</span>
+                        <span class="card-title">RxJS repeatWhen实现轮询</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -815,14 +806,14 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
+                                    知识点
                                 </a>
                             
                             
