@@ -1,8 +1,8 @@
 class TreeNode {
-    constructor(val,left,right) {
+    constructor(val) {
         this.val = val
-        this.left = left
-        this.right = right
+        this.left = null
+        this.right = null
     }
 }
 class BinarySearchTree {
@@ -19,21 +19,25 @@ class BinarySearchTree {
         let p = this.root
         while(p) {
             if(val < p.val) {
-                if(!p.left) p.left = newNode
-                else p = p.left
+                if(!p.left) {
+                    p.left = newNode
+                    return
+                }
+                p = p.left
             } else {
-                if(!p.right) p.right = newNode
-                else p = p.right
+                if(!p.right) {
+                    p.right = newNode
+                    return
+                }
+                p = p.right
             }
         }
     }
     // 查找
     find(val) {
-        if(!this.root) return null
         let p = this.root
         while(p && p.val !== val) {
-            if(val < p.val) p.left
-            else p.right
+            p = val < p.val ? p.left : p.right
         }
         return p
     }
