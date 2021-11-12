@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="3.TS接口, Lazy">
+    <meta name="keywords" content="红黑树, Lazy">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>3.TS接口 | Lazy</title>
+    <title>红黑树 | Lazy</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">3.TS接口</h1>
+                    <h1 class="description center-align post-title">红黑树</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/TypeScript/">
-                                <span class="chip bg-color">TypeScript</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-23
+                    2021-11-12
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    645
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    2 分
                 </div>
                 
 
@@ -446,176 +446,58 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS接口"><a href="#TS接口" class="headerlink" title="TS接口"></a>TS接口</h1><p><strong>接口</strong> 定义一个类型,以 <strong>约束变量</strong> 或 <strong>约束类</strong>,<br>类型检查器会以接口类型为标准对值的结构进行类型检查.<br>“鸭式辨型法”:如果它走起 路来像鸭子,叫起来也是鸭子,那么它就是鸭子</p>
+                <h1 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h1><p>平衡二叉树: <strong>AVL树</strong> <strong>红黑树</strong> <strong>伸展树(SplayTree)</strong> <strong>树堆(Treap)</strong></p>
+<p>学习数据结构和算法,要学习的是 <strong>它的由来/特性/使用场景/解决的问题</strong>.</p>
+<p>这已经足够了.</p>
+<h2 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h2><p><strong>平衡二叉树</strong>:任意一个节点左右子树高度相差不能大于1</p>
+<p>平衡二叉树的初衷:解决普通二叉查找树树结构”不平衡”时,出现时间复杂度退化的情况</p>
+<p>“近似平衡”: 树看起来”比较对称”,”比较平衡”,不出现左右子树一边高一边矮的情况.</p>
+<p>从而避免性能退化得太严重</p>
+<p><strong>AVL树</strong></p>
+<p>最先被发明的平衡二叉树 <strong>AVL树</strong>,是严格符合定义,高度平衡的二叉查找树.</p>
+<p><strong>AVL树</strong> 增加和删除操作都可能进行一次或多次 <strong>“AVL旋转”</strong>,实现树的重新平衡</p>
+<p><strong>AVL树</strong> 节点的左右子树高度差称为 <strong>平衡因子</strong>,1/0/-1被认为是平衡的.</p>
 <blockquote>
-<p>一个类可以 继承另一个类 并实现多个接口<br>一个类可以 <strong>实现多个接口</strong> ，一个接口也可以 <strong>被多个类实现</strong><br>一个类可以只能 <strong>继承一个父类</strong> , 可以 <strong>被多个子类继承</strong></p>
+<p>Adelson-Velsky and Landis Tree 人名命名的</p>
 </blockquote>
-<p>变量后面<code>:xxx</code>可能是,<code>type</code>定义的类型,可能是<code>class</code>定义的类,<br>可能是 <code>interface</code> 定义的接口,可能是 字面量,可能是 js原始类型</p>
-<h2 id="接口约束-变量的值-为特定Object"><a href="#接口约束-变量的值-为特定Object" class="headerlink" title="接口约束 变量的值 为特定Object"></a>接口约束 变量的值 为特定Object</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束变量 接收的值 必须为对象
-interface Speakable&#123;
-    speak():void;
-    name:string;
-&#125;
-let speakMan:Speakable &#x3D; &#123;
-    speak()&#123;&#125;,&#x2F;&#x2F;少属性会报错
-    name,
-    age&#x2F;&#x2F;多属性也会报错
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>可选属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
-  color?: string;
-  width?: number;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>任意属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;无法预先知道有哪些新的属性的时候,可以使用 &#96;[propName:string]:any&#96;,propName名字是任意的
-interface SquareConfig &#123;
-    color?: string;
-    width?: number;
-    [propName: string]: any;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>只读属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 只读属性,只在创建的时候可以赋值
-interface Point &#123;
-    readonly x: number;
-    readonly y: number;
-&#125;
-let p1: Point &#x3D; &#123; x: 10, y: 20 &#125;;
-p1.x &#x3D; 5; &#x2F;&#x2F; error!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>变量用const，属性用readonly</p>
+<p>AVL树高度平衡,查找效率非常高,但是为了维持这种平衡付出了更多代价</p>
 </blockquote>
-<p><strong>对象字面量 直接作为参数时 会经历 额外属性检查</strong><br><strong>而改写成 对象 再作为参数 传入函数调用,则不会 检查对象上的额外属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
-    height: number;
-    width: number;
-&#125;
+<blockquote>
+<p>每次 插入 删除都要做调整,复杂耗时.频繁进行插入删除的操作集合并不适用.</p>
+</blockquote>
+<p>但很多平衡二叉树并没有严格符合 平衡二叉树的定义.例如,开篇中的后三种树.</p>
+<p>无需完全符合二叉树定义,尽量平衡,保证高度仍是对数量级,</p>
+<p>就仍可以说是合格平衡二叉树.</p>
+<h2 id="红黑树-1"><a href="#红黑树-1" class="headerlink" title="红黑树"></a>红黑树</h2><p>BlackRedTree,一种不严格的平衡二叉树.</p>
+<p>要求:</p>
+<ol>
+<li><p><strong>根节点黑色</strong></p>
+</li>
+<li><p><strong>叶子节点黑色空节点</strong>,不储存数据(简化代码)</p>
+</li>
+<li><p><strong>红色节点不能相邻</strong></p>
+</li>
+<li><p><strong>任意节点 到达其可到达的 任意叶子节点 经过的黑色节点数目 相同</strong></p>
+</li>
+</ol>
+<p>以上要求,使红黑树达到了下面的效果.</p>
+<ol>
+<li><p>去掉红节点后的纯黑树高度低于 log2n(毕竟去掉了一些节点)</p>
+</li>
+<li><p>加上红节点,由于红节点不能连续,所以最长路径不超过 2log2n(一红一黑)</p>
+</li>
+</ol>
+<p>也就是说,<strong>红黑树高度近似不超过 2log2n</strong>.</p>
+<p>红黑树高度 比高度平衡的 AVL树 仅仅大了一倍,所以性能上不差很多.</p>
+<blockquote>
+<p>这样推导的结果不够精确,实际上红黑树性能更好</p>
+</blockquote>
+<blockquote>
+<p>红黑树的插入 删除 查找 各项操作都相对 性能稳定,工业级应用更倾向.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tiancai/p/9072813.html">红黑树的演变,红黑的含义</a></p>
 
-function createSquare(config: SquareConfig):void &#123;&#125;
-&#x2F;&#x2F; 报错error: &#39;colour&#39; not expected in type &#39;SquareConfig&#39;
-&#x2F;&#x2F; 因为直接传入了 对象字面量,所以经历了额外属性检查,
-&#x2F;&#x2F; 不允许拥有接口定义外的额外属性
-let mySquare &#x3D; createSquare(&#123;height:100, width: 100,colour: &quot;red&quot;&#125;);
-&#x2F;&#x2F; 解决方案1,不适用 对象字面量,改写成对象 再作为参数传入
-let squareOptions &#x3D; &#123; colour: &quot;red&quot;, width: 100 &#125;;
-let mySquare &#x3D; createSquare(squareOptions);
-&#x2F;&#x2F; 解决方案2,在 interface SquareConfig 中增加 [propName: string]: any;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口继承"><a href="#接口继承" class="headerlink" title="接口继承"></a>接口继承</h2><p>类继承接口</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable&#123; &#x2F;&#x2F; 代表具有speak函数的对象
-    speak():void;
-&#125;
-interface Eatable&#123; &#x2F;&#x2F; 代表具有eat函数的对象
-    eat():void
-&#125;
-&#x2F;&#x2F;一个类可以实现多个接口,继承后必须满足接口的条件(实现接口)
-class Person implements Speakable,Eatable&#123;
-    speak()&#123;
-        console.log(&#39;Person说话&#39;);
-    &#125;
-    eat()&#123;&#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>接口继承另一个接口</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable &#123;
-    speak(): void
-&#125;
-interface SpeakChinese extends Speakable &#123;
-    speakChinese(): void
-&#125;
-class Person implements SpeakChinese &#123;
-    speak() &#123;
-        console.log(&#39;Person&#39;)
-    &#125;
-    speakChinese() &#123;
-        console.log(&#39;speakChinese&#39;)
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>接口继承多个接口</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Shape &#123;
-    color: string;
-&#125;
-
-interface PenStroke &#123;
-    penWidth: number;
-&#125;
-
-interface Square extends Shape, PenStroke &#123;
-    sideLength: number;
-&#125;
-
-let square &#x3D; &lt;Square&gt;&#123;&#125;; &#x2F;&#x2F; Square类型的对象
-square.color &#x3D; &quot;blue&quot;;
-square.sideLength &#x3D; 10;
-square.penWidth &#x3D; 5.0;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口约束-变量的值-为-函数类型"><a href="#接口约束-变量的值-为-函数类型" class="headerlink" title="接口约束 变量的值 为 函数类型"></a>接口约束 变量的值 为 函数类型</h2><p>约束 变量 的值为 特定类型函数</p>
-<p>对于约束 函数变量 的值时,值(函数) 的参数名不需要和接口中一致,<br><strong>只要求 对应位置上的参数类型是兼容的</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SearchFunc &#123;
-  (source: string, subString: string): boolean;
-&#125;
-let mySearch: SearchFunc;
-&#x2F;&#x2F; 下面的src sub 不指定类型也会根据function内进行类型推断
-mySearch &#x3D; function(src: string, sub: string): boolean &#123;
-  let result &#x3D; src.search(sub);
-  return result &gt; -1;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口约束-类的值-的定义"><a href="#接口约束-类的值-的定义" class="headerlink" title="接口约束 类的值 的定义"></a>接口约束 类的值 的定义</h2><p><strong>类 实现(implements) 接口,即完成 接口 对类的约束</strong></p>
-<p><strong>创建一个类可代表两个类型,静态部分的类型,实例部分的类型</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable &#123;
-    name: string;               &#x2F;&#x2F;约束具有某属性
-    speak(words: string): void  &#x2F;&#x2F;约束具有某方法 
-&#125;
-class Dog implements Speakable &#123;
-    name!: string;
-    speak(words:string) &#123;
-        console.log(words);
-    &#125;
-&#125;
-let dog &#x3D; new Dog();
-dog.speak(&#39;汪汪汪&#39;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>但上面的接口Speakable 只约束的是 类的定义(静态类型)</p>
-<h2 id="接口约束-变量的值-为特定-的构造函数-类"><a href="#接口约束-变量的值-为特定-的构造函数-类" class="headerlink" title="接口约束 变量的值 为特定 的构造函数(类)"></a>接口约束 变量的值 为特定 的构造函数(类)</h2><p><strong>不加new是约束变量为函数的,加new是约束变量为 特定(通过约束构造函数)类的</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface WithNameClass&#123;
-  new(name:string):Animal
-&#125;
-class Animal&#123;
-  constructor(public name:string)&#123;
-  &#125;
-&#125;
-&#x2F;&#x2F; 约束clazz这个对象的构造函数必须带name
-function createAnimal(clazz:WithNameClass,name:string)&#123;
-   return new clazz(name);
-&#125;
-let a &#x3D; createAnimal(Animal,&#39;zhufeng&#39;);
-console.log(a.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口约束-变量的值-为特定的-索引"><a href="#接口约束-变量的值-为特定的-索引" class="headerlink" title="接口约束 变量的值 为特定的 索引"></a>接口约束 变量的值 为特定的 索引</h2><p>对数组和对象进行约束</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 表示index必须为number,值必须为string
-interface UserInterface &#123;
-  [index:number]:string
-&#125;
-let arr:UserInterface &#x3D; [&#39;lzy1&#39;,&#39;lzy2&#39;];
-console.log(arr);
-&#x2F;&#x2F; 表示键必须是string,值必须是string
-interface UserInterface2 &#123;
-  [index:string]:string
-&#125;
-let obj:UserInterface2 &#x3D; &#123;name:&#39;lzy&#39;&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface NumberDictionary &#123;
-  [index: string]: number;
-  length: number;    &#x2F;&#x2F; 可以，length是number类型
-  name: string       &#x2F;&#x2F; 错误，&#96;name&#96;的类型与索引类型返回值的类型不匹配
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接口约束-变量的值-为-混合类型"><a href="#接口约束-变量的值-为-混合类型" class="headerlink" title="接口约束 变量的值 为 混合类型"></a>接口约束 变量的值 为 混合类型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束一个函数,同时这个函数还作为对象加了两个属性
-interface Counter &#123;
-    (start: number): string;
-    interval: number;
-    reset(): void;
-&#125;
-function getCounter(): Counter &#123;
-    let counter &#x3D; &lt;Counter&gt;function (start: number) &#123; &#125;;
-    counter.interval &#x3D; 123;
-    counter.reset &#x3D; function () &#123; &#125;;
-    return counter;
-&#125;
-
-let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -641,7 +523,7 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/09/23/typescript/3.ts-jie-kou/">https://github.com/LZY2333/LZY2333.github.io/2021/09/23/typescript/3.ts-jie-kou/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/11/12/suan-fa/13.hong-hei-shu/">https://github.com/LZY2333/LZY2333.github.io/2021/11/12/suan-fa/13.hong-hei-shu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -679,8 +561,8 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/TypeScript/">
-                                    <span class="chip bg-color">TypeScript</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -850,66 +732,18 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/09/24/typescript/4.ts-fan-xing/">
+                <a href="/2021/11/12/suan-fa/13.hong-hei-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="4.TS泛型">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="红黑树">
                         
-                        <span class="card-title">4.TS泛型</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-24
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/TypeScript/">
-                        <span class="chip bg-color">TypeScript</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/09/21/typescript/2.ts-lei/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="2.TS类">
-                        
-                        <span class="card-title">2.TS类</span>
+                        <span class="card-title">红黑树</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -920,7 +754,7 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-12
                             </span>
                         <span class="publish-author">
                             
@@ -934,13 +768,51 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/TypeScript/">
-                        <span class="chip bg-color">TypeScript</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/11/12/suan-fa/test/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            罗紫宇
+                            
+                        </span>
+                    </div>
                 </div>
                 
             </div>
