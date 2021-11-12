@@ -523,10 +523,10 @@
 <p>直到队头下标等于队尾下标.这个时候表示当前层遍历完成.</p>
 <p>每一层刚开始遍历的时候,树的高度+1.最后队列为空,就能得到树的高度.</p>
 <h2 id="自己写的实现"><a href="#自己写的实现" class="headerlink" title="自己写的实现"></a>自己写的实现</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">TreeNode</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">val<span class="token punctuation">,</span>left<span class="token punctuation">,</span>right</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val
-        <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> left
-        <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> right
+        <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">null</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">class</span> <span class="token class-name">BinarySearchTree</span> <span class="token punctuation">&#123;</span>
@@ -543,21 +543,25 @@
         <span class="token keyword">let</span> p <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
         <span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             <span class="token keyword">if</span><span class="token punctuation">(</span>val <span class="token operator">&lt;</span> p<span class="token punctuation">.</span>val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>p<span class="token punctuation">.</span>left<span class="token punctuation">)</span> p<span class="token punctuation">.</span>left <span class="token operator">=</span> newNode
-                <span class="token keyword">else</span> p <span class="token operator">=</span> p<span class="token punctuation">.</span>left
+                <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>p<span class="token punctuation">.</span>left<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    p<span class="token punctuation">.</span>left <span class="token operator">=</span> newNode
+                    <span class="token keyword">return</span>
+                <span class="token punctuation">&#125;</span>
+                p <span class="token operator">=</span> p<span class="token punctuation">.</span>left
             <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>p<span class="token punctuation">.</span>right<span class="token punctuation">)</span> p<span class="token punctuation">.</span>right <span class="token operator">=</span> newNode
-                <span class="token keyword">else</span> p <span class="token operator">=</span> p<span class="token punctuation">.</span>right
+                <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>p<span class="token punctuation">.</span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    p<span class="token punctuation">.</span>right <span class="token operator">=</span> newNode
+                    <span class="token keyword">return</span>
+                <span class="token punctuation">&#125;</span>
+                p <span class="token operator">=</span> p<span class="token punctuation">.</span>right
             <span class="token punctuation">&#125;</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token comment">// 查找</span>
     <span class="token function">find</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span>
         <span class="token keyword">let</span> p <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
         <span class="token keyword">while</span><span class="token punctuation">(</span>p <span class="token operator">&amp;&amp;</span> p<span class="token punctuation">.</span>val <span class="token operator">!==</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>val <span class="token operator">&lt;</span> p<span class="token punctuation">.</span>val<span class="token punctuation">)</span> p<span class="token punctuation">.</span>left
-            <span class="token keyword">else</span> p<span class="token punctuation">.</span>right
+            p <span class="token operator">=</span> val <span class="token operator">&lt;</span> p<span class="token punctuation">.</span>val <span class="token operator">?</span> p<span class="token punctuation">.</span>left <span class="token operator">:</span> p<span class="token punctuation">.</span>right
         <span class="token punctuation">&#125;</span>
         <span class="token keyword">return</span> p
     <span class="token punctuation">&#125;</span>
@@ -594,7 +598,7 @@
         <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>pp<span class="token punctuation">.</span>left <span class="token operator">=</span> p<span class="token punctuation">)</span> pp<span class="token punctuation">.</span>left <span class="token operator">=</span> child
         <span class="token keyword">else</span> pp<span class="token punctuation">.</span>right <span class="token operator">=</span> child
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="二叉树与散列表"><a href="#二叉树与散列表" class="headerlink" title="二叉树与散列表"></a>二叉树与散列表</h2><p>散列表的插入、删除、查找操作的时间复杂度可以做到常量级的 O(1),非常高效</p>
 <p>二叉查找树在比较平衡的情况下,插入、删除、查找操作时间复杂度才是 O(logn)</p>
 <p>平衡二叉树 对比 散列表的优势:</p>
