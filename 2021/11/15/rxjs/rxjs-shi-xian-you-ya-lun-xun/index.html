@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="排序(计数,基数,桶), Lazy">
+    <meta name="keywords" content="RxJS repeatWhen实现轮询, Lazy">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>排序(计数,基数,桶) | Lazy</title>
+    <title>RxJS repeatWhen实现轮询 | Lazy</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">排序(计数,基数,桶)</h1>
+                    <h1 class="description center-align post-title">RxJS repeatWhen实现轮询</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/RxJS/">
+                                <span class="chip bg-color">RxJS</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                技术栈
+                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
+                                知识点
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-31
+                    2021-11-15
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    4 分
                 </div>
                 
 
@@ -446,145 +446,131 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="排序-计数-基数-桶"><a href="#排序-计数-基数-桶" class="headerlink" title="排序(计数,基数,桶)"></a>排序(计数,基数,桶)</h1><p>对数据有要求,但时间复杂度为O(n)</p>
-<h2 id="桶排序-BucketSort"><a href="#桶排序-BucketSort" class="headerlink" title="桶排序(BucketSort)"></a>桶排序(BucketSort)</h2><p>桶排序实际上是一种思想,<br>主要用于排序 大批量数据(10GB),<br>进行外部排序(数据储存在外部磁盘中),<br>进行分批次排序</p>
-<p>先扫描一遍文件,确定数据范围,如1-100<br>首先,定义每个’桶’内存放的数据区间,如1-10,11-20…91-100<br>然后,扫描数据将数据存放在属于自己范围内的桶内<br>再次,依次对各个桶进行排序<br>最后,按顺序 直接拼接 桶内数据.</p>
-<p>数据量大可继续分桶,数据不均匀可桶内再分桶</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/** 找到数据范围,确定每个桶范围,创建桶,数据分桶,对每个桶调用排序 */</span>
-
-<span class="token comment">// 桶排序</span>
-<span class="token keyword">function</span> <span class="token function">bucketSort</span><span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> bucketSize <span class="token operator">=</span> <span class="token number">5</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>array<span class="token punctuation">.</span>length <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> array
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">const</span> buckets <span class="token operator">=</span> <span class="token function">createBuckets</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> bucketSize<span class="token punctuation">)</span>
-    <span class="token comment">// 5.对每个桶调用排序</span>
-    <span class="token keyword">return</span> <span class="token function">sortBuckets</span><span class="token punctuation">(</span>buckets<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">function</span> <span class="token function">createBuckets</span><span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> bucketSize</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> minValue <span class="token operator">=</span> array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-    <span class="token keyword">let</span> maxValue <span class="token operator">=</span> array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-    <span class="token comment">// 1.找到数据范围:遍历数组，找到数组最小值与数组最大值</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> array<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> minValue<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            minValue <span class="token operator">=</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> maxValue<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            maxValue <span class="token operator">=</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">// 2.确定每个桶范围:根据最小值、最大值、桶的大小，计算得到桶的个数</span>
-    <span class="token keyword">const</span> bucketCount <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>maxValue <span class="token operator">-</span> minValue<span class="token punctuation">)</span> <span class="token operator">/</span> bucketSize<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
-    <span class="token comment">// 3.创建桶:建立一个二维数组，将桶放入buckets中</span>
-    <span class="token keyword">const</span> buckets <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> bucketCount<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        buckets<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">// 4.数据分桶:计算每一个值应该放在哪一个桶中</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> array<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">const</span> bucketIndex <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> minValue<span class="token punctuation">)</span> <span class="token operator">/</span> bucketSize<span class="token punctuation">)</span>
-        buckets<span class="token punctuation">[</span>bucketIndex<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> buckets
-<span class="token punctuation">&#125;</span>
-<span class="token comment">// 对每个桶调用排序</span>
-<span class="token keyword">function</span> <span class="token function">sortBuckets</span><span class="token punctuation">(</span><span class="token parameter">buckets</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">const</span> sortedArray <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> buckets<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>buckets<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token function">insertionSort</span><span class="token punctuation">(</span>buckets<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
-            sortedArray<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">...</span>buckets<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> sortedArray
-<span class="token punctuation">&#125;</span>
-
-<span class="token comment">// 插入排序</span>
-<span class="token keyword">function</span> <span class="token function">insertionSort</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> length <span class="token punctuation">&#125;</span> <span class="token operator">=</span> array
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
-
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> value <span class="token operator">=</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        <span class="token keyword">let</span> j <span class="token operator">=</span> i <span class="token operator">-</span> <span class="token number">1</span>
-        <span class="token comment">// i左边是已排完序的,i右边是待排序区</span>
-        <span class="token comment">// array[i] 在i的左边区域内,从右往左对比,</span>
-        <span class="token comment">// 比 array[i] 大的都右移,碰到比array[i]小的数时停止,</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>j <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>array<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                array<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> array<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token comment">// 移动</span>
-                j<span class="token operator">--</span>
-            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">break</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">//  array[i]插入到碰见的第一个比自己小的数右边,</span>
-        <span class="token comment">//  此时j+1右边也会都是 比自己大的数</span>
-        array<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> value <span class="token comment">// 插入数据</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="计数排序-CountingSort"><a href="#计数排序-CountingSort" class="headerlink" title="计数排序(CountingSort)"></a>计数排序(CountingSort)</h2><p>计数排序 其实是 桶排序 的一种特殊情况<br>50万考生 分数0-900 分为901个桶 同一个桶内分数相同<br>只需将考生 依次输出到一个数组中 就实现了排序.</p>
-<p>假设 <code>a = [2,5,3,0,2,3,0,3]</code> 八个考生的分数 数组进行排序</p>
-<p>创建<code>c1 = [2,0,2,3,0,1]</code> 下标对应分数,数值对应 等于 分数的考生个数</p>
-<p>创建<code>c2 = [2,2,4,7,7,8]</code> 由c1变种而来,数值对应 小于等于 分数的考生个数</p>
-<p>创建<code>r = []</code> 8位空数组,存放排序完的数据</p>
-<p>从后 往前扫描<code>a</code>,得到<code>3</code>,从<code>c2[3]</code>得到<code>7</code>,</p>
-<p>代表<code>3</code>位于<code>r</code>第<code>7</code>位(<code>r[6]</code>),因为<code>c2[3]</code>表示 小于等于 <code>3</code>分的有<code>7</code>个</p>
-<p>于是<code>r[6] = 3</code>,<code>3</code>排序结束,</p>
-<p>此时小于等于3的元素只剩6个,<code>c2[3] = c2[3]-1</code></p>
-<p>继续 往前扫描<code>a</code>,得到<code>0</code>,由<code>c2[0]</code>知小于等于<code>0</code>的只有2个</p>
-<p>于是<code>0</code>位于<code>r</code>第二位,<code>r[1] = 2</code>,<code>c2[0] = c2[0]-1 = 1</code>,</p>
-<p>继续 往前扫描<code>a</code>,以此类推</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">countingSort</span> <span class="token operator">=</span> <span class="token parameter">array</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>array<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
-
-    <span class="token keyword">const</span> max <span class="token operator">=</span> <span class="token function">findMaxValue</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span>
-    <span class="token keyword">const</span> counts <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">(</span>max <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
-
-    <span class="token comment">// 计算每个元素的个数，放入到counts桶中</span>
-    <span class="token comment">// counts下标是元素，值是元素个数</span>
-    array<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">element</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>counts<span class="token punctuation">[</span>element<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            counts<span class="token punctuation">[</span>element<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
-        <span class="token punctuation">&#125;</span>
-        counts<span class="token punctuation">[</span>element<span class="token punctuation">]</span><span class="token operator">++</span>
+                <h1 id="RxJS-repeatWhen实现轮询"><a href="#RxJS-repeatWhen实现轮询" class="headerlink" title="RxJS repeatWhen实现轮询"></a>RxJS repeatWhen实现轮询</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>(无关内容，可直接跳过)</p>
+<p>下面是 2021-04-13 23:35:14 的留言 ———————————-</p>
+<p>业务上有个轮询操作，最近又自学了RxJS，</p>
+<p>不想妥协嵌套函数，不想使用settimeout，想写一段代码检视会上大家第一眼看不懂的代码，</p>
+<p>想着憋一个轮询出来应该不难吧….</p>
+<p>结果可能是RxJS用的人相对少，或者很多地方都是能用就行，</p>
+<p>所以问了查了很多地方，问了很多人，也没有满意的答案，</p>
+<p>直到我翻到了repeatWhen这个操作符，才有了一丝希望，谁知道这又是一个新坑的开始…</p>
+<p>经过不断的尝试，搜索，翻看文档，查看源码(在公司没外网权限，手机硬查…..)，</p>
+<p>终于是写了一版(可以说是菜鸟本鸟了)，</p>
+<p>回家复现了出来，这里做个笔记，真能帮到有需要的人便是我最开心的事.</p>
+<p>下面是 2021-11-05 10:25:12 的留言 ———————————-</p>
+<p>今天进一下掘金居然看到有人给这篇文章点赞了</p>
+<p>但是之前文章并没有把 repeatWhen 讲的很透，甚至有个小错误</p>
+<p>这个操作符经过我在公司项目半年的实际运用后已经基本摸清，现在改一版更详细的讲解</p>
+<h2 id="repeatWhen"><a href="#repeatWhen" class="headerlink" title="repeatWhen"></a>repeatWhen</h2><p>首先是最核心的 <strong>repeatWhen</strong></p>
+<p>这个操作符由 <strong>源Observable</strong> 调用,</p>
+<p>repeatWhen接收一个函数, 该函数被称为 <strong>notifier</strong>,</p>
+<p><strong>notifier</strong> 返回值必须是一个Observable,</p>
+<p>当该 返回值Observable 内部的next被调用</p>
+<p>则 源Observable 会再次创建 并被subscribe(再次调用),</p>
+<p>当该 返回值Observable 内部的error complete被调用,</p>
+<p>则 无事发生,事件结束</p>
+<p>最基础的使用方式如下</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">const</span> ori <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">Observer</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span> <span class="token comment">// 源Observable</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token operator">++</span>count<span class="token punctuation">)</span>
+    Observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+ori<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
+    <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// notify函数</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">Observer</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+            Observer<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">// 1</span>
+<span class="token comment">// 2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其原理是 repeatWhen 创建了一个 源Observable 的镜像,</p>
+<p>当源Observable的complete被调用, 则触发notify函数, 并将 镜像源Observable</p>
+<p>交由notify函数触发</p>
+<p>相当于 镜像源Observable 订阅了 notify 返回的Observable.</p>
+<p>这个 notify 被 镜像源Observable 订阅 的感觉 可以看官方例子理解</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> <span class="token keyword">of</span><span class="token punctuation">,</span> fromEvent <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> repeatWhen <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span><span class="token punctuation">;</span>
 
-    <span class="token comment">// counts下标是元素，值是元素个数</span>
-    <span class="token comment">// 例如： array: [6, 4, 3, 1], counts: [empty, 1, empty, 1, 1, empty, 1]</span>
-    <span class="token comment">// i是元素, count是元素个数</span>
-    <span class="token keyword">let</span> sortedIndex <span class="token operator">=</span> <span class="token number">0</span>
-    counts<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">count<span class="token punctuation">,</span> i</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            array<span class="token punctuation">[</span>sortedIndex<span class="token punctuation">]</span> <span class="token operator">=</span> i
-            sortedIndex<span class="token operator">++</span>
-            count<span class="token operator">--</span>
-        <span class="token punctuation">&#125;</span>
+<span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token keyword">of</span><span class="token punctuation">(</span><span class="token string">'Repeat message'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> documentClick$ <span class="token operator">=</span> <span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+source<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> documentClick$<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">data</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但是个人最建议的使用方式还是下面这种</p>
+<p>repeatWhen 还会给 <strong>notifier</strong> 传入一个 <strong>notifications</strong>,</p>
+<p>这个 <strong>notifications</strong> 似乎是一个 Subject(可理解为Observable的一种)</p>
+<p>当源Observable的complete被调用,<strong>notifications</strong> 内部的next就会被调用</p>
+<p>可直接使用此 <strong>notifications</strong> 而不 new Observable,</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">const</span> ori <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">Observer</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token operator">++</span>count<span class="token punctuation">)</span>
+    Observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+ori<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
+    <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">notifications</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> notifications<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
+            <span class="token comment">// takeWhile:当内部函数返回true时 调用next,否则complete</span>
+            <span class="token function">takeWhile</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> count <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-    <span class="token comment">// return array</span>
+<span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//1 2 3 4 5 循环5次</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><a target="_blank" rel="noopener" href="https://rxjs.dev/api/operators/repeatWhen">rxjs_repeatWhen官网解释</a></p>
+<h2 id="实现轮询"><a href="#实现轮询" class="headerlink" title="实现轮询"></a>实现轮询</h2><p>话都在注释里</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component<span class="token punctuation">,</span> OnInit <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Observable<span class="token punctuation">,</span> Subject <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> repeatWhen<span class="token punctuation">,</span>delay<span class="token punctuation">,</span>takeWhile<span class="token punctuation">,</span>timeout <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span>
+
+@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    selector<span class="token operator">:</span> <span class="token string">'app-test'</span><span class="token punctuation">,</span>
+    templateUrl<span class="token operator">:</span> <span class="token string">'./test.component.html'</span><span class="token punctuation">,</span>
+    styleUrls<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'./test.component.css'</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">TestComponent</span> <span class="token keyword">implements</span> <span class="token class-name">OnInit</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token function">ngOnInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">observer</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'----------start----------'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// start标记</span>
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// 模拟异步获取后端数据</span>
+                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// get标记</span>
+                count <span class="token operator">++</span> <span class="token comment">// 模拟拿到数据,并修改状态，例如 进度条进度 todo....</span>
+                observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 请求完就complete，触发repeatWhen</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        source<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
+            <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">notifications</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">return</span> notifications<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
+                    <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    <span class="token function">takeWhile</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'judge count &lt; 5 while repeat,count:'</span><span class="token punctuation">,</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">return</span> count <span class="token operator">&lt;</span> <span class="token number">5</span>
+                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    <span class="token comment">// 可设置20秒轮询超时时间，此20秒包含 请求时间 及 delay(2000) 的时间</span>
+                    <span class="token comment">// 例如在此处20秒大概是5次轮询后超时</span>
+                    <span class="token comment">// timeout(20000) </span>
+                <span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment">// ----------start---------- (创建新observable发起请求)</span>
+        <span class="token comment">// 2秒 (向后台请求时间)</span>
+        <span class="token comment">// get (获得数据)</span>
+        <span class="token comment">// 2秒 (设置的延迟请求时间)</span>
+        <span class="token comment">// judge count &lt; 5 while repeat,count: 1 (判断是否达到循环终止条件)</span>
+        <span class="token comment">// ----------start---------- (立即下过一次请求开始)</span>
+        <span class="token comment">// .....</span>
+        <span class="token comment">// ----------start---------- (创建新observable发起请求)</span>
+        <span class="token comment">// 2秒 (向后台请求时间)</span>
+        <span class="token comment">// get (获得数据)</span>
+        <span class="token comment">// 2秒 (设置的延迟时间)</span>
+        <span class="token comment">// judge count &lt; 5 while repeat,count: 5 (判断是否达到循环终止条件)</span>
+        <span class="token comment">// (结束)</span>
 <span class="token punctuation">&#125;</span>
-
-<span class="token keyword">function</span> <span class="token function">findMaxValue</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> max <span class="token operator">=</span> array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> array<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> max<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            max <span class="token operator">=</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> max
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>计数排序 只能用在 <strong>数据范围不大</strong> 的场景中,只能给 <strong>非负整数</strong> 排序.</p>
-<p>如果 数据范围k 大于 要排序的数据数n,则不适用<br>如果 存在非负整数,则需在 不改变相对大小 的情况下先转换为 非负整数</p>
-</blockquote>
-<h2 id="基数排序-RadixSort"><a href="#基数排序-RadixSort" class="headerlink" title="基数排序(RadixSort)"></a>基数排序(RadixSort)</h2><p>10万个手机号码从小到大排序</p>
-<p>使用快速排序 时间复杂度O(nlogn),使用桶排序,计数排序 则11位范围太大</p>
-<p>此时应使用 基数排序</p>
-<p>基数排序,将数据 按从低位到高位 依次进行O(n)的稳定排序,进行K次(K为数据位数)</p>
-<p>基数排序 对数据的要求:</p>
-<p>需要可以分割出独立的“位”来比较,<br>位之间有递进的关系(如果a数据的高位比b数据大,那剩下的低位就不用比较了),<br>每一位的数据范围不能太大,要可以用线性排序算法来排序<br>(否则,基数排序的时间复杂度就无法做到 O(n) 了。)</p>
-<h2 id="C语言的qsort函数策略"><a href="#C语言的qsort函数策略" class="headerlink" title="C语言的qsort函数策略"></a>C语言的qsort函数策略</h2><p>优先使用 归并排序 ,(归并排序应用与小数据量数据 如1kb 2kb)<br>数据量较大时(100MB),改用 快速排序,<br>快速排序过程中 区间元素个数小于4时, 使用插入排序,不继续使用递归快速排序 </p>
-
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -610,7 +596,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/08/31/suan-fa/8.pai-xu-ji-shu-ji-shu-tong/">https://github.com/LZY2333/LZY2333.github.io/2021/08/31/suan-fa/8.pai-xu-ji-shu-ji-shu-tong/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/11/15/rxjs/rxjs-shi-xian-you-ya-lun-xun/">https://github.com/LZY2333/LZY2333.github.io/2021/11/15/rxjs/rxjs-shi-xian-you-ya-lun-xun/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -648,8 +634,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/RxJS/">
+                                    <span class="chip bg-color">RxJS</span>
                                 </a>
                             
                         </div>
@@ -823,13 +809,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/08/31/suan-fa/9.er-fen-cha-zhao/">
+                <a href="/2021/11/15/suan-fa/test/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="二分查找">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">二分查找</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -840,27 +826,15 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-31
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-15
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            罗紫宇
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -872,13 +846,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/08/18/suan-fa/7.pai-xu-gui-bing-kuai-pai/">
+                <a href="/2021/11/15/suan-fa/14.dui/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="排序(归并,快排)">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="堆">
                         
-                        <span class="card-title">排序(归并,快排)</span>
+                        <span class="card-title">堆</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -889,7 +863,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-15
                             </span>
                         <span class="publish-author">
                             
