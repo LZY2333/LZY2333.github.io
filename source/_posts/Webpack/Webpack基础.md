@@ -1,6 +1,6 @@
 ---
 title: Webpack基础
-date: 2021-09-20 20:20:10
+date: 2021-11-17 10:56:56
 categories: 技术栈
 tags: 
     - Webpack
@@ -28,13 +28,11 @@ tags:
   - 压缩JS CSS HTML
   - 提取单独CSS文件
 
- ## 核心概念
+## 基础配置
 
 ### webpack.config.js
 
 webpack默认配置文件
-
-
 
 ### 入口
 
@@ -181,14 +179,16 @@ plugins: [
 
 __cross-env 用的最多__ 因为webpack.config文件能拿到,又能用于修改mode值,从而修改模块内.
 
-## 插件
+### 插件
 
 插件可以执行范围更广的任务
 
 比如: 打包优化 资源管理 输入环境变量 生成输入文件
 
 
-## webpack-dev-server开发服务器的原理
+## loader与插件配置
+
+### webpack-dev-server开发服务器的原理
 - 也是会用webpack从入口文件进行打包，然后输出到输出目录，这个输出是输出的内存文件系统里去了
 - 然后会启动http服务器预览我们的项目 
 
