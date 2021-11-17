@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="RxJS repeatWhen实现轮询, Lazy">
+    <meta name="keywords" content="Webpack基础, Lazy">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>RxJS repeatWhen实现轮询 | Lazy</title>
+    <title>Webpack基础 | Lazy</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">RxJS repeatWhen实现轮询</h1>
+                    <h1 class="description center-align post-title">Webpack基础</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RxJS/">
-                                <span class="chip bg-color">RxJS</span>
+                            <a href="/tags/Webpack/">
+                                <span class="chip bg-color">Webpack</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
-                                知识点
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                技术栈
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-16
+                    2021-11-17
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    6 分
                 </div>
                 
 
@@ -446,131 +446,120 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="RxJS-repeatWhen实现轮询"><a href="#RxJS-repeatWhen实现轮询" class="headerlink" title="RxJS repeatWhen实现轮询"></a>RxJS repeatWhen实现轮询</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>(无关内容，可直接跳过)</p>
-<p>下面是 2021-04-13 23:35:14 的留言 ———————————-</p>
-<p>业务上有个轮询操作，最近又自学了RxJS，</p>
-<p>不想妥协嵌套函数，不想使用settimeout，想写一段代码检视会上大家第一眼看不懂的代码，</p>
-<p>想着憋一个轮询出来应该不难吧….</p>
-<p>结果可能是RxJS用的人相对少，或者很多地方都是能用就行，</p>
-<p>所以问了查了很多地方，问了很多人，也没有满意的答案，</p>
-<p>直到我翻到了repeatWhen这个操作符，才有了一丝希望，谁知道这又是一个新坑的开始…</p>
-<p>经过不断的尝试，搜索，翻看文档，查看源码(在公司没外网权限，手机硬查…..)，</p>
-<p>终于是写了一版(可以说是菜鸟本鸟了)，</p>
-<p>回家复现了出来，这里做个笔记，真能帮到有需要的人便是我最开心的事.</p>
-<p>下面是 2021-11-05 10:25:12 的留言 ———————————-</p>
-<p>今天进一下掘金居然看到有人给这篇文章点赞了</p>
-<p>但是之前文章并没有把 repeatWhen 讲的很透，甚至有个小错误</p>
-<p>这个操作符经过我在公司项目半年的实际运用后已经基本摸清，现在改一版更详细的讲解</p>
-<h2 id="repeatWhen"><a href="#repeatWhen" class="headerlink" title="repeatWhen"></a>repeatWhen</h2><p>首先是最核心的 <strong>repeatWhen</strong></p>
-<p>这个操作符由 <strong>源Observable</strong> 调用,</p>
-<p>repeatWhen接收一个函数, 该函数被称为 <strong>notifier</strong>,</p>
-<p><strong>notifier</strong> 返回值必须是一个Observable,</p>
-<p>当该 返回值Observable 内部的next被调用</p>
-<p>则 源Observable 会再次创建 并被subscribe(再次调用),</p>
-<p>当该 返回值Observable 内部的error complete被调用,</p>
-<p>则 无事发生,事件结束</p>
-<p>最基础的使用方式如下</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-<span class="token keyword">const</span> ori <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">Observer</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span> <span class="token comment">// 源Observable</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token operator">++</span>count<span class="token punctuation">)</span>
-    Observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-ori<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-    <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// notify函数</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">Observer</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            Observer<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token comment">// 1</span>
-<span class="token comment">// 2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其原理是 repeatWhen 创建了一个 源Observable 的镜像,</p>
-<p>当源Observable的complete被调用, 则触发notify函数, 并将 镜像源Observable</p>
-<p>交由notify函数触发</p>
-<p>相当于 镜像源Observable 订阅了 notify 返回的Observable.</p>
-<p>这个 notify 被 镜像源Observable 订阅 的感觉 可以看官方例子理解</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> <span class="token keyword">of</span><span class="token punctuation">,</span> fromEvent <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> repeatWhen <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span><span class="token punctuation">;</span>
+                <h1 id="Webpack基础"><a href="#Webpack基础" class="headerlink" title="Webpack基础"></a>Webpack基础</h1><h2 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h2><ul>
+<li>webpack5安装的基本使用</li>
+<li>入口、输出、loader、plugin、mode模式</li>
+<li>开发环境配置<ul>
+<li>开发服务器</li>
+<li>支持CSS</li>
+<li>支持less sass</li>
+<li>处理CSS兼容</li>
+<li>处理JS和JS兼容</li>
+<li>如何配置使用图片等静态资料</li>
+<li>eslint代码校验</li>
+<li>sourcemap</li>
+<li>打包第三方包</li>
+<li>拷贝静态文件</li>
+<li>如何配置服务器代码</li>
+</ul>
+</li>
+<li>生成环境配置<ul>
+<li>压缩JS CSS HTML</li>
+<li>提取单独CSS文件</li>
+</ul>
+</li>
+</ul>
+<h2 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h2><h3 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h3><p>webpack默认配置文件</p>
+<h3 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h3><p>指示webpack应该从哪个文件开始打包，用来作为内部依赖的图构建的起点</p>
+<p>在webpack5里，如果没有额外配置的话，入口文件就是<code>src\index.js</code></p>
+<p><strong>package.json中的命令如何执行</strong></p>
+<p>package.json文件 的 scripts中添加 <code>build&quot;:&quot;webpack&quot;</code>命令</p>
+<p>执行时npm从当前目录下<code>node_modules</code>文件夹bin目录下找同名文件<code>webpack.cmd</code></p>
+<p><code>webpack.cmd</code>指向 <code>../webpack/bin/webpack.js</code>,</p>
+<p>也就是<code>node_modules</code>下的<code>webpack</code>模块的的<code>bin</code>文件夹下的<code>webpack.js</code></p>
+<h3 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h3><p>webpack默认情况下只能处理和理解javascript和json文件</p>
+<p>如果要想引入其它类型的文件，比如css,需要对源文件进行加载和转换，转成JS  </p>
+<p>比如处理CSS文件,配置文件以<code>/\.css$/</code>结尾,就用 <code>[&#39;style-loader&#39;, &#39;css-loader&#39;]</code></p>
+<p>两个loader进行处理,<strong>从右向左执行</strong></p>
+<p>1.先读出源文件 index.css</p>
+<p>2.把文件内容传递给css-loader,css-loader可以处理css中的@import和url语法,</p>
+<p>处理完之后会把内容传递给style-loader</p>
+<p>3.style-loader的作用是把CSS转换成style标签插入页面中</p>
+<h3 id="mode"><a href="#mode" class="headerlink" title="mode"></a>mode</h3><p>代表当前编译 的环境</p>
+<p><code>none</code> 未指定</p>
+<p><code>production</code> 生产环境 webpack会针对构建结果进行生成环境的优化 默认值</p>
+<p><code>development</code> 开发环境 webpack不会对代码进行压缩</p>
+<p>日常项目开发中，我们会有两套环境</p>
+<p>一套是开发环境 用于开发时使用，构建结果用于本地的开发调试，不压缩代码，打印日志，包含sourcemap文件</p>
+<p>一套是构建后直接上线的 代码一般都是压缩后，不打印LOG，静态文件也不包含sourcemap</p>
+<p>webpack4之后引入mode概念</p>
+<p><strong>production mode 时</strong></p>
+<p>会将 <code>process.env.NODE_ENV</code> 的值设为 <code>development</code></p>
+<p>默认会 __启用各种性能优化的功能__，包括构建结果优化以及 webpack 运行性能优化</p>
+<p>启用 NamedChunksPlugin 和 NamedModulesPlugin</p>
+<p><strong>development mode 时</strong></p>
+<p>会将 <code>process.env.NODE_ENV</code> 的值设为 <code>production</code></p>
+<p>会 __开启 debug 工具__，运行时打印详细的错误信息，以及更加快速的增量编译构建</p>
+<p>启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, </p>
+<p>ModuleConcatenationPlugin, NoEmitOnErrorsPlugin, OccurrenceOrderPlugin, </p>
+<p>SideEffectsFlagPlugin 和 UglifyJsPlugin</p>
+<p><strong>development none 时</strong>,不启动任何额外的插件</p>
+<p><strong>开发环境</strong>,需要生成 sourcemap 文件,打印 debug 信息,hot reload 的功能</p>
+<p><strong>生产环境</strong>,可能需要分离 CSS 成单独的文件,以便多个页面共享同一个 CSS 文件</p>
+<p>,需要压缩 HTML/CSS/JS 代码,需要压缩图片</p>
+<p><strong>如何 命令行 动态启用不同的环境</strong></p>
+<p>mode一般不在配置文件中写死,而在命令行中设置.</p>
+<p><code>webpack</code>命令 的mode默认为production</p>
+<p><code>webpack serve</code>命令 的mode默认为development</p>
+<ol>
+<li><code>webpack --mode=production</code> 可填入两种模式,直接设置模块内的<code>process.env.NODE_ENV</code>的值</li>
+</ol>
+<blockquote>
+<p>process.env.NODE_ENV变量无法在项目编译完运行时模块内访问,在编译时已被替换为字面量如<code>&#39;production&#39;</code><br>mode优先级顺序: 默认mode(production) &lt; 配置文件webpack.config.js里的mode<br>&lt; package.json中的–mode的配置</p>
+</blockquote>
+<ol start="2">
+<li><code>webpack --env</code>,命令行中用来设置webpack配置文件的函数参数</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 可以在webpack配置文件中 的第一个参数获取到env</span>
+module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">env<span class="token punctuation">,</span>argv</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'env'</span><span class="token punctuation">,</span>env<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// env是个对象</span>
+    <span class="token comment">// 假设命令行 webpack --env=abc</span>
+    <span class="token comment">// 则env.abc === true</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token keyword">of</span><span class="token punctuation">(</span><span class="token string">'Repeat message'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> documentClick$ <span class="token operator">=</span> <span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>3.<code>cross-env NODE_ENV=production webpack</code> 可改变node环境变量 <code>process.env.NODE_ENV</code></p>
+<p>process.env.NODE_ENV 在 src内的 是被webpack识别并捕获替换的字面量</p>
+<p>process.env.NODE_ENV 在 webpack配置文件中 是undefined</p>
+<p>process代表webpack运行的node进程,env代表环境变量,NODE_ENV代表一个key</p>
+<p>通过<code>cross-env</code>可设定任意key值,包括NODE_ENV</p>
+<p>需要先<code>npm i cross-env --D</code> 此module名意为,跨平台环境变量</p>
+<p>因为win和mac的环境变量设置的命令行语句不同,</p>
+<p>例如,win平台需要set命令<code>set NODE_ENV=production webpack</code>,mac平台不需要加set</p>
+<ol start="4">
+<li><strong>DefinePlugin</strong> 用来设置模块内的全局变量,可以用于模块内的字符串替换</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>DefinePlugin</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        <span class="token string">'process.env.NODE_ENV'</span><span class="token operator">:</span> <span class="token string">'production'</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token comment">// 当然这个production也可以使用变量,比如读dev里的production</span>
+    <span class="token comment">// 但是注意 使用变量时得加上 JSON.stringify(dev.production) 或 '"'+ a + '"'</span>
+    <span class="token comment">// 不加的话替换过去会没有双引号,从而在运行的时候被视为变量,或错误,而非字符串字面量</span>
+    <span class="token comment">// 当然这个字符串也可以随便写 abcd啥的,就是个编译时的字符串替换</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>cross-env 用的最多</strong> 因为webpack.config文件能拿到,又能用于修改mode值,从而修改模块内.</p>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>插件可以执行范围更广的任务</p>
+<p>比如: 打包优化 资源管理 输入环境变量 生成输入文件</p>
+<h2 id="loader与插件配置"><a href="#loader与插件配置" class="headerlink" title="loader与插件配置"></a>loader与插件配置</h2><h3 id="webpack-dev-server开发服务器的原理"><a href="#webpack-dev-server开发服务器的原理" class="headerlink" title="webpack-dev-server开发服务器的原理"></a>webpack-dev-server开发服务器的原理</h3><ul>
+<li>也是会用webpack从入口文件进行打包，然后输出到输出目录，这个输出是输出的内存文件系统里去了</li>
+<li>然后会启动http服务器预览我们的项目 </li>
+</ul>
+<p>less 用于把less编译成CSS<br>less-loader<br>node-sass 用于把sass编译成CSS<br>sass-loader</p>
+<p>background-image: url(~image/kf.jpg);<br>//为了引入node_modules下面的资源文件，比如说bootstrap，可以添加 ~前缀</p>
+<p>CSS兼容 性和importLoaders<br>importLoaders 允许或者说启动几个数量的loaders应用在import 的文件</p>
+<p>webpack4 关于图片需要 使用file-loader url-loader<br>webpack5 不再需要<br>file-loader=&gt;asset/resource 把图片拷贝到输出目录里去，返回一个输出后的路径，包括文件<br>url-loader=&gt;asset/inline 不拷贝文件，直接把源文件变成base64字符串内嵌到输出结果</p>
+<p>js兼容性<br>polyfill preset-env preset-react<br>eslint<br>eslint prettier git hooks 放在一起<br>source可以放在一起</p>
+<p>1.直接引入<br>每次使用都需要手工导入<br>2.插件引入<br>如果使用webpack.ProvidePlugin插件引入的话，则不再需要你在模块手工引入<br>3.但在没有全局变量，你在模块外是不能访问的<br>如果想在任何地方访问此变量，需要把此变量设置为环境变量 <code>window.isarray</code><br>expose-loader 可以把模块添加到全局对象上<br>以上三种方式，都需要打包库的代码，不能使用CDN</p>
 
-source<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> documentClick$<span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">data</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>但是个人最建议的使用方式还是下面这种</p>
-<p>repeatWhen 还会给 <strong>notifier</strong> 传入一个 <strong>notifications</strong>,</p>
-<p>这个 <strong>notifications</strong> 似乎是一个 Subject(可理解为Observable的一种)</p>
-<p>当源Observable的complete被调用,<strong>notifications</strong> 内部的next就会被调用</p>
-<p>可直接使用此 <strong>notifications</strong> 而不 new Observable,</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-<span class="token keyword">const</span> ori <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">Observer</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token operator">++</span>count<span class="token punctuation">)</span>
-    Observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-ori<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-    <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">notifications</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> notifications<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-            <span class="token comment">// takeWhile:当内部函数返回true时 调用next,否则complete</span>
-            <span class="token function">takeWhile</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> count <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token comment">//1 2 3 4 5 循环5次</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><a target="_blank" rel="noopener" href="https://rxjs.dev/api/operators/repeatWhen">rxjs_repeatWhen官网解释</a></p>
-<h2 id="实现轮询"><a href="#实现轮询" class="headerlink" title="实现轮询"></a>实现轮询</h2><p>话都在注释里</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component<span class="token punctuation">,</span> OnInit <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Observable<span class="token punctuation">,</span> Subject <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> repeatWhen<span class="token punctuation">,</span>delay<span class="token punctuation">,</span>takeWhile<span class="token punctuation">,</span>timeout <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span>
-
-@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    selector<span class="token operator">:</span> <span class="token string">'app-test'</span><span class="token punctuation">,</span>
-    templateUrl<span class="token operator">:</span> <span class="token string">'./test.component.html'</span><span class="token punctuation">,</span>
-    styleUrls<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'./test.component.css'</span><span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">TestComponent</span> <span class="token keyword">implements</span> <span class="token class-name">OnInit</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token function">ngOnInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-        <span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">observer</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'----------start----------'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// start标记</span>
-            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// 模拟异步获取后端数据</span>
-                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// get标记</span>
-                count <span class="token operator">++</span> <span class="token comment">// 模拟拿到数据,并修改状态，例如 进度条进度 todo....</span>
-                observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 请求完就complete，触发repeatWhen</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        source<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-            <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">notifications</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">return</span> notifications<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-                    <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                    <span class="token function">takeWhile</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-                        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'judge count &lt; 5 while repeat,count:'</span><span class="token punctuation">,</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        <span class="token keyword">return</span> count <span class="token operator">&lt;</span> <span class="token number">5</span>
-                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                    <span class="token comment">// 可设置20秒轮询超时时间，此20秒包含 请求时间 及 delay(2000) 的时间</span>
-                    <span class="token comment">// 例如在此处20秒大概是5次轮询后超时</span>
-                    <span class="token comment">// timeout(20000) </span>
-                <span class="token punctuation">)</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment">// ----------start---------- (创建新observable发起请求)</span>
-        <span class="token comment">// 2秒 (向后台请求时间)</span>
-        <span class="token comment">// get (获得数据)</span>
-        <span class="token comment">// 2秒 (设置的延迟请求时间)</span>
-        <span class="token comment">// judge count &lt; 5 while repeat,count: 1 (判断是否达到循环终止条件)</span>
-        <span class="token comment">// ----------start---------- (立即下过一次请求开始)</span>
-        <span class="token comment">// .....</span>
-        <span class="token comment">// ----------start---------- (创建新observable发起请求)</span>
-        <span class="token comment">// 2秒 (向后台请求时间)</span>
-        <span class="token comment">// get (获得数据)</span>
-        <span class="token comment">// 2秒 (设置的延迟时间)</span>
-        <span class="token comment">// judge count &lt; 5 while repeat,count: 5 (判断是否达到循环终止条件)</span>
-        <span class="token comment">// (结束)</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -596,7 +585,7 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/11/16/rxjs/rxjs-shi-xian-you-ya-lun-xun/">https://github.com/LZY2333/LZY2333.github.io/2021/11/16/rxjs/rxjs-shi-xian-you-ya-lun-xun/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/11/17/webpack/webpack-ji-chu/">https://github.com/LZY2333/LZY2333.github.io/2021/11/17/webpack/webpack-ji-chu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -634,8 +623,8 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/RxJS/">
-                                    <span class="chip bg-color">RxJS</span>
+                                <a href="/tags/Webpack/">
+                                    <span class="chip bg-color">Webpack</span>
                                 </a>
                             
                         </div>
@@ -805,54 +794,18 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/16/suan-fa/test/">
+                <a href="/2021/11/17/webpack/webpack-ji-chu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Webpack基础">
                         
-                        <span class="card-title"></span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-16
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            罗紫宇
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/11/15/suan-fa/14.dui/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="堆">
-                        
-                        <span class="card-title">堆</span>
+                        <span class="card-title">Webpack基础</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -863,7 +816,7 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-17
                             </span>
                         <span class="publish-author">
                             
@@ -877,11 +830,61 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/Webpack/">
+                        <span class="chip bg-color">Webpack</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/11/17/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
+                        
+                        <span class="card-title">Node的Git上传脚本</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/node/">
+                        <span class="chip bg-color">node</span>
                     </a>
                     
                 </div>
@@ -1028,7 +1031,7 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">79.6k</span>&nbsp;字
+                class="white-color">79.2k</span>&nbsp;字
             
             
             
