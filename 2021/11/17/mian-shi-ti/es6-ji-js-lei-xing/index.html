@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Node的Git上传脚本, Lazy">
+    <meta name="keywords" content="ES6及JS类型, Lazy">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Node的Git上传脚本 | Lazy</title>
+    <title>ES6及JS类型 | Lazy</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Node的Git上传脚本</h1>
+                    <h1 class="description center-align post-title">ES6及JS类型</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/node/">
-                                <span class="chip bg-color">node</span>
+                            <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                                <span class="chip bg-color">面试题</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
-                                经验帖
+                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
+                                知识点
                             </a>
                         
                     </div>
@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    139
+                    119
                 </div>
                 
 
@@ -446,24 +446,18 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Node的Git上传脚本"><a href="#Node的Git上传脚本" class="headerlink" title="Node的Git上传脚本"></a>Node的Git上传脚本</h1><p>由于我自己用git的时候每次都是重复的 3个操作</p>
-<p><code>git add .</code>/ <code>git commit -m&quot;XXX&quot;</code>/<code>git push</code> </p>
-<p>希望能写个node脚本一句话解决,发现了这个Simple Git包</p>
-<p>还挺好用</p>
-<h2 id="Simple-Git"><a href="#Simple-Git" class="headerlink" title="Simple Git"></a>Simple Git</h2><p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/simple-git">Simple Git npm包介绍页</a></p>
-<p>新建一个文件,我这里叫<code>bin.js</code></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> simpleGit <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'simple-git'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> git <span class="token operator">=</span> <span class="token function">simpleGit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-git
-<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span>global<span class="token punctuation">.</span>process<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Push to master success"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>npm i</code> 更新一下包,自动下载simple-git</p>
-<p>命令行敲 <code>node bin my-message</code> 就OK了，详细的以后再去研究</p>
-
+                <h1 id="ES6及JS类型"><a href="#ES6及JS类型" class="headerlink" title="ES6及JS类型"></a>ES6及JS类型</h1><h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>会修改数组自身的七大方法:<br><code>push</code>/<code>pop</code>/<code>shift</code>/<code>unshift</code>/<code>sort</code>/<code>reverse</code>/<code>splice</code></p>
+<p><code>splice(删除与插入的起始位置,删除元素个数,添加的元素)</code><br>修改原数组,返回删除的元素组成的数组</p>
+<p><code>slice(start,end)</code> 前闭后开,不修改原数组,返回新数组</p>
+<p><code>split(&#39;&#39;)</code> 根据括号内符号切割字符串</p>
+<p>``</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 求和</span>
+<span class="token keyword">function</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> arr<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">total<span class="token punctuation">,</span>num</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> total <span class="token operator">+</span> num
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2>
                 
             </div>
             <hr/>
@@ -489,7 +483,7 @@ git
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/11/17/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">https://github.com/LZY2333/LZY2333.github.io/2021/11/17/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/11/17/mian-shi-ti/es6-ji-js-lei-xing/">https://github.com/LZY2333/LZY2333.github.io/2021/11/17/mian-shi-ti/es6-ji-js-lei-xing/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -527,8 +521,8 @@ git
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/node/">
-                                    <span class="chip bg-color">node</span>
+                                <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                                    <span class="chip bg-color">面试题</span>
                                 </a>
                             
                         </div>
@@ -702,6 +696,55 @@ git
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2021/11/18/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
+                        
+                        <span class="card-title">Node的Git上传脚本</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-18
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/node/">
+                        <span class="chip bg-color">node</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2021/11/17/webpack/webpack-ji-chu/">
                     <div class="card-image">
                         
@@ -718,9 +761,9 @@ git
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-17
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-17
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -738,55 +781,6 @@ git
                     
                     <a href="/tags/Webpack/">
                         <span class="chip bg-color">Webpack</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/11/17/rxjs/rxjs-shi-xian-you-ya-lun-xun/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="RxJS repeatWhen实现轮询">
-                        
-                        <span class="card-title">RxJS repeatWhen实现轮询</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-17
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
-                                    知识点
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/RxJS/">
-                        <span class="chip bg-color">RxJS</span>
                     </a>
                     
                 </div>
@@ -933,7 +927,7 @@ git
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">79.2k</span>&nbsp;字
+                class="white-color">79.4k</span>&nbsp;字
             
             
             
