@@ -195,7 +195,7 @@ __cross-env 用的最多__ 因为webpack.config文件能拿到,又能用于修�
 
 
 less 用于把less编译成CSS
-less-loader 
+less-loader 在webpack中使用，负责调用less包
 node-sass 用于把sass编译成CSS
 sass-loader
 
