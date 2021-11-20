@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    727
+                    740
                 </div>
                 
 
@@ -456,13 +456,16 @@
 <ol start="6">
 <li>VI中同时按 <code>Shift + g</code> 展示全部,<code>q</code>退出查看</li>
 </ol>
-<p>可以自定义git log的展示内容,以后用 <code>git mylog</code> 就行(最推荐)</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">git config --global alias.mylog &quot;log --color --graph --pretty&#x3D;format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --&quot;
+<p>可以自定义git log的展示内容,以后用 <code>git lg</code> 就行(最推荐)</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">git config --global alias.lg &quot;log --color --graph --pretty&#x3D;format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --&quot;
 
 git mylog
 # 效果(带颜色):* 16c8eff - init (2021-11-03 21:01:24 +0800) &lt;Your Name&gt;
-# ci换成cr则提交日期，按多久以前的方式显示 例如：1 day ago<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="git-reset-hard-xxx回滚版本-且丢弃之后所有版本"><a href="#git-reset-hard-xxx回滚版本-且丢弃之后所有版本" class="headerlink" title="git reset --hard xxx回滚版本,且丢弃之后所有版本"></a><code>git reset --hard xxx</code>回滚版本,且丢弃之后所有版本</h4><p>1.<code>git reset --hard HEAD^</code>,回滚到上个版本</p>
+# ci换成cr则提交日期，按多久以前的方式显示 例如：1 day ago
+
+# 删除别名配置: git config --global --unset alias.lg
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="git-reset-hard-commit号回滚版本-且丢弃之后所有版本"><a href="#git-reset-hard-commit号回滚版本-且丢弃之后所有版本" class="headerlink" title="git reset --hard commit号回滚版本,且丢弃之后所有版本"></a><code>git reset --hard commit号</code>回滚版本,且丢弃之后所有版本</h4><p>1.<code>git reset --hard HEAD^</code>,回滚到上个版本</p>
 <p>2.<code>git reset --hard HEAD^~2</code>,回滚到前两个版本</p>
 <p>3.<code>git reset --hard xxx</code>(版本号或版本号前几位),回滚到指定版本号,会自动匹配</p>
 <p>4.<code>git reset --hard xxx filename</code>回滚某个文件到指定版本号(需要进入该文件所在目录)</p>
@@ -947,7 +950,7 @@ git mylog
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">80.9k</span>&nbsp;字
+                class="white-color">81.1k</span>&nbsp;字
             
             
             

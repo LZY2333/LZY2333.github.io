@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    642
+                    879
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -464,16 +464,27 @@
 <p><strong>React组件必须首字母大写,React是通过首字母是否大写判断是否是自定义组件,小写就是原生标签了</strong></p>
 <h2 id="组件的数据来源有两个"><a href="#组件的数据来源有两个" class="headerlink" title="组件的数据来源有两个"></a>组件的数据来源有两个</h2><p>一个是父组件的属性,组件内通过<code>this.props</code>获取,属性是父组件的不能修改,</p>
 <p>一个是自身的状态, state对象 自己内部初始化的,唯一的修改方法是<code>setState</code></p>
-<h2 id="React绑定事件与原生不同"><a href="#React绑定事件与原生不同" class="headerlink" title="React绑定事件与原生不同"></a>React绑定事件与原生不同</h2><ol>
+<h2 id="React绑定事件写法与原生不同"><a href="#React绑定事件写法与原生不同" class="headerlink" title="React绑定事件写法与原生不同"></a>React绑定事件写法与原生不同</h2><ol>
 <li><p>属性不是小写而是驼峰命名</p>
 </li>
 <li><p>值不是字符串而是函数的引用,<code>onClick=&#123;this.handleClick&#125;</code></p>
 </li>
 </ol>
-<h2 id="React异步更新组件内的state"><a href="#React异步更新组件内的state" class="headerlink" title="React异步更新组件内的state"></a>React异步更新组件内的state</h2><p>组件内调用<code>setState</code>修改某数据后,在下面立即console该属性,发现属性未发生改变</p>
+<h2 id="React会异步更新组件内的state"><a href="#React会异步更新组件内的state" class="headerlink" title="React会异步更新组件内的state"></a>React会异步更新组件内的state</h2><p>组件内调用<code>setState</code>修改某数据后,在下面立即console该属性,发现属性未发生改变</p>
 <p>这是因为同一次同步任务内所有的数据修改<code>setState</code>,会记录在<code>pendingState</code>队列</p>
 <p>最后在该同步任务执行完毕时,下一个微任务队列内执行数据的更新.</p>
-<h2 id="React组件更新原理"><a href="#React组件更新原理" class="headerlink" title="React组件更新原理"></a>React组件更新原理</h2><ol>
+<h2 id="想基于当前同步任务中上一次state修改-来做这次的state修改"><a href="#想基于当前同步任务中上一次state修改-来做这次的state修改" class="headerlink" title="想基于当前同步任务中上一次state修改,来做这次的state修改"></a>想基于当前同步任务中上一次state修改,来做这次的state修改</h2><p>想基于同一次同步任务内上次state修改后的数据,来完成这次state的修改.</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>number<span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 想基于上一次的state.number+1后的数据,完成这一次的state.number再+1</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>number<span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 这样过后,假设一开始number===0,最后number会===1,与想要的结果2不同</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>正确的写法,<code>this.setState(state=&gt;&#123;number:this.state.number+1&#125;)</code>(使用函数,而非对象)</p>
+<p>内部原理:计算最新state状态时,当检测到 当前这次<code>setState</code>调用 的参数为函数,</p>
+<p>调用该函数,并传入 最新state(已经过同次同步任务之前setState的修改后 并与oldstate 合并了的state),</p>
+<p>返回 当前这次<code>setState</code>调用 产生的 state作为 最新state </p>
+<h2 id="React类组件更新原理"><a href="#React类组件更新原理" class="headerlink" title="React类组件更新原理"></a>React类组件更新原理</h2><ol>
 <li><p>初次渲染的时候已经在页面上放置了一个DIV</p>
 </li>
 <li><p>更新的时候用新的state,重新render返回新的虚拟DOM,</p>
@@ -953,7 +964,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">80.9k</span>&nbsp;字
+                class="white-color">81.1k</span>&nbsp;字
             
             
             
