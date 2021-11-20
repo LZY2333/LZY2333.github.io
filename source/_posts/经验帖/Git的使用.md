@@ -25,17 +25,20 @@ tags:
 
 6. VI中同时按 `Shift + g` 展示全部,`q`退出查看
 
-可以自定义git log的展示内容,以后用 `git mylog` 就行(最推荐)
+可以自定义git log的展示内容,以后用 `git lg` 就行(最推荐)
 
 ```sh
-git config --global alias.mylog "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit --"
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 
 git mylog
 # 效果(带颜色):* 16c8eff - init (2021-11-03 21:01:24 +0800) <Your Name>
 # ci换成cr则提交日期，按多久以前的方式显示 例如：1 day ago
+
+# 删除别名配置: git config --global --unset alias.lg
+
 ```
 
-#### `git reset --hard xxx`回滚版本,且丢弃之后所有版本
+#### `git reset --hard commit号`回滚版本,且丢弃之后所有版本
 
 1.`git reset --hard HEAD^`,回滚到上个版本
 
@@ -63,5 +66,6 @@ git mylog
 比如产生了3个版本,想丢弃版本2的修改,并保留版本3的修改,使用此方法,会生成版本4,此版本4由版本1和3的修改组成.
 
 [git reset 和 git revert](https://juejin.cn/post/6844903614767448072)
+
 
 ### 碰到一个问题写一个
