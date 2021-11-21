@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    879
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    5 分
                 </div>
                 
 
@@ -470,9 +470,56 @@
 <li><p>值不是字符串而是函数的引用,<code>onClick=&#123;this.handleClick&#125;</code></p>
 </li>
 </ol>
-<h2 id="React会异步更新组件内的state"><a href="#React会异步更新组件内的state" class="headerlink" title="React会异步更新组件内的state"></a>React会异步更新组件内的state</h2><p>组件内调用<code>setState</code>修改某数据后,在下面立即console该属性,发现属性未发生改变</p>
+<h2 id="React的更新是可能是-异步-可能是-同步"><a href="#React的更新是可能是-异步-可能是-同步" class="headerlink" title="React的更新是可能是 异步 可能是 同步"></a>React的更新是可能是 异步 可能是 同步</h2><p><strong>React会 异步批量更新 组件内的state</strong></p>
+<p>组件内调用<code>setState</code>修改某数据后,在下面立即console该属性,发现属性未发生改变</p>
 <p>这是因为同一次同步任务内所有的数据修改<code>setState</code>,会记录在<code>pendingState</code>队列</p>
 <p>最后在该同步任务执行完毕时,下一个微任务队列内执行数据的更新.</p>
+<p><strong>React对于非自己的提供的接口产生的更新是 同步立即更新 的</strong></p>
+<p>React 在自己能够管理 的范围内比如 事件函数 生命周期函数 内产生的 更新都是 异步批量更新的,</p>
+<p>能够管理的范围外的 更新,例如 setTimeout 原生事件 内的更新 都是同步立即更新的.</p>
+<p>原理是: 是否批量更新标记isBatchingUpdate,在同步任务开始时置为true,批量更新结束时置为false.</p>
+<p>setState被调用时,发现 isBatchingUpdate 为false 就立即更新数据.</p>
+<h2 id="React-的事件都绑定在容器上-而非当前DOM上"><a href="#React-的事件都绑定在容器上-而非当前DOM上" class="headerlink" title="React 的事件都绑定在容器上,而非当前DOM上"></a>React 的事件都绑定在容器上,而非当前DOM上</h2><p><strong>组件的事件处理原理</strong></p>
+<ol>
+<li><p>React事件绑定时,并没有将事件绑定在 当前DOM,而是绑定在 容器div#root</p>
+</li>
+<li><p>事件绑定在 容器上,事件处理函数 还是保存在 当前DOM.store中</p>
+</li>
+<li><p>click 当前DOM,必然事件冒泡,触发 容器div#root 绑定的click事件,</p>
+</li>
+<li><p>容器调用其 统一事件处理函数 拿到event.target/type,调用 真正的相应 事件处理函数</p>
+<p>(并传入react 修改后加了点属性的的event,如果要用的话)</p>
+</li>
+<li><p>target就是 当前DOM,挂载了 事件处理函数,type 就是事件类型,据此调用 当前DOM 上的 事件处理函数</p>
+</li>
+</ol>
+<p><strong>容器统一事件处理函数会让当前 事件处理 结束后组件的状态 异步批量更新</strong></p>
+<ol>
+<li><p>容器统一事件处理函数的步骤如下,</p>
+</li>
+<li><p>首先,updateQueue.isBatchingUpdate=true;// 事件函数执行前先设置批量更新模式为true</p>
+</li>
+<li><p>这样当前如果有同步任务的setState 就会作为 异步批量更新的一部分,放入 updateQueue 的待更新队列,</p>
+<p>isBatchingUpdate === false,setState会直接同步触发 组件的state更新</p>
+</li>
+<li><p>此时调用 当前DOM 上的 事件处理函数,如果里面有 setState 就按上面的逻辑来</p>
+</li>
+<li><p>最后 isBatchingUpdate = false, updateQueue.batchUpdate()启动批量更新</p>
+</li>
+</ol>
+<p><strong>为什么react要给事件处理函数接收的event加点属性</strong></p>
+<ol>
+<li>兼容多种浏览器,用到时候不用考虑游览器差异</li>
+</ol>
+<p><strong>其他</strong></p>
+<ol>
+<li><p>你不能通过返回 false 的方式阻止事件默认行为。你必须显式的使用preventDefault</p>
+</li>
+<li><p>从17以前,事件都是 绑定在document上,委托给document.</p>
+</li>
+<li><p>同一类型事件,容器只需绑定一次,因为就是注册事件,之后触发target上的 事件处理函数就行.</p>
+</li>
+</ol>
 <h2 id="想基于当前同步任务中上一次state修改-来做这次的state修改"><a href="#想基于当前同步任务中上一次state修改-来做这次的state修改" class="headerlink" title="想基于当前同步任务中上一次state修改,来做这次的state修改"></a>想基于当前同步任务中上一次state修改,来做这次的state修改</h2><p>想基于同一次同步任务内上次state修改后的数据,来完成这次state的修改.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>number<span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -484,6 +531,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <p>内部原理:计算最新state状态时,当检测到 当前这次<code>setState</code>调用 的参数为函数,</p>
 <p>调用该函数,并传入 最新state(已经过同次同步任务之前setState的修改后 并与oldstate 合并了的state),</p>
 <p>返回 当前这次<code>setState</code>调用 产生的 state作为 最新state </p>
+<p>或者 setState 后强制更新.</p>
 <h2 id="React类组件更新原理"><a href="#React类组件更新原理" class="headerlink" title="React类组件更新原理"></a>React类组件更新原理</h2><ol>
 <li><p>初次渲染的时候已经在页面上放置了一个DIV</p>
 </li>
@@ -733,7 +781,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/11/20/rxjs/rxjs-shi-xian-you-ya-lun-xun/">
+                <a href="/2021/11/21/rxjs/rxjs-shi-xian-you-ya-lun-xun/">
                     <div class="card-image">
                         
                         
@@ -750,7 +798,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-20
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-21
                         </span>
                         <span class="publish-author">
                             
@@ -964,7 +1012,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">81.1k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             
