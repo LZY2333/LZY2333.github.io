@@ -115,7 +115,7 @@ __为什么react要给事件处理函数接收的event加点属性__
 
 __其他__
 
-1. 你不能通过返回 false 的方式阻止事件默认行为。你必须显式的使用preventDefault
+1. 你不能通过返回 false 的方式阻止事件默认行为.你必须显式的使用preventDefault
 
 2. 从17以前,事件都是 绑定在document上,委托给document.
 
@@ -153,3 +153,90 @@ console.log(this.state);
 
 4. 新的真实DOM替换老的DIV
 
+## React中HTML原生组件才会有真实DOM
+
+React的实现中 vdom.dom 会指向其渲染形成的真实DOM,
+
+如果 存在 函数组件/类组件 实现是直接return一个 函数组件/类组件
+
+则此层级不存在真实DOM,其vdom.DOM 为null.
+
+所以,如果此类 函数组件/类组件 ref属性 实际指向其第一个为真实DOM的子节点.
+
+`findDOM` 通过 `vdom.oldRenderVdom` 获取到 其构造函数执行返回的 虚拟节点
+
+也即 子虚拟节点,查找 子vdom 是否有真实DOM挂载,直到找到为止
+
+__DOM数和组件数并非一一对应,甚至DOM数可能少于组件数__
+
+```js
+export function findDOM(vdom){
+   if(!vdom)return null;
+   if(vdom.dom){//如果它身上有dom属性,那说明这个vdom是一个原生组件的虚拟DOM.它会有dom属生指向真实DOM,直接返回
+    return vdom.dom;;
+   }else{
+      return findDOM(vdom.oldRenderVdom);
+   }
+}
+```
+
+## forwardRef(function_component)给函数组件加ref
+
+在React中,不能直接给函数组件使用ref,因为函数组件挂载时,没有新建实例.
+
+```js
+function TextInput(props,ref){ // 注意第二个参数ref,得这样写
+  return <input ref={ref}/> 
+}
+
+const ForwardedTextInput = React.forwardRef(TextInput);
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.input = React.createRef();
+  }
+  getFocus = () => {
+    this.input.current.focus();
+  }
+  render() {
+    return (
+      <div>
+        <ForwardedTextInput ref={this.input} />
+        <button onClick={this.getFocus}>获得焦点</button>
+      </div>
+    )
+  }
+}
+ReactDOM.render(<Form />, document.getElementById('root'));
+```
+
+执行时 实际上是执行 函数组件`forwardRef`,返回的也是 vdom(后面称为v1),
+
+v1 在编译后已经变为`{type:{$$typeof:REACT_FORWARD_REF,render},ref}`
+
+`createDOM`形成真实DOM是,发现`v1.type.$$typeof==REACT_FORWARD_REF`,
+
+调用`mountForwardComponent`,传入v1,
+
+内部调用 `v1.type.render()`,并传入v1上 父组件 传来的props 及 ref,
+
+此处的render就是真正的`TextInput`,被调用,创建其虚拟节点,并传入ref
+
+再 `createDOM(renderVdom)` 创建真实DOM并返回
+
+```js
+// 实际上就是把函数组件变成了 另一种函数组件 forwardRef
+function forwardRef(render){
+    return {
+        $$typeof:REACT_FORWARD_REF,
+        render
+    }
+}
+// 创建虚拟节点时,还是调用该函数组件,返回虚拟对象
+function mountForwardComponent(vdom){
+    let {type,props,ref} = vdom;
+    let renderVdom = type.render(props,ref);
+    return createDOM(renderVdom);
+}
+```
