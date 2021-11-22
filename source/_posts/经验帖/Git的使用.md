@@ -1,21 +1,23 @@
 ---
 title: Git的使用
-date: 
+date: 2021-11-20 09:43:01
 categories: 经验帖
 tags: 
     - Git
 ---
 
 
-## Git的使用
+# Git的使用
 
-### 回滚历史版本
+## 回滚历史版本
 
-#### `git log --oneline`查看历史提交版本：
+### git log --oneline
+
+查看历史提交版本
 
 1.`git log` 查看历史所有版本信息
 
-2. `git log --graph` 查看历史所有版本,命令行模拟图表展示(好看一点点)
+2.`git log --graph` 查看历史所有版本,命令行模拟图表展示(好看一点点)
 
 3.`git log -x` 查看最新的x个版本信息
 
@@ -23,7 +25,7 @@ tags:
 
 5.`git log --oneline`查看历史所有版本信息,只包含版本号和记录描述
 
-6. VI中同时按 `Shift + g` 展示全部,`q`退出查看
+6.VI中同时按 `Shift + g` 展示全部,`q`退出查看
 
 可以自定义git log的展示内容,以后用 `git lg` 就行(最推荐)
 
@@ -38,7 +40,9 @@ git mylog
 
 ```
 
-#### `git reset --hard commit号`回滚版本,且丢弃之后所有版本
+### git reset --hard commit号
+
+回滚版本,且丢弃之后所有版本
 
 1.`git reset --hard HEAD^`,回滚到上个版本
 
@@ -61,14 +65,22 @@ git mylog
 --keep 和--hard类似，执行reset之前改动文件如果是a分支修改了的，会提示你修改了相同的文件，不能合并。如果不是a分支修改的文件，会移除缓存区。git status还是可以看到保持了这些修改。
 ```
 
-#### `git revert commit号`新建一个回退了指定commit的修改的新commit.
+### git revert commit号
 
-比如产生了3个版本,想丢弃版本2的修改,并保留版本3的修改,使用此方法,会生成版本4,此版本4由版本1和3的修改组成.
+新建一个回退了指定commit的修改的新commit.
+
+比如产生了3个版本,想丢弃版本2的修改,并保留版本3的修改,
+
+使用此方法,会生成版本4,此版本4由版本1和3的修改组成.
 
 [git reset 和 git revert](https://juejin.cn/post/6844903614767448072)
 
 
-### git fetch拉取代码覆盖本地
+## 拉取代码覆盖本地
+
+### git fetch
+
+
 
 [git fetch VS pull](https://juejin.cn/post/6844903921794859021)
-### 碰到一个问题写一个
+## 碰到一个问题写一个
