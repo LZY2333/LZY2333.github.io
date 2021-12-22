@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="RxJS repeatWhen实现轮询, 懒前端">
+    <meta name="keywords" content="React的事件函数为什么要绑定this, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>RxJS repeatWhen实现轮询 | 懒前端</title>
+    <title>React的事件函数为什么要绑定this | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">RxJS repeatWhen实现轮询</h1>
+                    <h1 class="description center-align post-title">React的事件函数为什么要绑定this</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RxJS/">
-                                <span class="chip bg-color">RxJS</span>
+                            <a href="/tags/React/">
+                                <span class="chip bg-color">React</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
-                                知识点
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                经验帖
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-12-12
+                    2021-12-22
                 </div>
                 
 
@@ -446,131 +446,133 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="RxJS-repeatWhen实现轮询"><a href="#RxJS-repeatWhen实现轮询" class="headerlink" title="RxJS repeatWhen实现轮询"></a>RxJS repeatWhen实现轮询</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>(无关内容，可直接跳过)</p>
-<p>下面是 2021-04-13 23:35:14 的留言 ———————————-</p>
-<p>业务上有个轮询操作，最近又自学了RxJS，</p>
-<p>不想妥协嵌套函数，不想使用settimeout，想写一段代码检视会上大家第一眼看不懂的代码，</p>
-<p>想着憋一个轮询出来应该不难吧….</p>
-<p>结果可能是RxJS用的人相对少，或者很多地方都是能用就行，</p>
-<p>所以问了查了很多地方，问了很多人，也没有满意的答案，</p>
-<p>直到我翻到了repeatWhen这个操作符，才有了一丝希望，谁知道这又是一个新坑的开始…</p>
-<p>经过不断的尝试，搜索，翻看文档，查看源码(在公司没外网权限，手机硬查…..)，</p>
-<p>终于是写了一版(可以说是菜鸟本鸟了)，</p>
-<p>回家复现了出来，这里做个笔记，真能帮到有需要的人便是我最开心的事.</p>
-<p>下面是 2021-11-05 10:25:12 的留言 ———————————-</p>
-<p>今天进一下掘金居然看到有人给这篇文章点赞了</p>
-<p>但是之前文章并没有把 repeatWhen 讲的很透，甚至有个小错误</p>
-<p>这个操作符经过我在公司项目半年的实际运用后已经基本摸清，现在改一版更详细的讲解</p>
-<h2 id="repeatWhen"><a href="#repeatWhen" class="headerlink" title="repeatWhen"></a>repeatWhen</h2><p>首先是最核心的 <strong>repeatWhen</strong></p>
-<p>这个操作符由 <strong>源Observable</strong> 调用,</p>
-<p>repeatWhen接收一个函数, 该函数被称为 <strong>notifier</strong>,</p>
-<p><strong>notifier</strong> 返回值必须是一个Observable,</p>
-<p>当该 返回值Observable 内部的next被调用</p>
-<p>则 源Observable 会再次创建 并被subscribe(再次调用),</p>
-<p>当该 返回值Observable 内部的error complete被调用,</p>
-<p>则 无事发生,事件结束</p>
-<p>最基础的使用方式如下</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-<span class="token keyword">const</span> ori <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">Observer</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span> <span class="token comment">// 源Observable</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token operator">++</span>count<span class="token punctuation">)</span>
-    Observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-ori<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-    <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// notify函数</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">Observer</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            Observer<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token comment">// 1</span>
-<span class="token comment">// 2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其原理是 repeatWhen 创建了一个 源Observable 的镜像,</p>
-<p>当源Observable的complete被调用, 则触发notify函数, 并将 镜像源Observable</p>
-<p>交由notify函数触发</p>
-<p>相当于 镜像源Observable 订阅了 notify 返回的Observable.</p>
-<p>这个 notify 被 镜像源Observable 订阅 的感觉 可以看官方例子理解</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> <span class="token keyword">of</span><span class="token punctuation">,</span> fromEvent <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> repeatWhen <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span><span class="token punctuation">;</span>
+                <h1 id="React的事件函数为什么要绑定this"><a href="#React的事件函数为什么要绑定this" class="headerlink" title="React的事件函数为什么要绑定this"></a>React的事件函数为什么要绑定this</h1><h2 id="react类组件中-事件处理函数需要-bind-this"><a href="#react类组件中-事件处理函数需要-bind-this" class="headerlink" title="react类组件中,事件处理函数需要 bind(this)"></a>react类组件中,事件处理函数需要 bind(this)</h2><p>react类组件中,我们需要将 事件处理函数 绑定在组件实例上</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Toggle</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token punctuation">&#123;</span>isToggleOn<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token keyword">of</span><span class="token punctuation">(</span><span class="token string">'Repeat message'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> documentClick$ <span class="token operator">=</span> <span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// This binding is necessary to make `this` work in the callback</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>handleClick <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">handleClick</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
 
-source<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> documentClick$<span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">data</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>但是个人最建议的使用方式还是下面这种</p>
-<p>repeatWhen 还会给 <strong>notifier</strong> 传入一个 <strong>notifications</strong>,</p>
-<p>这个 <strong>notifications</strong> 似乎是一个 Subject(可理解为Observable的一种)</p>
-<p>当源Observable的complete被调用,<strong>notifications</strong> 内部的next就会被调用</p>
-<p>可直接使用此 <strong>notifications</strong> 而不 new Observable,</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-<span class="token keyword">const</span> ori <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">Observer</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token operator">++</span>count<span class="token punctuation">)</span>
-    Observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-ori<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-    <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">notifications</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> notifications<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-            <span class="token comment">// takeWhile:当内部函数返回true时 调用next,否则complete</span>
-            <span class="token function">takeWhile</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> count <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token comment">//1 2 3 4 5 循环5次</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><a target="_blank" rel="noopener" href="https://rxjs.dev/api/operators/repeatWhen">rxjs_repeatWhen官网解释</a></p>
-<h2 id="实现轮询"><a href="#实现轮询" class="headerlink" title="实现轮询"></a>实现轮询</h2><p>话都在注释里</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component<span class="token punctuation">,</span> OnInit <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Observable<span class="token punctuation">,</span> Subject <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> repeatWhen<span class="token punctuation">,</span>delay<span class="token punctuation">,</span>takeWhile<span class="token punctuation">,</span>timeout <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span>
+  <span class="token function">handleClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token parameter">state</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+      isToggleOn<span class="token operator">:</span> <span class="token operator">!</span>state<span class="token punctuation">.</span>isToggleOn
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
 
-@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    selector<span class="token operator">:</span> <span class="token string">'app-test'</span><span class="token punctuation">,</span>
-    templateUrl<span class="token operator">:</span> <span class="token string">'./test.component.html'</span><span class="token punctuation">,</span>
-    styleUrls<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'./test.component.css'</span><span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">TestComponent</span> <span class="token keyword">implements</span> <span class="token class-name">OnInit</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token function">ngOnInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-        <span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">observer</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'----------start----------'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// start标记</span>
-            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// 模拟异步获取后端数据</span>
-                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// get标记</span>
-                count <span class="token operator">++</span> <span class="token comment">// 模拟拿到数据,并修改状态，例如 进度条进度 todo....</span>
-                observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 请求完就complete，触发repeatWhen</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        source<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-            <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">notifications</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">return</span> notifications<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-                    <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                    <span class="token function">takeWhile</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-                        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'judge count &lt; 5 while repeat,count:'</span><span class="token punctuation">,</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        <span class="token keyword">return</span> count <span class="token operator">&lt;</span> <span class="token number">5</span>
-                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                    <span class="token comment">// 可设置20秒轮询超时时间，此20秒包含 请求时间 及 delay(2000) 的时间</span>
-                    <span class="token comment">// 例如在此处20秒大概是5次轮询后超时</span>
-                    <span class="token comment">// timeout(20000) </span>
-                <span class="token punctuation">)</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment">// ----------start---------- (创建新observable发起请求)</span>
-        <span class="token comment">// 2秒 (向后台请求时间)</span>
-        <span class="token comment">// get (获得数据)</span>
-        <span class="token comment">// 2秒 (设置的延迟请求时间)</span>
-        <span class="token comment">// judge count &lt; 5 while repeat,count: 1 (判断是否达到循环终止条件)</span>
-        <span class="token comment">// ----------start---------- (立即下过一次请求开始)</span>
-        <span class="token comment">// .....</span>
-        <span class="token comment">// ----------start---------- (创建新observable发起请求)</span>
-        <span class="token comment">// 2秒 (向后台请求时间)</span>
-        <span class="token comment">// get (获得数据)</span>
-        <span class="token comment">// 2秒 (设置的延迟时间)</span>
-        <span class="token comment">// judge count &lt; 5 while repeat,count: 5 (判断是否达到循环终止条件)</span>
-        <span class="token comment">// (结束)</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>handleClick<span class="token punctuation">&#125;</span><span class="token operator">></span>
+        <span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>isToggleOn <span class="token operator">?</span> <span class="token string">'ON'</span> <span class="token operator">:</span> <span class="token string">'OFF'</span><span class="token punctuation">&#125;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="为什么需要bind-this"><a href="#为什么需要bind-this" class="headerlink" title="为什么需要bind(this)"></a>为什么需要bind(this)</h2><p>不绑定的话会出现this 丢失的问题.</p>
+<p>这是由 JavaScript 中 this 绑定的方式决定的, 与React的工作方式无关。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Foo</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Foo</span><span class="token punctuation">(</span><span class="token string">'lzy'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+foo<span class="token punctuation">.</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// lzy</span>
+
+<span class="token comment">// 将 函数赋值给新变量, 造成上下文的丢失.. .this,只认调用时的前缀.</span>
+<span class="token comment">// 实际在 React Component 中将处理程序,与为 callback 参数传递相似。</span>
+<span class="token keyword">var</span> display <span class="token operator">=</span> foo<span class="token punctuation">.</span>display<span class="token punctuation">;</span> 
+<span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// TypeError: this is undefined</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>示例二</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    name<span class="token operator">:</span> <span class="token string">'lzy'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">display</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 'this' 指向 obj</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">"global lzy"</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> outerDisplay <span class="token operator">=</span> obj<span class="token punctuation">.</span>display<span class="token punctuation">;</span>
+<span class="token function">outerDisplay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 浏览器下运行,输出 global lzy</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>事件处理函数被传递给新变量后,作用域发生了改变,丢掉了原先的this。</p>
+<h2 id="React中怎么实现的事件绑定"><a href="#React中怎么实现的事件绑定" class="headerlink" title="React中怎么实现的事件绑定"></a>React中怎么实现的事件绑定</h2><p>在 <code>React createDOM</code>函数中会进行进行真实DOM的创建,随后当前dom上的属性(props)进行处理</p>
+<p>如 <code>&lt;div style=&quot;width:100px;&quot; onClick=&#123;this.handleClick&#125; xxx=&#39;123&#39;&gt;</code>,</p>
+<p>其中的 style,onClick,xxx 均在编译阶段被处理为 props下的属性。</p>
+<p>处理props,会调用<code>updateProps()</code>,当检测满足<code>/^on[A-Z].*/.test(key)</code>时,此属性被认为是 事件绑定</p>
+<p><strong>事件绑定</strong>,由<code>addEvent()</code>函数进行处理</p>
+<ol>
+<li>给当前 真实DOM 创建一个 store属性,储存各类事件,键为事件类型(如’click’),值为处理函数.</li>
+</ol>
+<p>注意,此时发生了<code>handleClick</code>函数的赋值给新变量<code>store.click</code>,如未<code>bind(this)</code>,则原本的this丢失.</p>
+<ol start="2">
+<li>将事件的监听(如’click’)放在 <code>document</code>上,17以后的版本,放在 <code>div#root</code>上.</li>
+</ol>
+<p>最顶层的DOM元素自然可以监听其内部的所有事件,</p>
+<p>监听到事件后从<code>target</code>向外冒泡,依次触发<code>target</code>及父节点的对应事件<code>handler</code></p>
+<p>换言之,由<code>document</code>监听所有DOM上的事件,而后触发放在 对应DOM 上的<code>store</code>上的对应<code>handler</code></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+ * 
+ * @param &#123;*&#125; dom 要绑定事件的DOM元素  button
+ * @param &#123;*&#125; eventType 事件类型 onclick
+ * @param &#123;*&#125; handler 事件处理函数 handleClick
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">addEvent</span><span class="token punctuation">(</span><span class="token parameter">dom<span class="token punctuation">,</span> eventType<span class="token punctuation">,</span> handler</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> store <span class="token operator">=</span> dom<span class="token punctuation">.</span>store <span class="token operator">||</span> <span class="token punctuation">(</span>dom<span class="token punctuation">.</span>store <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  <span class="token comment">//dom.store['onclick']=handleClick</span>
+  store<span class="token punctuation">[</span>eventType<span class="token punctuation">]</span> <span class="token operator">=</span> handler<span class="token punctuation">;</span><span class="token comment">//虽然没有给每个子DOM绑定事件，但是事件处理函数还是保存在子DOM上的</span>
+  <span class="token comment">//从17开始，我们不再把事件委托给document.而是委托给容器了 div#root</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>document<span class="token punctuation">[</span>eventType<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    document<span class="token punctuation">[</span>eventType<span class="token punctuation">]</span> <span class="token operator">=</span> dispatchEvent<span class="token punctuation">;</span> <span class="token comment">// 如,document.onclick = clickHandler</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//合成事件的统一代理处理函数</span>
+<span class="token keyword">function</span> <span class="token function">dispatchEvent</span><span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> target<span class="token punctuation">,</span> type <span class="token punctuation">&#125;</span> <span class="token operator">=</span> event<span class="token punctuation">;</span><span class="token comment">//target=button type =click</span>
+  <span class="token keyword">let</span> eventType <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">on</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>type<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span><span class="token comment">//onclick</span>
+  <span class="token keyword">let</span> syntheticEvent <span class="token operator">=</span> <span class="token function">createSyntheticEvent</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  updateQueue<span class="token punctuation">.</span>isBatchingUpdate <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span><span class="token comment">//事件函数执行前先设置批量更新模式为true</span>
+  <span class="token comment">//在此我们要模拟React事件的冒泡</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> store <span class="token punctuation">&#125;</span> <span class="token operator">=</span> target<span class="token punctuation">;</span>
+    <span class="token keyword">let</span> handler <span class="token operator">=</span> store <span class="token operator">&amp;&amp;</span> store<span class="token punctuation">[</span>eventType<span class="token punctuation">]</span>
+    handler <span class="token operator">&amp;&amp;</span> <span class="token function">handler</span><span class="token punctuation">(</span>syntheticEvent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//在执行handler的过程中有可能会阻止冒泡</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>syntheticEvent<span class="token punctuation">.</span>isPropagationStopped<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    target <span class="token operator">=</span> target<span class="token punctuation">.</span>parentNode<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  updateQueue<span class="token punctuation">.</span>isBatchingUpdate <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+  updateQueue<span class="token punctuation">.</span><span class="token function">batchUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="bind-的最佳实践"><a href="#bind-的最佳实践" class="headerlink" title="bind 的最佳实践"></a>bind 的最佳实践</h2><p><strong>在定义函数阶段使用箭头函数</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function-variable function">handleClick</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'this > '</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>
+        <span class="token operator">&lt;</span>div onClick<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>handleClick<span class="token punctuation">&#125;</span><span class="token operator">></span>test<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>此外,可以在 构造函数中使用bind,在render中使用箭头函数,在render中使用bind</p>
+<p>组件每次执行render将会重新分配函数这将会影响性能。特别是在你做了一些性能优化之后，它会破坏PureComponent性能。不推荐使用。</p>
+<h2 id="为什么vue-和angular中不需要bind"><a href="#为什么vue-和angular中不需要bind" class="headerlink" title="为什么vue 和angular中不需要bind"></a>为什么vue 和angular中不需要bind</h2><p>vue中methods下的所有函数都被bind在了当前组件对象上.</p>
+<p>猜测angular也有类似处理</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> methods<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ...</span>
+    vm<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">typeof</span> methods<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token string">'function'</span> <span class="token operator">?</span> noop <span class="token operator">:</span> <span class="token function">bind</span><span class="token punctuation">(</span>methods<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">,</span> vm<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -596,7 +598,7 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/12/12/rxjs/rxjs-shi-xian-you-ya-lun-xun/">https://github.com/LZY2333/LZY2333.github.io/2021/12/12/rxjs/rxjs-shi-xian-you-ya-lun-xun/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/12/22/jing-yan-tie/react-de-shi-jian-chu-li-han-shu-wei-shi-me-yao-bang-ding-this/">https://github.com/LZY2333/LZY2333.github.io/2021/12/22/jing-yan-tie/react-de-shi-jian-chu-li-han-shu-wei-shi-me-yao-bang-ding-this/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -634,8 +636,8 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/RxJS/">
-                                    <span class="chip bg-color">RxJS</span>
+                                <a href="/tags/React/">
+                                    <span class="chip bg-color">React</span>
                                 </a>
                             
                         </div>
@@ -805,11 +807,62 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/12/12/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                <a href="/2021/12/22/jing-yan-tie/react-de-shi-jian-chu-li-han-shu-wei-shi-me-yao-bang-ding-this/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="React的事件函数为什么要绑定this">
+                        
+                        <span class="card-title">React的事件函数为什么要绑定this</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/12/22/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
                     <div class="card-image">
                         
                         
@@ -825,9 +878,9 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-12-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -845,55 +898,6 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     
                     <a href="/tags/node/">
                         <span class="chip bg-color">node</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/11/20/jing-yan-tie/git-de-shi-yong/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Git的使用">
-                        
-                        <span class="card-title">Git的使用</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-20
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
-                                    经验帖
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Git/">
-                        <span class="chip bg-color">Git</span>
                     </a>
                     
                 </div>
@@ -1040,7 +1044,7 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">82.5k</span>&nbsp;字
+                class="white-color">83.9k</span>&nbsp;字
             
             
             

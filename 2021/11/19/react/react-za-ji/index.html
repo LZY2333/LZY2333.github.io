@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2.2k
                 </div>
                 
 
@@ -461,6 +461,13 @@
 <p><code>babel</code>将 JSX 编译为 编译后的纯粹的JS代码(产生了<code>React.creatElement</code>)时,用到了AST语法树.</p>
 <p>浏览器执行时,<code>React.createElement(type, config, children)</code>返回虚拟DOM,</p>
 <p><code>ReactDOM.render(reactElement,真实dom选择器容器)</code>渲染成页面.</p>
+<p><strong>render做了什么</strong></p>
+<p>根据createElement创建的vdom内的type属性,</p>
+<p>调用document.createElement(type),创建真实DOM,</p>
+<p>根据vdom内的 其他属性(如className style),决定 挂载真实DOM上的属性,自定义属性(如react的ref)继续呆在vdom上</p>
+<p>同时会将真实DOM挂载到vdom上(方便以后(如diff后)获取真实节点),最后将真实DOM挂载到真实父节点上,</p>
+<p>内部会对vdom的,children属性嵌套调用render方法,挂载到当前节点.</p>
+<p>children属性在babel本地编译时决定,在createElement调用时 与 config内的大部分属性,共同放在vdom的props下.</p>
 <p><strong>React组件必须首字母大写,React是通过首字母是否大写判断是否是自定义组件,小写就是原生标签了</strong></p>
 <h2 id="组件的数据来源有两个"><a href="#组件的数据来源有两个" class="headerlink" title="组件的数据来源有两个"></a>组件的数据来源有两个</h2><p>一个是父组件的属性,组件内通过<code>this.props</code>获取,属性是父组件的不能修改,</p>
 <p>一个是自身的状态, state对象 自己内部初始化的,唯一的修改方法是<code>setState</code></p>
@@ -602,6 +609,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
     <span class="token keyword">let</span> renderVdom <span class="token operator">=</span> type<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>props<span class="token punctuation">,</span>ref<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token function">createDOM</span><span class="token punctuation">(</span>renderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
                 
             </div>
             <hr/>
@@ -1071,7 +1079,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">82.5k</span>&nbsp;字
+                class="white-color">83.9k</span>&nbsp;字
             
             
             
