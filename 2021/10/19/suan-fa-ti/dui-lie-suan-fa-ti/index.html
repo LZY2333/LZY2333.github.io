@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -474,6 +474,7 @@
 <span class="token class-name">MyQueue</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">empty</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>s1<span class="token punctuation">.</span>length
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>接下来这种方法节省了每次push都需要反转s1的情况，</p>
 <p>类似于懒加载，pop的时候需要反转才反转，</p>
 <p>反转后就直接放在s2,pop的时候直接从s2拿，s2没有就再反转是s1</p>
@@ -513,6 +514,7 @@
     <span class="token keyword">return</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>s1<span class="token punctuation">.</span>length <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>s2<span class="token punctuation">.</span>length
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="4-滑动窗口最大值-LeetCode-239"><a href="#4-滑动窗口最大值-LeetCode-239" class="headerlink" title="4.滑动窗口最大值( LeetCode 239 )"></a>4.滑动窗口最大值( LeetCode 239 )</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">maxSlidingWindow</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums<span class="token punctuation">,</span> k</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 单调递减 双端 队列,控制左侧是最大数,控制删除过期数</span>
     <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 记录结果</span>
@@ -544,6 +546,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> result
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="5-设计循环队列-LeetCode-622"><a href="#5-设计循环队列-LeetCode-622" class="headerlink" title="5.设计循环队列( LeetCode 622 )"></a>5.设计循环队列( LeetCode 622 )</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-circular-queue/">leetcode</a></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**循环队列 */</span>
 <span class="token keyword">class</span> <span class="token class-name">MyCircularQueue</span> <span class="token punctuation">&#123;</span>
@@ -586,13 +589,14 @@
         <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">===</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>tail <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token keyword">this</span><span class="token punctuation">.</span>cap<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="6-有效的括号-leetcode-20"><a href="#6-有效的括号-leetcode-20" class="headerlink" title="6.有效的括号( leetcode 20 )"></a>6.有效的括号( leetcode 20 )</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/valid-parentheses/">leetcode</a><br><strong>最简写法</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">isValid</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">s</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> 
         map <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
-            <span class="token string">"("</span><span class="token operator">:</span><span class="token string">")"</span><span class="token punctuation">,</span>
-            <span class="token string">"&#123;"</span><span class="token operator">:</span><span class="token string">"&#125;"</span><span class="token punctuation">,</span>
-            <span class="token string">"["</span><span class="token operator">:</span><span class="token string">"]"</span>
+            <span class="token string-property property">"("</span><span class="token operator">:</span><span class="token string">")"</span><span class="token punctuation">,</span>
+            <span class="token string-property property">"&#123;"</span><span class="token operator">:</span><span class="token string">"&#125;"</span><span class="token punctuation">,</span>
+            <span class="token string-property property">"["</span><span class="token operator">:</span><span class="token string">"]"</span>
         <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">const</span> x <span class="token keyword">of</span> s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token keyword">in</span> map<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -603,13 +607,14 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token operator">!</span>stack<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>我的解法</strong></p>
 <p><strong><code>forEach</code>内的return不能return掉外部函数!!!!</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"> <span class="token keyword">var</span> <span class="token function-variable function">isValid</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">s</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
-        <span class="token string">'('</span><span class="token operator">:</span><span class="token string">')'</span><span class="token punctuation">,</span>
-        <span class="token string">'&#123;'</span><span class="token operator">:</span><span class="token string">'&#125;'</span><span class="token punctuation">,</span>
-        <span class="token string">'['</span><span class="token operator">:</span><span class="token string">']'</span>
+        <span class="token string-property property">'('</span><span class="token operator">:</span><span class="token string">')'</span><span class="token punctuation">,</span>
+        <span class="token string-property property">'&#123;'</span><span class="token operator">:</span><span class="token string">'&#125;'</span><span class="token punctuation">,</span>
+        <span class="token string-property property">'['</span><span class="token operator">:</span><span class="token string">']'</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">const</span> left <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'('</span><span class="token punctuation">,</span><span class="token string">'['</span><span class="token punctuation">,</span><span class="token string">'&#123;'</span><span class="token punctuation">]</span>
     <span class="token keyword">const</span> tempArr <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
@@ -626,6 +631,7 @@
     <span class="token keyword">return</span> <span class="token boolean">true</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">isValid</span><span class="token punctuation">(</span><span class="token string">'(]'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="7-移除无效的括号-leetcode-1249"><a href="#7-移除无效的括号-leetcode-1249" class="headerlink" title="7.移除无效的括号( leetcode 1249 )"></a>7.移除无效的括号( leetcode 1249 )</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-remove-to-make-valid-parentheses/submissions/">leetcode</a></p>
 <p><strong>大佬的解法</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">minRemoveToMakeValid</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">s</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -656,6 +662,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> result
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>自己的解法</strong></p>
 <p>循环内splice数组记得要反向循环，不然先删前面的，会打乱index</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">minRemoveToMakeValid</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">s</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1140,7 +1147,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1149,7 +1156,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

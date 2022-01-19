@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -478,6 +478,7 @@ let a: Animal &#x3D; &#123;
     age: 25,
     gender: 0 &#x2F;&#x2F; 报错
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在第三篇文章 TS接口 中有写道,</p>
 <p><strong>对象字面量 直接作为参数时 会经历 额外属性检查</strong></p>
 <p><strong>而改写成 对象 再作为参数 传入函数调用,则不会 检查对象上的额外属性</strong>,</p>
@@ -498,6 +499,7 @@ let num2 : &#123;
 
 let str2:string&#x3D;&#39;jiagou&#39;;
 num2 &#x3D; str2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="类的兼容性"><a href="#类的兼容性" class="headerlink" title="类的兼容性"></a>类的兼容性</h2><p>类有 静态部分 和 实例部分 的类型<br>在比较两个变量的 类类型时，<strong>只有实例的成员会被比较</strong></p>
 <blockquote>
 <p>类的私有成员和受保护成员会影响兼容性。<br>当检查类实例的兼容时，如果目标类型包含一个私有成员，<br>那么源类型必须包含来自同一个类的这个私有成员。<br>同样地，这条规则也适用于包含受保护成员实例的类型检查。<br>这允许子类赋值给父类，但是不能赋值给其它有同样类型的类。</p>
@@ -520,6 +522,7 @@ let s: Size;
 
 a &#x3D; s;  &#x2F;&#x2F; OK
 s &#x3D; a;  &#x2F;&#x2F; OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>在类的实例部分比较时，只对比实例部分的结构而不在意类型名</strong></p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Animal&#123; name:string &#125;
 class Bird extends Animal&#123; swing:number &#125;
@@ -538,6 +541,7 @@ let a:Animal &#x3D; new Bird();
 
 let b:Bird &#x3D; new Animal();
 &#x2F;&#x2F; 两个完全无关的类也一样,可以相互赋值,只要结构符合<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="函数的兼容性"><a href="#函数的兼容性" class="headerlink" title="函数的兼容性"></a>函数的兼容性</h2><p>函数赋值给变量时 先比较函数的参数 再比较函数的返回值</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type sumFunc &#x3D; (a:number,b:number)&#x3D;&gt;number;
 let sum:sumFunc;
@@ -610,6 +614,7 @@ const parentToChild: (dog: Dog)&#x3D;&gt;Dog &#x3D; (animal: Animal): BlackDog &
   return new BlackDog()
 &#125;
 &#x2F;&#x2F;(Animal → Greyhound) ≼ (Dog → Dog)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="泛型的兼容性"><a href="#泛型的兼容性" class="headerlink" title="泛型的兼容性"></a>泛型的兼容性</h2><p>首先明确，接口就是一种类型 一种type，泛型得先转换成具体type再进行判断</p>
 <p>原则:<strong>先根据 传入的泛型T确定其具体的类型，再进行兼容性判断</strong></p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;1.接口内容为空 或者 没用到泛型 或者 传入的T一样
@@ -640,12 +645,14 @@ interface NotEmptyNumber&#123;
 let xx2!:NotEmptyString;
 let yy2!:NotEmptyNumber;
 xx2 &#x3D; yy2; &#x2F;&#x2F; 报错<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如果是没有指定类型的泛型，则视为T为any</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let identity &#x3D; function&lt;T&gt;(x: T): T &#123; &#125;
 
 let reverse &#x3D; function&lt;U&gt;(y: U): U &#123; &#125;
 
 identity &#x3D; reverse;  &#x2F;&#x2F; OK, because (x: any) &#x3D;&gt; any matches (y: any) &#x3D;&gt; any<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="枚举的兼容性"><a href="#枚举的兼容性" class="headerlink" title="枚举的兼容性"></a>枚举的兼容性</h2><p><strong>枚举类型 与 数字类型 相互兼容</strong></p>
 <p><strong>不同枚举类型 不兼容</strong></p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;数字可以赋给枚举
@@ -662,6 +669,7 @@ c &#x3D; Colors2.Red &#x2F;&#x2F; 报错
 let n:number;
 n &#x3D; 1;
 n &#x3D; Colors.Red;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
                 
             </div>
             <hr/>
@@ -1122,7 +1130,7 @@ n &#x3D; Colors.Red;<span aria-hidden="true" class="line-numbers-rows"><span></s
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1131,7 +1139,7 @@ n &#x3D; Colors.Red;<span aria-hidden="true" class="line-numbers-rows"><span></s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

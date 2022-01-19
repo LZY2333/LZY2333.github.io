@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -460,6 +460,7 @@ document<span class="token punctuation">.</span>body<span class="token punctuati
 <span class="token comment">// body发生click事件时,通知所有注册的监听者事件发生,并传入 event,监听者函数 自动执行.</span>
 <span class="token comment">// 这就是观察者模式. 观察者模式的概念其实就是这么简单</span>
 <span class="token comment">// 代码的关键点,事件的注册监听与通知,都已经被观察者类做好了,而不用自己编写.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>下面来练习写一个观察者类,或者说构造函数</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// ES5</span>
 <span class="token keyword">function</span> <span class="token function">Producer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -487,6 +488,7 @@ document<span class="token punctuation">.</span>body<span class="token punctuati
 		<span class="token function">listener</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>Promise 的实现就是使用的观察者模式</p>
 </blockquote>
@@ -542,8 +544,8 @@ egghead<span class="token punctuation">.</span><span class="token function">noti
 
 <span class="token class-name">IteratorFromArray</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">next</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_cursor <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">.</span>length <span class="token operator">?</span>
-		<span class="token punctuation">&#123;</span> value<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span>_cursor<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span> done<span class="token operator">:</span> <span class="token boolean">false</span> <span class="token punctuation">&#125;</span> <span class="token operator">:</span>
-		<span class="token punctuation">&#123;</span> done<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#123;</span> <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span>_cursor<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token literal-property property">done</span><span class="token operator">:</span> <span class="token boolean">false</span> <span class="token punctuation">&#125;</span> <span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span> <span class="token literal-property property">done</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
 <span class="token comment">// ES6 实现</span>
@@ -555,10 +557,11 @@ egghead<span class="token punctuation">.</span><span class="token function">noti
   
 	<span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_cursor <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">.</span>length <span class="token operator">?</span>
-		<span class="token punctuation">&#123;</span> value<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span>_cursor<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span> done<span class="token operator">:</span> <span class="token boolean">false</span> <span class="token punctuation">&#125;</span> <span class="token operator">:</span>
-		<span class="token punctuation">&#123;</span> done<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#123;</span> <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_array<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span>_cursor<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token literal-property property">done</span><span class="token operator">:</span> <span class="token boolean">false</span> <span class="token punctuation">&#125;</span> <span class="token operator">:</span>
+		<span class="token punctuation">&#123;</span> <span class="token literal-property property">done</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>迭代器 相当于一个拥有 next方法 的数组,</p>
 <p>一直调用 next方法 会返回当前下标的数据,并将指针指向下一下标,</p>
 <p>直到迭代器的 指针指向最后一个元素之后,返回<code>&#123; done: true, value: undefined&#125;</code></p>
@@ -598,6 +601,7 @@ body<span class="token punctuation">.</span><span class="token function">addEven
 
 <span class="token comment">// iterator 去主动调用,立即获取数据,然后执行.(同步)</span>
 <span class="token keyword">var</span> x <span class="token operator">=</span> iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>Observable,其实是两者的结合,由生产者推送资料(异步,响应式),<br>同时又像队列一样拥有map,filter等方法…</p>
 <p>Observable 就像一个队列,里面的元素会随着时间推送(原话).</p>
 <p>我的理解:<br>Observable 就像 链式调用,<br>里面的异步操作在完成时 自动触发(生产者推送) 已经注册好的回调(Observer),<br>回调完成后会根据返回值 主动发起(消费者要求) 下一个数据请求(Iterator),</p>
@@ -606,6 +610,7 @@ body<span class="token punctuation">.</span><span class="token function">addEven
 	<span class="token punctuation">.</span><span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span> <span class="token comment">// 註冊監聽</span>
 	<span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">// 只取一次</span>
 	<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>Observable 这一小段没有彻底明白,有点模糊,只做了思路整理.</p>
 </blockquote>
@@ -1070,7 +1075,7 @@ body<span class="token punctuation">.</span><span class="token function">addEven
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1079,7 +1084,7 @@ body<span class="token punctuation">.</span><span class="token function">addEven
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -511,6 +511,7 @@
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序前:'</span><span class="token punctuation">,</span>testArr<span class="token punctuation">)</span>
 <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token function">mergeSort</span><span class="token punctuation">(</span>testArr<span class="token punctuation">)</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序后:'</span><span class="token punctuation">,</span>res<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>稳定的排序算法</strong><br><code>mergeArr()</code>递归分解函数中:<br><code>left[leftIndex] &lt;= right[rightIndex]</code>中的等号<br><code>temp.concat(left.slice(leftIndex)).concat(right.slice(rightIndex))</code><br>中的temp与concat顺序,left.concat与right的顺序<br>保证了 归并排序 是 稳定的排序</p>
 <p><strong>时间复杂度:O(nlogn)</strong><br>公式推演太复杂,高中和大学的基本忘了.<br>自己想了一个思路,每一层遍历都是n,共log2n层,所以是nlogn</p>
 <p><strong>空间复杂度:O(n)</strong></p>
@@ -569,6 +570,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序前:'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span>
 <span class="token function">quickSort</span><span class="token punctuation">(</span>testArr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> testArr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序后:'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>不稳定的排序算法</strong></p>
 <p><strong>原地排序</strong></p>
 <p><strong>时间复杂度O(nlogn)</strong><br>极端情况下时间复杂度退化成O(n²),例如选中有序数组的最后一位做为pivot<br>防止极端情况:<br>三数取中法(每次从要排序的区间中 首 尾 中 取数 中值作为pivot,可5数取中,等)<br>随机法(每次从要排序的区间中随机选择pivot)</p>
@@ -587,6 +589,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <span class="token keyword">let</span> right <span class="token operator">=</span> array<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">v</span> <span class="token operator">=></span> v <span class="token operator">></span> pivot<span class="token punctuation">)</span>
   <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token function">quickSort</span><span class="token punctuation">(</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> pivot<span class="token punctuation">,</span> <span class="token operator">...</span><span class="token function">quickSort</span><span class="token punctuation">(</span>right<span class="token punctuation">)</span><span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>稳定排序</strong></p>
 <p><strong>非原地排序</strong></p>
 <p><strong>空间复杂度O(nlogn)</strong></p>
@@ -1097,7 +1100,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1106,7 +1109,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

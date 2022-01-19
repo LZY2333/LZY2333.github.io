@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -493,8 +493,9 @@
 </blockquote>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// ViewEncapsulation需要引入, 属于 @angular/core包.</span>
 @<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    encapsulation<span class="token operator">:</span> ViewEncapsulation<span class="token punctuation">.</span>Native
+    <span class="token literal-property property">encapsulation</span><span class="token operator">:</span> ViewEncapsulation<span class="token punctuation">.</span>Native
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><code>Emulated</code>模式效果:<br>Angular 运行代码中,节点被增加了_nghost 或 _ngcontent 属性选择器,<br>这些额外的选择器,目的是保证组件间的css不相互影响.</p>
 <p>渲染后的,<br>DOM节点 带<code>_nghost-组件名</code>属性,表示是 组件宿主元素<br>DOM节点 带<code>_ngcontent-组件名</code>属性,表示是 组件内的子节点元素,或者说哪个宿主的模拟ShadowDOM<br>CSS选择器 都被增加了 _nghost 或 _ngcontent 属性选择器</p>
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hero-details</span> <span class="token attr-name">_nghost-pmm-5</span><span class="token punctuation">></span></span>
@@ -521,7 +522,7 @@
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">NameChildComponent</span> <span class="token punctuation">&#123;</span>
   @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
   <span class="token keyword">get</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> string <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_name<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-  <span class="token keyword">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token parameter">name<span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">name</span><span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span>_name <span class="token operator">=</span> <span class="token punctuation">(</span>name <span class="token operator">&amp;&amp;</span> name<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'&lt;no name set>'</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span>
   <span class="token keyword">private</span> _name <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
@@ -529,20 +530,21 @@
 <blockquote>
 <p>ngOnChanges() 截听输入属性值的变化<br>当需要监视多个、交互式输入属性的时候，本方法比用属性的 setter 更合适。</p>
 </blockquote>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">ngOnChanges</span><span class="token punctuation">(</span><span class="token parameter">changes<span class="token operator">:</span> SimpleChanges</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">const</span> log<span class="token operator">:</span> string<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">ngOnChanges</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">changes</span><span class="token operator">:</span> SimpleChanges</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> <span class="token literal-property property">log</span><span class="token operator">:</span> string<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> propName <span class="token keyword">in</span> changes<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
       <span class="token keyword">const</span> changedProp <span class="token operator">=</span> changes<span class="token punctuation">[</span>propName<span class="token punctuation">]</span><span class="token punctuation">;</span>
-      <span class="token keyword">const</span> <span class="token keyword">from</span> <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>changedProp<span class="token punctuation">.</span>previousValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> from <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>changedProp<span class="token punctuation">.</span>previousValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token keyword">const</span> to <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>changedProp<span class="token punctuation">.</span>currentValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
   <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>@Output 装饰器</strong></p>
 <p>子传父</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 父</span>
-template<span class="token operator">:</span> <span class="token punctuation">(</span>voted<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"onVoted($event)"</span>
+<span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token punctuation">(</span>voted<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"onVoted($event)"</span>
 
-<span class="token function">onVoted</span><span class="token punctuation">(</span><span class="token parameter">agreed<span class="token operator">:</span> boolean</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token function">onVoted</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">agreed</span><span class="token operator">:</span> boolean</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     agreed <span class="token operator">?</span> <span class="token keyword">this</span><span class="token punctuation">.</span>agreed <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>disagreed<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
@@ -554,22 +556,24 @@ template<span class="token operator">:</span> <span class="token punctuation">(<
     <span class="token keyword">this</span><span class="token punctuation">.</span>voted<span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>模板通过#ngID直接获取子组件数据</strong><br>父获取子</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-  selector<span class="token operator">:</span> <span class="token string">'app-countdown-parent-lv'</span><span class="token punctuation">,</span>
-  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'app-countdown-parent-lv'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
   &lt;h3>Countdown to Liftoff (via local variable)&lt;/h3>
   &lt;button (click)="timer.start()">Start&lt;/button>
   &lt;button (click)="timer.stop()">Stop&lt;/button>
   &lt;div class="seconds">&#123;&#123;timer.seconds&#125;&#125;&lt;/div>
   &lt;app-countdown-timer #timer>&lt;/app-countdown-timer>
   </span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
-  styleUrls<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'../assets/demo.css'</span><span class="token punctuation">]</span>
+  <span class="token literal-property property">styleUrls</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'../assets/demo.css'</span><span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>@ViewChild()</strong><br>父获取子</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> ViewChild <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> ChildComponent <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'./Child.component'</span><span class="token punctuation">;</span>
-template<span class="token operator">:</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;app-child #ChildComponentID>&lt;/app-child></span><span class="token template-punctuation string">`</span></span>
+<span class="token literal-property property">template</span><span class="token operator">:</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;app-child #ChildComponentID>&lt;/app-child></span><span class="token template-punctuation string">`</span></span>
 @<span class="token function">ViewChild</span><span class="token punctuation">(</span><span class="token string">'ChildComponentID'</span><span class="token punctuation">)</span> ChildComponent123 <span class="token operator">:</span> ChildComponent
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>ngAfterViewInit() 之后才能拿到 ChildComponent123 属性</p>
@@ -594,34 +598,35 @@ template<span class="token operator">:</span><span class="token template-string"
 </blockquote>
 <p><strong>元数据中的样式</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token comment">// styles 属性里直接写</span>
-  selector<span class="token operator">:</span> <span class="token string">'app-root'</span><span class="token punctuation">,</span>
-  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string"> &lt;h1>Tour of Heroes&lt;/h1></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
-  styles<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'h1 &#123; font-weight: normal; &#125;'</span><span class="token punctuation">]</span>
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'app-root'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string"> &lt;h1>Tour of Heroes&lt;/h1></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+  <span class="token literal-property property">styles</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'h1 &#123; font-weight: normal; &#125;'</span><span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">HeroAppComponent</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* . . . */</span> <span class="token punctuation">&#125;</span>
 
 @<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token comment">// styleUrls 引用外部文件,数组,可引用多个css文件</span>
-  selector<span class="token operator">:</span> <span class="token string">'app-root'</span><span class="token punctuation">,</span>
-  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string"> &lt;h1>Tour of Heroes&lt;/h1></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
-  styleUrls<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'./hero-app.component.css'</span><span class="token punctuation">]</span>
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'app-root'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string"> &lt;h1>Tour of Heroes&lt;/h1></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+  <span class="token literal-property property">styleUrls</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'./hero-app.component.css'</span><span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 
 @<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token comment">// 模板 里直接写style标签</span>
-  selector<span class="token operator">:</span> <span class="token string">'app-hero-controls'</span><span class="token punctuation">,</span>
-  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'app-hero-controls'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
     &lt;style> button &#123; background-color: white; border: 1px solid #777; &#125; &lt;/style>
     &lt;button (click)="activate()">Activate&lt;/button>
   </span><span class="token template-punctuation string">`</span></span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 
 @<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token comment">// 模板 里直接写link标签,路径是相对于本应用的根路径的</span>
-  selector<span class="token operator">:</span> <span class="token string">'app-hero-team'</span><span class="token punctuation">,</span>
-  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'app-hero-team'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
     &lt;link rel="stylesheet" href="../assets/hero-team.component.css">
     &lt;h3>Team&lt;/h3>
   </span><span class="token template-punctuation string">`</span></span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">HeroAppComponent</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* . . . */</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>css 中可使用 @import, URL为相对当前正在导入的CSS文件</p>
 <p>.scss、.less、.styl 文件引用时使用相应扩展名指定到 @Component.styleUrls 元数据中。<br>CLI 的构建过程会运行相关的预处理器。</p>
 <h2 id="在父子指令及组件之间共享数据"><a href="#在父子指令及组件之间共享数据" class="headerlink" title="在父子指令及组件之间共享数据"></a>在父子指令及组件之间共享数据</h2><p>同时使用 @Input() 和 @Output()</p>
@@ -1090,7 +1095,7 @@ template<span class="token operator">:</span><span class="token template-string"
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1099,7 +1104,7 @@ template<span class="token operator">:</span><span class="token template-string"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

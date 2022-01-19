@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -517,6 +517,7 @@ hash<span class="token punctuation">.</span><span class="token function">remove<
 hash<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'Gandalf'</span><span class="token punctuation">)</span>
 hash<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'Tyrion'</span><span class="token punctuation">)</span>
 hash<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="一个工业化散列表"><a href="#一个工业化散列表" class="headerlink" title="一个工业化散列表"></a>一个工业化散列表</h2><p>散列函数不能太复杂 (过多计算浪费性能)<br>散列函数生成的值要尽可能随机且均匀分布<br>装载因子过大时 动态扩容<br>使用 开放寻址法 或 链表法 解决散列冲突</p>
 <h2 id="散列表将LRU缓存淘汰算法时间复杂度降为O-1"><a href="#散列表将LRU缓存淘汰算法时间复杂度降为O-1" class="headerlink" title="散列表将LRU缓存淘汰算法时间复杂度降为O(1)"></a>散列表将LRU缓存淘汰算法时间复杂度降为O(1)</h2><p>LRU缓存淘汰算法 需要维护一个 按访问瞬间从大到小的 有序链表结构<br>当缓存空间不够时 就从链表头删除结点<br>当要添加某个数据时，先在链表中查找该数据，没找到就插入到尾部，找到了移到尾部</p>
 <p>查找链表的时间复杂度很高为O(n)<br>添加/删除/查找 都需要查找链表</p>
@@ -991,7 +992,7 @@ hash<span class="token punctuation">.</span><span class="token function">print</
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1000,7 +1001,7 @@ hash<span class="token punctuation">.</span><span class="token function">print</
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

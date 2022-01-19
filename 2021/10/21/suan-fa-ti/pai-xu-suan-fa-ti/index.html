@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -468,6 +468,7 @@
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">31</span><span class="token punctuation">,</span><span class="token number">56</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">bubbleSort</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="选择排序-insertionSort"><a href="#选择排序-insertionSort" class="headerlink" title="选择排序(insertionSort)"></a>选择排序(insertionSort)</h2><p>注意，选择排序是 不稳定 的排序算法，交换的过程中打乱了原有的相对顺序</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// i把Array分为左边有序列，右边无序列</span>
 <span class="token comment">// 每轮从无序列中找出最小的 与 有序列最右侧i处 交换</span>
@@ -489,6 +490,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
 <span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">31</span><span class="token punctuation">,</span><span class="token number">56</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">selectionSort</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="插入排序-insertionSort"><a href="#插入排序-insertionSort" class="headerlink" title="插入排序(insertionSort)"></a>插入排序(insertionSort)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// i把Array分为左边有序列，右边无序列</span>
 <span class="token comment">// 每轮把i依次从右往左对比，与比自己大的数交换 (XXX,错误思路)</span>
 <span class="token comment">// 保存i 每轮把i依次从右往左对比，比自己大的数，就右移，最后j+1放i</span>
@@ -514,6 +516,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">31</span><span class="token punctuation">,</span><span class="token number">56</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">insertionSort</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="合并两个有序数组-LeetCode-88"><a href="#合并两个有序数组-LeetCode-88" class="headerlink" title="合并两个有序数组(LeetCode 88)"></a>合并两个有序数组(LeetCode 88)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">merge</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums1<span class="token punctuation">,</span> m<span class="token punctuation">,</span> nums2<span class="token punctuation">,</span> n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     m<span class="token operator">--</span>
     n<span class="token operator">--</span>
@@ -522,6 +525,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> nums1
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="颜色分类-LeetCode-75"><a href="#颜色分类-LeetCode-75" class="headerlink" title="颜色分类(LeetCode 75)"></a>颜色分类(LeetCode 75)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 只要原地排序就行，这里试一下插入排序</span>
 <span class="token keyword">var</span> <span class="token function-variable function">sortColors</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> nums
@@ -538,6 +542,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
         nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> temp
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="部分排序-leetcode16"><a href="#部分排序-leetcode16" class="headerlink" title="部分排序(leetcode16)"></a>部分排序(leetcode16)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sub-sort-lcci/submissions/">leetcode</a></p>
 <p>标准做法是：找两个数，m n，[m,n]区间内是乱序需要排序的数组</p>
 <p>m是满足 其右侧 <strong>存在</strong> 小于自己的数(表示此数以右边未递增，需要排序) 的数</p>
@@ -562,6 +567,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> n <span class="token operator">===</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token punctuation">[</span>m<span class="token punctuation">,</span>n<span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 注意到成为 左边界m 的条件是，</span>
 <span class="token comment">// 1.所有自己左侧的数 必须开始递减</span>
 <span class="token comment">// 2.所有自己左侧的数 必须小于 右侧最小的数min</span>
@@ -590,6 +596,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token comment">// n边界没有动表示 从左到右，找不到一个数小于前一个数，即本就是递增</span>
     <span class="token keyword">return</span> n <span class="token operator">===</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token punctuation">[</span>m<span class="token punctuation">,</span>n<span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="我的解法"><a href="#我的解法" class="headerlink" title="我的解法"></a>我的解法</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 我是从左往右一个个判断这个数是不是当前最小的数，找到左边界，右边界同理。</span>
 <span class="token keyword">var</span> <span class="token function-variable function">subSort</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> start <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>end <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
@@ -621,6 +628,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
     <span class="token keyword">return</span> <span class="token punctuation">[</span>start<span class="token punctuation">,</span>end<span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="计算右侧小于当前元素的个数-LeetCode-315"><a href="#计算右侧小于当前元素的个数-LeetCode-315" class="headerlink" title="计算右侧小于当前元素的个数(LeetCode 315)"></a>计算右侧小于当前元素的个数(LeetCode 315)</h2><h2 id="合并-K-个升序链表-LeetCode-23"><a href="#合并-K-个升序链表-LeetCode-23" class="headerlink" title="合并 K 个升序链表(LeetCode 23)"></a>合并 K 个升序链表(LeetCode 23)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/merge-k-sorted-lists/submissions/">leetcode</a></p>
 <p>没啥好说的，最简单的，一个个合并</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">mergeKLists</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">lists</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -645,6 +653,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     pResult<span class="token punctuation">.</span>next <span class="token operator">=</span> pl <span class="token operator">?</span> pl <span class="token operator">:</span> pr
     <span class="token keyword">return</span> result<span class="token punctuation">.</span>next
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="有序数组的平方-LeetCode-977"><a href="#有序数组的平方-LeetCode-977" class="headerlink" title="有序数组的平方(LeetCode 977)"></a>有序数组的平方(LeetCode 977)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/squares-of-a-sorted-array/solution/you-xu-shu-zu-de-ping-fang-by-leetcode-solution/">leetcode</a></p>
 <p>双指针</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">sortedSquares</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -660,6 +669,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> result
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="我的解法-1"><a href="#我的解法-1" class="headerlink" title="我的解法"></a>我的解法</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">sortedSquares</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
     <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -678,6 +688,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> result
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="盛最多水的容器-LeetCode-11"><a href="#盛最多水的容器-LeetCode-11" class="headerlink" title="盛最多水的容器(LeetCode 11)"></a>盛最多水的容器(LeetCode 11)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/container-with-most-water/">leetcode</a></p>
 <p>双指针</p>
 <p><strong>双99%击败</strong></p>
@@ -706,6 +717,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> result
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="两数之和-LeetCode-11"><a href="#两数之和-LeetCode-11" class="headerlink" title="两数之和(LeetCode 11)"></a>两数之和(LeetCode 11)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/two-sum/solution/">leetcode</a></p>
 <p>设置map，值设为键</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">twoSum</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1179,7 +1191,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1188,7 +1200,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

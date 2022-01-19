@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -452,10 +452,10 @@
 <p>队列的实现需要两个指针,head标记队列头,tail标记队尾<br>栈只需要栈顶指针</p>
 <h2 id="队列的代码实现"><a href="#队列的代码实现" class="headerlink" title="队列的代码实现"></a>队列的代码实现</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 基于数组的队列实现</span>
 <span class="token keyword">class</span> <span class="token class-name">ArrayQueue</span> <span class="token punctuation">&#123;</span>
-    items<span class="token operator">:</span>string<span class="token punctuation">[</span><span class="token punctuation">]</span>
-    n<span class="token operator">:</span>number <span class="token operator">=</span> <span class="token number">0</span>
-    head<span class="token operator">:</span>number <span class="token operator">=</span> <span class="token number">0</span>
-    tail<span class="token operator">:</span>number <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token literal-property property">items</span><span class="token operator">:</span>string<span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token literal-property property">n</span><span class="token operator">:</span>number <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token literal-property property">head</span><span class="token operator">:</span>number <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token literal-property property">tail</span><span class="token operator">:</span>number <span class="token operator">=</span> <span class="token number">0</span>
     <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">(^[1-9]\d*$)</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             <span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token string">"ArrayQueue需要接收一个正整数作为初始栈大小"</span><span class="token punctuation">)</span>
@@ -504,6 +504,7 @@
     <span class="token operator">++</span><span class="token keyword">this</span><span class="token punctuation">.</span>tail
     <span class="token keyword">return</span> <span class="token boolean">true</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 基于链表的队列实现,Author: nameczz</span>
 <span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">&#123;</span>
     <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">element</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -551,8 +552,10 @@ console<span class="token punctuation">.</span><span class="token function">log<
     res <span class="token operator">=</span> newQueue<span class="token punctuation">.</span><span class="token function">dequeue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 基于链表的 循环队列</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
                 
             </div>
             <hr/>
@@ -1013,7 +1016,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1022,7 +1025,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

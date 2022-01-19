@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -528,12 +528,13 @@
 </li>
 </ol>
 <h2 id="想基于当前同步任务中上一次state修改-来做这次的state修改"><a href="#想基于当前同步任务中上一次state修改-来做这次的state修改" class="headerlink" title="想基于当前同步任务中上一次state修改,来做这次的state修改"></a>想基于当前同步任务中上一次state修改,来做这次的state修改</h2><p>想基于同一次同步任务内上次state修改后的数据,来完成这次state的修改.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>number<span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">number</span><span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 想基于上一次的state.number+1后的数据,完成这一次的state.number再+1</span>
-<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>number<span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">number</span><span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 这样过后,假设一开始number===0,最后number会===1,与想要的结果2不同</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>正确的写法,<code>this.setState(state=&gt;&#123;number:this.state.number+1&#125;)</code>(使用函数,而非对象)</p>
 <p>内部原理:计算最新state状态时,当检测到 当前这次<code>setState</code>调用 的参数为函数,</p>
 <p>调用该函数,并传入 最新state(已经过同次同步任务之前setState的修改后 并与oldstate 合并了的state),</p>
@@ -564,6 +565,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
       <span class="token keyword">return</span> <span class="token function">findDOM</span><span class="token punctuation">(</span>vdom<span class="token punctuation">.</span>oldRenderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
    <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="forwardRef-function-component-给函数组件加ref"><a href="#forwardRef-function-component-给函数组件加ref" class="headerlink" title="forwardRef(function_component)给函数组件加ref"></a>forwardRef(function_component)给函数组件加ref</h2><p>在React中,不能直接给函数组件使用ref,因为函数组件挂载时,没有新建实例.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">TextInput</span><span class="token punctuation">(</span><span class="token parameter">props<span class="token punctuation">,</span>ref</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token comment">// 注意第二个参数ref,得这样写</span>
   <span class="token keyword">return</span> <span class="token operator">&lt;</span>input ref<span class="token operator">=</span><span class="token punctuation">&#123;</span>ref<span class="token punctuation">&#125;</span><span class="token operator">/</span><span class="token operator">></span> 
@@ -589,6 +591,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Form <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">,</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>执行时 实际上是执行 函数组件<code>forwardRef</code>,返回的也是 vdom(后面称为v1),</p>
 <p>v1 在编译后已经变为<code>&#123;type:&#123;$$typeof:REACT_FORWARD_REF,render&#125;,ref&#125;</code></p>
 <p><code>createDOM</code>形成真实DOM是,发现<code>v1.type.$$typeof==REACT_FORWARD_REF</code>,</p>
@@ -609,6 +612,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
     <span class="token keyword">let</span> renderVdom <span class="token operator">=</span> type<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>props<span class="token punctuation">,</span>ref<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token function">createDOM</span><span class="token punctuation">(</span>renderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id=""><a href="#" class="headerlink" title=""></a></h2>
                 
             </div>
@@ -1070,7 +1074,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1079,7 +1083,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

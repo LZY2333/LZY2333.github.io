@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -457,16 +457,17 @@
 <h2 id="内置指令"><a href="#内置指令" class="headerlink" title="内置指令"></a>内置指令</h2><p>内置指令只有两种 属性型指令 和 结构型指令</p>
 <p>属性指令 会监听并修改 其依附的 HTML元素 或 组件的行为、Attribute 和 Property.就像HTML属性一样.</p>
 <p><code>NgClass</code>/<code>NgStyle</code>/<code>ngModel</code> 内置属性型指令</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">currentClasses<span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token literal-property property">currentClasses</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token comment">/* . . . */</span>
   <span class="token function">setCurrentClasses</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span>currentClasses <span class="token operator">=</span>  <span class="token punctuation">&#123;</span>
-      saveable<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>canSave<span class="token punctuation">,</span>
-      modified<span class="token operator">:</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>isUnchanged<span class="token punctuation">,</span>
-      special<span class="token operator">:</span>  <span class="token keyword">this</span><span class="token punctuation">.</span>isSpecial
+      <span class="token literal-property property">saveable</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>canSave<span class="token punctuation">,</span>
+      <span class="token literal-property property">modified</span><span class="token operator">:</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>isUnchanged<span class="token punctuation">,</span>
+      <span class="token literal-property property">special</span><span class="token operator">:</span>  <span class="token keyword">this</span><span class="token punctuation">.</span>isSpecial
     <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">[ngClass]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>currentClasses<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>This div is initially saveable, unchanged, and special.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <blockquote>
 <p>添加删除 单个类用类绑定，多个类用 NgClass,NgStyle同理,用法相同。<br>并且这种用法要在 初始化 和 它的依赖属性变化时 调用一遍 setCurrentClasses()。</p>
 </blockquote>
@@ -477,18 +478,20 @@
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">[value]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">(input)</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name=$event.target.value<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>without<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">[ngModel]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">(ngModelChange)</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name=$event.target.value<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>example-change<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
 <span class="token comment">&lt;!-- ngModel 输入属性会设置该元素的值，并通过 ngModelChange 的输出属性来监听元素值的变化。 --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p><code>NgIf</code>/<code>NgFor</code>/<code>NgSwitch</code> 内置属性型指令</p>
 <p><code>&lt;div [class.hidden]=&quot;isSpecial&quot;&gt;Hide with class&lt;/div&gt;</code> 隐藏元素</p>
 <p><code>&lt;div *ngIf=&quot;currentCustomer&quot;&gt;Hello, &#123;&#123;currentCustomer.name&#125;&#125;&lt;/div&gt;</code> 防范空指针错误</p>
 <p>*ngFor 使用 trackBy 防止列表中已经被渲染过的DOM被全部替换</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// ts文件中</span>
-<span class="token function">trackByItems</span><span class="token punctuation">(</span>index<span class="token operator">:</span> number<span class="token punctuation">,</span> item<span class="token operator">:</span> Item<span class="token punctuation">)</span><span class="token operator">:</span> number <span class="token punctuation">&#123;</span>
+<span class="token function">trackByItems</span><span class="token punctuation">(</span>index<span class="token operator">:</span> number<span class="token punctuation">,</span> <span class="token literal-property property">item</span><span class="token operator">:</span> Item<span class="token punctuation">)</span><span class="token operator">:</span> number <span class="token punctuation">&#123;</span>
   <span class="token keyword">return</span> item<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- // 这样就会通过id是否改变来判断是否需要替换 --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">*ngFor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>let item of items; trackBy: trackByItems<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   (&#123;&#123;item.id&#125;&#125;) &#123;&#123;item.name&#125;&#125;
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><code>ngSwitch</code></p>
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">[ngSwitch]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>currentItem.feature<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-worst-item</span> <span class="token attr-name">*ngSwitchCase</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">'</span>worst<span class="token punctuation">'</span><span class="token punctuation">"</span></span> <span class="token attr-name">[item]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cItem<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;cItem&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-worst-item</span><span class="token punctuation">></span></span>
@@ -496,33 +499,36 @@
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-lost-item</span>  <span class="token attr-name">*ngSwitchCase</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">'</span>lost<span class="token punctuation">'</span><span class="token punctuation">"</span></span>  <span class="token attr-name">[item]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cItem<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-lost-item</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-best-item</span>  <span class="token attr-name">*ngSwitchCase</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">'</span>best<span class="token punctuation">'</span><span class="token punctuation">"</span></span>  <span class="token attr-name">[item]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cItem<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-best-item</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-know-item</span>  <span class="token attr-name">*ngSwitchDefault</span>        <span class="token attr-name">[item]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cItem<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-know-item</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="自定义一个属性型指令"><a href="#自定义一个属性型指令" class="headerlink" title="自定义一个属性型指令"></a>自定义一个属性型指令</h2><pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- appHighlight 高亮一个元素,自定义指令 --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">appHighlight</span><span class="token punctuation">></span></span>Highlight me!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>第一步,<code>ng generate directive highlight</code></p>
 <p>第二步,在自动创建的文件中修改<code>constructor</code></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Directive<span class="token punctuation">,</span>ElementRef <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
 @<span class="token function">Directive</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-  selector<span class="token operator">:</span> <span class="token string">'[appHighlight]'</span> <span class="token comment">// 这里会被自动加app(模块名)前缀,就像ng指令的ng前缀</span>
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'[appHighlight]'</span> <span class="token comment">// 这里会被自动加app(模块名)前缀,就像ng指令的ng前缀</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">HighlightDirective</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 这里会被自动 加一个 directive 后缀</span>
-  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">el<span class="token operator">:</span> ElementRef</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 这里是自己加的</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">el</span><span class="token operator">:</span> ElementRef</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 这里是自己加的</span>
     <span class="token comment">// 引入 ElementRef 并使用</span>
     <span class="token comment">// ElementRef 通过其 nativeElement 属性给你了直接访问宿主 DOM 元素的能力。</span>
     el<span class="token punctuation">.</span>nativeElement<span class="token punctuation">.</span>style<span class="token punctuation">.</span>backgroundColor <span class="token operator">=</span> <span class="token string">'yellow'</span><span class="token punctuation">;</span>
     
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>第三步,增加响应用户事件,增加<code>@Input</code>属性,指定颜色</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Directive<span class="token punctuation">,</span> ElementRef<span class="token punctuation">,</span> HostListener<span class="token punctuation">,</span> Input <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
 @<span class="token function">Directive</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-  selector<span class="token operator">:</span> <span class="token string">'[appHighlight]'</span>
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'[appHighlight]'</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">HighlightDirective</span> <span class="token punctuation">&#123;</span>
 
     @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span> highlightColor<span class="token operator">:</span> string<span class="token punctuation">;</span>
 
     <span class="token comment">// 修改后的构造函数只负责声明要注入的元素 el: ElementRef</span>
-    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">el<span class="token operator">:</span> ElementRef</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">el</span><span class="token operator">:</span> ElementRef</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
 
     @<span class="token function">HostListener</span><span class="token punctuation">(</span><span class="token string">'mouseenter'</span><span class="token punctuation">)</span> <span class="token function">onMouseEnter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">highlight</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>highlightColor <span class="token operator">||</span> <span class="token string">'red'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -532,27 +538,29 @@
       <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">highlight</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 
-    <span class="token keyword">private</span> <span class="token function">highlight</span><span class="token punctuation">(</span><span class="token parameter">color<span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token function">highlight</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">color</span><span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>el<span class="token punctuation">.</span>nativeElement<span class="token punctuation">.</span>style<span class="token punctuation">.</span>backgroundColor <span class="token operator">=</span> color<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- 绑定指令,再绑定属性 --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">appHighlight</span> <span class="token attr-name">highlightColor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>yellow<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Highlighted in yellow<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">appHighlight</span> <span class="token attr-name">[highlightColor]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">'</span>orange<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Highlighted in orange<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>再次修改</p>
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- 设定指令并绑定属性,属性和指令同名,更方便,但是属性名这样命名就不好,所以指定别名 --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">[appHighlight]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>color<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Highlight me!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 在指令内部，叫 highlightColor，在外部，绑定的地方叫 appHighlight。</span>
 @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token string">'appHighlight'</span><span class="token punctuation">)</span> highlightColor<span class="token operator">:</span> string<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>绑定第二个属性</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Directive<span class="token punctuation">,</span> ElementRef<span class="token punctuation">,</span> HostListener<span class="token punctuation">,</span> Input <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
 
 @<span class="token function">Directive</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-  selector<span class="token operator">:</span> <span class="token string">'[appHighlight]'</span>
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'[appHighlight]'</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">HighlightDirective</span> <span class="token punctuation">&#123;</span>
 
-  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter"><span class="token keyword">private</span> el<span class="token operator">:</span> ElementRef</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter"><span class="token keyword">private</span> <span class="token literal-property property">el</span><span class="token operator">:</span> ElementRef</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
 
   @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token string">'appHighlight'</span><span class="token punctuation">)</span> highlightColor<span class="token operator">:</span> string<span class="token punctuation">;</span>
   @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span> defaultColor<span class="token operator">:</span> string<span class="token punctuation">;</span>
@@ -566,10 +574,11 @@
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">highlight</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span>
 
-  <span class="token keyword">private</span> <span class="token function">highlight</span><span class="token punctuation">(</span><span class="token parameter">color<span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">private</span> <span class="token function">highlight</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">color</span><span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span>el<span class="token punctuation">.</span>nativeElement<span class="token punctuation">.</span>style<span class="token punctuation">.</span>backgroundColor <span class="token operator">=</span> color<span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>@Input 装饰器会告诉 Angular，该属性是公共的，并且能被父组件绑定。如果没有 @Input，Angular 就会拒绝绑定到该属性。<br>等号右边的 模板表达式 属于模板所在的组件, 等号左边的 [] 属于其他组件或指令, 其组件或指令内部必须必须带有 @Input 装饰器</p>
 </blockquote>
@@ -577,6 +586,7 @@
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">ngNonBindable</span> <span class="token attr-name">[appHighlight]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">'</span>yellow<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   This should not evaluate: &#123;&#123; 1 +1 &#125;&#125;, but will highlight yellow.
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="自定义一个结构型指令"><a href="#自定义一个结构型指令" class="headerlink" title="自定义一个结构型指令"></a>自定义一个结构型指令</h2><p>结构型指令 都会使用(*)语法,可以操作宿主元素及其子元素</p>
 <p>一个宿主元素可以有多个 属性型指令, 但只能有一个 结构型指令</p>
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">*ngIf</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>hero<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;hero.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
@@ -588,6 +598,7 @@
 <span class="token comment">&lt;!-- Angular 会在真正渲染的时候填充 &lt;ng-template> 的内容，并且把 &lt;ng-template> 替换为一个供诊断用的注释。 --></span>
 
 <span class="token comment">&lt;!-- NgFor和NgSwitch...指令也都遵循同样的模式。 --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">*ngFor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>let hero of heroes; 
   let i=index; let odd=odd; trackBy: trackById<span class="token punctuation">"</span></span> <span class="token attr-name">[class.odd]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>odd<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   (&#123;&#123;i&#125;&#125;) &#123;&#123;hero.name&#125;&#125;
@@ -597,6 +608,7 @@
   <span class="token attr-name">let-i</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>index<span class="token punctuation">"</span></span> <span class="token attr-name">let-odd</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>odd<span class="token punctuation">"</span></span> <span class="token attr-name">[ngForTrackBy]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>trackById<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">[class.odd]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>odd<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>(&#123;&#123;i&#125;&#125;) &#123;&#123;hero.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ng-template</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>微语法:  通过简短的、友好的字符串来配置一个指令。 微语法解析器把这个字符串翻译成 <ng-template> 上的属性.</p>
 <p><code>let</code> 关键字声明一个模板输入变量,让你在模板中能用到这个变量。</p>
 <p>本例子中，这个输入变量就是 hero、i 和 odd。 解析器会把 <code>let hero</code>、<code>let i</code>和<code>let odd</code>翻译成命名变量 <code>let-hero</code>、<code>let-i</code> 和 <code>let-odd</code>。</p>
@@ -608,6 +620,7 @@
 <p>微语法处略过….(以后再看)</p>
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- 写一个NgIf的反义词结构指令 --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">*appUnless</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>condition<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Show this sentence unless the condition is true.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <ol>
 <li>导入 Directive 装饰器</li>
 <li>导入符号 Input、TemplateRef 和 ViewContainerRef,任何结构型指令都会用到.</li>
@@ -618,15 +631,15 @@
 <p>使用<code>TemplateRef</code>取得 <ng-template> 的内容，并通过<code>ViewContainerRef</code>来访问这个视图容器.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Directive<span class="token punctuation">,</span> Input<span class="token punctuation">,</span> TemplateRef<span class="token punctuation">,</span> ViewContainerRef <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
 
-@<span class="token function">Directive</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> selector<span class="token operator">:</span> <span class="token string">'[appUnless]'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+@<span class="token function">Directive</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'[appUnless]'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">UnlessDirective</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">private</span> hasView <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
 
   <span class="token function">constructor</span><span class="token punctuation">(</span>
-    <span class="token parameter"><span class="token keyword">private</span> templateRef<span class="token operator">:</span> TemplateRef<span class="token operator">&lt;</span>any<span class="token operator">></span><span class="token punctuation">,</span>
-    <span class="token keyword">private</span> viewContainer<span class="token operator">:</span> ViewContainerRef</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
+    <span class="token parameter"><span class="token keyword">private</span> <span class="token literal-property property">templateRef</span><span class="token operator">:</span> TemplateRef<span class="token operator">&lt;</span>any<span class="token operator">></span><span class="token punctuation">,</span>
+    <span class="token keyword">private</span> <span class="token literal-property property">viewContainer</span><span class="token operator">:</span> ViewContainerRef</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
 
-  @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">set</span> <span class="token function">appUnless</span><span class="token punctuation">(</span><span class="token parameter">condition<span class="token operator">:</span> boolean</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">set</span> <span class="token function">appUnless</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">condition</span><span class="token operator">:</span> boolean</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>condition <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>hasView<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>viewContainer<span class="token punctuation">.</span><span class="token function">createEmbeddedView</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>templateRef<span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>hasView <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
@@ -1096,7 +1109,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1105,7 +1118,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

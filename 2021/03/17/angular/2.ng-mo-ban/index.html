@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -473,6 +473,7 @@
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">*ngFor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>let customer of customers<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123;customer.name&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>其中优先级 模板变量 &gt; 指令的上下文属性 &gt; 组件实例的成员变量</p>
 <p>表达式的使用须遵循, 简单, 执行快速, 无可见副作用 的原则</p>
 <h2 id="模板语句"><a href="#模板语句" class="headerlink" title="模板语句"></a>模板语句</h2><p>在 HTML 中用于响应用户事件的方法或属性</p>
@@ -491,6 +492,7 @@
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ng-template</span> <span class="token attr-name">[ngIf]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>Value: &#123;&#123; ref1.value &#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ng-template</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>使用 管道 格式化数据, 如格式化 金额日期.</p>
 <p>管道可配置参数 <code>&#123;&#123; amount | currency:'EUR':'Euros '&#125;&#125;</code> ,参数也可为变量</p>
 <p>可串联配置多个管道 <code>&#123;&#123;  birthday | date:'fullDate' | uppercase&#125;&#125;</code></p>
@@ -506,7 +508,7 @@
 <p>自定义管道,管道前 被绑定的值会作为第一个参数, 管道的参数 会从作为第二个参数开始</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//实现一种指数级转换，以指数级增加英雄的力量,基本值2,通过管道设定指数级为10,最终展示1024</span>
 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Pipe<span class="token punctuation">,</span> PipeTransform <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
-@<span class="token function">Pipe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>name<span class="token operator">:</span> <span class="token string">'exponentialStrength'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+@<span class="token function">Pipe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'exponentialStrength'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">ExponentialStrengthPipe</span> <span class="token keyword">implements</span> <span class="token class-name">PipeTransform</span> <span class="token punctuation">&#123;</span>
   <span class="token function">transform</span><span class="token punctuation">(</span>value<span class="token operator">:</span> number<span class="token punctuation">,</span> exponent<span class="token operator">?</span><span class="token operator">:</span> number<span class="token punctuation">)</span><span class="token operator">:</span> number <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> Math<span class="token punctuation">.</span><span class="token function">pow</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> <span class="token function">isNaN</span><span class="token punctuation">(</span>exponent<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> exponent<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -514,20 +516,21 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
 @<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-  selector<span class="token operator">:</span> <span class="token string">'app-power-booster'</span><span class="token punctuation">,</span>
-  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'app-power-booster'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
     &lt;h2>Power Booster&lt;/h2>
     &lt;p>Super power boost: &#123;&#123;2 | exponentialStrength: 10&#125;&#125;&lt;/p>
   </span><span class="token template-punctuation string">`</span></span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token comment">// 1024</span>
 <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">PowerBoosterComponent</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>通过管道的数据绑定特性来响应用户操作</strong></p>
 <p>Angular 会检测每次变更，并立即运行管道</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
 
 @<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-  selector<span class="token operator">:</span> <span class="token string">'app-power-boost-calculator'</span><span class="token punctuation">,</span>
-  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+  <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'app-power-boost-calculator'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
     &lt;h2>Power Boost Calculator&lt;/h2>
     &lt;div>Normal power: &lt;input [(ngModel)]="power">&lt;/div>
     &lt;div>Boost factor: &lt;input [(ngModel)]="factor">&lt;/div>
@@ -540,6 +543,7 @@
   power <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
   factor <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span> <span class="token comment">// input框修改,都会影响变量power或factor,展示的值都会重新计算</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="管道执行时机"><a href="#管道执行时机" class="headerlink" title="管道执行时机"></a>管道执行时机</h3><p>Angular 会在每次 DOM 事件（每次按键、鼠标移动、计时器滴答和服务器响应）之后运行的变更检测过程中查找对数据绑定值的更改。检查到有更改 则执行管道</p>
 <p>但是对于每次变更， 走执行一次管道， 性能过低. 所以 真正的变更检测有一些情况没有进行检测</p>
 <p><strong>纯管道</strong>: 没有副作用 或者说没做额外的事情 或者说只要输入同输入值其输出值永远一致的管道</p>
@@ -548,8 +552,8 @@
 <p>比如调用 数组元素的push 方法,并不能触发 管道的更新,因为 数组的引用地址并没发生改变.</p>
 <p>此情况可以采用替换数组的额方式解决, 或者 使用 <strong>非纯管道</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">@<span class="token function">Pipe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-  name<span class="token operator">:</span> <span class="token string">'flyingHeroesImpure'</span><span class="token punctuation">,</span>
-  pure<span class="token operator">:</span> <span class="token boolean">false</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'flyingHeroesImpure'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">pure</span><span class="token operator">:</span> <span class="token boolean">false</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>每当按键或鼠标移动时，Angular 都会检测到一次变更，从而执行一个非纯管道。</p>
 <p>只需加一个属性 <code>pure: false</code> , 但要小心使用。长时间运行非纯管道可能会大大降低你的应用速度。</p>
@@ -573,6 +577,7 @@
 <span class="token comment">&lt;!-- 技术上说也可以这样控制 disabled Attribute 达到效果(注意Attribute绑定取决于该值是否为null)--></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">[attr.disabled]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>condition ? <span class="token punctuation">'</span>disabled<span class="token punctuation">'</span> : null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
 <span class="token comment">&lt;!-- 但是不推荐,因为前者更直观(boolean值数据),语法更短,性能更高 --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>可使用该语法的目标</strong></p>
 <p>属性 (元素属性 组件属性 指令属性)<br>事件 (元素事件 组件事件 指令事件)<br>双向 (事件与属性)  <code>&lt;input [(ngModel)]=&quot;name&quot;&gt;</code><br>Attribute (少数)  <code>&lt;button [attr.aria-label]=&quot;help&quot;&gt;help&lt;/button&gt;</code><br>类   (class 属性) <code>&lt;div [class.special]=&quot;isSpecial&quot;&gt;Special&lt;/div&gt;</code><br>样式 (style 属性) <code>&lt;button [style.color]=&quot;isSpecial ? &#39;red&#39; : &#39;green&#39;&quot;&gt;</code></p>
 <blockquote>
@@ -587,6 +592,7 @@
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>"&#123;&#123;interpolationTitle&#125;&#125;" is the <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span><span class="token punctuation">></span></span>interpolated<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">></span></span> title.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>"<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">[innerHTML]</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>propertyTitle<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>" is the <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span><span class="token punctuation">></span></span>property bound<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">></span></span> title.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>将数据值渲染为字符串时,都能用,<code>&#123;&#123;...&#125;&#125;</code>更易读,<br>但是将元素属性设置为 非字符串 属性时, 必须使用 属性绑定.</p>
 <p><strong>绑定到 Attribute</strong></p>
 <p>单个 class 绑定语法:<br><code>[class.sale]=&quot;true&quot;</code><br>多重 class 绑定语法:<br><code>[class]=&quot;class-1 class-2&quot;</code>,<br><code>[class]=&quot;&#123;foo: true, bar: false&#125;&quot;</code>,<br><code>[class]=&quot;[&#39;foo&#39;, &#39;bar&#39;]&quot;</code></p>
@@ -604,6 +610,7 @@
   @<span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  size<span class="token operator">:</span> number <span class="token operator">|</span> string<span class="token punctuation">;</span>
   @<span class="token function">Output</span><span class="token punctuation">(</span><span class="token punctuation">)</span> sizeChange <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">EventEmitter</span><span class="token operator">&lt;</span>number<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="NgModule-模块"><a href="#NgModule-模块" class="headerlink" title="NgModule 模块"></a>NgModule 模块</h2><p>@NgModule修饰的class 就是一个NgModule</p>
 <p>@NgModule 使用一个元数据对象来告诉Angular如何去编译和运行代码。</p>
 <p>一个模块内部可以包含组件、指令、管道，并且可以将它们的访问权限声明为公有，以使外部模块的组件可以访问和使用到它们。</p>
@@ -631,13 +638,13 @@
 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> ModuleWithProviders <span class="token punctuation">&#125;</span>  <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Routes<span class="token punctuation">,</span> RouterModule <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/router'</span><span class="token punctuation">;</span>
  
-<span class="token keyword">export</span> <span class="token keyword">const</span> routes<span class="token operator">:</span> Routes <span class="token operator">=</span> <span class="token punctuation">[</span>
-  <span class="token punctuation">&#123;</span> path<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span> redirectTo<span class="token operator">:</span> <span class="token string">'contact'</span><span class="token punctuation">,</span> pathMatch<span class="token operator">:</span> <span class="token string">'full'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-  <span class="token punctuation">&#123;</span> path<span class="token operator">:</span> <span class="token string">'crisis'</span><span class="token punctuation">,</span> loadChildren<span class="token operator">:</span> <span class="token string">'app/crisis/crisis.module#CrisisModule'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-  <span class="token punctuation">&#123;</span> path<span class="token operator">:</span> <span class="token string">'heroes'</span><span class="token punctuation">,</span> loadChildren<span class="token operator">:</span> <span class="token string">'app/hero/hero.module#HeroModule'</span> <span class="token punctuation">&#125;</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token literal-property property">routes</span><span class="token operator">:</span> Routes <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">&#123;</span> <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span> <span class="token literal-property property">redirectTo</span><span class="token operator">:</span> <span class="token string">'contact'</span><span class="token punctuation">,</span> <span class="token literal-property property">pathMatch</span><span class="token operator">:</span> <span class="token string">'full'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'crisis'</span><span class="token punctuation">,</span> <span class="token literal-property property">loadChildren</span><span class="token operator">:</span> <span class="token string">'app/crisis/crisis.module#CrisisModule'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'heroes'</span><span class="token punctuation">,</span> <span class="token literal-property property">loadChildren</span><span class="token operator">:</span> <span class="token string">'app/hero/hero.module#HeroModule'</span> <span class="token punctuation">&#125;</span>
 <span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-<span class="token keyword">export</span> <span class="token keyword">const</span> routing<span class="token operator">:</span> ModuleWithProviders <span class="token operator">=</span> RouterModule<span class="token punctuation">.</span><span class="token function">forRoot</span><span class="token punctuation">(</span>routes<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token literal-property property">routing</span><span class="token operator">:</span> ModuleWithProviders <span class="token operator">=</span> RouterModule<span class="token punctuation">.</span><span class="token function">forRoot</span><span class="token punctuation">(</span>routes<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>path指明路径，loadChildren指明使用延迟加载，’app/crisis/crisis.module#CrisisModule’指明了模块的路径，和模块的名称。</p>
 
                 
@@ -1100,7 +1107,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1109,7 +1116,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

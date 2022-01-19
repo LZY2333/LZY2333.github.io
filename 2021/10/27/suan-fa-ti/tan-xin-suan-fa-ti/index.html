@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -471,6 +471,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> gp
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="柠檬水找零-leetcode-860"><a href="#柠檬水找零-leetcode-860" class="headerlink" title="柠檬水找零(leetcode 860)"></a>柠檬水找零(leetcode 860)</h2><p>“不带零钱你卖什么柃檬水？”</p>
 <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/lemonade-change/">leetcode</a></p>
 <p>在柠檬水摊上，每一杯柠檬水的售价为 5 美元。</p>
@@ -503,6 +504,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token boolean">true</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="用最少数量的箭引爆气球-leetcode-452"><a href="#用最少数量的箭引爆气球-leetcode-452" class="headerlink" title="用最少数量的箭引爆气球(leetcode 452)"></a>用最少数量的箭引爆气球(leetcode 452)</h2><p>其实就是区间覆盖,给几个区间,每个区间存在重复与不充分,找出最多的重复区间</p>
 <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/">leetcode</a></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">findMinArrowShots</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">points</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -532,6 +534,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="我的解法"><a href="#我的解法" class="headerlink" title="我的解法"></a>我的解法</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">findMinArrowShots</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">points</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     points <span class="token operator">=</span> points<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">l<span class="token punctuation">,</span>r</span><span class="token punctuation">)</span> <span class="token operator">=></span> l<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> r<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">||</span> l<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> r<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// 左端点相等要按右端点最小的来</span>
     <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -549,6 +552,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> count
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="移掉K位数字-leetcode-402"><a href="#移掉K位数字-leetcode-402" class="headerlink" title="移掉K位数字(leetcode 402)"></a>移掉K位数字(leetcode 402)</h2><p><a target="_blank" rel="noopener" href="https://www.algomooc.com/algocamp2">leetcode</a></p>
 <p>这样从递增里找减少的，从递减里找增加的，就用栈！！！！</p>
 <p><strong>无注释版</strong></p>
@@ -565,6 +569,7 @@
     <span class="token keyword">while</span><span class="token punctuation">(</span>stack<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">'0'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> stack<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'0'</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>注释版</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">removeKDigits</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">num<span class="token punctuation">,</span> k</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 维护一个单调递减栈(越栈底的数越小)</span>
@@ -583,6 +588,7 @@
     <span class="token comment">// 拼接并防止空字符串</span>
     <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'0'</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="跳跃游戏-leetcode-55"><a href="#跳跃游戏-leetcode-55" class="headerlink" title="跳跃游戏(leetcode 55)"></a>跳跃游戏(leetcode 55)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/jump-game/">leetcode</a></p>
 <p>贪心要 找对贪心的方向，有时候从前向后，有时候从后向前</p>
 <p><strong>标准解法</strong><br>从前往后轮,找最大覆盖范围</p>
@@ -598,6 +604,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>我的解法</strong></p>
 <p>从后往前轮,感觉还是标准解法好.我这解法属实迷宫玩多了.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">canJump</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -623,6 +630,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token boolean">true</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="摆动序列-leetcode-376"><a href="#摆动序列-leetcode-376" class="headerlink" title="摆动序列(leetcode 376)"></a>摆动序列(leetcode 376)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/wiggle-subsequence/solution/bai-dong-xu-lie-by-leetcode-solution-yh2m/">leetcode</a></p>
 <p>可使用动态规划,或者贪心</p>
 <p>注意题目是可以删除任意位置的数，换句话说，只要不满足的，不计入就行</p>
@@ -641,6 +649,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>题解里抄的某位大佬的神级解法</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">wiggleMaxLength</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> up <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>down <span class="token operator">=</span> <span class="token number">1</span>
@@ -653,6 +662,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> nums<span class="token punctuation">.</span>length <span class="token operator">?</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>up<span class="token punctuation">,</span>down<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token number">0</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="买卖股票的最佳时机-leetcode-122"><a href="#买卖股票的最佳时机-leetcode-122" class="headerlink" title="买卖股票的最佳时机(leetcode 122)"></a>买卖股票的最佳时机(leetcode 122)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/">leetcode</a></p>
 <p>这题目让我震惊了,这还要想??</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">maxProfit</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">prices</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -951,13 +961,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/27/suan-fa/39.hui-su-suan-fa/">
+                <a href="/2021/10/27/suan-fa/38.fen-zhi-suan-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="回溯算法">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="分治算法">
                         
-                        <span class="card-title">回溯算法</span>
+                        <span class="card-title">分治算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1124,7 +1134,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1133,7 +1143,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -575,6 +575,7 @@ subject<span class="token punctuation">.</span><span class="token function">next
 <span class="token comment">// observerB: 2</span>
 <span class="token comment">// observerA: 3</span>
 <span class="token comment">// observerB: 3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>ReplaySubject(x,y)</strong> 可缓存值,当新观察者订阅时会立即一次向其推送所有缓存值.<br>x 代表缓存个数; y可不赋值,代表记录长时间内的值.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 缓存100个,500毫秒内的值.</span>
 <span class="token keyword">var</span> subject <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Rx<span class="token punctuation">.</span>ReplaySubject</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -624,6 +625,7 @@ subject<span class="token punctuation">.</span><span class="token function">next
 subject<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// observerA: 5</span>
 <span class="token comment">//observerB: 5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="Operators-操作符"><a href="#Operators-操作符" class="headerlink" title="Operators (操作符)"></a>Operators (操作符)</h2><p>RxJS 的根基是 Observable,但RxJS 最有用的是 Operators.</p>
 <p>操作符 是Observable类上的方法，被调用时 不会改变调用者Observable实例，而是返回一个基于调用者逻辑的 新的Observable.</p>
 <p>操作符 本身是一个纯函数,接收一个Observable输入,生成一个新的Observable输出.</p>
@@ -650,6 +652,7 @@ output<span class="token punctuation">.</span><span class="token function">subsc
 <span class="token comment">// 20</span>
 <span class="token comment">// 30</span>
 <span class="token comment">// 40</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="实例操作符-vs-静态操作符"><a href="#实例操作符-vs-静态操作符" class="headerlink" title="实例操作符 vs. 静态操作符"></a>实例操作符 vs. 静态操作符</h2><p>实例操作符 是 Observable实例 上的方法.</p>
 <p>静态操作符 是直接附加到 Observable类 上的方法,内部不使用this进行实现, 而是依赖入参.</p>
 <p>实例运算符 特征是 内部实现使用this来指代输入的 Observable,通过<code>实例.函数()</code>来调用<br>因为通过<code>observable1.multiplyByTen()</code>来调用,内部this 就指向调用者,而不需要传参。</p>
@@ -667,6 +670,7 @@ Rx<span class="token punctuation">.</span><span class="token class-name">Observa
 
 <span class="token keyword">var</span> observable <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">multiplyByTen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 此时均未被订阅</span>
 observable<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 产生订阅链,两个 observable 均被触发.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>静态操作符 特征是 内部实现依赖传参,不使用this,通过<code>Rx.Observable.函数(x)</code>来调用.</p>
 <p>静态操作符 通常是用于从头创建实例,大部分是创建操作符,大部分接收非Observable参数,创建一个新Observalbe.</p>
 <blockquote>
@@ -678,6 +682,7 @@ observable<span class="token punctuation">.</span><span class="token function">s
 <span class="token keyword">var</span> observable2 <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">1000</span> <span class="token comment">/* 毫秒数 */</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// merge 组合操作符,静态操作符, 接收 多个Observable参数</span>
 <span class="token keyword">var</span> merged <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span>observable1<span class="token punctuation">,</span> observable2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="查找你想要的操作符"><a href="#查找你想要的操作符" class="headerlink" title="查找你想要的操作符"></a>查找你想要的操作符</h2><p>官网有一个可以根据你当前需求,推荐操作符的小功能很实用.</p>
 <h2 id="操作符分类"><a href="#操作符分类" class="headerlink" title="操作符分类"></a>操作符分类</h2><p>创建、转换、过滤、组合、多播、错误处理、工具、条件和布尔操作、数学和聚合操作 等操作符.</p>
 <blockquote>
@@ -711,6 +716,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token comment">// done</span>
 
 <span class="token comment">// async调度器 使得消息向观察者的 推送变为了异步</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>调度器 实际上是 <code>proxyObserver </code>(代理观察者).</p>
 <p><code>observable1.observeOn(Rx.Scheduler.async)</code>也就是订阅调度器后,<br>再调用<code>observable1.subscribe(finalObserver)</code> 开始了订阅链.</p>
 <p>实际上 <code>observable1</code> 的 是被调度器<code>async</code>订阅为被观察者了,然后观察者<code>finalObserver</code>,订阅是<br><code>.observeOn()</code>产生并返回的Observable,<code>.observeOn()</code>中的<code>next(val)</code>,实现如下</p>
@@ -1193,7 +1199,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1202,7 +1208,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

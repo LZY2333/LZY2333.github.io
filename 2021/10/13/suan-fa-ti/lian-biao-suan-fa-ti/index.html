@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -476,6 +476,7 @@
     <span class="token comment">// 外层会继续将next 置为前一个数</span>
     <span class="token keyword">return</span> newHead<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="相交链表-LeetCode-160"><a href="#相交链表-LeetCode-160" class="headerlink" title="相交链表(LeetCode 160)"></a>相交链表(LeetCode 160)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 反转链表</span>
 <span class="token keyword">var</span> <span class="token function-variable function">getIntersectionNode</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">headA<span class="token punctuation">,</span> headB</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>headA <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> headB <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -489,6 +490,7 @@
     <span class="token keyword">return</span> pA<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token comment">// 注意假设A和B等长，不会无限循环，因为 AB同为null时已经跳出循环了</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="合并两个有序链表-LeetCode-21"><a href="#合并两个有序链表-LeetCode-21" class="headerlink" title="合并两个有序链表 (LeetCode 21)"></a>合并两个有序链表 (LeetCode 21)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 迭代</span>
 <span class="token keyword">var</span> <span class="token function-variable function">mergeTwoLists</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">l1<span class="token punctuation">,</span> l2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> preHead <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -508,6 +510,7 @@
 
     <span class="token keyword">return</span> preHead<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 递归</span>
 <span class="token keyword">var</span> <span class="token function-variable function">mergeTwoLists</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">l1<span class="token punctuation">,</span> l2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>l1 <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -522,6 +525,7 @@
         <span class="token keyword">return</span> l2<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>自己的解法</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">mergeTwoLists</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">l1<span class="token punctuation">,</span> l2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 
@@ -544,6 +548,7 @@
 
     <span class="token keyword">return</span> rHEAD<span class="token punctuation">.</span>next
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="分隔链表-LeetCode-86"><a href="#分隔链表-LeetCode-86" class="headerlink" title="分隔链表 (LeetCode 86)"></a>分隔链表 (LeetCode 86)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">partition</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> x</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> small <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">const</span> smallHead <span class="token operator">=</span> small<span class="token punctuation">;</span>
@@ -597,6 +602,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> result<span class="token punctuation">.</span>next
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="环形链表-II-LeetCode-142"><a href="#环形链表-II-LeetCode-142" class="headerlink" title="环形链表 II (LeetCode 142)"></a>环形链表 II (LeetCode 142)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 我想的是在节点上做标记，显然用set更好，记住这思路</span>
 <span class="token keyword">var</span> <span class="token function-variable function">detectCycle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> visited <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -609,6 +615,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <!-- O(1)空间版 -->
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 要理解 快慢指针 找链的环结构入口,要理解两个重要结论,</span>
 <span class="token comment">// 1.慢指针 走过的的长度 等于 环的长度</span>
@@ -661,6 +668,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="反转链表-II-LeetCode-92"><a href="#反转链表-II-LeetCode-92" class="headerlink" title="反转链表 II (LeetCode 92)"></a>反转链表 II (LeetCode 92)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 要点，拆分子列，标记 左前与右 结点，左与右后 结点</span>
 <span class="token keyword">var</span> <span class="token function-variable function">reverseBetween</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> pointH <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>head<span class="token punctuation">)</span> <span class="token comment">// 这类头部可能插值的问题都需要一个头空结点</span>
@@ -698,6 +706,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> root
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>更优的解法,头插法</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">reverseBetween</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 设置 dummyNode 是这一类问题的一般做法</span>
@@ -717,6 +726,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> dummy_node<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="复制带随机指针的链表-LeetCode-138"><a href="#复制带随机指针的链表-LeetCode-138" class="headerlink" title="复制带随机指针的链表(LeetCode 138)"></a>复制带随机指针的链表(LeetCode 138)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">copyRandomList</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">if</span><span class="token punctuation">(</span>head <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token keyword">null</span> <span class="token punctuation">&#125;</span>
         <span class="token keyword">let</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// map记录结点</span>
@@ -734,6 +744,7 @@
         <span class="token punctuation">&#125;</span>
         <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="移除链表元素-LeetCode-203"><a href="#移除链表元素-LeetCode-203" class="headerlink" title="移除链表元素(LeetCode 203)"></a>移除链表元素(LeetCode 203)</h2><p>简单题</p>
 <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-linked-list-elements/submissions/">leetcode</a></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">removeElements</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> val</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -752,6 +763,7 @@
 
     <span class="token keyword">return</span> tmpHead<span class="token punctuation">.</span>next
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="旋转链表-LeetCode-61"><a href="#旋转链表-LeetCode-61" class="headerlink" title="旋转链表(LeetCode 61)"></a>旋转链表(LeetCode 61)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/rotate-list/">leetcode</a></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">rotateRight</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> k</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>head<span class="token punctuation">)</span> <span class="token keyword">return</span> head
@@ -779,6 +791,7 @@
 
     <span class="token keyword">return</span> <span class="token constant">H</span><span class="token punctuation">.</span>next
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>leetcode提供的解法是头尾相接。</p>
 <h2 id="两两交换链表中的节点-LeetCode-24"><a href="#两两交换链表中的节点-LeetCode-24" class="headerlink" title="两两交换链表中的节点(LeetCode 24)"></a>两两交换链表中的节点(LeetCode 24)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/">leetcode</a></p>
 <p><strong>递归</strong></p>
@@ -810,6 +823,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token constant">H</span><span class="token punctuation">.</span>next<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>我的错误解答</strong></p>
 <p>我把题目写成了 反转链表，每隔一个不反转……</p>
 <p>且正好是答案的反转链表,写成反转的原因(仅仅指链表为什么被反转了)是,</p>
@@ -826,6 +840,7 @@
 <span class="token comment">// 输入:[1,2,3,4,5]</span>
 <span class="token comment">// 输出:[5,3,4,1,2]</span>
 <span class="token comment">// leetcode题目的正确输出:[2,1,4,3,5]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="删除链表的倒数第-N-个结点-LeetCode-19"><a href="#删除链表的倒数第-N-个结点-LeetCode-19" class="headerlink" title="删除链表的倒数第 N 个结点(LeetCode 19)"></a>删除链表的倒数第 N 个结点(LeetCode 19)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/">leetcode</a></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">removeNthFromEnd</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> r <span class="token operator">=</span> l <span class="token operator">=</span> <span class="token constant">H</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>head<span class="token punctuation">)</span>
@@ -836,6 +851,7 @@
     l<span class="token punctuation">.</span>next <span class="token operator">=</span> l<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next
     <span class="token keyword">return</span> <span class="token constant">H</span><span class="token punctuation">.</span>next
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这里本该先减(–n)，但这样结束后l就指向要删除的元素</p>
 <p>我们这样l得指向要删除的元素之前的元素,所以改为后减n,l要少跑一轮</p>
 <p><strong>我的解法</strong></p>
@@ -854,6 +870,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> nowN <span class="token operator">-</span> <span class="token number">1</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="链表的中间节点-LeetCode-876"><a href="#链表的中间节点-LeetCode-876" class="headerlink" title="链表的中间节点(LeetCode 876)"></a>链表的中间节点(LeetCode 876)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/middle-of-the-linked-list/">leetcode</a></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">middleNode</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> s <span class="token operator">=</span> f <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>head<span class="token punctuation">)</span>
@@ -863,6 +880,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> f <span class="token operator">?</span> s<span class="token punctuation">.</span>next <span class="token operator">:</span> s <span class="token comment">// f当前节点存在代表是偶数个</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="判断链表中存在环结构-LeetCode-141"><a href="#判断链表中存在环结构-LeetCode-141" class="headerlink" title="判断链表中存在环结构(LeetCode 141)"></a>判断链表中存在环结构(LeetCode 141)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle/">leetcode</a><br><strong>快慢指针</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">hasCycle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> f <span class="token operator">=</span> s <span class="token operator">=</span> head
@@ -1335,7 +1353,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1344,7 +1362,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

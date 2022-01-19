@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -457,6 +457,7 @@
 <span class="token keyword">const</span> <span class="token function-variable function">sub</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">-</span> b
 
 <span class="token function">sub</span><span class="token punctuation">(</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">mul</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <ol>
 <li>每一步骤包装成一个个不同的函数</li>
 <li>调用函数,<strong>组合</strong>完成复杂的计算<br>这就是最简单的 函数式编程.</li>
@@ -471,6 +472,7 @@
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p><strong>陈述式</strong> 则表现某种行为, 例如给一个变量赋值</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <blockquote>
 <p>有时候表达式也可能是合法的陈述式,这里只讲了基本的判断方式.更深入的了解区别,<a target="_blank" rel="noopener" href="https://2ality.com/2012/09/expressions-vs-statements.html"> Expressions versus statements in JavaScript</a><br>这一块基本没看懂.</p>
 </blockquote>
@@ -481,6 +483,7 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
 arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
 <span class="token comment">// 不管执行多少次,返回值都相同,并且除了返回值,没有任何额外操作.</span>
 <span class="token comment">// 所以slice是一个 纯函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 arr<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
 arr<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [4, 5]</span>
@@ -499,6 +502,7 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token function">findIndex</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token parameter">x</span> <span class="token operator">=></span> x <span class="token operator">===</span> <span class="token string">'b'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 找陣列中 'b' 的 index</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><code>findeIndex</code>中第三个参数就是利用参数保存状态</p>
 <h3 id="4-Functional-Programming-有什么优势"><a href="#4-Functional-Programming-有什么优势" class="headerlink" title="4.Functional Programming 有什么优势"></a>4.Functional Programming 有什么优势</h3><p><strong>可读性高</strong>,透过一系列函数封装,代码能非常简洁易懂</p>
 <p><strong>可维护性高</strong>,不依赖外部环境，不影响外部环境，一个函数维持一小个功能，可直接单独修改。</p>
@@ -971,7 +975,7 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -980,7 +984,7 @@ arr<span class="token punctuation">.</span><span class="token function">slice</s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

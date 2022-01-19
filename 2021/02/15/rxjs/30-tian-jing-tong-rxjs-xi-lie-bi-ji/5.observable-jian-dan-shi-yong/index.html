@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -472,6 +472,7 @@
 observable<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>同步异步都能进行处理</p>
 <h3 id="参数-Observer-观察者"><a href="#参数-Observer-观察者" class="headerlink" title="参数 Observer 观察者"></a>参数 Observer 观察者</h3><p>Observable 可以被 Observer 订阅.</p>
 <blockquote>
@@ -500,6 +501,7 @@ observable<span class="token punctuation">.</span><span class="token function">s
 <span class="token punctuation">&#125;</span>
 <span class="token comment">// subscribe 相当于promise 的 then</span>
 observable<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>observer<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>error参数的常见用法</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> observable <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
@@ -510,6 +512,7 @@ observable<span class="token punctuation">.</span><span class="token function">s
       observer<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>Observer 可以只传next方法,也可不用Observer直接传函数</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 只有next属性的Observer</span>
 <span class="token keyword">var</span> observer <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
@@ -1006,7 +1009,7 @@ observable<span class="token punctuation">.</span><span class="token function">s
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1015,7 +1018,7 @@ observable<span class="token punctuation">.</span><span class="token function">s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

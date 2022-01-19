@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -454,6 +454,7 @@
         console.log(this.name);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>存取器 构造函数</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class User &#123;
     private myName:string;
@@ -468,6 +469,7 @@
     &#125;
 &#125;
 存取器只有get 没有set 的private属性,会被自动推断为readonly<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>public: 默认,可以在任何地方使用<br>private: 不可为声明的类的外部访问<br>protected: 在自己和子类中可以访问,其他地方不可以访问</p>
 <p>在 构造函数 参数 前添加修饰符,<br>会自动 声明并初始化 该参数 为类私有成员属性</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class User2 &#123;
@@ -481,6 +483,7 @@
 &#125;
 let user &#x3D; new User2(&#39;lzy&#39;);
 console.log(user.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>readonly</strong><br>readonly 修饰的变量 只能在构造函数中初始化<br>readonly 在编译时被检查 const 在运行时被检查</p>
 <p><strong>兼容性</strong><br>在TS中,<br>正常情况 Animal类 的变量 可接收 Employee类型的数据,<br>因为他们类型检查一样(二者都有且仅有name,且假设二者的name是public)<br>但是,比较类型的时候, 如果出现了 private/protected成员,<br>则同时需满足 另一个类也存在这样一个private成员, 且来自于同一处.<br>public修饰的成员则不要求来自同一处</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Animal &#123;
@@ -504,6 +507,7 @@ let employee &#x3D; new Employee(&quot;Bob&quot;);
 animal &#x3D; rhino;
 animal &#x3D; employee; &#x2F;&#x2F; 错误: Animal 与 Employee 不兼容.
 &#x2F;&#x2F;  尽管Employee里也有一个私有成员name，但它明显不是Animal里面定义的那个<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>子类(派生类) 继承 父类(基类/超类) 有用 父类的 属性和方法,增强复用性<br>子类 公用方法 抽象出来放在父类,在子类 写更具体的逻辑 重写父类的方法<br>super 调用 父类的 方法和属性<br>子类 构造函数 必须使用 super() 以执行父类的构造函数 </p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Person &#123;
     name: string;&#x2F;&#x2F;定义实例的属性，默认省略public修饰符
@@ -545,6 +549,7 @@ console.log(s1);<span aria-hidden="true" class="line-numbers-rows"><span></span>
 &#125;
 console.log(Father.className);
 console.log(Father.getClassName());<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>作为其他派生类的基类使用,代表一种抽象的概念.<br>无法被实例化,只能被继承.<br>抽象类中的抽象方法,不能在抽象类中实现,<br>只能在派生类中实现,且必须在派生类中实现.</p>
 <p>一般不会被直接实例化.<br>抽象方法 和 接口方法 都定义方法前面 当不包含方法体.<br>不同于接口,抽象类可以包含成员的实现细节.</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">abstract class Department &#123;
@@ -579,6 +584,7 @@ department &#x3D; new AccountingDepartment(); &#x2F;&#x2F; 允许对一个抽象
 department.printName();
 department.printMeeting();
 department.generateReports(); &#x2F;&#x2F; 错误: 方法在声明的抽象类中不存在<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h2><p>装饰器是一种特殊类型的声明,<br>它能够被附加到类声明、方法、属性或参数上,可以修改类的行为</p>
 <p>常见的装饰器有 <strong>类装饰器</strong> <strong>属性装饰器</strong> <strong>方法装饰器</strong> <strong>参数装饰器</strong></p>
 <p>装饰器的写法分为普通装饰器和装饰器工厂</p>
@@ -1043,7 +1049,7 @@ department.generateReports(); &#x2F;&#x2F; 错误: 方法在声明的抽象类�
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1052,7 +1058,7 @@ department.generateReports(); &#x2F;&#x2F; 错误: 方法在声明的抽象类�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

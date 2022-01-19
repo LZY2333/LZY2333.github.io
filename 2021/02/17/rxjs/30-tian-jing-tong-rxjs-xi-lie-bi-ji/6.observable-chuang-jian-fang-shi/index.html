@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -485,6 +485,7 @@ source<span class="token punctuation">.</span><span class="token function">subsc
 <span class="token comment">// Jerry</span>
 <span class="token comment">// Anna</span>
 <span class="token comment">// complete!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="Rx-Observable-from"><a href="#Rx-Observable-from" class="headerlink" title="Rx.Observable.from"></a>Rx.Observable.from</h3><p><code>from(x)</code>数组版<code>of(x,y,z...)</code>,接收参数为数组</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'Jerry'</span><span class="token punctuation">,</span><span class="token string">'Anna'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// Jerry</span>
@@ -501,6 +502,7 @@ source<span class="token punctuation">.</span><span class="token function">subsc
 source<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token operator">...</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token comment">// Hello RxJS!</span>
 <span class="token comment">// complete!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="Rx-Observable-fromEvent"><a href="#Rx-Observable-fromEvent" class="headerlink" title="Rx.Observable.fromEvent"></a>Rx.Observable.fromEvent</h3><p>给事件建立Observable,通过<code>fromEvent(x,y)</code></p>
 <p>第一个参数是 DOM对象, 第二个参数是 监听事件名.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -521,6 +523,7 @@ source<span class="token punctuation">.</span><span class="token function">subsc
 <span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">throw</span><span class="token punctuation">(</span><span class="token string">'Oop!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 省略 source.subscribe(&#123;...&#125;)</span>
 <span class="token comment">// Throw Error: Oop!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="Rx-Observable-interval-timer"><a href="#Rx-Observable-interval-timer" class="headerlink" title="Rx.Observable.interval timer"></a>Rx.Observable.interval timer</h3><p>内置定时器不停调用next的Observable<br><code>interval(x)</code> 每 x 毫秒调用一次next<br><code>timer(x,y)</code>  x 毫秒后调用第一次next,之后每隔 y 毫秒调用一次next.<br><code>timer(x)</code>    只传一个参数,效果为 x 毫秒后调用一次next,无后续.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> source <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -544,6 +547,7 @@ source<span class="token punctuation">.</span><span class="token function">subsc
 <span class="token comment">// 2</span>
 <span class="token comment">// 3</span>
 <span class="token comment">// 4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>讲了 <code>create</code>,<code>of(x,y,z...)</code>,<code>from([])</code>,<code>fromEvent(document.body, &#39;click&#39;)</code>,</p>
 <p><code>fromPromise(new Promise())</code>,<code>never()</code>,<code>empty()</code>,<code>throw(&#39;Oop!&#39;)</code>,</p>
 <p><code>interval(1000)</code>,<code>timer(1000,5000)</code>,</p>
@@ -1009,7 +1013,7 @@ source<span class="token punctuation">.</span><span class="token function">subsc
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1018,7 +1022,7 @@ source<span class="token punctuation">.</span><span class="token function">subsc
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -527,6 +527,7 @@ module<span class="token punctuation">.</span><span class="token function-variab
     <span class="token comment">// 则env.abc === true</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+
 <p>3.<code>cross-env NODE_ENV=production webpack</code> 可改变node环境变量 <code>process.env.NODE_ENV</code></p>
 <p>process.env.NODE_ENV 在 src内的 是被webpack识别并捕获替换的字面量</p>
 <p>process.env.NODE_ENV 在 webpack配置文件中 是undefined</p>
@@ -538,14 +539,15 @@ module<span class="token punctuation">.</span><span class="token function-variab
 <ol start="4">
 <li><strong>DefinePlugin</strong> 用来设置模块内的全局变量,可以用于模块内的字符串替换</li>
 </ol>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>DefinePlugin</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-        <span class="token string">'process.env.NODE_ENV'</span><span class="token operator">:</span> <span class="token string">'production'</span>
+        <span class="token string-property property">'process.env.NODE_ENV'</span><span class="token operator">:</span> <span class="token string">'production'</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token comment">// 当然这个production也可以使用变量,比如读dev里的production</span>
     <span class="token comment">// 但是注意 使用变量时得加上 JSON.stringify(dev.production) 或 '"'+ a + '"'</span>
     <span class="token comment">// 不加的话替换过去会没有双引号,从而在运行的时候被视为变量,或错误,而非字符串字面量</span>
     <span class="token comment">// 当然这个字符串也可以随便写 abcd啥的,就是个编译时的字符串替换</span>
 <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>cross-env 用的最多</strong> 因为webpack.config文件能拿到,又能用于修改mode值,从而修改模块内.</p>
 <h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>插件可以执行范围更广的任务</p>
 <p>比如: 打包优化 资源管理 输入环境变量 生成输入文件</p>
@@ -1020,7 +1022,7 @@ module<span class="token punctuation">.</span><span class="token function-variab
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1029,7 +1031,7 @@ module<span class="token punctuation">.</span><span class="token function-variab
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

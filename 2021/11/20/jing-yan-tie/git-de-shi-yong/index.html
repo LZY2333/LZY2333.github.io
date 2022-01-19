@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -462,6 +462,7 @@ git mylog
 
 # 删除别名配置: git config --global --unset alias.lg
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="git-reset-–hard-commit号"><a href="#git-reset-–hard-commit号" class="headerlink" title="git reset –hard commit号"></a>git reset –hard commit号</h3><p>回滚版本,且丢弃之后所有版本</p>
 <p>1.<code>git reset --hard HEAD^</code>,回滚到上个版本</p>
 <p>2.<code>git reset --hard HEAD^~2</code>,回滚到前两个版本</p>
@@ -474,6 +475,7 @@ git mylog
 --hard 重置索引和工作树，并且a分支修改的所有文件和中间的提交，没提交的代码都被丢弃了。
 --merge 和--hard类似，只不过如果在执行reset命令之前你有改动一些文件并且未提交，merge会保留你的这些修改，hard则不会。【注：如果你的这些修改add过或commit过，merge和hard都将删除你的提交】
 --keep 和--hard类似，执行reset之前改动文件如果是a分支修改了的，会提示你修改了相同的文件，不能合并。如果不是a分支修改的文件，会移除缓存区。git status还是可以看到保持了这些修改。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="git-revert-commit号"><a href="#git-revert-commit号" class="headerlink" title="git revert commit号"></a>git revert commit号</h3><p>新建一个回退了指定commit的修改的新commit.</p>
 <p>比如产生了3个版本,想丢弃版本2的修改,并保留版本3的修改,</p>
 <p>使用此方法,会生成版本4,此版本4由版本1和3的修改组成.</p>
@@ -718,13 +720,13 @@ git mylog
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/12/22/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                <a href="/2021/12/22/jing-yan-tie/react-de-shi-jian-chu-li-han-shu-wei-shi-me-yao-bang-ding-this/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="React的事件函数为什么要绑定this">
                         
-                        <span class="card-title">Node的Git上传脚本</span>
+                        <span class="card-title">React的事件函数为什么要绑定this</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -752,8 +754,8 @@ git mylog
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/node/">
-                        <span class="chip bg-color">node</span>
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
                     </a>
                     
                 </div>
@@ -940,7 +942,7 @@ git mylog
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -949,7 +951,7 @@ git mylog
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -479,6 +479,7 @@
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">const</span> test <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
 <span class="token function">bubbleSort</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>冒泡排序 空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>相邻元素大小相等时不会进行交换 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong></p>
 <p>最好情况 全为顺序 只要一轮冒泡(只需检查一轮),时间复杂度 O(n)<br>最好情况 全为逆序 需要n轮冒泡(需检查n轮),时间复杂度 O(n²)</p>
 <p><strong>有序度</strong> 和 <strong>逆序度</strong>:<br>有序度是数组中具有有序关系的元素对的个数<br>如:2,4,3,1,5,6,有序度为 11(一个个从前往后找,如24,23,25,26都是有序对,再找4*,3*,1*)</p>
@@ -511,6 +512,7 @@
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">const</span> testSort <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
 <span class="token function">insertionSort</span><span class="token punctuation">(</span>testSort<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>插入排序 空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>发现值相同的元素时插入 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong> (n轮,每轮移动n个数)</p>
 <p>最好情况时间复杂度为O(n)</p>
 <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>也区分 <strong>已排序区间</strong> 和 <strong>未排序区间</strong>,<br>每轮 找到 未排序区间 最小的数,与 已排序区间的末尾 的数交换,</p>
@@ -533,6 +535,7 @@
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">const</span> testSelect <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">]</span>
 <span class="token function">selectionSort</span><span class="token punctuation">(</span>testSelect<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>插入排序 空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>是 <strong>不!稳定的排序算法</strong>,<br>任何情况时间复杂度 为 <strong>O(n²)</strong></p>
 <p>选择排序好理解,但是相比上面两个,略显逊色</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>冒泡、插入、选择排序都有一个共同点，将待排序数列分为已排序和未排序两部分。<br>在未排序的部分中查找一个最值，放到已排序数列的恰当位置。</p>
@@ -555,6 +558,7 @@
 <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">break</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>所以 冒泡排序 虽然和插入排序时间复杂度一样,但 赋值操作 占用了额外三倍的时间.</p>
 <p>排序排序 还具有优化后的 <strong>希尔排序</strong></p>
 <h2 id="额外-当数据结构为链表"><a href="#额外-当数据结构为链表" class="headerlink" title="额外:当数据结构为链表"></a>额外:当数据结构为链表</h2><p>考虑只能改变节点位置，<br>冒泡排序相比于数组实现，比较次数一致，但交换时操作更复杂；<br>插入排序，比较次数一致，不需要再有后移操作，找到位置后可以直接插入，<br>但排序完毕后可能需要倒置链表；<br>选择排序比较次数一致，交换操作同样比较麻烦。</p>
@@ -1020,7 +1024,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1029,7 +1033,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

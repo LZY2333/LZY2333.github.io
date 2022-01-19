@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -459,6 +459,7 @@
     &#125;
   &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Animal &#123;
   name!: string;
 &#125;
@@ -472,6 +473,7 @@ function getName(animal: Animal) &#123;
     console.log(animal.name);
   &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="null-保护"><a href="#null-保护" class="headerlink" title="null 保护"></a>null 保护</h2><p>开启了 strictNullChecks 选项，那么对于可能为 null 的变量不能调用它上面的方法和属性</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function getFirstLetter(s: string | null) &#123;
   &#x2F;&#x2F;第一种方式是加上null判断
@@ -491,8 +493,10 @@ function getFirstLetter2(s: string | null) &#123;
   log();
   return s.charAt(0);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="链判断运算符"><a href="#链判断运算符" class="headerlink" title="链判断运算符(?)"></a>链判断运算符(?)</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">a?.b; &#x2F;&#x2F;如果a是null&#x2F;undefined,那么返回undefined，否则返回a.b的值.
 a &#x3D;&#x3D; null ? undefined : a.b;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <h2 id="可辨识的联合类型"><a href="#可辨识的联合类型" class="headerlink" title="可辨识的联合类型"></a>可辨识的联合类型</h2><p>在 interface 或 type 定义时 写好用于辨识的字段</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface WarningButton&#123;
   class:&#39;warning&#39;,
@@ -510,6 +514,7 @@ function getButton(button:Button)&#123;
  if(button.class&#x3D;&#x3D;&#39;danger&#39;)&#123;
   console.log(button.text2);
  &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="in-判断type的属性"><a href="#in-判断type的属性" class="headerlink" title="in 判断type的属性"></a>in 判断type的属性</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Bird &#123; swing: number; &#125;
 
 interface Dog &#123; leg: number; &#125;
@@ -520,6 +525,7 @@ function getNumber(x: Bird | Dog) &#123;
     &#125;
     return x.leg;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="is-自定义类判断"><a href="#is-自定义类判断" class="headerlink" title="is 自定义类判断"></a>is 自定义类判断</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Bird &#123;
   swing: number;
 &#125;
@@ -540,6 +546,7 @@ function getAnimal(x: Bird | Dog) &#123;
   &#125;
   return x.leg;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="类型变换"><a href="#类型变换" class="headerlink" title="类型变换"></a>类型变换</h1><h2 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h2><p>TS能根据赋值,推断 没用定义类型的变量的类型</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let foo &#x3D; 1; &#x2F;&#x2F; foo 是 &#39;number&#39;
 let bar &#x3D; &#39;zhufeng&#39;; &#x2F;&#x2F; bar 是 &#39;string&#39;
@@ -552,6 +559,7 @@ const person &#x3D; &#123;
 let name &#x3D;person.name;
 let age &#x3D;person.age;
 age &#x3D; &#39;hello&#39;; &#x2F;&#x2F; Error：不能把 &#39;string&#39; 类型赋值给 &#39;number&#39; 类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="amp-交叉类型"><a href="#amp-交叉类型" class="headerlink" title="&amp; 交叉类型"></a>&amp; 交叉类型</h2><p>把多个类型拼成一个类型,具有所有类型的所需属性</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Bird &#123;
     name: string,
@@ -566,6 +574,7 @@ let p: BirdPerson &#x3D; &#123; name: &#39;zhufeng&#39;, fly() &#123; &#125;, ta
 p.fly;
 p.name
 p.talk;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="typeof-获取变量的类型-反射"><a href="#typeof-获取变量的类型-反射" class="headerlink" title="typeof 获取变量的类型,反射?"></a>typeof 获取变量的类型,反射?</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;先定义变量，再定义类型
 let p1 &#x3D; &#123;
     name:&#39;zhufeng&#39;,
@@ -577,6 +586,7 @@ function getName(p:People):string&#123;
     return p.name;
 &#125;
 getName(p1);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="获取一个type内的子type"><a href="#获取一个type内的子type" class="headerlink" title="[]获取一个type内的子type"></a>[]获取一个type内的子type</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Person&#123;
     name:string;
     age:number;
@@ -589,6 +599,7 @@ let FrontEndJob:Person[&#39;job&#39;] &#x3D; &#123;
     name:&#39;前端工程师&#39;
 &#125;
 let interestLevel:Person[&#39;interests&#39;][0][&#39;level&#39;] &#x3D; 2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="keyof-创建联合类型"><a href="#keyof-创建联合类型" class="headerlink" title="keyof 创建联合类型"></a>keyof 创建联合类型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Person&#123;
   name:string;
   age:number;
@@ -596,6 +607,7 @@ let interestLevel:Person[&#39;interests&#39;][0][&#39;level&#39;] &#x3D; 2;<span
 &#125;
 type PersonKey &#x3D; keyof Person;
 &#x2F;&#x2F;type PersonKey &#x3D; &#39;name&#39;|&#39;age&#39;|&#39;gender&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="其他-模块"><a href="#其他-模块" class="headerlink" title="其他:模块"></a>其他:模块</h2><p>在默认情况下，当你开始在一个新的 TypeScript 文件中写下代码时，它处于全局命名空间中</p>
 <p>这样的话,明明是不同的文件,却会产生命名冲突.</p>
 <p>在工作中编码时却并没发现这种不同文件的同名冲突情况,</p>
@@ -1066,7 +1078,7 @@ type PersonKey &#x3D; keyof Person;
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1075,7 +1087,7 @@ type PersonKey &#x3D; keyof Person;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

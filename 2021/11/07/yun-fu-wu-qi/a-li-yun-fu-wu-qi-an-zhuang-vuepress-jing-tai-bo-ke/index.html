@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -516,6 +516,7 @@ nginx <span class="token operator">-</span>t  <span class="token comment">// 测
 nginx <span class="token operator">-</span>s reload <span class="token comment">// 修改nginx.conf之后，可以重载</span>
 
 curl http<span class="token operator">:</span><span class="token operator">/</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">120.24.169.47</span><span class="token regex-delimiter">/</span></span>  <span class="token comment">// 测试是否出现nginx默认页面</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这个时候就可以在自己本地的浏览器里输入 公网IP 访问了</p>
 <p>我这里是 <code>120.24.169.47</code></p>
 <h2 id="VuePress"><a href="#VuePress" class="headerlink" title="VuePress"></a>VuePress</h2><p>第一步,看完<a target="_blank" rel="noopener" href="https://vuepress.vuejs.org/zh/guide/getting-started.html">VuePress官网</a></p>
@@ -531,8 +532,10 @@ curl http<span class="token operator">:</span><span class="token operator">/</sp
 
 ClientAliveInterval <span class="token number">60</span> <span class="token comment">// 每隔60秒向客户端发送请求消息,并等待客户端响应</span>
 ClientAliveCountMax <span class="token number">10</span> <span class="token comment">// 客户端超过10次没响应,自动断开(10分钟)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>2.重启SSH服务</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">systemctl restart sshd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h3 id="输入visudo显示busy"><a href="#输入visudo显示busy" class="headerlink" title="输入visudo显示busy"></a>输入visudo显示busy</h3><p>问题:linux命令中输入<code>visudo</code>显示<code>visudo: /etc/sudoers is busy, try again later</code></p>
 <p>找到进程号<code>ps -ef|grep visudo</code></p>
 <p>根据进程号杀掉进程<code>kill -9 (进程号)</code></p>
@@ -999,7 +1002,7 @@ ClientAliveCountMax <span class="token number">10</span> <span class="token comm
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1008,7 +1011,7 @@ ClientAliveCountMax <span class="token number">10</span> <span class="token comm
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

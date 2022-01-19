@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -457,6 +457,7 @@ function createArray&lt;T&gt;(length: number, value: T): Array&lt;T&gt; &#123;
   &#125;
 let result &#x3D; createArray2&lt;string&gt;(3,&#39;x&#39;);
 console.log(result);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class MyArray&lt;T&gt;&#123;
     private list:T[]&#x3D;[];
     add(value:T) &#123;
@@ -472,6 +473,7 @@ console.log(result);<span aria-hidden="true" class="line-numbers-rows"><span></s
         return result;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>使用时传入factory<T>,约束type必须是T类型</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function factory&lt;T&gt;(type: &#123;new():T&#125;): T &#123;
   return new type(); &#x2F;&#x2F; This expression is not constructable.
@@ -479,6 +481,7 @@ console.log(result);<span aria-hidden="true" class="line-numbers-rows"><span></s
 class Person &#123;&#125;
 let p &#x3D; factory&lt;Person&gt;(Person)
 console.log(p)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h2><p><strong>约束 变量的值 为 一个泛型函数</strong><br>(须变量使用时赋值T,因为 使用该变量 就相当于 使用 泛型函数)</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Calculate&#123;
   &lt;T&gt;(a:T,b:T):T
@@ -496,6 +499,7 @@ let add:Calculate&lt;number&gt; &#x3D; function(a:number,b:number):number&#123;
     return a;
 &#125;
 add(1,2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="传入多个泛型"><a href="#传入多个泛型" class="headerlink" title="传入多个泛型"></a>传入多个泛型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function swap&lt;A,B&gt;(tuple:[A,B]):[B,A]&#123;
   return [tuple[1],tuple[0]];
 &#125;
@@ -503,6 +507,7 @@ let swapped &#x3D; swap&lt;string,number&gt;([&#39;a&#39;,1]);
 console.log(swapped);
 console.log(swapped[0].toFixed(2));
 console.log(swapped[1].length);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="泛型可写默认值"><a href="#泛型可写默认值" class="headerlink" title="泛型可写默认值"></a>泛型可写默认值</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function createArray3&lt;T&#x3D;number&gt;(length: number, value: T): Array&lt;T&gt; &#123;
   let result: T[] &#x3D; [];
   for (let i &#x3D; 0; i &lt; length; i++) &#123;
@@ -512,6 +517,7 @@ console.log(swapped[1].length);<span aria-hidden="true" class="line-numbers-rows
 &#125;
 let result2 &#x3D; createArray3(3,&#39;x&#39;);
 console.log(result2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="泛型可被事先约束类型"><a href="#泛型可被事先约束类型" class="headerlink" title="泛型可被事先约束类型"></a>泛型可被事先约束类型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface LengthWise &#123;
     length: number
 &#125;
@@ -521,6 +527,7 @@ function logger2&lt;T extends LengthWise&gt;(val: T) &#123;
 &#125;
 logger2(&#39;lzy&#39;);
 logger2(1);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>约束 传入的泛型 为 string 或 string[]</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 这里只能用type 不能用 interface,
 &#x2F;&#x2F; 因为interface无法表示这种类型,只能表示class或function或object
@@ -528,9 +535,11 @@ type LengthWise &#x3D; string|string[]
 function logger2&lt;T extends LengthWise&gt;(val: T) &#123;
     console.log(val.length)
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="带泛型的type"><a href="#带泛型的type" class="headerlink" title="带泛型的type"></a>带泛型的type</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Cart&lt;T&gt; &#x3D; &#123;list:T[]&#125; | T[];
 let c1:Cart&lt;string&gt; &#x3D; &#123;list:[&#39;1&#39;]&#125;;
 let c2:Cart&lt;number&gt; &#x3D; [1];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="compose"><a href="#compose" class="headerlink" title="compose"></a>compose</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Func&lt;T extends any[], R&gt; &#x3D; (...a: T) &#x3D;&gt; R
 
 &#x2F;**
@@ -1048,7 +1057,7 @@ export default function compose(...funcs: Function[]) &#123;
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1057,7 +1066,7 @@ export default function compose(...funcs: Function[]) &#123;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             

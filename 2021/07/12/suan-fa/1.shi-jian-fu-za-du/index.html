@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 
@@ -493,6 +493,7 @@ int <span class="token function">find</span><span class="token punctuation">(</s
 <span class="token comment">// 加权平均: 增加考虑每种情况出现概率权重,</span>
 <span class="token comment">//          假设 1/2 不在数组中,则出现在数组中每个位置概率为w = 1/2n,</span>
 <span class="token comment">//          执行次数为 (1+2+3...+n)*w + n*1/2 = (3n+1)/4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>均摊时间复杂度</strong>:摊还分析/平摊分析,针对存在规律的 <strong>平均情况时间复杂度</strong><br>的一种分析思想<br>(amortized case time complexity)</p>
 <blockquote>
 <p>例如 每一次O(n)的操作,会紧跟着n-1次O(1)的操作,将O(n)均摊在n-1次的O(1)上,最终 时间复杂度为O(1)</p>
@@ -510,6 +511,7 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
 <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> n<span class="token punctuation">)</span>  <span class="token punctuation">&#123;</span>
     i <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>空间复杂度,O(1),O(n),O(n²),表示 算法的储存空间 与数据规模之间 的增长关系</p>
 </blockquote>
@@ -974,7 +976,7 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -983,7 +985,7 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.1k</span>&nbsp;字
+                class="white-color">84.7k</span>&nbsp;字
             
             
             
