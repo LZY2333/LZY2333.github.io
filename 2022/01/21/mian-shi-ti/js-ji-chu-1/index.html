@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    108
+                    573
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -449,22 +449,71 @@
                 <h1 id="JS基础1"><a href="#JS基础1" class="headerlink" title="JS基础1"></a>JS基础1</h1><h2 id="防抖和节流"><a href="#防抖和节流" class="headerlink" title="防抖和节流"></a>防抖和节流</h2><p>防抖和节流都是防止某一事件频繁触发</p>
 <h3 id="防抖-debounce"><a href="#防抖-debounce" class="headerlink" title="防抖(debounce)"></a>防抖(debounce)</h3><p>施法前摇，在读条期间再次触发会打断施法，重新读条，直到正常读条结束，触发函数。</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">
-<span class="token keyword">function</span> <span class="token function">debounce</span><span class="token punctuation">(</span><span class="token parameter">fn<span class="token punctuation">,</span> wait</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> timer
-    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> args <span class="token operator">=</span> arguments
-        <span class="token keyword">if</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
-        timer <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            <span class="token function">fn</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> wait<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">debounce</span><span class="token punctuation">(</span><span class="token parameter">f<span class="token punctuation">,</span> wait</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> timer<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    timer <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token function">f</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> wait<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
 a<span class="token punctuation">.</span>c <span class="token operator">=</span> <span class="token function">debounce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">b</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token number">500</span><span class="token punctuation">)</span>
-a<span class="token punctuation">.</span><span class="token function">c</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+a<span class="token punctuation">.</span><span class="token function">c</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h3>
+<p>场景: 按钮多次点击重复提交,浏览器窗口resize,文本编辑器自动保存,输入框智能提示</p>
+<p>防抖重在清零 <code>clearTimeout(timer)</code></p>
+<h3 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h3><p>节流重在加锁 <code>timer=timeout</code>,控制事件发生频率,限流,单位时间内只发生一次</p>
+<p>防抖是在等用户给出最终答案 再触发，节流就是防止频繁触发 限流 锁。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">throttle</span><span class="token punctuation">(</span><span class="token parameter">f<span class="token punctuation">,</span> wait</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> timer<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>timer<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    timer <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token function">f</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      timer <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> wait<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="图片懒加载"><a href="#图片懒加载" class="headerlink" title="图片懒加载"></a>图片懒加载</h2><p><strong>懒加载</strong>:滑动页面到能看到图片时再加载图片</p>
+<p><strong>难点</strong>:如何判断图片出现在了视口?如何控制图片的加载?</p>
+<h3 id="位置计算"><a href="#位置计算" class="headerlink" title="位置计算"></a>位置计算</h3><p>判断图片出现在视口: clientTop，offsetTop，clientHeight 以及 scrollTop 各种关于图片的高度作比对</p>
+<p>控制图片加载: 把图片路径储存在dom属性内如<code>&lt;img data-src=&quot;xxx.jpg&quot; /&gt;</code>,监听<code>window.scroll</code>事件,触发时<code>img.src = img.datSet.src</code></p>
+<blockquote>
+<p>DataSet API, 这里 data-src 和 datSet.src 似乎是用了这个 DataSet API,回头看看</p>
+</blockquote>
+<h3 id="getBoundingClientRect元素相对视口位置"><a href="#getBoundingClientRect元素相对视口位置" class="headerlink" title="getBoundingClientRect元素相对视口位置"></a>getBoundingClientRect元素相对视口位置</h3><p><code>Element.getBoundingClientRect()</code> 方法返回元素的大小及其相对于视口的位置</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 图片距离顶端的高度 &lt; 视口的高度,说明出现在视口内了</span>
+img<span class="token punctuation">.</span><span class="token function">getBoundingClientRect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>top <span class="token operator">&lt;</span> document<span class="token punctuation">.</span>documentElement<span class="token punctuation">.</span>clientHeight<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>window.scroll监听 可以加个 防抖 或 节流</p>
+</blockquote>
+<h3 id="IntersectionObserver元素是否到了视口位置"><a href="#IntersectionObserver元素是否到了视口位置" class="headerlink" title="IntersectionObserver元素是否到了视口位置"></a>IntersectionObserver元素是否到了视口位置</h3><p><code>IntersectionObserver</code>监听当前元素是否到了当前视口位置</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> observer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IntersectionObserver</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">changes</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// changes: 目标元素集合</span>
+  changes<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">change</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// intersectionRatio</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>change<span class="token punctuation">.</span>isIntersecting<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 代表目标元素可见</span>
+      <span class="token keyword">const</span> img <span class="token operator">=</span> change<span class="token punctuation">.</span>target<span class="token punctuation">;</span>
+      img<span class="token punctuation">.</span>src <span class="token operator">=</span> img<span class="token punctuation">.</span>dataset<span class="token punctuation">.</span>src<span class="token punctuation">;</span>
+      observer<span class="token punctuation">.</span><span class="token function">unobserve</span><span class="token punctuation">(</span>img<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+observer<span class="token punctuation">.</span><span class="token function">observe</span><span class="token punctuation">(</span>img<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>IntersectionObserver 除了给图片做懒加载外，还可以对单页应用资源做预加载</p>
+</blockquote>
+<h3 id="loading-”lazy”浏览器自动懒加载"><a href="#loading-”lazy”浏览器自动懒加载" class="headerlink" title="loading=”lazy”浏览器自动懒加载"></a>loading=”lazy”浏览器自动懒加载</h3><p><code>&lt;img src=&quot;xxx.jpg&quot; loading=&quot;lazy&quot; /&gt;</code></p>
+<p>存在浏览器兼容问题</p>
+
                 
             </div>
             <hr/>
@@ -934,7 +983,7 @@ a<span class="token punctuation">.</span><span class="token function">c</span><s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">85.8k</span>&nbsp;字
+                class="white-color">86.2k</span>&nbsp;字
             
             
             
