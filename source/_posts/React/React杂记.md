@@ -34,12 +34,13 @@ JSX经过 webpack打包,期间经过babel编译,编译成纯粹的JS,就是所�
 
 用户访问时,返回HTML页面,HTML引用打包完的JS文件,JS执行,形成虚拟DOM(React元素),渲染成页面.
 
-
 webpack编译时,检测到JSX,就用babel,将源代码中的JSX部分进行了替换,
 
 `babel`将 JSX 编译为 编译后的纯粹的JS代码(产生了`React.creatElement`)时,用到了AST语法树.
 
-浏览器执行时,`React.createElement(type, config, children)`返回虚拟DOM,
+浏览器执行到赋值语句时,替换后的`React.createElement(type, config, children)`执行,
+
+返回一个对象 也就是 虚拟DOM,
 
 `ReactDOM.render(reactElement,真实dom选择器容器)`渲染成页面.
 
