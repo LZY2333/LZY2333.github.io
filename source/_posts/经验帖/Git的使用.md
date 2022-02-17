@@ -75,11 +75,18 @@ git mylog
 
 [git reset 和 git revert](https://juejin.cn/post/6844903614767448072)
 
+### git checkout （*）
+
+git checkout commit号 本地跳到指定版本
+
+git checkout master 回到原来的分支
+
+这样就可以自由查看某一个版本的代码了，这种方法正是我要找的。
+
 
 ## 拉取代码覆盖本地
 
 ### git fetch
-
 
 
 [git fetch VS pull](https://juejin.cn/post/6844903921794859021)

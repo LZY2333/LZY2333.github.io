@@ -25,7 +25,7 @@ class Toggle extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick() { // 如果没有bind(this),则调用时此处拿不到类的this.setState
     this.setState(state => ({
       isToggleOn: !state.isToggleOn
     }));
@@ -58,14 +58,18 @@ class Foo {
   }
 }
 
+// 情理之中的示范,输出了this.name lzy
 var foo = new Foo('lzy');
 foo.display(); // lzy
 
 // 将 函数赋值给新变量, 造成上下文的丢失.. .this,只认调用时的前缀.
 // 实际在 React Component 中将处理程序,与为 callback 参数传递相似。
-var display = foo.display; 
+var display = foo.display;
 display(); // TypeError: this is undefined
 ```
+实际上这里就是把堆中的函数地址,传递给了变量,调用变量display时,和foo对象已经毫无关联
+
+调用display时,在display作用域中查找 this.name,相当于在global中查找
 
 示例二
 ```js
@@ -83,6 +87,11 @@ outerDisplay(); // 浏览器下运行,输出 global lzy
 
 事件处理函数被传递给新变量后,作用域发生了改变,丢掉了原先的this。
 
+也就是说,react中肯定发生了 函数传递给新的变量 的事件,导致了作用域发生改变.
+
+__那么,react中什么时候把事件处理函数,传递给了新的变量呢???__
+
+这就要从react对事件绑定 与 触发 的特殊处理说起
 
 ## React中怎么实现的事件绑定
 

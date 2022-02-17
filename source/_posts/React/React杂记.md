@@ -135,6 +135,17 @@ __其他__
 
 3. 同一类型事件,容器只需绑定一次,因为就是注册事件,之后触发target上的 事件处理函数就行.
 
+
+## setState 为异步更新，在下一行打印
+
+```js
+// 假设 this.state.number 初始为0
+this.setState({number:this.state.number+1});
+console.log(this.state); // 打印 0，而不是期望的1，但页面展示为1
+```
+因为 `setState` 是异步执行的，在下一个事件循环 才执行了 `this.state.number+1` 并渲染页面
+
+
 ## 想基于当前同步任务中上一次state修改,来做这次的state修改
 
 想基于同一次同步任务内上次state修改后的数据,来完成这次state的修改.
@@ -143,7 +154,7 @@ this.setState({number:this.state.number+1});
 console.log(this.state);
 // 想基于上一次的state.number+1后的数据,完成这一次的state.number再+1
 this.setState({number:this.state.number+1});
-console.log(this.state);
+console.log(this.state); // 期望输出2
 // 这样过后,假设一开始number===0,最后number会===1,与想要的结果2不同
 ```
 
@@ -155,7 +166,11 @@ console.log(this.state);
 
 返回 当前这次`setState`调用 产生的 state作为 最新state 
 
-或者 setState 后强制更新.
+> 或者 setState 后强制更新.也是同样效果
+
+## setState有时异步有时同步
+
+
 
 ## React类组件更新原理
 
@@ -255,4 +270,140 @@ function mountForwardComponent(vdom){
 }
 ```
 
-##
+## react中的style 得写成 obj的格式
+
+```js
+ <h1 style={{ color: 'red' }}> </h1>
+```
+因为在处理props的时候读取到props 为 style时，会直接视其为 obj进行覆盖旧属性
+
+```js
+/**
+ * 更新真实DOM的属性
+ * @param {*} dom 
+ * @param {*} oldProps 
+ * @param {*} newProps 
+ */
+function updateProps(dom, oldProps = {}, newProps = {}) {
+    for (let key in newProps) {
+        //属性中的children属性不在此处处理
+        if (key === 'children') {
+            continue;
+        } else if (key === 'style') {
+            let styleObj = newProps[key]; // 拿到style对象
+            for (let attr in styleObj) { // 循环style对象中的每个属性
+                dom.style[attr] = styleObj[attr];
+            }
+        } else {
+            dom[key] = newProps[key];//dom.className = 'title ' dom.id = 'title'
+        }
+    }
+    //如果属性在老的属性里，新的属性没有，需要从真实DOM中删除
+    for (let key in oldProps) {
+        if (!newProps.hasOwnProperty(key)) {
+            dom[key] = null;
+        }
+    }
+}
+```
+
+## 函数组件内的jsx在编译阶段也已经被改变
+
+```js
+function FunctionComponent(props) {
+  return ( // 【编译阶段】 已经变成了 return React.createElement()
+    <h1 className="title" style={{ color: 'red' }}>
+      <span>{props.name}</span>
+      <span>{props.children}</span>
+    </h1>
+  ) //FunctionComponent  【执行阶段】 执行React.createElement()执行的返回结果 也就是虚拟DOM
+} // 相当于虚拟DOM工厂
+// 编译阶段已经变成了 React.createElement(FunctionComponent, { name: "hello" }, "world");
+let element = <FunctionComponent name="hello">world</FunctionComponent>
+```
+## react不推荐组件继承组件
+
+## 类组件 的prop只 初始化时用到，后续setState 更新视图与props无关
+
+__props唯一用到的地方,实例化 类组件时__
+```js
+// 检测到类组件时调用，作用是调用 实例化类，调用其render()获取到虚拟DOM，再createDOM()得到真实DOM
+function mountClassComponent(vdom) {
+    //获取函数本身
+    let { type: ClassComponent, props } = vdom;
+    //把属性对象传递给函数执行，返回要渲染的虚拟DOM
+    let classInstance = new ClassComponent(props); //************此处用到了props
+    let renderVdom = classInstance.render();
+    //把上一次render渲染得到的虚拟DOM
+    vdom.oldRenderVdom = classInstance.oldRenderVdom = renderVdom;
+    return createDOM(renderVdom);
+}
+
+// 顺便举例一个类组件
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    //构建函数是唯一能直接给state直接赋值的地方
+    this.state = { number: 0, age: 13 };
+  }
+  handleClick = (amount) => {
+    this.setState({ number: this.state.number + amount }, () => {
+       console.log('callback', this.state);
+     });
+    console.log(this.state);
+  }
+  render() {
+    return (
+      <div>
+        <p>number:{this.state.number}</p>
+        <button onClick={() => this.handleClick(5)}>+</button>
+      </div>
+    )
+  }
+}
+```
+
+```js
+//setState的最后一步 更新视图
+forceUpdate() {
+    //获取此组件上一次render渲染出来的虚拟DOM
+    let oldRenderVdom = this.oldRenderVdom;
+    //获取虚拟DOM对应的真实DOM oldRenderVdom.dom
+    let oldDOM = findDOM(oldRenderVdom);
+    //重新执行render得到新的虚拟DOM
+    let newRenderVdom = this.render();
+    //把老的虚拟DOM和新的虚拟DOM进行对比，得对比得到的差异更新到真实DOM
+    compareTwoVdom(oldDOM.parentNode, oldRenderVdom, newRenderVdom);
+    this.oldRenderVdom = newRenderVdom;
+}
+```
+可以看到 直接this.render()，无props介入。
+
+__换句话说 类组件的 props只实例化时用到，直接给state赋值，后续组件属性修改与props无关__
+
+也仅此一个途径直接给state赋值，后续setState
+
+## 函数组件 类组件 的vdom 没有挂载真实dom
+
+首先要明确，【编译阶段】 jsx变成了下面这样
+```js
+class ClassComponent extends extends React.Component  {
+    constructor() {
+        super();
+        this.name = 2;
+    }
+    render() {
+        return <h1>hello</h1>; // 相当于下面那条
+        // return React.createElement('h1', null, 'hello');
+    }
+}
+
+let element = <ClassComponent /> // 相当于下面那条
+//let element = React.createElement(ClassComponent,{},undefined); 
+//  React.createElement(【变量】ClassComponent，【props】,【children】)
+```
+【执行阶段】
+
+当执行到 函数组件或类组件，会调用其函数，返回vdom
+
+

@@ -108,3 +108,11 @@ observer.observe(img);
 `<img src="xxx.jpg" loading="lazy" />`
 
 存在浏览器兼容问题
+
+__文字超出省略__
+
+```css
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+```
