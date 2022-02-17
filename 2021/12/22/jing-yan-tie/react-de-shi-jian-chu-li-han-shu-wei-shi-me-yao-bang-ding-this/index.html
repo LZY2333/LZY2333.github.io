@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -456,7 +456,7 @@
     <span class="token keyword">this</span><span class="token punctuation">.</span>handleClick <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">handleClick</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span>
 
-  <span class="token function">handleClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">handleClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果没有bind(this),则调用时此处拿不到类的this.setState</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token parameter">state</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
       <span class="token literal-property property">isToggleOn</span><span class="token operator">:</span> <span class="token operator">!</span>state<span class="token punctuation">.</span>isToggleOn
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -483,14 +483,16 @@
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 
+<span class="token comment">// 情理之中的示范,输出了this.name lzy</span>
 <span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Foo</span><span class="token punctuation">(</span><span class="token string">'lzy'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 foo<span class="token punctuation">.</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// lzy</span>
 
 <span class="token comment">// 将 函数赋值给新变量, 造成上下文的丢失.. .this,只认调用时的前缀.</span>
 <span class="token comment">// 实际在 React Component 中将处理程序,与为 callback 参数传递相似。</span>
-<span class="token keyword">var</span> display <span class="token operator">=</span> foo<span class="token punctuation">.</span>display<span class="token punctuation">;</span> 
-<span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// TypeError: this is undefined</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<span class="token keyword">var</span> display <span class="token operator">=</span> foo<span class="token punctuation">.</span>display<span class="token punctuation">;</span>
+<span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// TypeError: this is undefined</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实际上这里就是把堆中的函数地址,传递给了变量,调用变量display时,和foo对象已经毫无关联</p>
+<p>调用display时,在display作用域中查找 this.name,相当于在global中查找</p>
 <p>示例二</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
     <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'lzy'</span><span class="token punctuation">,</span>
@@ -504,6 +506,9 @@ foo<span class="token punctuation">.</span><span class="token function">display<
 <span class="token function">outerDisplay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 浏览器下运行,输出 global lzy</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>事件处理函数被传递给新变量后,作用域发生了改变,丢掉了原先的this。</p>
+<p>也就是说,react中肯定发生了 函数传递给新的变量 的事件,导致了作用域发生改变.</p>
+<p><strong>那么,react中什么时候把事件处理函数,传递给了新的变量呢???</strong></p>
+<p>这就要从react对事件绑定 与 触发 的特殊处理说起</p>
 <h2 id="React中怎么实现的事件绑定"><a href="#React中怎么实现的事件绑定" class="headerlink" title="React中怎么实现的事件绑定"></a>React中怎么实现的事件绑定</h2><p>在 <code>React createDOM</code>函数中会进行进行真实DOM的创建,随后当前dom上的属性(props)进行处理</p>
 <p>如 <code>&lt;div style=&quot;width:100px;&quot; onClick=&#123;this.handleClick&#125; xxx=&#39;123&#39;&gt;</code>,</p>
 <p>其中的 style,onClick,xxx 均在编译阶段被处理为 props下的属性。</p>
@@ -1047,7 +1052,7 @@ foo<span class="token punctuation">.</span><span class="token function">display<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">86.2k</span>&nbsp;字
+                class="white-color">87.4k</span>&nbsp;字
             
             
             
