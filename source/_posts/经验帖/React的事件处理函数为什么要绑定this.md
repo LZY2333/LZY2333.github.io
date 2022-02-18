@@ -184,12 +184,12 @@ class App extends React.Component {
 
 ## 为什么vue 和angular中不需要bind
 
-vue中methods下的所有函数都被bind在了当前组件对象上.
+vue源码中methods下的所有函数，都被 显式的调用bind() 绑定在了当前组件对象上.
 
 猜测angular也有类似处理
 ```js
 for (const key in methods) {
     // ...
-    vm[key] = typeof methods[key] !== 'function' ? noop : bind(methods[key], vm)
+    vm[key] = typeof methods[key] !== 'function' ? noop : bind(methods[key], vm) // 内部有.bind(this)
 }
 ```

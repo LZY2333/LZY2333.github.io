@@ -67,13 +67,103 @@ __React组件必须首字母大写,React是通过首字母是否大写判断是�
 
 一个是自身的状态, state对象 自己内部初始化的,唯一的修改方法是`setState`
 
-## React绑定事件写法与原生不同
 
-1. 属性不是小写而是驼峰命名
+## setState 为异步更新，在下一行打印
+```js
+// 假设 this.state.number 初始为0
+this.setState({number:this.state.number+1});
+console.log(this.state); // 打印 0，而不是期望的1，但页面展示为1
+```
+因为 `setState` 是异步执行的，console的执行 先于 state的修改
 
-2. 值不是字符串而是函数的引用,`onClick={this.handleClick}`
+在下一个事件循环 才执行了 `this.state.number+1` 并渲染页面
 
-## React的更新是可能是 异步 可能是 同步
+
+## 想基于当前同步任务中上一次state修改,来做这次的state修改
+
+想基于同一次同步任务内上次state修改后的数据,来完成这次state的修改.
+```js
+this.setState({number:this.state.number+1});
+console.log(this.state);
+this.setState({number:this.state.number+1});
+console.log(this.state);
+// 期望state为2,实际展示结果为1,也就是说虽然我调用了两次number+1,但两次都是基于0加了1
+```
+
+正确的写法,`this.setState(state=>{number:this.state.number+1})`(使用函数,而非对象)
+
+内部原理:计算最新state状态时,当检测到 当前这次`setState`调用 的参数为函数,
+
+调用该函数,并传入 最新state(已经过同次同步任务之前setState的修改后 并与oldstate 合并了的state),
+
+返回 当前这次`setState`调用 产生的 state作为 最新state 
+
+> 或者 setState 后强制更新.也是同样效果
+
+> 注意,即使用函数的方法,此次两次console也均为0,因为无论如何,本质上state的修改都异步,console都先于state的修改执行.
+
+## setState可能异步可能同步
+
+所以最好不要依赖 this.state的值来进行下一步更新
+
+```js
+  handleClick = (event) => {
+    //在handleClick方法中执行是批量的, 是异步的，会在方法执行结束之后再更新 state
+    this.setState({ number: this.state.number + 1 });
+    console.log(this.state.number);
+    this.setState({ number: this.state.number + 1 });
+    console.log(this.state.number);
+    setTimeout(() => {
+      //在setTimeout里的更新是同步的,下一次会基于上一次,就和上一问用函数一样.
+      this.setState({ number: this.state.number + 1 });
+      console.log(this.state.number);
+      this.setState({ number: this.state.number + 1 });
+      console.log(this.state.number);
+    });
+  }
+  // 输出 0 0 2 3
+```
+发现了两个问题: 
+1. 第一次 第二次 两次 只加了1 (原因看上一问)(如果第一第二次改成函数执行,则此处输出0034)
+2. setTimeout 内的 setState是同步更新,调用一次马上更新state数据,console拿到的是最新state.
+
+特性:
+react能管到的更新,都异步了,因为异步性能更好,不用每次修改都更新,而是一次同步统一更新
+
+react管不到的更新,都同步了,每次都更新state,因为这样更保险,不容易出错.
+
+什么是管不到的更新? 就是setTimeout这种宏任务,非本次同步执行的.
+
+__实现原理__
+
+更新队列中存在一个标识,是否批量更新(异步更新).
+
+在当次同步更新的开头,标识置为true,当次同步更新结束,标识置为false.
+
+当标识为true,setState的修改将被push进更新队列,再异步统一修改state,一次性更新.
+
+当标识为false,每次setState都会立刻修改state,并立刻更新视图.
+
+很显然,宏任务在同步更新结束后才执行,此时标识为false.
+
+
+`setState` 调用 `updater.addState`,每个类组件一个updater管理自己的更新
+
+每个updater有一个数组`pendingStates`储存每次更新的`partialState`,
+
+`addState`把每次的state修改`partialState`放进对象,触发`emitUpdate`,
+
+`emitUpdate`根据`isBatchingUpdate`判断立即触发更新,还是异步批量触发更新
+
+1. 如果立即更新,则调用该updater的`updateComponent`方法,遍历所有`partialState`,
+    
+  计算最新state,替换实例oldState,调用实例`classInstance.forceUpdate()`,
+  
+  `render`新虚拟DOM,老虚拟DOM对比,创建真实DOM并替换老真实DOM,更新完成
+
+2. 如果是异步批量更新,则该updater会把自己放入`updateQueue`,后续调用统一处理
+
+## React的更新是可能是 异步 可能是 同步(旧,有时间与上一问合并)
 
 __React会 异步批量更新 组件内的state__
 
@@ -93,85 +183,6 @@ React 在自己能够管理 的范围内比如 事件函数 生命周期函数 �
 
 setState被调用时,发现 isBatchingUpdate 为false 就立即更新数据.
 
-## React 的事件都绑定在容器上,而非当前DOM上
-
-__组件的事件处理原理__
-
-1. React事件绑定时,并没有将事件绑定在 当前DOM,而是绑定在 容器div#root
-
-2. 事件绑定在 容器上,事件处理函数 还是保存在 当前DOM.store中
- 
-3. click 当前DOM,必然事件冒泡,触发 容器div#root 绑定的click事件,
-
-4. 容器调用其 统一事件处理函数 拿到event.target/type,调用 真正的相应 事件处理函数
-   
-   (并传入react 修改后加了点属性的的event,如果要用的话)
-
-5. target就是 当前DOM,挂载了 事件处理函数,type 就是事件类型,据此调用 当前DOM 上的 事件处理函数
-
-__容器统一事件处理函数会让当前 事件处理 结束后组件的状态 异步批量更新__
-
-1. 容器统一事件处理函数的步骤如下,
-
-2. 首先,updateQueue.isBatchingUpdate=true;// 事件函数执行前先设置批量更新模式为true
-
-3. 这样当前如果有同步任务的setState 就会作为 异步批量更新的一部分,放入 updateQueue 的待更新队列,
-
-   isBatchingUpdate === false,setState会直接同步触发 组件的state更新
-
-4. 此时调用 当前DOM 上的 事件处理函数,如果里面有 setState 就按上面的逻辑来
-
-6. 最后 isBatchingUpdate = false, updateQueue.batchUpdate()启动批量更新
-
-__为什么react要给事件处理函数接收的event加点属性__
-
-1. 兼容多种浏览器,用到时候不用考虑游览器差异
-
-__其他__
-
-1. 你不能通过返回 false 的方式阻止事件默认行为.你必须显式的使用preventDefault
-
-2. 从17以前,事件都是 绑定在document上,委托给document.
-
-3. 同一类型事件,容器只需绑定一次,因为就是注册事件,之后触发target上的 事件处理函数就行.
-
-
-## setState 为异步更新，在下一行打印
-
-```js
-// 假设 this.state.number 初始为0
-this.setState({number:this.state.number+1});
-console.log(this.state); // 打印 0，而不是期望的1，但页面展示为1
-```
-因为 `setState` 是异步执行的，在下一个事件循环 才执行了 `this.state.number+1` 并渲染页面
-
-
-## 想基于当前同步任务中上一次state修改,来做这次的state修改
-
-想基于同一次同步任务内上次state修改后的数据,来完成这次state的修改.
-```js
-this.setState({number:this.state.number+1});
-console.log(this.state);
-// 想基于上一次的state.number+1后的数据,完成这一次的state.number再+1
-this.setState({number:this.state.number+1});
-console.log(this.state); // 期望输出2
-// 这样过后,假设一开始number===0,最后number会===1,与想要的结果2不同
-```
-
-正确的写法,`this.setState(state=>{number:this.state.number+1})`(使用函数,而非对象)
-
-内部原理:计算最新state状态时,当检测到 当前这次`setState`调用 的参数为函数,
-
-调用该函数,并传入 最新state(已经过同次同步任务之前setState的修改后 并与oldstate 合并了的state),
-
-返回 当前这次`setState`调用 产生的 state作为 最新state 
-
-> 或者 setState 后强制更新.也是同样效果
-
-## setState有时异步有时同步
-
-
-
 ## React类组件更新原理
 
 1. 初次渲染的时候已经在页面上放置了一个DIV
@@ -181,94 +192,6 @@ console.log(this.state); // 期望输出2
 3. 虚拟DOM再次生产新的真实DOM
 
 4. 新的真实DOM替换老的DIV
-
-## React中HTML原生组件才会有真实DOM
-
-React的实现中 vdom.dom 会指向其渲染形成的真实DOM,
-
-如果 存在 函数组件/类组件 实现是直接return一个 函数组件/类组件
-
-则此层级不存在真实DOM,其vdom.DOM 为null.
-
-所以,如果此类 函数组件/类组件 ref属性 实际指向其第一个为真实DOM的子节点.
-
-`findDOM` 通过 `vdom.oldRenderVdom` 获取到 其构造函数执行返回的 虚拟节点
-
-也即 子虚拟节点,查找 子vdom 是否有真实DOM挂载,直到找到为止
-
-__DOM数和组件数并非一一对应,甚至DOM数可能少于组件数__
-
-```js
-export function findDOM(vdom){
-   if(!vdom)return null;
-   if(vdom.dom){//如果它身上有dom属性,那说明这个vdom是一个原生组件的虚拟DOM.它会有dom属生指向真实DOM,直接返回
-    return vdom.dom;;
-   }else{
-      return findDOM(vdom.oldRenderVdom);
-   }
-}
-```
-
-## forwardRef(function_component)给函数组件加ref
-
-在React中,不能直接给函数组件使用ref,因为函数组件挂载时,没有新建实例.
-
-```js
-function TextInput(props,ref){ // 注意第二个参数ref,得这样写
-  return <input ref={ref}/> 
-}
-
-const ForwardedTextInput = React.forwardRef(TextInput);
-
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.input = React.createRef();
-  }
-  getFocus = () => {
-    this.input.current.focus();
-  }
-  render() {
-    return (
-      <div>
-        <ForwardedTextInput ref={this.input} />
-        <button onClick={this.getFocus}>获得焦点</button>
-      </div>
-    )
-  }
-}
-ReactDOM.render(<Form />, document.getElementById('root'));
-```
-
-执行时 实际上是执行 函数组件`forwardRef`,返回的也是 vdom(后面称为v1),
-
-v1 在编译后已经变为`{type:{$$typeof:REACT_FORWARD_REF,render},ref}`
-
-`createDOM`形成真实DOM是,发现`v1.type.$$typeof==REACT_FORWARD_REF`,
-
-调用`mountForwardComponent`,传入v1,
-
-内部调用 `v1.type.render()`,并传入v1上 父组件 传来的props 及 ref,
-
-此处的render就是真正的`TextInput`,被调用,创建其虚拟节点,并传入ref
-
-再 `createDOM(renderVdom)` 创建真实DOM并返回
-
-```js
-// 实际上就是把函数组件变成了 另一种函数组件 forwardRef
-function forwardRef(render){
-    return {
-        $$typeof:REACT_FORWARD_REF,
-        render
-    }
-}
-// 创建虚拟节点时,还是调用该函数组件,返回虚拟对象
-function mountForwardComponent(vdom){
-    let {type,props,ref} = vdom;
-    let renderVdom = type.render(props,ref);
-    return createDOM(renderVdom);
-}
-```
 
 ## react中的style 得写成 obj的格式
 
@@ -322,6 +245,8 @@ function FunctionComponent(props) {
 let element = <FunctionComponent name="hello">world</FunctionComponent>
 ```
 ## react不推荐组件继承组件
+
+
 
 ## 类组件 的prop只 初始化时用到，后续setState 更新视图与props无关
 
@@ -383,7 +308,36 @@ __换句话说 类组件的 props只实例化时用到，直接给state赋值，
 
 也仅此一个途径直接给state赋值，后续setState
 
+## React中HTML原生组件才会有真实DOM
+
+React的实现中 vdom.dom 会指向其渲染形成的真实DOM,
+
+如果 存在 函数组件/类组件 实现是直接return一个 函数组件/类组件
+
+则此层级不存在真实DOM,其vdom.DOM 为null.
+
+所以,如果此类 函数组件/类组件 ref属性 实际指向其第一个为真实DOM的子节点.
+
+`findDOM` 通过 `vdom.oldRenderVdom` 获取到 其构造函数执行返回的 虚拟节点
+
+也即 子虚拟节点,查找 子vdom 是否有真实DOM挂载,直到找到为止
+
+__DOM数和组件数并非一一对应,甚至DOM数可能少于组件数__
+
+```js
+export function findDOM(vdom){
+   if(!vdom)return null;
+   if(vdom.dom){//如果它身上有dom属性,那说明这个vdom是一个原生组件的虚拟DOM.它会有dom属生指向真实DOM,直接返回
+    return vdom.dom;;
+   }else{
+      return findDOM(vdom.oldRenderVdom);
+   }
+}
+```
+
 ## 函数组件 类组件 的vdom 没有挂载真实dom
+
+一定要区分好,【编译阶段】 和 【执行阶段】
 
 首先要明确，【编译阶段】 jsx变成了下面这样
 ```js
@@ -393,17 +347,221 @@ class ClassComponent extends extends React.Component  {
         this.name = 2;
     }
     render() {
-        return <h1>hello</h1>; // 相当于下面那条
+        return <h1>hello</h1>; // 相当于下面
         // return React.createElement('h1', null, 'hello');
     }
 }
 
-let element = <ClassComponent /> // 相当于下面那条
+let element = <ClassComponent /> // 编译完相当于下面
 //let element = React.createElement(ClassComponent,{},undefined); 
-//  React.createElement(【变量】ClassComponent，【props】,【children】)
+//React.createElement(【变量】ClassComponent，【props】,【children】)
+
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
 ```
 【执行阶段】
 
-当执行到 函数组件或类组件，会调用其函数，返回vdom
+执行到变量`element`时，`React.createElement`执行返回vdom,`element`被赋值vdom对象
+
+此 第一层vdom 就是 函数组件/类组件vdom,
+
+当执行到`render`,发现`element` 的type为 类组件,
+
+便会拿到 `ClassComponent`,`new ClassComponent(props)`实例化,再调用其render方法,获得第二个vdom
+
+如果发现`element` 的type为 函数组件,则拿到该函数执行,获得第二个vdom
+
+拿到第二个vdom之后,再次调用render方法,渲染真实dom.
+
+__所以 函数组件/类组件vdom本身并没有挂载 真实dom__
+
+__而原生标签产生的vdom是会挂载真实DOM的__
+
+> 注意 ClassComponent作为变量传入了createElement,直接拿到传入的ClassComponent就能new,不需要去哪找.
+> 函数组件同理
+```js
+/**
+ * 把虚拟DOM转成真实DOM
+ * @param {*} vdom 虚拟DOM
+ */
+function createDOM(vdom) {
+    let { type, props } = vdom;
+    let dom;//真实DOM
+    if (typeof type === 'function') { // 如果是组件vdom,就调用相应处理
+        if (type.isReactComponent) { // 下面两个函数也是返回真实DOM
+            return mountClassComponent(vdom);
+        } else {
+            return mountFunctionComponent(vdom);
+        }
+    } else { // 如果是原生标签,直接创建真实DOM
+        dom = document.createElement(type);
+    }
+    //让vdom的dom属性指定它创建出来的真实DOM
+    vdom.dom = dom;
+    return dom; // 返回真实DOM,给mount()函数,mount函数负责把真实DOM进行挂载
+}
+
+// *调用render,拿到第二层vdom后,又循环调用了createDOM,给第二层vdom进行转换成真实dom,再返回
+function mountClassComponent(vdom) {
+    //获取函数本身
+    let { type: ClassComponent, props } = vdom;
+    //把属性对象传递给函数执行，返回要渲染的虚拟DOM
+    let classInstance = new ClassComponent(props);
+    let renderVdom = classInstance.render();
+    //把上一次render渲染得到的虚拟DOM
+    vdom.oldRenderVdom = classInstance.oldRenderVdom = renderVdom;
+    return createDOM(renderVdom);
+}
+function mountFunctionComponent(vdom) {
+    //获取函数本身
+    let { type, props } = vdom;
+    //把属性对象传递给函数执行，返回要渲染的虚拟DOM
+    let renderVdom = type(props);
+    //vdom.老的要渲染的虚拟DOM=renderVdom,方便后面的DOM
+    vdom.oldRenderVdom = renderVdom;
+    return createDOM(renderVdom);
+}
+```
+额外注意, 组件的 vdom虽然没挂载真实DOM,但是挂载了 oldRenderVdom,也就是第二层vdom.
+
+而第二层vdom内部挂载了 自己对应的 真实DOM(组件套组件另算)
+
+## React绑定事件写法与原生不同
+
+1. 属性不是小写而是驼峰命名
+
+2. 值不是字符串而是函数的引用,`onClick={this.handleClick}`
+
+## React 的事件都绑定在容器上,而非当前DOM上(旧,有时间与下一问合并)
+
+__组件的事件处理原理__
+
+1. React事件绑定时,并没有将事件绑定在 当前DOM,而是绑定在 容器div#root
+
+2. 事件绑定在 容器上,事件处理函数 还是保存在 当前DOM.store中
+ 
+3. click 当前DOM,必然事件冒泡,触发 容器div#root 绑定的click事件,
+
+4. 容器调用其 统一事件处理函数 拿到event.target/type,调用 真正的相应 事件处理函数
+   
+   (并传入react 修改后加了点属性的的event,如果要用的话)
+
+5. target就是 当前DOM,挂载了 事件处理函数,type 就是事件类型,据此调用 当前DOM 上的 事件处理函数
+
+__容器统一事件处理函数会让当前 事件处理 结束后组件的状态 异步批量更新__
+
+1. 容器统一事件处理函数的步骤如下,
+
+2. 首先,updateQueue.isBatchingUpdate=true;// 事件函数执行前先设置批量更新模式为true
+
+3. 这样当前如果有同步任务的setState 就会作为 异步批量更新的一部分,放入 updateQueue 的待更新队列,
+
+   isBatchingUpdate === false,setState会直接同步触发 组件的state更新
+
+4. 此时调用 当前DOM 上的 事件处理函数,如果里面有 setState 就按上面的逻辑来
+
+6. 最后 isBatchingUpdate = false, updateQueue.batchUpdate()启动批量更新
+
+__为什么react要给事件处理函数接收的event加点属性__
+
+1. 兼容多种浏览器,用到时候不用考虑游览器差异
+
+__其他__
+
+1. 你不能通过返回 false 的方式阻止事件默认行为.你必须显式的使用preventDefault
+
+2. 从17以前,事件都是 绑定在document上,委托给document.
+
+3. 同一类型事件,容器只需绑定一次,因为就是注册事件,之后触发target上的 事件处理函数就行.
 
 
+
+## react事件由最上级DOM统一监听,再分发处理.
+
+react并不是直接给真实DOM绑定事件,而是有最上级DOM,DOCUMENT,
+
+监听所有DOM的事件,再分派到对应DOM上的对应事件的handler去处理.
+
+为什么要这样做?
+
+给DOM添加合成事件
+ * 不是天然的，人工合成的
+ * 为什么要合成？
+ * 1.做一个类似面向切面编程的操作 AOP 。在用户自己的handler函数之前做一些事情，之后做一些事情
+ * 2.处理浏览器的兼容性 提供兼容所有的浏览器的统一的API，屏蔽浏览器的差异
+ * 3.模拟事件冒泡的阻止冒泡的过程
+
+ 这样做被称为切片编程
+
+
+
+
+
+
+
+
+
+
+
+ ## forwardRef(function_component)给函数组件加ref
+
+在React中,不能直接给函数组件使用ref,因为函数组件挂载时,没有新建实例.
+
+```js
+function TextInput(props,ref){ // 注意第二个参数ref,得这样写
+  return <input ref={ref}/> 
+}
+
+const ForwardedTextInput = React.forwardRef(TextInput);
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.input = React.createRef();
+  }
+  getFocus = () => {
+    this.input.current.focus();
+  }
+  render() {
+    return (
+      <div>
+        <ForwardedTextInput ref={this.input} />
+        <button onClick={this.getFocus}>获得焦点</button>
+      </div>
+    )
+  }
+}
+ReactDOM.render(<Form />, document.getElementById('root'));
+```
+
+执行时 实际上是执行 函数组件`forwardRef`,返回的也是 vdom(后面称为v1),
+
+v1 在编译后已经变为`{type:{$$typeof:REACT_FORWARD_REF,render},ref}`
+
+`createDOM`形成真实DOM是,发现`v1.type.$$typeof==REACT_FORWARD_REF`,
+
+调用`mountForwardComponent`,传入v1,
+
+内部调用 `v1.type.render()`,并传入v1上 父组件 传来的props 及 ref,
+
+此处的render就是真正的`TextInput`,被调用,创建其虚拟节点,并传入ref
+
+再 `createDOM(renderVdom)` 创建真实DOM并返回
+
+```js
+// 实际上就是把函数组件变成了 另一种函数组件 forwardRef
+function forwardRef(render){
+    return {
+        $$typeof:REACT_FORWARD_REF,
+        render
+    }
+}
+// 创建虚拟节点时,还是调用该函数组件,返回虚拟对象
+function mountForwardComponent(vdom){
+    let {type,props,ref} = vdom;
+    let renderVdom = type.render(props,ref);
+    return createDOM(renderVdom);
+}
+```
