@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.2k
+                    4.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    13 分
+                    18 分
                 </div>
                 
 
@@ -472,73 +472,17 @@
 <p><strong>React组件必须首字母大写,React是通过首字母是否大写判断是否是自定义组件,小写就是原生标签了</strong></p>
 <h2 id="组件的数据来源有两个"><a href="#组件的数据来源有两个" class="headerlink" title="组件的数据来源有两个"></a>组件的数据来源有两个</h2><p>一个是父组件的属性,组件内通过<code>this.props</code>获取,属性是父组件的不能修改,</p>
 <p>一个是自身的状态, state对象 自己内部初始化的,唯一的修改方法是<code>setState</code></p>
-<h2 id="React绑定事件写法与原生不同"><a href="#React绑定事件写法与原生不同" class="headerlink" title="React绑定事件写法与原生不同"></a>React绑定事件写法与原生不同</h2><ol>
-<li><p>属性不是小写而是驼峰命名</p>
-</li>
-<li><p>值不是字符串而是函数的引用,<code>onClick=&#123;this.handleClick&#125;</code></p>
-</li>
-</ol>
-<h2 id="React的更新是可能是-异步-可能是-同步"><a href="#React的更新是可能是-异步-可能是-同步" class="headerlink" title="React的更新是可能是 异步 可能是 同步"></a>React的更新是可能是 异步 可能是 同步</h2><p><strong>React会 异步批量更新 组件内的state</strong></p>
-<p>组件内调用<code>setState</code>修改某数据后,在下面立即console该属性,发现属性未发生改变</p>
-<p>这是因为同一次同步任务内所有的数据修改<code>setState</code>,会记录在<code>pendingState</code>队列</p>
-<p>最后在该同步任务执行完毕时,下一个微任务队列内执行数据的更新.</p>
-<p><strong>React对于非自己的提供的接口产生的更新是 同步立即更新 的</strong></p>
-<p>React 在自己能够管理 的范围内比如 事件函数 生命周期函数 内产生的 更新都是 异步批量更新的,</p>
-<p>能够管理的范围外的 更新,例如 setTimeout 原生事件 内的更新 都是同步立即更新的.</p>
-<p>原理是: 是否批量更新标记isBatchingUpdate,在同步任务开始时置为true,批量更新结束时置为false.</p>
-<p>setState被调用时,发现 isBatchingUpdate 为false 就立即更新数据.</p>
-<h2 id="React-的事件都绑定在容器上-而非当前DOM上"><a href="#React-的事件都绑定在容器上-而非当前DOM上" class="headerlink" title="React 的事件都绑定在容器上,而非当前DOM上"></a>React 的事件都绑定在容器上,而非当前DOM上</h2><p><strong>组件的事件处理原理</strong></p>
-<ol>
-<li><p>React事件绑定时,并没有将事件绑定在 当前DOM,而是绑定在 容器div#root</p>
-</li>
-<li><p>事件绑定在 容器上,事件处理函数 还是保存在 当前DOM.store中</p>
-</li>
-<li><p>click 当前DOM,必然事件冒泡,触发 容器div#root 绑定的click事件,</p>
-</li>
-<li><p>容器调用其 统一事件处理函数 拿到event.target/type,调用 真正的相应 事件处理函数</p>
-<p>(并传入react 修改后加了点属性的的event,如果要用的话)</p>
-</li>
-<li><p>target就是 当前DOM,挂载了 事件处理函数,type 就是事件类型,据此调用 当前DOM 上的 事件处理函数</p>
-</li>
-</ol>
-<p><strong>容器统一事件处理函数会让当前 事件处理 结束后组件的状态 异步批量更新</strong></p>
-<ol>
-<li><p>容器统一事件处理函数的步骤如下,</p>
-</li>
-<li><p>首先,updateQueue.isBatchingUpdate=true;// 事件函数执行前先设置批量更新模式为true</p>
-</li>
-<li><p>这样当前如果有同步任务的setState 就会作为 异步批量更新的一部分,放入 updateQueue 的待更新队列,</p>
-<p>isBatchingUpdate === false,setState会直接同步触发 组件的state更新</p>
-</li>
-<li><p>此时调用 当前DOM 上的 事件处理函数,如果里面有 setState 就按上面的逻辑来</p>
-</li>
-<li><p>最后 isBatchingUpdate = false, updateQueue.batchUpdate()启动批量更新</p>
-</li>
-</ol>
-<p><strong>为什么react要给事件处理函数接收的event加点属性</strong></p>
-<ol>
-<li>兼容多种浏览器,用到时候不用考虑游览器差异</li>
-</ol>
-<p><strong>其他</strong></p>
-<ol>
-<li><p>你不能通过返回 false 的方式阻止事件默认行为.你必须显式的使用preventDefault</p>
-</li>
-<li><p>从17以前,事件都是 绑定在document上,委托给document.</p>
-</li>
-<li><p>同一类型事件,容器只需绑定一次,因为就是注册事件,之后触发target上的 事件处理函数就行.</p>
-</li>
-</ol>
 <h2 id="setState-为异步更新，在下一行打印"><a href="#setState-为异步更新，在下一行打印" class="headerlink" title="setState 为异步更新，在下一行打印"></a>setState 为异步更新，在下一行打印</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 假设 this.state.number 初始为0</span>
 <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">number</span><span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 打印 0，而不是期望的1，但页面展示为1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>因为 <code>setState</code> 是异步执行的，在下一个事件循环 才执行了 <code>this.state.number+1</code> 并渲染页面</p>
+<p>因为 <code>setState</code> 是异步执行的，console的执行 先于 state的修改</p>
+<p>在下一个事件循环 才执行了 <code>this.state.number+1</code> 并渲染页面</p>
 <h2 id="想基于当前同步任务中上一次state修改-来做这次的state修改"><a href="#想基于当前同步任务中上一次state修改-来做这次的state修改" class="headerlink" title="想基于当前同步任务中上一次state修改,来做这次的state修改"></a>想基于当前同步任务中上一次state修改,来做这次的state修改</h2><p>想基于同一次同步任务内上次state修改后的数据,来完成这次state的修改.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">number</span><span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 想基于上一次的state.number+1后的数据,完成这一次的state.number再+1</span>
 <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">number</span><span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 期望输出2</span>
-<span class="token comment">// 这样过后,假设一开始number===0,最后number会===1,与想要的结果2不同</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 期望state为2,实际展示结果为1,也就是说虽然我调用了两次number+1,但两次都是基于0加了1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>正确的写法,<code>this.setState(state=&gt;&#123;number:this.state.number+1&#125;)</code>(使用函数,而非对象)</p>
 <p>内部原理:计算最新state状态时,当检测到 当前这次<code>setState</code>调用 的参数为函数,</p>
@@ -547,7 +491,61 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <blockquote>
 <p>或者 setState 后强制更新.也是同样效果</p>
 </blockquote>
-<h2 id="setState有时异步有时同步"><a href="#setState有时异步有时同步" class="headerlink" title="setState有时异步有时同步"></a>setState有时异步有时同步</h2><h2 id="React类组件更新原理"><a href="#React类组件更新原理" class="headerlink" title="React类组件更新原理"></a>React类组件更新原理</h2><ol>
+<blockquote>
+<p>注意,即使用函数的方法,此次两次console也均为0,因为无论如何,本质上state的修改都异步,console都先于state的修改执行.</p>
+</blockquote>
+<h2 id="setState可能异步可能同步"><a href="#setState可能异步可能同步" class="headerlink" title="setState可能异步可能同步"></a>setState可能异步可能同步</h2><p>所以最好不要依赖 this.state的值来进行下一步更新</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function-variable function">handleClick</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">//在handleClick方法中执行是批量的, 是异步的，会在方法执行结束之后再更新 state</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">number</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">number</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//在setTimeout里的更新是同步的,下一次会基于上一次,就和上一问用函数一样.</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">number</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">number</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 输出 0 0 2 3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>发现了两个问题: </p>
+<ol>
+<li>第一次 第二次 两次 只加了1 (原因看上一问)(如果第一第二次改成函数执行,则此处输出0034)</li>
+<li>setTimeout 内的 setState是同步更新,调用一次马上更新state数据,console拿到的是最新state.</li>
+</ol>
+<p>特性:<br>react能管到的更新,都异步了,因为异步性能更好,不用每次修改都更新,而是一次同步统一更新</p>
+<p>react管不到的更新,都同步了,每次都更新state,因为这样更保险,不容易出错.</p>
+<p>什么是管不到的更新? 就是setTimeout这种宏任务,非本次同步执行的.</p>
+<p><strong>实现原理</strong></p>
+<p>更新队列中存在一个标识,是否批量更新(异步更新).</p>
+<p>在当次同步更新的开头,标识置为true,当次同步更新结束,标识置为false.</p>
+<p>当标识为true,setState的修改将被push进更新队列,再异步统一修改state,一次性更新.</p>
+<p>当标识为false,每次setState都会立刻修改state,并立刻更新视图.</p>
+<p>很显然,宏任务在同步更新结束后才执行,此时标识为false.</p>
+<p><code>setState</code> 调用 <code>updater.addState</code>,每个类组件一个updater管理自己的更新</p>
+<p>每个updater有一个数组<code>pendingStates</code>储存每次更新的<code>partialState</code>,</p>
+<p><code>addState</code>把每次的state修改<code>partialState</code>放进对象,触发<code>emitUpdate</code>,</p>
+<p><code>emitUpdate</code>根据<code>isBatchingUpdate</code>判断立即触发更新,还是异步批量触发更新</p>
+<ol>
+<li><p>如果立即更新,则调用该updater的<code>updateComponent</code>方法,遍历所有<code>partialState</code>,</p>
+<p>计算最新state,替换实例oldState,调用实例<code>classInstance.forceUpdate()</code>,</p>
+<p><code>render</code>新虚拟DOM,老虚拟DOM对比,创建真实DOM并替换老真实DOM,更新完成</p>
+</li>
+<li><p>如果是异步批量更新,则该updater会把自己放入<code>updateQueue</code>,后续调用统一处理</p>
+</li>
+</ol>
+<h2 id="React的更新是可能是-异步-可能是-同步-旧-有时间与上一问合并"><a href="#React的更新是可能是-异步-可能是-同步-旧-有时间与上一问合并" class="headerlink" title="React的更新是可能是 异步 可能是 同步(旧,有时间与上一问合并)"></a>React的更新是可能是 异步 可能是 同步(旧,有时间与上一问合并)</h2><p><strong>React会 异步批量更新 组件内的state</strong></p>
+<p>组件内调用<code>setState</code>修改某数据后,在下面立即console该属性,发现属性未发生改变</p>
+<p>这是因为同一次同步任务内所有的数据修改<code>setState</code>,会记录在<code>pendingState</code>队列</p>
+<p>最后在该同步任务执行完毕时,下一个微任务队列内执行数据的更新.</p>
+<p><strong>React对于非自己的提供的接口产生的更新是 同步立即更新 的</strong></p>
+<p>React 在自己能够管理 的范围内比如 事件函数 生命周期函数 内产生的 更新都是 异步批量更新的,</p>
+<p>能够管理的范围外的 更新,例如 setTimeout 原生事件 内的更新 都是同步立即更新的.</p>
+<p>原理是: 是否批量更新标记isBatchingUpdate,在同步任务开始时置为true,批量更新结束时置为false.</p>
+<p>setState被调用时,发现 isBatchingUpdate 为false 就立即更新数据.</p>
+<h2 id="React类组件更新原理"><a href="#React类组件更新原理" class="headerlink" title="React类组件更新原理"></a>React类组件更新原理</h2><ol>
 <li><p>初次渲染的时候已经在页面上放置了一个DIV</p>
 </li>
 <li><p>更新的时候用新的state,重新render返回新的虚拟DOM,</p>
@@ -557,69 +555,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <li><p>新的真实DOM替换老的DIV</p>
 </li>
 </ol>
-<h2 id="React中HTML原生组件才会有真实DOM"><a href="#React中HTML原生组件才会有真实DOM" class="headerlink" title="React中HTML原生组件才会有真实DOM"></a>React中HTML原生组件才会有真实DOM</h2><p>React的实现中 vdom.dom 会指向其渲染形成的真实DOM,</p>
-<p>如果 存在 函数组件/类组件 实现是直接return一个 函数组件/类组件</p>
-<p>则此层级不存在真实DOM,其vdom.DOM 为null.</p>
-<p>所以,如果此类 函数组件/类组件 ref属性 实际指向其第一个为真实DOM的子节点.</p>
-<p><code>findDOM</code> 通过 <code>vdom.oldRenderVdom</code> 获取到 其构造函数执行返回的 虚拟节点</p>
-<p>也即 子虚拟节点,查找 子vdom 是否有真实DOM挂载,直到找到为止</p>
-<p><strong>DOM数和组件数并非一一对应,甚至DOM数可能少于组件数</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">findDOM</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-   <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>vdom<span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-   <span class="token keyword">if</span><span class="token punctuation">(</span>vdom<span class="token punctuation">.</span>dom<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//如果它身上有dom属性,那说明这个vdom是一个原生组件的虚拟DOM.它会有dom属生指向真实DOM,直接返回</span>
-    <span class="token keyword">return</span> vdom<span class="token punctuation">.</span>dom<span class="token punctuation">;</span><span class="token punctuation">;</span>
-   <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
-      <span class="token keyword">return</span> <span class="token function">findDOM</span><span class="token punctuation">(</span>vdom<span class="token punctuation">.</span>oldRenderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="forwardRef-function-component-给函数组件加ref"><a href="#forwardRef-function-component-给函数组件加ref" class="headerlink" title="forwardRef(function_component)给函数组件加ref"></a>forwardRef(function_component)给函数组件加ref</h2><p>在React中,不能直接给函数组件使用ref,因为函数组件挂载时,没有新建实例.</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">TextInput</span><span class="token punctuation">(</span><span class="token parameter">props<span class="token punctuation">,</span>ref</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token comment">// 注意第二个参数ref,得这样写</span>
-  <span class="token keyword">return</span> <span class="token operator">&lt;</span>input ref<span class="token operator">=</span><span class="token punctuation">&#123;</span>ref<span class="token punctuation">&#125;</span><span class="token operator">/</span><span class="token operator">></span> 
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">const</span> ForwardedTextInput <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span>TextInput<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">Form</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
-  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">super</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>input <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">createRef</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span>
-  <span class="token function-variable function">getFocus</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>input<span class="token punctuation">.</span>current<span class="token punctuation">.</span><span class="token function">focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span>
-  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token punctuation">(</span>
-      <span class="token operator">&lt;</span>div<span class="token operator">></span>
-        <span class="token operator">&lt;</span>ForwardedTextInput ref<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>input<span class="token punctuation">&#125;</span> <span class="token operator">/</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>getFocus<span class="token punctuation">&#125;</span><span class="token operator">></span>获得焦点<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
-      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
-    <span class="token punctuation">)</span>
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Form <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">,</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>执行时 实际上是执行 函数组件<code>forwardRef</code>,返回的也是 vdom(后面称为v1),</p>
-<p>v1 在编译后已经变为<code>&#123;type:&#123;$$typeof:REACT_FORWARD_REF,render&#125;,ref&#125;</code></p>
-<p><code>createDOM</code>形成真实DOM是,发现<code>v1.type.$$typeof==REACT_FORWARD_REF</code>,</p>
-<p>调用<code>mountForwardComponent</code>,传入v1,</p>
-<p>内部调用 <code>v1.type.render()</code>,并传入v1上 父组件 传来的props 及 ref,</p>
-<p>此处的render就是真正的<code>TextInput</code>,被调用,创建其虚拟节点,并传入ref</p>
-<p>再 <code>createDOM(renderVdom)</code> 创建真实DOM并返回</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 实际上就是把函数组件变成了 另一种函数组件 forwardRef</span>
-<span class="token keyword">function</span> <span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token parameter">render</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
-        $$<span class="token keyword">typeof</span><span class="token operator">:</span><span class="token constant">REACT_FORWARD_REF</span><span class="token punctuation">,</span>
-        render
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token comment">// 创建虚拟节点时,还是调用该函数组件,返回虚拟对象</span>
-<span class="token keyword">function</span> <span class="token function">mountForwardComponent</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span>type<span class="token punctuation">,</span>props<span class="token punctuation">,</span>ref<span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
-    <span class="token keyword">let</span> renderVdom <span class="token operator">=</span> type<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>props<span class="token punctuation">,</span>ref<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token function">createDOM</span><span class="token punctuation">(</span>renderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="react中的style-得写成-obj的格式"><a href="#react中的style-得写成-obj的格式" class="headerlink" title="react中的style 得写成 obj的格式"></a>react中的style 得写成 obj的格式</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">&lt;</span>h1 style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">'red'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">></span> <span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>因为在处理props的时候读取到props 为 style时，会直接视其为 obj进行覆盖旧属性</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
@@ -711,23 +646,208 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 <p>可以看到 直接this.render()，无props介入。</p>
 <p><strong>换句话说 类组件的 props只实例化时用到，直接给state赋值，后续组件属性修改与props无关</strong></p>
 <p>也仅此一个途径直接给state赋值，后续setState</p>
-<h2 id="函数组件-类组件-的vdom-没有挂载真实dom"><a href="#函数组件-类组件-的vdom-没有挂载真实dom" class="headerlink" title="函数组件 类组件 的vdom 没有挂载真实dom"></a>函数组件 类组件 的vdom 没有挂载真实dom</h2><p>首先要明确，【编译阶段】 jsx变成了下面这样</p>
+<h2 id="React中HTML原生组件才会有真实DOM"><a href="#React中HTML原生组件才会有真实DOM" class="headerlink" title="React中HTML原生组件才会有真实DOM"></a>React中HTML原生组件才会有真实DOM</h2><p>React的实现中 vdom.dom 会指向其渲染形成的真实DOM,</p>
+<p>如果 存在 函数组件/类组件 实现是直接return一个 函数组件/类组件</p>
+<p>则此层级不存在真实DOM,其vdom.DOM 为null.</p>
+<p>所以,如果此类 函数组件/类组件 ref属性 实际指向其第一个为真实DOM的子节点.</p>
+<p><code>findDOM</code> 通过 <code>vdom.oldRenderVdom</code> 获取到 其构造函数执行返回的 虚拟节点</p>
+<p>也即 子虚拟节点,查找 子vdom 是否有真实DOM挂载,直到找到为止</p>
+<p><strong>DOM数和组件数并非一一对应,甚至DOM数可能少于组件数</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">findDOM</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>vdom<span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span>vdom<span class="token punctuation">.</span>dom<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//如果它身上有dom属性,那说明这个vdom是一个原生组件的虚拟DOM.它会有dom属生指向真实DOM,直接返回</span>
+    <span class="token keyword">return</span> vdom<span class="token punctuation">.</span>dom<span class="token punctuation">;</span><span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token function">findDOM</span><span class="token punctuation">(</span>vdom<span class="token punctuation">.</span>oldRenderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="函数组件-类组件-的vdom-没有挂载真实dom"><a href="#函数组件-类组件-的vdom-没有挂载真实dom" class="headerlink" title="函数组件 类组件 的vdom 没有挂载真实dom"></a>函数组件 类组件 的vdom 没有挂载真实dom</h2><p>一定要区分好,【编译阶段】 和 【执行阶段】</p>
+<p>首先要明确，【编译阶段】 jsx变成了下面这样</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">ClassComponent</span> <span class="token keyword">extends</span> <span class="token class-name">extends</span> React<span class="token punctuation">.</span>Component  <span class="token punctuation">&#123;</span>
     <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token operator">&lt;</span>h1<span class="token operator">></span>hello<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span><span class="token punctuation">;</span> <span class="token comment">// 相当于下面那条</span>
+        <span class="token keyword">return</span> <span class="token operator">&lt;</span>h1<span class="token operator">></span>hello<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span><span class="token punctuation">;</span> <span class="token comment">// 相当于下面</span>
         <span class="token comment">// return React.createElement('h1', null, 'hello');</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 
-<span class="token keyword">let</span> element <span class="token operator">=</span> <span class="token operator">&lt;</span>ClassComponent <span class="token operator">/</span><span class="token operator">></span> <span class="token comment">// 相当于下面那条</span>
+<span class="token keyword">let</span> element <span class="token operator">=</span> <span class="token operator">&lt;</span>ClassComponent <span class="token operator">/</span><span class="token operator">></span> <span class="token comment">// 编译完相当于下面</span>
 <span class="token comment">//let element = React.createElement(ClassComponent,&#123;&#125;,undefined); </span>
-<span class="token comment">//  React.createElement(【变量】ClassComponent，【props】,【children】)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">//React.createElement(【变量】ClassComponent，【props】,【children】)</span>
+
+ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>
+  element<span class="token punctuation">,</span>
+  document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>【执行阶段】</p>
-<p>当执行到 函数组件或类组件，会调用其函数，返回vdom</p>
+<p>执行到变量<code>element</code>时，<code>React.createElement</code>执行返回vdom,<code>element</code>被赋值vdom对象</p>
+<p>此 第一层vdom 就是 函数组件/类组件vdom,</p>
+<p>当执行到<code>render</code>,发现<code>element</code> 的type为 类组件,</p>
+<p>便会拿到 <code>ClassComponent</code>,<code>new ClassComponent(props)</code>实例化,再调用其render方法,获得第二个vdom</p>
+<p>如果发现<code>element</code> 的type为 函数组件,则拿到该函数执行,获得第二个vdom</p>
+<p>拿到第二个vdom之后,再次调用render方法,渲染真实dom.</p>
+<p><strong>所以 函数组件/类组件vdom本身并没有挂载 真实dom</strong></p>
+<p><strong>而原生标签产生的vdom是会挂载真实DOM的</strong></p>
+<blockquote>
+<p>注意 ClassComponent作为变量传入了createElement,直接拿到传入的ClassComponent就能new,不需要去哪找.<br>函数组件同理</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+ * 把虚拟DOM转成真实DOM
+ * @param &#123;*&#125; vdom 虚拟DOM
+ */</span>
+<span class="token keyword">function</span> <span class="token function">createDOM</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> type<span class="token punctuation">,</span> props <span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
+    <span class="token keyword">let</span> dom<span class="token punctuation">;</span><span class="token comment">//真实DOM</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> type <span class="token operator">===</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果是组件vdom,就调用相应处理</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>type<span class="token punctuation">.</span>isReactComponent<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 下面两个函数也是返回真实DOM</span>
+            <span class="token keyword">return</span> <span class="token function">mountClassComponent</span><span class="token punctuation">(</span>vdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token function">mountFunctionComponent</span><span class="token punctuation">(</span>vdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果是原生标签,直接创建真实DOM</span>
+        dom <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//让vdom的dom属性指定它创建出来的真实DOM</span>
+    vdom<span class="token punctuation">.</span>dom <span class="token operator">=</span> dom<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> dom<span class="token punctuation">;</span> <span class="token comment">// 返回真实DOM,给mount()函数,mount函数负责把真实DOM进行挂载</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// *调用render,拿到第二层vdom后,又循环调用了createDOM,给第二层vdom进行转换成真实dom,再返回</span>
+<span class="token keyword">function</span> <span class="token function">mountClassComponent</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//获取函数本身</span>
+    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">type</span><span class="token operator">:</span> ClassComponent<span class="token punctuation">,</span> props <span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
+    <span class="token comment">//把属性对象传递给函数执行，返回要渲染的虚拟DOM</span>
+    <span class="token keyword">let</span> classInstance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassComponent</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> renderVdom <span class="token operator">=</span> classInstance<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//把上一次render渲染得到的虚拟DOM</span>
+    vdom<span class="token punctuation">.</span>oldRenderVdom <span class="token operator">=</span> classInstance<span class="token punctuation">.</span>oldRenderVdom <span class="token operator">=</span> renderVdom<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">createDOM</span><span class="token punctuation">(</span>renderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">mountFunctionComponent</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//获取函数本身</span>
+    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> type<span class="token punctuation">,</span> props <span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
+    <span class="token comment">//把属性对象传递给函数执行，返回要渲染的虚拟DOM</span>
+    <span class="token keyword">let</span> renderVdom <span class="token operator">=</span> <span class="token function">type</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//vdom.老的要渲染的虚拟DOM=renderVdom,方便后面的DOM</span>
+    vdom<span class="token punctuation">.</span>oldRenderVdom <span class="token operator">=</span> renderVdom<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">createDOM</span><span class="token punctuation">(</span>renderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>额外注意, 组件的 vdom虽然没挂载真实DOM,但是挂载了 oldRenderVdom,也就是第二层vdom.</p>
+<p>而第二层vdom内部挂载了 自己对应的 真实DOM(组件套组件另算)</p>
+<h2 id="React绑定事件写法与原生不同"><a href="#React绑定事件写法与原生不同" class="headerlink" title="React绑定事件写法与原生不同"></a>React绑定事件写法与原生不同</h2><ol>
+<li><p>属性不是小写而是驼峰命名</p>
+</li>
+<li><p>值不是字符串而是函数的引用,<code>onClick=&#123;this.handleClick&#125;</code></p>
+</li>
+</ol>
+<h2 id="React-的事件都绑定在容器上-而非当前DOM上-旧-有时间与下一问合并"><a href="#React-的事件都绑定在容器上-而非当前DOM上-旧-有时间与下一问合并" class="headerlink" title="React 的事件都绑定在容器上,而非当前DOM上(旧,有时间与下一问合并)"></a>React 的事件都绑定在容器上,而非当前DOM上(旧,有时间与下一问合并)</h2><p><strong>组件的事件处理原理</strong></p>
+<ol>
+<li><p>React事件绑定时,并没有将事件绑定在 当前DOM,而是绑定在 容器div#root</p>
+</li>
+<li><p>事件绑定在 容器上,事件处理函数 还是保存在 当前DOM.store中</p>
+</li>
+<li><p>click 当前DOM,必然事件冒泡,触发 容器div#root 绑定的click事件,</p>
+</li>
+<li><p>容器调用其 统一事件处理函数 拿到event.target/type,调用 真正的相应 事件处理函数</p>
+<p>(并传入react 修改后加了点属性的的event,如果要用的话)</p>
+</li>
+<li><p>target就是 当前DOM,挂载了 事件处理函数,type 就是事件类型,据此调用 当前DOM 上的 事件处理函数</p>
+</li>
+</ol>
+<p><strong>容器统一事件处理函数会让当前 事件处理 结束后组件的状态 异步批量更新</strong></p>
+<ol>
+<li><p>容器统一事件处理函数的步骤如下,</p>
+</li>
+<li><p>首先,updateQueue.isBatchingUpdate=true;// 事件函数执行前先设置批量更新模式为true</p>
+</li>
+<li><p>这样当前如果有同步任务的setState 就会作为 异步批量更新的一部分,放入 updateQueue 的待更新队列,</p>
+<p>isBatchingUpdate === false,setState会直接同步触发 组件的state更新</p>
+</li>
+<li><p>此时调用 当前DOM 上的 事件处理函数,如果里面有 setState 就按上面的逻辑来</p>
+</li>
+<li><p>最后 isBatchingUpdate = false, updateQueue.batchUpdate()启动批量更新</p>
+</li>
+</ol>
+<p><strong>为什么react要给事件处理函数接收的event加点属性</strong></p>
+<ol>
+<li>兼容多种浏览器,用到时候不用考虑游览器差异</li>
+</ol>
+<p><strong>其他</strong></p>
+<ol>
+<li><p>你不能通过返回 false 的方式阻止事件默认行为.你必须显式的使用preventDefault</p>
+</li>
+<li><p>从17以前,事件都是 绑定在document上,委托给document.</p>
+</li>
+<li><p>同一类型事件,容器只需绑定一次,因为就是注册事件,之后触发target上的 事件处理函数就行.</p>
+</li>
+</ol>
+<h2 id="react事件由最上级DOM统一监听-再分发处理"><a href="#react事件由最上级DOM统一监听-再分发处理" class="headerlink" title="react事件由最上级DOM统一监听,再分发处理."></a>react事件由最上级DOM统一监听,再分发处理.</h2><p>react并不是直接给真实DOM绑定事件,而是有最上级DOM,DOCUMENT,</p>
+<p>监听所有DOM的事件,再分派到对应DOM上的对应事件的handler去处理.</p>
+<p>为什么要这样做?</p>
+<p>给DOM添加合成事件</p>
+<ul>
+<li><p>不是天然的，人工合成的</p>
+</li>
+<li><p>为什么要合成？</p>
+</li>
+<li><p>1.做一个类似面向切面编程的操作 AOP 。在用户自己的handler函数之前做一些事情，之后做一些事情</p>
+</li>
+<li><p>2.处理浏览器的兼容性 提供兼容所有的浏览器的统一的API，屏蔽浏览器的差异</p>
+</li>
+<li><p>3.模拟事件冒泡的阻止冒泡的过程</p>
+<p>这样做被称为切片编程</p>
+</li>
+</ul>
+<h2 id="forwardRef-function-component-给函数组件加ref"><a href="#forwardRef-function-component-给函数组件加ref" class="headerlink" title="forwardRef(function_component)给函数组件加ref"></a>forwardRef(function_component)给函数组件加ref</h2><p>在React中,不能直接给函数组件使用ref,因为函数组件挂载时,没有新建实例.</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">TextInput</span><span class="token punctuation">(</span><span class="token parameter">props<span class="token punctuation">,</span>ref</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token comment">// 注意第二个参数ref,得这样写</span>
+  <span class="token keyword">return</span> <span class="token operator">&lt;</span>input ref<span class="token operator">=</span><span class="token punctuation">&#123;</span>ref<span class="token punctuation">&#125;</span><span class="token operator">/</span><span class="token operator">></span> 
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">const</span> ForwardedTextInput <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span>TextInput<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Form</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>input <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">createRef</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token function-variable function">getFocus</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>input<span class="token punctuation">.</span>current<span class="token punctuation">.</span><span class="token function">focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token operator">&lt;</span>div<span class="token operator">></span>
+        <span class="token operator">&lt;</span>ForwardedTextInput ref<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>input<span class="token punctuation">&#125;</span> <span class="token operator">/</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>getFocus<span class="token punctuation">&#125;</span><span class="token operator">></span>获得焦点<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+    <span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Form <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">,</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>执行时 实际上是执行 函数组件<code>forwardRef</code>,返回的也是 vdom(后面称为v1),</p>
+<p>v1 在编译后已经变为<code>&#123;type:&#123;$$typeof:REACT_FORWARD_REF,render&#125;,ref&#125;</code></p>
+<p><code>createDOM</code>形成真实DOM是,发现<code>v1.type.$$typeof==REACT_FORWARD_REF</code>,</p>
+<p>调用<code>mountForwardComponent</code>,传入v1,</p>
+<p>内部调用 <code>v1.type.render()</code>,并传入v1上 父组件 传来的props 及 ref,</p>
+<p>此处的render就是真正的<code>TextInput</code>,被调用,创建其虚拟节点,并传入ref</p>
+<p>再 <code>createDOM(renderVdom)</code> 创建真实DOM并返回</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 实际上就是把函数组件变成了 另一种函数组件 forwardRef</span>
+<span class="token keyword">function</span> <span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token parameter">render</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+        $$<span class="token keyword">typeof</span><span class="token operator">:</span><span class="token constant">REACT_FORWARD_REF</span><span class="token punctuation">,</span>
+        render
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 创建虚拟节点时,还是调用该函数组件,返回虚拟对象</span>
+<span class="token keyword">function</span> <span class="token function">mountForwardComponent</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span>type<span class="token punctuation">,</span>props<span class="token punctuation">,</span>ref<span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
+    <span class="token keyword">let</span> renderVdom <span class="token operator">=</span> type<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>props<span class="token punctuation">,</span>ref<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">createDOM</span><span class="token punctuation">(</span>renderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -1198,7 +1318,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">87.4k</span>&nbsp;字
+                class="white-color">88.8k</span>&nbsp;字
             
             
             

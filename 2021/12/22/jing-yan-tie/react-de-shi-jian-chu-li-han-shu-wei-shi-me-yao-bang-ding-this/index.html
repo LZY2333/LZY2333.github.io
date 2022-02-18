@@ -577,11 +577,11 @@ foo<span class="token punctuation">.</span><span class="token function">display<
 
 <p>此外,可以在 构造函数中使用bind,在render中使用箭头函数,在render中使用bind</p>
 <p>组件每次执行render将会重新分配函数这将会影响性能。特别是在你做了一些性能优化之后，它会破坏PureComponent性能。不推荐使用。</p>
-<h2 id="为什么vue-和angular中不需要bind"><a href="#为什么vue-和angular中不需要bind" class="headerlink" title="为什么vue 和angular中不需要bind"></a>为什么vue 和angular中不需要bind</h2><p>vue中methods下的所有函数都被bind在了当前组件对象上.</p>
+<h2 id="为什么vue-和angular中不需要bind"><a href="#为什么vue-和angular中不需要bind" class="headerlink" title="为什么vue 和angular中不需要bind"></a>为什么vue 和angular中不需要bind</h2><p>vue源码中methods下的所有函数，都被 显式的调用bind() 绑定在了当前组件对象上.</p>
 <p>猜测angular也有类似处理</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> methods<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// ...</span>
-    vm<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">typeof</span> methods<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token string">'function'</span> <span class="token operator">?</span> noop <span class="token operator">:</span> <span class="token function">bind</span><span class="token punctuation">(</span>methods<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">,</span> vm<span class="token punctuation">)</span>
+    vm<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">typeof</span> methods<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token string">'function'</span> <span class="token operator">?</span> noop <span class="token operator">:</span> <span class="token function">bind</span><span class="token punctuation">(</span>methods<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">,</span> vm<span class="token punctuation">)</span> <span class="token comment">// 内部有.bind(this)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
@@ -1052,7 +1052,7 @@ foo<span class="token punctuation">.</span><span class="token function">display<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">87.4k</span>&nbsp;字
+                class="white-color">88.8k</span>&nbsp;字
             
             
             
