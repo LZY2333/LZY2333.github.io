@@ -88,6 +88,14 @@ git checkout master 回到原来的分支
 
 ### git fetch
 
+## git reset --hard 丢弃本地所有修改
+
+## git commit -m ‘提交信息’ 写错了
+
+`git commit --amend -m "新的修改提交信息"`
+
+注意，仅仅只能针对最后一次提交
 
 [git fetch VS pull](https://juejin.cn/post/6844903921794859021)
+
 ## 碰到一个问题写一个

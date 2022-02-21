@@ -434,7 +434,7 @@ function mountFunctionComponent(vdom) {
 
 2. 值不是字符串而是函数的引用,`onClick={this.handleClick}`
 
-## React 的事件都绑定在容器上,而非当前DOM上(旧,有时间与下一问合并)
+## React 的事件都绑定在容器上,而非当前DOM上
 
 __组件的事件处理原理__
 
@@ -449,6 +449,11 @@ __组件的事件处理原理__
    (并传入react 修改后加了点属性的的event,如果要用的话)
 
 5. target就是 当前DOM,挂载了 事件处理函数,type 就是事件类型,据此调用 当前DOM 上的 事件处理函数
+
+> 这种做法叫切片编程，react可以在事件处理时做一些统一的事情，比如 处理浏览器兼容性
+
+> 15的事件都是代理到document,17之后都代理给了容器 div#root
+> 因为React希望一个页面可以运行多个react版本 
 
 __容器统一事件处理函数会让当前 事件处理 结束后组件的状态 异步批量更新__
 
@@ -476,36 +481,147 @@ __其他__
 
 3. 同一类型事件,容器只需绑定一次,因为就是注册事件,之后触发target上的 事件处理函数就行.
 
+## 类组件 更新功能 源码中各个函数的作用
 
+```js
+export let updateQueue = { // ---------------------------------储存多个updater批量更新
+    batchUpdate() {
+      // 绑定在root上的 事件处理函数dispatchEvent,监听到一次事件
+      // 首先,模拟事件冒泡,循环向父级真实DOM 触发事件(click)涉及的处理函数
+      //     这些处理函数的setState会emitUpdate,将updater存入这里
+      // 最后,调用updateQueue.batchUpdate(),拿出所有updater
+      //     调用updater.shouldUpdate()
+    }
+}
+class Updater {
+    constructor(classInstance) {
+        //类组件的实例
+        this.classInstance = classInstance;
+        //等待更新的状态
+        this.pendingStates = [];
+        //更新后的回调
+        this.callbacks = [];
+    }
+    addState(partialState, callback) { // ---------------------储存当前实例state的修改,调用smitUpdate()
+        // 储存传进来的setState传进来的state对象,等后续修改
+        // 调用smitUpdate()
+    }
+    emitUpdate() { // -----------------------------------------判断批量触发,还是立即触发updateComponent()
+        // 立即触发更新
+        // 还是 将此updater存入updateQueue,
+    }
+    //更新这个updater对应的类组件
+    updateComponent() { // ------------------------------------调用shouldUpdate(),触发回调
+        // 调用getState()拿到最新state,传给shouldUpdate更新
+        // 触发setState传入的所有回调
+    }
+    getState() { // --------------------------------------------返回最新state
+        // 获取所有要修改的state状态,循环修改state,返回最新state
+    }
+}
+function shouldUpdate(classInstance, nextState) { // -----------更新state,判断是否需要更新视图,调用forceUpdate()
+    // 生命周期函数 shouldComponentUpdate 再次调用判断是否更新,
+    // 生命周期函数 componentWillUpdate 再此调用表示将要更新,
+    // 调用 classInstance.forceUpdate() 进行更新
+}
+export class Component {
+    constructor(props) {
+        this.updater = new Updater(this); // --------------------updater更新控制器
+    }
+    setState(partialState, callback) { // -----------------------updater.addState
+        // this.updater.addState(partialState, callback);
+    }
+    forceUpdate() { // -------------------------------------------真正更新组件vdom
+        // 根据最新state,获取 新老 renderVdom, domDiff对比
+        // 并挂载this.oldRenderVdom = newRenderVdom
+        // vdom挂载完, 生命周期函数 componentDidUpdate 在此调用
+    }
+}
+```
 
-## react事件由最上级DOM统一监听,再分发处理.
+## react与Vue最大的不同
 
-react并不是直接给真实DOM绑定事件,而是有最上级DOM,DOCUMENT,
+__react不是MVVM__
 
-监听所有DOM的事件,再分派到对应DOM上的对应事件的handler去处理.
+react是setState触发更新，
 
-为什么要这样做?
+非Vue那样 事件触发 model改变，model改变 触发监听。等待一次同步任务全部执行完，下一个微任务更新视图.
 
-给DOM添加合成事件
- * 不是天然的，人工合成的
- * 为什么要合成？
- * 1.做一个类似面向切面编程的操作 AOP 。在用户自己的handler函数之前做一些事情，之后做一些事情
- * 2.处理浏览器的兼容性 提供兼容所有的浏览器的统一的API，屏蔽浏览器的差异
- * 3.模拟事件冒泡的阻止冒泡的过程
+__vue以一次 宏任务 为更新单位__
 
- 这样做被称为切片编程
+__react以一次 事件 为更新单位__
 
+__在效果上是一样的,一次事件 其实就是一个宏任务,本质上是 视图更新的触发机制,以及 视图更新的发动时间不同__
 
+__vue是监听数据,数据改变触发视图更新 react是监听事件,事件触发更新__
 
+当 当次事件引发的 事件冒泡 造成 的所有事件处理函数执行完成后,
 
+得到所有state的变化,按批次处理,一次性更新state,最后调用视图更新函数.
 
+> react中事件处理中， 在事件函数中 state的变化是异步的，但还是在同一次同步任务中
+> 只不过实在当次 事件处理 的最后进行state批量更新
 
+## 类组件ref的实现原理
 
+类组件可以直接使用ref
 
+首先,`constructor`内`this.a = React.createRef()`,创建了一个对象赋值给a
 
+然后,`<input ref={this.a} />` 把a对象传递给了ref属性
 
+最后,`render`的时候发现了ref属性,就会把使`ref.current`指向当前真实DOM
 
- ## forwardRef(function_component)给函数组件加ref
+```js
+class Sum extends React.Component {
+  constructor() {
+    super();
+    this.a = React.createRef();//{current:inputA的真实DOM}
+    this.b = React.createRef();//{current:inputB的真实DOM}
+    this.result = React.createRef();//{current:inputResult的真实DOM}
+  }
+  handleClick = (event) => {
+    let valueA = this.a.current.value;
+    let valueB = this.b.current.value;
+    this.result.current.value = valueA + valueB;
+  }
+  render() {
+    return (
+      <div>
+        <input ref={this.a} />+<input ref={this.b} />
+        <button onClick={this.handleClick}>=</button>
+        <input ref={this.result} />
+      </div>
+    )
+  }
+}
+let element = <Sum />;
+
+ReactDOM.render( element, document.getElementById('root') );
+```
+
+```js
+// 根据虚拟DOM创建真实DOM
+function createDOM(vdom) {
+    let { type, props, ref } = vdom;
+    let dom;//真实DOM
+    if (type && type.$$typeof === REACT_FORWARD_REF_TYPE) {
+      // ...
+    } else if (type === REACT_TEXT) {//文本组件
+      // ...
+    } else if (typeof type === 'function') {
+      // ...
+    }
+    if (props) {
+      // ...
+    }
+    vdom.dom = dom;
+    if (ref) ref.current = dom; // ******
+    return dom;
+}
+```
+
+## 函数组件的ref,forwardRef(function_component)
 
 在React中,不能直接给函数组件使用ref,因为函数组件挂载时,没有新建实例.
 
@@ -536,19 +652,19 @@ class Form extends React.Component {
 ReactDOM.render(<Form />, document.getElementById('root'));
 ```
 
-执行时 实际上是执行 函数组件`forwardRef`,返回的也是 vdom(后面称为v1),
+'Forward'组件`ForwardedTextInput`,类似于函数组件,不渲染真实DOM的vdom
 
-v1 在编译后已经变为`{type:{$$typeof:REACT_FORWARD_REF,render},ref}`
+在编译后已经变为`{type:{$$typeof:REACT_FORWARD_REF,render},props,ref}`,为第一层 vdom(后面称为v1),
 
 `createDOM`形成真实DOM是,发现`v1.type.$$typeof==REACT_FORWARD_REF`,
 
-调用`mountForwardComponent`,传入v1,
+调用`mountForwardComponent`,传入v1,内部调用 `v1.type.render()`,
 
-内部调用 `v1.type.render()`,并传入v1上 父组件 传来的props 及 ref,
+其实就是执行函数组件`TextInput`,并传入v1上 `ForwardedTextInput` 传来的props 及 ref,
 
-此处的render就是真正的`TextInput`,被调用,创建其虚拟节点,并传入ref
+返回 函数组件`TextInput` 的vdom,为第二层vdom(后面称为v1)
 
-再 `createDOM(renderVdom)` 创建真实DOM并返回
+再传入 `createDOM(renderVdom)` 创建真实DOM并返回
 
 ```js
 // 实际上就是把函数组件变成了 另一种函数组件 forwardRef
@@ -560,8 +676,60 @@ function forwardRef(render){
 }
 // 创建虚拟节点时,还是调用该函数组件,返回虚拟对象
 function mountForwardComponent(vdom){
+    //vdom = {type:{$$typeof:REACT_FORWARD_REF,render},props:{},ref:this.textInputRef}
     let {type,props,ref} = vdom;
     let renderVdom = type.render(props,ref);
     return createDOM(renderVdom);
 }
 ```
+
+> react.js 里面的方法似乎都是返回不同类型的对象,react-dom.js 根据不同类型的对象进行真实DOM创建
+
+__不支持类组件用`React.forwardRef(TextInput)`,因为从源码里可以看到是直接调用的render,而不是新建实例,在调用实例的render__
+
+
+## 类组件的 生命周期
+
+```js
+class Counter extends React.Component {
+  //设置默认属性对象
+  static defaultProps = { name: 'zhufeng' }
+  constructor(props) {
+    super(props);
+    //设置默认状态对象
+    this.state = { number: 0 };
+    console.log(`Counter 1.constructor`); // 1.设置属性和状态
+  }
+  componentWillMount() {
+    console.log(`Counter 2.componentWillMount`); // 2.将要挂载
+  }
+  componentDidMount() {
+    console.log(`Counter 4.componentDidMount`); // 4.挂载完成(挂载:真实DOM append到 父真实DOM上)
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(`Counter 5.shouldComponentUpdate`); // 5.是否要更新组件界面,this.state其实都会更新
+    //奇数不更新界面，偶数更新界面。不管要不要更新 
+    return nextState.number % 2 === 0;
+  }
+  componentWillUpdate() {
+    console.log(`Counter 6.componentWillUpdate`); // 6.组件将要更新
+  }
+  componentDidUpdate() { // ---------------------// 六和七 之间会有3.render()
+    console.log(`Counter 7.componentDidUpdate`); // 7. 组件更新完成
+  }
+  handleClick = () => {
+    this.setState({ number: this.state.number + 1 });
+  }
+  render() {
+    console.log(`Counter 3.render`); // 3.计算虚拟DOM
+    return (
+      <div>
+        <p>{this.state.number}</p>
+        <button onClick={this.handleClick}>+</button>
+      </div>
+    )
+  }
+}
+
+```
+
