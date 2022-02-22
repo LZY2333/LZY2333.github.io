@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.8k
+                    6.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    23 分
+                    25 分
                 </div>
                 
 
@@ -999,7 +999,43 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="类组件的子组件的生命周期"><a href="#类组件的子组件的生命周期" class="headerlink" title="类组件的子组件的生命周期"></a>类组件的子组件的生命周期</h2><p>【componentWillReceiveProps】 与 【componentWillUnmount】生命周期何时被调用</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//Component类 里的forceUpdate让类组件真正更新</span>
+<span class="token function">forceUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//把老的虚拟DOM和新的虚拟DOM进行对比，得对比得到的差异更新到真实DOM</span>
+    <span class="token function">compareTwoVdom</span><span class="token punctuation">(</span>oldDOM<span class="token punctuation">.</span>parentNode<span class="token punctuation">,</span> oldRenderVdom<span class="token punctuation">,</span> newRenderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
+<span class="token comment">// 新旧虚拟DOM的更替。</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">compareTwoVdom</span><span class="token punctuation">(</span><span class="token parameter">parentDOM<span class="token punctuation">,</span> oldVdom<span class="token punctuation">,</span> newVdom<span class="token punctuation">,</span> nextDOM</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// if (!oldVdom &amp;&amp; !newVdom) </span>
+    <span class="token comment">// if (oldVdom &amp;&amp; !newVdom) unMountVdom(oldVdom) 卸载------------------【componentWillUnmount】 被调用</span>
+    <span class="token comment">// if (!oldVdom &amp;&amp; newVdom) &#123; createDOM(newVdom)并挂载</span>
+    <span class="token comment">// if (oldVdom &amp;&amp; newVdom &amp;&amp; oldVdom.type !== newVdom.type) &#123; 新老都有但类型不同，比上面多一步卸载</span>
+    <span class="token comment">// &#125; else &#123; updateElement(oldVdom, newVdom); &#125;  // *关键，新老都有，且类型相同，复用原真实DOM节点 或 类实例</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 继续深入比较 新老vdom节点差异，更新到真实DOM</span>
+<span class="token keyword">function</span> <span class="token function">updateElement</span><span class="token punctuation">(</span><span class="token parameter">oldVdom<span class="token punctuation">,</span> newVdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// if (oldVdom.type === REACT_TEXT) &#123; 文本节点，直接更新</span>
+    <span class="token comment">// if (typeof oldVdom.type === 'string') &#123; </span>
+    <span class="token comment">// *关键，原生DOM节点,根据props更新真实DOM属性, 最后再遍历更新孩子节点compareTwoVdom</span>
+
+    <span class="token comment">// if (typeof oldVdom.type === 'function') &#123; * 关键,类组件或函数组件</span>
+
+        <span class="token comment">// if (oldVdom.type.isReactComponent) &#123; updateClassComponent(oldVdom, newVdom); &#125;</span>
+        <span class="token comment">// 类组件,复用老实例,再更新classInstance.updater.emitUpdate(newVdom.props)</span>
+        <span class="token comment">// 内部---------------------------------------------------------【componentWillReceiveProps】被调用</span>
+
+
+        <span class="token comment">// else &#123; updateFunctionComponent(oldVdom, newVdom); &#125;</span>
+        <span class="token comment">// 函数组件，执行函数，拿到最新vdom,compareTwoVdom</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 卸载当前vdom对应的真实DOM，并调用 【componentWillUnmount】，并对子vdom递归调用 unMountVdom 卸载</span>
+<span class="token keyword">function</span> <span class="token function">unMountVdom</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="react的-dom-diff-算法"><a href="#react的-dom-diff-算法" class="headerlink" title="react的 dom-diff 算法"></a>react的 dom-diff 算法</h2>
                 
             </div>
             <hr/>
@@ -1469,7 +1505,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">90k</span>&nbsp;字
+                class="white-color">90.4k</span>&nbsp;字
             
             
             
