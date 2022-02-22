@@ -733,3 +733,45 @@ class Counter extends React.Component {
 
 ```
 
+## 类组件的子组件的生命周期
+
+【componentWillReceiveProps】 与 【componentWillUnmount】生命周期何时被调用
+
+```js
+//Component类 里的forceUpdate让类组件真正更新
+forceUpdate() {
+    //把老的虚拟DOM和新的虚拟DOM进行对比，得对比得到的差异更新到真实DOM
+    compareTwoVdom(oldDOM.parentNode, oldRenderVdom, newRenderVdom);
+}
+
+// 新旧虚拟DOM的更替。
+export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
+    // if (!oldVdom && !newVdom) 
+    // if (oldVdom && !newVdom) unMountVdom(oldVdom) 卸载------------------【componentWillUnmount】 被调用
+    // if (!oldVdom && newVdom) { createDOM(newVdom)并挂载
+    // if (oldVdom && newVdom && oldVdom.type !== newVdom.type) { 新老都有但类型不同，比上面多一步卸载
+    // } else { updateElement(oldVdom, newVdom); }  // *关键，新老都有，且类型相同，复用原真实DOM节点 或 类实例
+}
+
+// 继续深入比较 新老vdom节点差异，更新到真实DOM
+function updateElement(oldVdom, newVdom) {
+    // if (oldVdom.type === REACT_TEXT) { 文本节点，直接更新
+    // if (typeof oldVdom.type === 'string') { 
+    // *关键，原生DOM节点,根据props更新真实DOM属性, 最后再遍历更新孩子节点compareTwoVdom
+
+    // if (typeof oldVdom.type === 'function') { * 关键,类组件或函数组件
+
+        // if (oldVdom.type.isReactComponent) { updateClassComponent(oldVdom, newVdom); }
+        // 类组件,复用老实例,再更新classInstance.updater.emitUpdate(newVdom.props)
+        // 内部---------------------------------------------------------【componentWillReceiveProps】被调用
+
+
+        // else { updateFunctionComponent(oldVdom, newVdom); }
+        // 函数组件，执行函数，拿到最新vdom,compareTwoVdom
+}
+
+// 卸载当前vdom对应的真实DOM，并调用 【componentWillUnmount】，并对子vdom递归调用 unMountVdom 卸载
+function unMountVdom(vdom) { }
+```
+
+## react的 dom-diff 算法
