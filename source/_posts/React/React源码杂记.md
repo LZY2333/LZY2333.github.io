@@ -1,12 +1,12 @@
 ---
-title: React杂记
-date: 2021-11-19 05:39:59
+title: React源码杂记
+date: 2022-02-23 17:49:28
 categories: 技术栈
 tags: 
     - React
 ---
 
-# React杂记
+# React源码杂记
 
 ## 新版本编译后不使用`React.createElement`创建元素
 
@@ -733,7 +733,7 @@ class Counter extends React.Component {
 
 ```
 
-## 类组件的子组件的生命周期
+## 类组件的子组件更新 及 生命周期
 
 【componentWillReceiveProps】 与 【componentWillUnmount】生命周期何时被调用
 
@@ -756,10 +756,13 @@ export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
 // 继续深入比较 新老vdom节点差异，更新到真实DOM
 function updateElement(oldVdom, newVdom) {
     // if (oldVdom.type === REACT_TEXT) { 文本节点，直接更新
-    // if (typeof oldVdom.type === 'string') { 
-    // *关键，原生DOM节点,根据props更新真实DOM属性, 最后再遍历更新孩子节点compareTwoVdom
 
-    // if (typeof oldVdom.type === 'function') { * 关键,类组件或函数组件
+    // if (typeof oldVdom.type === 'string') { *关键，
+    // 原生DOM节点,根据props更新真实DOM属性, 最后再遍历更新孩子节点compareTwoVdom
+    // updateProps(currentDOM, oldVdom.props, newVdom.props);
+    // updateChildren(currentDOM, oldVdom.props.children, newVdom.props.children); // dom-diff
+
+    // if (typeof oldVdom.type === 'function') { *关键,类组件或函数组件
 
         // if (oldVdom.type.isReactComponent) { updateClassComponent(oldVdom, newVdom); }
         // 类组件,复用老实例,再更新classInstance.updater.emitUpdate(newVdom.props)
@@ -768,10 +771,304 @@ function updateElement(oldVdom, newVdom) {
 
         // else { updateFunctionComponent(oldVdom, newVdom); }
         // 函数组件，执行函数，拿到最新vdom,compareTwoVdom
+     // }
 }
 
 // 卸载当前vdom对应的真实DOM，并调用 【componentWillUnmount】，并对子vdom递归调用 unMountVdom 卸载
 function unMountVdom(vdom) { }
 ```
+调用`render()`,内部递归调用`react.createElement()`,得到新vdom树
+`compareTwoVdom`新旧vdom对比，判断vdom的 存在/类型,非同类型的卸载或挂载,同类型的复用并`updateElement`
+`updateElement`同类型vdom进行更新,更新旧节点属性,再遍历孩子`updateChildren`,内部递归调用`updateElement`
 
-## react的 dom-diff 算法
+
+当 类组件 更新 新旧vdom创建完成 进行更替,会调用`compareTwoVdom`(单vdom),再调用`updateElement`更新复用旧真实DOM
+
+类组件 的children节点会 调用`updateChildren`,考虑同层级(顺序/属性改变了的)子vdom的复用,
+
+新老vdom都存在,只需要 先更`updateElement`新属性, 再 将老真实DOM移动,
+
+无newVdom 将其真实DOM删除,无oldVdom就`createDOM(newVChild)`.
+
+__`updateChildren`,`compareTwoVdom`,两者的功能极其类似,都是 对比 新旧vdom是否存在,然后 挂载/卸载 真实DOM,更新vdom.__
+
+两者的区别是`compareTwoVdom`由类组件更新直接调用,`updateChildren`针对类组件的子组件
+
+`updateChildren` 内存在dom-diff算法 在下一问
+
+## react的 dom-diff 算法(写乱了,回头总结)
+调用`render()`,内部递归调用`react.createElement()`,得到新vdom树
+
+事件发生, setState被调用, 类组件实例上的 `forceUpdate` 被调用,里面`compareTwoVdom`比较新旧vdom
+
+拿到 真实DOM更新属性, 再更新孩子节点, dom-diff.
+
+从前往后遍历新 vdom, 对 新vdom进行标记,存在四种情况,无需移动 需要移动 需要新建 需要删除
+
+标记完,无需移动的更新props真实DOM属性,需要删除的 直接removeChild,
+
+需要移动 先从DOM树上removeChild 再插入到对应的位置,需要新建的 新建再插入
+
+什么是需要移动的? react的 dom-diff, 会
+
+优先保证前面的newVdom 对应 的 真实DOM 位置相对不变,如:前三个child,对应 old真实DOM 0 1 4
+
+那么如果存在一个 child 更新后从最后面移到了前几位,会导致 中间大量 DOM 进入 patch{move}
+
+```js
+// 更新孩子节点
+function updateChildren(parentDOM, oldVChildren, newVChildren) {
+    oldVChildren = (Array.isArray(oldVChildren) ? oldVChildren : [oldVChildren]).filter(item => item);
+    newVChildren = (Array.isArray(newVChildren) ? newVChildren : [newVChildren]).filter(item => item);
+    //把老节点存放到一个以key为属性，以节点为值的数组里
+    let keyedOldMap = {};
+    let lastPlacedIndex = 0; // 这个标记之前的点都是要删除的
+    oldVChildren.forEach((oldVChild, index) => {
+        keyedOldMap[oldVChild.key || index] = oldVChild;
+    });
+    //存放操作的补丁包
+    let patch = [];
+    newVChildren.forEach((newVChild, index) => {
+        let newKey = newVChild.key || index;
+        let oldVChild = keyedOldMap[newKey];
+        if (oldVChild) {
+            //更新老节点
+            updateElement(oldVChild, newVChild); // * 有老的节点,无需移动的,直接更新属性就行,不放入patch
+            if (oldVChild.mountIndex < lastPlacedIndex) { // 有老节点,且其 old真实DOM 在当前已排好的 队列之后,需要移动插入
+                patch.push({
+                    type: MOVE,
+                    oldVChild,
+                    newVChild,
+                    mountIndex: index
+                });
+            }
+            //如果你复用了一个老节点，那就要从map中删除
+            delete keyedOldMap[newKey];
+            lastPlacedIndex = Math.max(lastPlacedIndex, oldVChild.mountIndex);
+        } else {
+            patch.push({ // 需要新建的 放入patch
+                type: PLACEMENT,
+                newVChild,
+                mountIndex: index
+            });
+        }
+    });
+    //获取所有的要移动的老节点
+    let moveChild = patch.filter(action => action.type === MOVE).map(action => action.oldVChild);
+    //把剩下的没有复用到的老节点和要移动的节点全部从DOM树中删除
+    let deleteVChildren = Object.values(keyedOldMap)
+    deleteVChildren.concat(moveChild).forEach(oldVChild => {
+        let currentDOM = findDOM(oldVChild);
+        parentDOM.removeChild(currentDOM);
+    });
+    if (patch) { // 真实节点插入,到 没动的节点内,前几位就是没动的节点
+        patch.forEach(action => { // 循环遍历  newVdom
+            let { type, oldVChild, newVChild, mountIndex } = action
+            let childNodes = parentDOM.childNodes;//[0 A,1:C:2 E]
+            let currentDOM;
+            if (type === PLACEMENT) {
+                currentDOM = createDOM(newVChild);
+                newVChild.mountIndex = mountIndex;
+            } else if (type === MOVE) {
+                currentDOM = findDOM(oldVChild);
+                oldVChild.mountIndex = mountIndex;
+            }
+            let childNode = childNodes[mountIndex] // 获取当前节点要插入的位置,是不是已经有节点了
+            if (childNode) {
+                parentDOM.insertBefore(currentDOM, childNode);
+            } else {
+                parentDOM.appendChild(currentDOM);
+            }
+        });
+    }
+}
+```
+
+## 新生命周期
+
+挂载
+constructor
+componentWillMount
+render
+componentDidMount
+
+更新
+componentWillReceiveProps
+shouldComponentUpdate
+componentWillUpdate
+render
+componentDidUpdate
+
+卸载
+componentWillUnmount
+
+从 16.3 开始
+
+【__getDerivedStateFromProps__】从props获取派发状态,static函数,无法使用this
+
+> 被故意设计成 static 函数,因为以前在 componentWillReceiveProps中用setState会死循环,现在不让用this了
+
+【__getSnapshotBeforeUpdate__】render之后新旧vdom即将对比替换时执行
+用于在组件真实DOM更新之前,拿到老真实DOM的一些信息,返回值会传给 componentDidUpdate
+
+挂载
+constructor
+getDerivedStateFromProps
+render
+componentDidMount
+
+更新
+getDerivedStateFromProps
+shouldComponentUpdate
+render
+getSnapshotBeforeUpdate
+componentDidUpdate
+
+卸载
+componentWillUnmount
+
+## context穿透传值原理
+
+__就是provider和consumer指向同一个对象,从这个对象上拿值__
+
+`react.createContext()`,返回一个对象context,内含provider,consumer,这两个对象,又循环引用context
+
+__渲染__
+当`createDom()` 创建DOM节点时发现类型为provider,就把provider接受的props,绑在`provider._contexts._currentValue`身上
+当`createDom()` 发现当前节点类型为consumer,因为两者的`_contexts`指向一个对象,就从其`consumer._contexts._currentValue`身上读值
+函数组件,将读到的值传给 子函数组件 执行返回新vdom,再递归`createDom()`
+
+类组件,在创建 实例的时候,拿到类上的static属性赋给实例,`classInstance.context = ClassComponent.contextType._currentValue;`
+
+__更新__
+新旧vdom 同type 进入`updateElement`,判断vdom类型为`provider`和`consumer`时,
+`provider` 用新props的value,更新context对象,并继续`compareTwoVdom`其子组件
+`consumer` 从`_context._currentValue`,拿到属性,调用子函数,返回新vdom,并递归`compareTwoVdom`
+
+类组件,`forceUpdate()`内`this.context = this.constructor.contextType._currentValue;`
+```js
+// react.createContext()
+function createContext() {
+    let context = { $$typeof: REACT_CONTEXT };
+    context.Provider = {
+        $$typeof: REACT_PROVIDER,
+        _context: context
+    }
+    context.Consumer = {
+        $$typeof: REACT_CONTEXT,
+        _context: context
+    }
+    return context;
+}
+// createDom()内对 Provider组件 Consumer组件的处理
+function mountProviderComponent(vdom) {
+    let { type, props } = vdom;
+    let context = type._context;
+    context._currentValue = props.value;
+    let renderVdom = props.children;
+    vdom.oldRenderVdom = renderVdom;
+    return createDOM(renderVdom);
+}
+function mountContextComponent(vdom) {
+    let { type, props } = vdom;
+    let context = type._context;
+    let renderVdom = props.children(context._currentValue);
+    vdom.oldRenderVdom = renderVdom;
+    return createDOM(renderVdom);
+}
+function mountClassComponent(vdom) { // 类组件
+    if (ClassComponent.contextType) {
+        classInstance.context = ClassComponent.contextType._currentValue;
+    }
+    // ......
+}
+```
+
+更新的时候遇到Provider Consumer的处理
+```js
+function updateElement(oldVdom, newVdom) {
+    //如果是文本节点的话
+    if (oldVdom.type.$$typeof === REACT_CONTEXT) {
+        updateContextComponent(oldVdom, newVdom);
+    } else if (oldVdom.type.$$typeof === REACT_PROVIDER) {
+        updateProviderComponent(oldVdom, newVdom);
+    } else if (oldVdom.type === REACT_TEXT) {
+    } else if (typeof oldVdom.type === 'string') {
+    } else if (typeof oldVdom.type === 'function') {
+    }
+    //......
+}
+// provider
+function updateProviderComponent(oldVdom, newVdom) {
+    let currentDOM = findDOM(oldVdom);
+    if (!currentDOM) return;
+    let parentDOM = currentDOM.parentNode;
+    let { type, props } = newVdom;
+    let context = type._context; // 拿到context对象
+    context._currentValue = props.value; // 用新vdom上的新props上的新value给context赋值
+    let newRenderVdom = props.children; // 继续递归渲染他的孩子
+    compareTwoVdom(parentDOM, oldVdom.oldRenderVdom, newRenderVdom);
+    newVdom.oldRenderVdom = newRenderVdom;
+}
+function updateContextComponent(oldVdom, newVdom) {
+    let currentDOM = findDOM(oldVdom);
+    if (!currentDOM) return;
+    let parentDOM = currentDOM.parentNode;
+    let { type, props } = newVdom;
+    let context = type._context; // 从_context._currentValue,拿到属性,调用子函数
+    let newRenderVdom = props.children(context._currentValue);
+    compareTwoVdom(parentDOM, oldVdom.oldRenderVdom, newRenderVdom);
+    newVdom.oldRenderVdom = newRenderVdom;
+}
+```
+
+__context使用方式__
+```js
+// * 1.这里必须这样创建context
+let ThemeContext = React.createContext();
+const { Provider, Consumer } = ThemeContext;
+
+let style = { margin: '5px', padding: '5px' };
+function Header() {
+    return (
+        // * 必须写 <Consumer>{ (接受context)=>{} }</Consumer>
+        <Consumer>
+            {
+                // 额外提一点,注意这里是括号,不是大括号,用大括号得写return,括号可以省略return
+                (contextValue) => (
+                    <div style={{ ...style, border: `5px solid ${contextValue.color}` }}> Header </div>
+                )
+            }
+        </Consumer>
+    )
+}
+class Main extends React.Component {
+    // * 2. 类组件这里必须写 static contextType = 创建的那个context对象
+    static contextType = ThemeContext 
+    render() {
+        return (
+            // 类组件这里必须 从 this.context 读provider传递的值
+            <div style={{ ...style, border: `5px solid ${this.context.color}` }}> Main </div>
+        )
+    }
+}
+
+class Page extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { color: 'black' };
+    }
+    changeColor = (color) => { this.setState({ color }); }
+    render() {
+        let contextValue = { color: this.state.color, changeColor: this.changeColor };
+        return (
+            // * 3. 这里必须传值写value
+            <Provider value={contextValue}> 
+                <div style={{ ...style, width: '250px', border: `5px solid ${this.state.color}` }}>
+                    Page <Header /> <Main />
+                </div>
+            </Provider >
+        )
+    }
+}
+```
