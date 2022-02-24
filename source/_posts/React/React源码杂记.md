@@ -1072,3 +1072,45 @@ class Page extends React.Component {
     }
 }
 ```
+
+## react性能优化
+
+性能优化的关键是减少渲染次数
+
+优化方向:
+如果 类组件 函数组件 属性没有修改的话，无需重新渲染。
+
+> 注意dom-diff也是性能优化，但是dom-diff是新旧vdom对比，目的是是通过复用老真实DOM来减少真实DOM的渲染
+> PureComponent 是新旧props对比，减少render函数调用，连vdom都不生成。
+
+类组件可使用`PureComponent`
+```js
+// 就是shouldComponentUpdate不同。
+class PureComponent extends Component {
+  shouldComponentUpdate(newProps, nextState) {
+    return !shallowEqual(this.props, newProps) || !shallowEqual(this.state, nextState);
+  }
+}
+// 浅比较
+export function shallowEqual(obj1, obj2) {
+  if (obj1 === obj2) {
+    return true;
+  }
+  if (typeof obj1 != "object" || obj1 === null || typeof obj2 != "object" || obj2 === null) {
+    return false;
+  }
+  let keys1 = Object.keys(obj1);
+  let keys2 = Object.keys(obj2);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (let key of keys1) {
+    if (!obj2.hasOwnProperty(key) || obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+```
+
+函数组件就是外面包一层，变成类组件，在类组件里比较props
