@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="RxJS repeatWhen实现轮询, 懒前端">
+    <meta name="keywords" content="Node的Git上传脚本, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>RxJS repeatWhen实现轮询 | 懒前端</title>
+    <title>Node的Git上传脚本 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">RxJS repeatWhen实现轮询</h1>
+                    <h1 class="description center-align post-title">Node的Git上传脚本</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RxJS/">
-                                <span class="chip bg-color">RxJS</span>
+                            <a href="/tags/node/">
+                                <span class="chip bg-color">node</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
-                                知识点
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                经验帖
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-24
+                    2022-01-20
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    139
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    1 分
                 </div>
                 
 
@@ -446,134 +446,25 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="RxJS-repeatWhen实现轮询"><a href="#RxJS-repeatWhen实现轮询" class="headerlink" title="RxJS repeatWhen实现轮询"></a>RxJS repeatWhen实现轮询</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>(无关内容，可直接跳过)</p>
-<p>下面是 2021-04-13 23:35:14 的留言 ———————————-</p>
-<p>业务上有个轮询操作，最近又自学了RxJS，</p>
-<p>不想妥协嵌套函数，不想使用settimeout，想写一段代码检视会上大家第一眼看不懂的代码，</p>
-<p>想着憋一个轮询出来应该不难吧….</p>
-<p>结果可能是RxJS用的人相对少，或者很多地方都是能用就行，</p>
-<p>所以问了查了很多地方，问了很多人，也没有满意的答案，</p>
-<p>直到我翻到了repeatWhen这个操作符，才有了一丝希望，谁知道这又是一个新坑的开始…</p>
-<p>经过不断的尝试，搜索，翻看文档，查看源码(在公司没外网权限，手机硬查…..)，</p>
-<p>终于是写了一版(可以说是菜鸟本鸟了)，</p>
-<p>回家复现了出来，这里做个笔记，真能帮到有需要的人便是我最开心的事.</p>
-<p>下面是 2021-11-05 10:25:12 的留言 ———————————-</p>
-<p>今天进一下掘金居然看到有人给这篇文章点赞了</p>
-<p>但是之前文章并没有把 repeatWhen 讲的很透，甚至有个小错误</p>
-<p>这个操作符经过我在公司项目半年的实际运用后已经基本摸清，现在改一版更详细的讲解</p>
-<h2 id="repeatWhen"><a href="#repeatWhen" class="headerlink" title="repeatWhen"></a>repeatWhen</h2><p>首先是最核心的 <strong>repeatWhen</strong></p>
-<p>这个操作符由 <strong>源Observable</strong> 调用,</p>
-<p>repeatWhen接收一个函数, 该函数被称为 <strong>notifier</strong>,</p>
-<p><strong>notifier</strong> 返回值必须是一个Observable,</p>
-<p>当该 返回值Observable 内部的next被调用</p>
-<p>则 源Observable 会再次创建 并被subscribe(再次调用),</p>
-<p>当该 返回值Observable 内部的error complete被调用,</p>
-<p>则 无事发生,事件结束</p>
-<p>最基础的使用方式如下</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-<span class="token keyword">const</span> ori <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">Observer</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span> <span class="token comment">// 源Observable</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token operator">++</span>count<span class="token punctuation">)</span>
-    Observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-ori<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-    <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// notify函数</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">Observer</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            Observer<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token comment">// 1</span>
-<span class="token comment">// 2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h1 id="Node的Git上传脚本"><a href="#Node的Git上传脚本" class="headerlink" title="Node的Git上传脚本"></a>Node的Git上传脚本</h1><p>由于我自己用git的时候每次都是重复的 3个操作</p>
+<p><code>git add .</code>/ <code>git commit -m&quot;XXX&quot;</code>/<code>git push</code> </p>
+<p>希望能写个node脚本一句话解决,发现了这个Simple Git包</p>
+<p>还挺好用</p>
+<h2 id="Simple-Git"><a href="#Simple-Git" class="headerlink" title="Simple Git"></a>Simple Git</h2><p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/simple-git">Simple Git npm包介绍页</a></p>
+<p>新建一个文件,我这里叫<code>bin.js</code></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> simpleGit <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'simple-git'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> git <span class="token operator">=</span> <span class="token function">simpleGit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+git
+<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span>global<span class="token punctuation">.</span>process<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Push to master success"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>其原理是 repeatWhen 创建了一个 源Observable 的镜像,</p>
-<p>当源Observable的complete被调用, 则触发notify函数, 并将 镜像源Observable</p>
-<p>交由notify函数触发</p>
-<p>相当于 镜像源Observable 订阅了 notify 返回的Observable.</p>
-<p>这个 notify 被 镜像源Observable 订阅 的感觉 可以看官方例子理解</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> <span class="token keyword">of</span><span class="token punctuation">,</span> fromEvent <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> repeatWhen <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span><span class="token punctuation">;</span>
+<p><code>npm i</code> 更新一下包,自动下载simple-git</p>
+<p>命令行敲 <code>node bin my-message</code> 就OK了，详细的以后再去研究</p>
 
-<span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token keyword">of</span><span class="token punctuation">(</span><span class="token string">'Repeat message'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> documentClick$ <span class="token operator">=</span> <span class="token function">fromEvent</span><span class="token punctuation">(</span>document<span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-source<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> documentClick$<span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token parameter">data</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>但是个人最建议的使用方式还是下面这种</p>
-<p>repeatWhen 还会给 <strong>notifier</strong> 传入一个 <strong>notifications</strong>,</p>
-<p>这个 <strong>notifications</strong> 似乎是一个 Subject(可理解为Observable的一种)</p>
-<p>当源Observable的complete被调用,<strong>notifications</strong> 内部的next就会被调用</p>
-<p>可直接使用此 <strong>notifications</strong> 而不 new Observable,</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-<span class="token keyword">const</span> ori <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">Observer</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token operator">++</span>count<span class="token punctuation">)</span>
-    Observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-ori<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-    <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">notifications</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> notifications<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-            <span class="token comment">// takeWhile:当内部函数返回true时 调用next,否则complete</span>
-            <span class="token function">takeWhile</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> count <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token comment">//1 2 3 4 5 循环5次</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><a target="_blank" rel="noopener" href="https://rxjs.dev/api/operators/repeatWhen">rxjs_repeatWhen官网解释</a></p>
-<h2 id="实现轮询"><a href="#实现轮询" class="headerlink" title="实现轮询"></a>实现轮询</h2><p>话都在注释里</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component<span class="token punctuation">,</span> OnInit <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Observable<span class="token punctuation">,</span> Subject <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span>
-<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> repeatWhen<span class="token punctuation">,</span>delay<span class="token punctuation">,</span>takeWhile<span class="token punctuation">,</span>timeout <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span>
-
-@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">selector</span><span class="token operator">:</span> <span class="token string">'app-test'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">templateUrl</span><span class="token operator">:</span> <span class="token string">'./test.component.html'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">styleUrls</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'./test.component.css'</span><span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">TestComponent</span> <span class="token keyword">implements</span> <span class="token class-name">OnInit</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token function">ngOnInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span>
-        <span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Observable</span><span class="token punctuation">(</span><span class="token parameter">observer</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'----------start----------'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// start标记</span>
-            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// 模拟异步获取后端数据</span>
-                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// get标记</span>
-                count <span class="token operator">++</span> <span class="token comment">// 模拟拿到数据,并修改状态，例如 进度条进度 todo....</span>
-                observer<span class="token punctuation">.</span><span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 请求完就complete，触发repeatWhen</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        source<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-            <span class="token function">repeatWhen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">notifications</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">return</span> notifications<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
-                    <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                    <span class="token function">takeWhile</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-                        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'judge count &lt; 5 while repeat,count:'</span><span class="token punctuation">,</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        <span class="token keyword">return</span> count <span class="token operator">&lt;</span> <span class="token number">5</span>
-                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                    <span class="token comment">// 可设置20秒轮询超时时间，此20秒包含 请求时间 及 delay(2000) 的时间</span>
-                    <span class="token comment">// 例如在此处20秒大概是5次轮询后超时</span>
-                    <span class="token comment">// timeout(20000) </span>
-                <span class="token punctuation">)</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment">// ----------start---------- (创建新observable发起请求)</span>
-        <span class="token comment">// 2秒 (向后台请求时间)</span>
-        <span class="token comment">// get (获得数据)</span>
-        <span class="token comment">// 2秒 (设置的延迟请求时间)</span>
-        <span class="token comment">// judge count &lt; 5 while repeat,count: 1 (判断是否达到循环终止条件)</span>
-        <span class="token comment">// ----------start---------- (立即下过一次请求开始)</span>
-        <span class="token comment">// .....</span>
-        <span class="token comment">// ----------start---------- (创建新observable发起请求)</span>
-        <span class="token comment">// 2秒 (向后台请求时间)</span>
-        <span class="token comment">// get (获得数据)</span>
-        <span class="token comment">// 2秒 (设置的延迟时间)</span>
-        <span class="token comment">// judge count &lt; 5 while repeat,count: 5 (判断是否达到循环终止条件)</span>
-        <span class="token comment">// (结束)</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -599,7 +490,7 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/02/24/rxjs/rxjs-shi-xian-you-ya-lun-xun/">https://github.com/LZY2333/LZY2333.github.io/2022/02/24/rxjs/rxjs-shi-xian-you-ya-lun-xun/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/01/20/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">https://github.com/LZY2333/LZY2333.github.io/2022/01/20/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -637,8 +528,8 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/RxJS/">
-                                    <span class="chip bg-color">RxJS</span>
+                                <a href="/tags/node/">
+                                    <span class="chip bg-color">node</span>
                                 </a>
                             
                         </div>
@@ -812,13 +703,13 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/02/24/react/react-gao-jie-zu-jian/">
+                <a href="/2022/01/21/mian-shi-ti/js-ji-chu-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="React高阶组件">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="JS基础1">
                         
-                        <span class="card-title">React高阶组件</span>
+                        <span class="card-title">JS基础1</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -829,14 +720,14 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-21
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
+                                    知识点
                                 </a>
                             
                             
@@ -846,8 +737,8 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/React/">
-                        <span class="chip bg-color">React</span>
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                        <span class="chip bg-color">面试题</span>
                     </a>
                     
                 </div>
@@ -861,13 +752,13 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/24/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                <a href="/2022/01/20/sheng-huo/bu-zhi-dao-fa-sha-lai-sao-ge-fu-zi-ba/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="不知道发啥，来扫个福字吧">
                         
-                        <span class="card-title">Node的Git上传脚本</span>
+                        <span class="card-title">不知道发啥，来扫个福字吧</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -878,14 +769,14 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-20
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
-                                    经验帖
+                            <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
+                                    生活区
                                 </a>
                             
                             
@@ -895,8 +786,8 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/node/">
-                        <span class="chip bg-color">node</span>
+                    <a href="/tags/%E8%AE%A1%E5%88%92/">
+                        <span class="chip bg-color">计划</span>
                     </a>
                     
                 </div>
@@ -1043,7 +934,7 @@ ori<span class="token punctuation">.</span><span class="token function">pipe</sp
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">93.8k</span>&nbsp;字
+                class="white-color">93.9k</span>&nbsp;字
             
             
             
