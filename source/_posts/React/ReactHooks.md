@@ -24,9 +24,9 @@ import React from './react';
 
 function App(){
 
-    const [number,setNumber] = React.useState(0);
+    const [number,setNumber] = React.useState(0); // 重新渲染的时候返回的number不一样了
 
-    let handleClick = () => setNumber(number+1)
+    let handleClick = () => setNumber(number+1) // setNumber调用之后会重新渲染，重新渲染的时候
     return (
         <div>
             <p>{number}</p>
