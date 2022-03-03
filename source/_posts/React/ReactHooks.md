@@ -8,10 +8,11 @@ tags:
 
 # Hooks
 
-Hooks可以让你在Function组件内使用state及其他react特性。
+Hooks可以让你在Function组件内使用state及其他react特性,如私有属性 生命周期函数。
 
 class组件已经不推荐使用了
 
+[大佬的reactHooks源码解析](https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA)
 ## useState
 
 给函数组件添加 重复渲染时可读取的 内部state
@@ -157,6 +158,7 @@ export  function useMemo(factory,deps){
       return newMemo;
     }
 }
+```
 
 ## useReducer
 
