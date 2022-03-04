@@ -13,6 +13,11 @@ Hooks可以让你在Function组件内使用state及其他react特性,如私有�
 class组件已经不推荐使用了
 
 [大佬的reactHooks源码解析](https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA)
+
+包含各个hooks的用法 注意事项 代码实现原理等
+
+hooks最重要的是保证顺序
+
 ## useState
 
 给函数组件添加 重复渲染时可读取的 内部state
@@ -37,7 +42,7 @@ function App(){
 }
 ```
 
-__原理__
+__简单实现__(实际上是用了fiber，本质上是链表，非数组储存，且更复杂)
 
 一个 __全局数组__，一个 __全局下标__，初始为0.
 
@@ -162,10 +167,257 @@ export  function useMemo(factory,deps){
 
 ## useReducer
 
+`useState`继承自`useReducer`,
+
+接收一个 `reducer:(state, action) => newState`,返回`[state, dispatch]`
+
+在调用`dispatch(action)`传入`action`,会传给 `reducer`,`reducer` 根据`action` 处理 `oldState`
+
+与`useState`不同,非直接覆盖`oldState`,
+
+可通过`reducer`事先设定处理方式,可获取到`oldState`,并根据`action`处理更多种更复杂的情况,
+```js
+function reducer(state={number:0}, action) {
+  switch (action.type) {
+    case 'ADD':
+      return {number: state.number + 1};
+    case 'MINUS':
+      return {number: state.number - 1};
+    default:
+      return state;
+  }
+}
+
+function Counter(){
+    const [state, dispatch] = React.useReducer(reducer,{number:0});
+    return (
+        <div>
+          Count: {state.number}
+          <button onClick={() => dispatch({type: 'ADD'})}>+</button>
+          <button onClick={() => dispatch({type: 'MINUS'})}>-</button>
+        </div>
+    )
+}
+```
+
+__简单实现原理__
+```js
+export function useReducer(reducer, initialState) {
+    hookStates[hookIndex] = hookStates[hookIndex] || initialState;
+    let currentIndex = hookIndex;
+    function dispatch(action) {
+        //1.获取老状态
+        let oldState = hookStates[currentIndex];
+        //如果有reducer就使用reducer计算新状态
+        if (reducer) {
+            let newState = reducer(oldState, action); // 给reducer传入action
+            hookStates[currentIndex] = newState;
+        } else {
+            //判断action是不是函数，如果是传入老状态，计算新状态
+            let newState = typeof action === 'function' ? action(oldState) : action;
+            hookStates[currentIndex] = newState;
+        }
+        scheduleUpdate();
+    }
+    return [hookStates[hookIndex++], dispatch];
+}
+```
+
 ## useContext
 
-## useEffect
+`useContext(MyContext)` 相当于 class 组件中的 `static contextType = MyContext` 或者 `<MyContext.Consumer>`
 
-## useLayoutEffect+useRef
+接收一个`context`对象,读取订阅 `context`,需要在上层组件树中使用 `<MyContext.Provider value={}>` 来为下层组件提供 context
+
+```js
+const CounterContext = React.createContext();
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'add':
+      return {number: state.number + 1};
+    case 'minus':
+      return {number: state.number - 1};
+    default:
+      return state;
+  }
+}
+function Counter(){
+  let {state,dispatch} = React.useContext(CounterContext);
+  return (
+      <div>
+        <p>{state.number}</p>
+        <button onClick={() => dispatch({type: 'add'})}>+</button>
+        <button onClick={() => dispatch({type: 'minus'})}>-</button>
+      </div>
+  )
+}
+function App(){
+    const [state, dispatch] = React.useReducer(reducer, {number:0});
+    return (
+        <CounterContext.Provider value={{state,dispatch}}>
+          <Counter/>
+        </CounterContext.Provider>
+    )
+}
+```
+
+__简单实现__
+```js
+function useContext(context){
+    return context._currentValue;
+}
+```
+
+## useEffect
+`useEffect` 操作副作用,其接收的函数会在组件渲染完成后执行.
+
+在函数组件主体内（这里指在 React 渲染阶段）改变 DOM、添加订阅、设置定时器、记录日志
+
+以及执行其他包含副作用的操作都是不被允许的，因为这可能会产生莫名其妙的 bug 并破坏 UI 的一致性.
+
+```js
+function Counter() {
+    const [number, setNumber] = React.useState(0);
+    React.useEffect(() => {
+        console.log('开启一个新的定时器')
+        const $timer = setInterval(() => {
+            setNumber(number => number + 1);
+        }, 1000);
+        return () => {
+            console.log('销毁老的定时器');
+            clearInterval($timer);
+        }
+    });
+    return (
+        <p>{number}</p>
+    )
+}
+```
+
+__简单实现__
+```js
+export function useEffect(callback,dependencies){
+    let currentIndex = hookIndex;
+    if(hookStates[hookIndex]){
+        let [destroy,lastDeps] = hookStates[hookIndex];
+        let same = dependencies&&dependencies.every((item,index)=>item === lastDeps[index]);
+        if(same){
+            hookIndex++;
+        }else{
+            destroy&&destroy();
+            setTimeout(()=>{
+                hookStates[currentIndex]=[callback(),dependencies];
+            });
+            hookIndex++;
+        }
+    }else{
+        setTimeout(()=>{
+            hookStates[currentIndex]=[callback(),dependencies];
+        });
+        hookIndex++;
+    }
+}
+```
+
+## useLayoutEffect + useRef
+
+`useEffect` 函数会放入宏任务队列,
+
+`useLayoutEffect` 函数会放入微任务队列,
+
+浏览器绘制属于宏任务,`useLayoutEffect`会在能拿到DOM,但浏览器未开始绘制时执行
+
+```js
+const Animate = ()=>{
+    const ref = React.useRef();
+    React.useLayoutEffect(() => {
+      ref.current.style.transform = `translate(500px)`;//TODO
+      ref.current.style.transition = `all 500ms`;
+    });
+    let style = {
+      width: '100px',
+      height: '100px',
+      borderRadius: '50%',
+      backgroundColor: 'red'
+    }
+    return (
+      <div style={style} ref={ref}></div>
+    )
+}
+```
+
+`useRef`只是创建了一个对象,然后将该对象保存在了链表里以后能拿到而已
+
+reactDOM 在执行渲染时会给这个对象绑定上该组件对应的真实DOM.
+
+```js
+export function useLayoutEffect(callback,dependencies){
+    let currentIndex = hookIndex;
+    if(hookStates[hookIndex]){ 
+        let [destroy,lastDeps] = hookStates[hookIndex];
+        let same = dependencies&&dependencies.every((item,index)=>item === lastDeps[index]);
+        if(same){
+            hookIndex++;
+        }else{
+            destroy&&destroy();
+            queueMicrotask(()=>{
+                hookStates[currentIndex]=[callback(),dependencies];
+            });
+            hookIndex++
+        }
+    }else{ // 如果原本没有,就存起来
+        queueMicrotask(()=>{ // 存的时候,按微任务的顺序存,拿的时候也按微任务的顺序拿.
+            hookStates[currentIndex]=[callback(),dependencies];
+        });
+        hookIndex++;
+    }
+}
+export function useRef(initialState) {
+    hookStates[hookIndex] =  hookStates[hookIndex] || { current: initialState };
+    return hookStates[hookIndex++];
+}
+```
 
 ## forwardRef + useImperativeHandle
+
+`useRef`: 获取原生DOM,或组件
+`forwardRef`: 转发父组件的ref,子组件须接受props和ref作为参数,子组件可将ref挂在到自身某个dom元素上
+`useImperativeHandle`:在函数式组件中，用于定义暴露给父组件的ref方法。
+
+```js
+function Child(props, ref) {
+    const inputRef = React.useRef();
+    React.useImperativeHandle(ref, () => (
+        {
+            focus() {
+                inputRef.current.focus();
+            }
+        }
+    ));
+    return (
+        <input type="text" ref={inputRef} />
+    )
+}
+const ForwardChild = React.forwardRef(Child);
+function Parent() {
+    let [number, setNumber] = React.useState(0);
+    const inputRef = React.useRef();
+    function getFocus() {
+        console.log(inputRef.current);
+        inputRef.current.value = 'focus'; // 代表输入框DOM
+        inputRef.current.focus();
+    }
+    return (
+        <div>
+            <ForwardChild ref={inputRef} />
+            <button onClick={getFocus}>获得焦点</button>
+            <p>{number}</p>
+            <button onClick={() => {
+                debugger
+                setNumber( number + 1)
+            }}>+</button>
+        </div>
+    )
+}
+```
