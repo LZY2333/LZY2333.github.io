@@ -1,12 +1,12 @@
 ---
-title: ReactMini简单实现杂记
+title: React核心
 date: 2022-02-23 17:49:28
 categories: 技术栈
 tags: 
     - React
 ---
 
-# ReactMini简单实现杂记
+# React核心
 
 ## 新版本编译后不使用`React.createElement`创建元素
 
