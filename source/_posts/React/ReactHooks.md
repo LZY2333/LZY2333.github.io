@@ -143,23 +143,23 @@ function App(){
 ```
 
 __原理__
-
+注意,`dependencies` 是潜比较
 ```js
-export  function useMemo(factory,deps){
+export  function useMemo(factory,dependencies){
     if(hookStates[hookIndex]){ // 如果以前有,就进行比较
         let [lastMemo,lastDeps] = hookStates[hookIndex];
-        let same = deps.every((item,index)=>item === lastDeps[index]);
+        let same = dependencies.every((item,index)=>item === lastDeps[index]);
         if(same){ // 数组中设定的依赖值每个都没变,就返回以前的对象
             hookIndex++;
             return lastMemo;
         }else{ // 有依赖项变了,就返回新的
             let newMemo = factory();
-            hookStates[hookIndex++]=[newMemo,deps];
+            hookStates[hookIndex++]=[newMemo,dependencies];
             return newMemo;
         }
     } else { // 如果没有,就保存,并返回初始值
       let newMemo = factory();
-      hookStates[hookIndex++]=[newMemo,deps];
+      hookStates[hookIndex++]=[newMemo,dependencies];
       return newMemo;
     }
 }
@@ -296,6 +296,7 @@ function Counter() {
 ```
 
 __简单实现__
+注意,`dependencies` 是潜比较
 ```js
 export function useEffect(callback,dependencies){
     let currentIndex = hookIndex;
@@ -328,6 +329,7 @@ export function useEffect(callback,dependencies){
 
 浏览器绘制属于宏任务,`useLayoutEffect`会在能拿到DOM,但浏览器未开始绘制时执行
 
+使用
 ```js
 const Animate = ()=>{
     const ref = React.useRef();
