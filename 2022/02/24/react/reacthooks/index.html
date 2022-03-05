@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    2.5k
                 </div>
                 
 
@@ -544,22 +544,22 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
   <span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>原理</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">export</span>  <span class="token keyword">function</span> <span class="token function">useMemo</span><span class="token punctuation">(</span><span class="token parameter">factory<span class="token punctuation">,</span>deps</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<p><strong>原理</strong><br>注意,<code>dependencies</code> 是潜比较</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">export</span>  <span class="token keyword">function</span> <span class="token function">useMemo</span><span class="token punctuation">(</span><span class="token parameter">factory<span class="token punctuation">,</span>dependencies</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span>hookStates<span class="token punctuation">[</span>hookIndex<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token comment">// 如果以前有,就进行比较</span>
         <span class="token keyword">let</span> <span class="token punctuation">[</span>lastMemo<span class="token punctuation">,</span>lastDeps<span class="token punctuation">]</span> <span class="token operator">=</span> hookStates<span class="token punctuation">[</span>hookIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">let</span> same <span class="token operator">=</span> deps<span class="token punctuation">.</span><span class="token function">every</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span>index</span><span class="token punctuation">)</span><span class="token operator">=></span>item <span class="token operator">===</span> lastDeps<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">let</span> same <span class="token operator">=</span> dependencies<span class="token punctuation">.</span><span class="token function">every</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span>index</span><span class="token punctuation">)</span><span class="token operator">=></span>item <span class="token operator">===</span> lastDeps<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">if</span><span class="token punctuation">(</span>same<span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token comment">// 数组中设定的依赖值每个都没变,就返回以前的对象</span>
             hookIndex<span class="token operator">++</span><span class="token punctuation">;</span>
             <span class="token keyword">return</span> lastMemo<span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span> <span class="token comment">// 有依赖项变了,就返回新的</span>
             <span class="token keyword">let</span> newMemo <span class="token operator">=</span> <span class="token function">factory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            hookStates<span class="token punctuation">[</span>hookIndex<span class="token operator">++</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">[</span>newMemo<span class="token punctuation">,</span>deps<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            hookStates<span class="token punctuation">[</span>hookIndex<span class="token operator">++</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">[</span>newMemo<span class="token punctuation">,</span>dependencies<span class="token punctuation">]</span><span class="token punctuation">;</span>
             <span class="token keyword">return</span> newMemo<span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果没有,就保存,并返回初始值</span>
       <span class="token keyword">let</span> newMemo <span class="token operator">=</span> <span class="token function">factory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      hookStates<span class="token punctuation">[</span>hookIndex<span class="token operator">++</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">[</span>newMemo<span class="token punctuation">,</span>deps<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      hookStates<span class="token punctuation">[</span>hookIndex<span class="token operator">++</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">[</span>newMemo<span class="token punctuation">,</span>dependencies<span class="token punctuation">]</span><span class="token punctuation">;</span>
       <span class="token keyword">return</span> newMemo<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -670,7 +670,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
     <span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>简单实现</strong></p>
+<p><strong>简单实现</strong><br>注意,<code>dependencies</code> 是潜比较</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token parameter">callback<span class="token punctuation">,</span>dependencies</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> currentIndex <span class="token operator">=</span> hookIndex<span class="token punctuation">;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span>hookStates<span class="token punctuation">[</span>hookIndex<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -696,6 +696,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
 <h2 id="useLayoutEffect-useRef"><a href="#useLayoutEffect-useRef" class="headerlink" title="useLayoutEffect + useRef"></a>useLayoutEffect + useRef</h2><p><code>useEffect</code> 函数会放入宏任务队列,</p>
 <p><code>useLayoutEffect</code> 函数会放入微任务队列,</p>
 <p>浏览器绘制属于宏任务,<code>useLayoutEffect</code>会在能拿到DOM,但浏览器未开始绘制时执行</p>
+<p>使用</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">Animate</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> ref <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useRef</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     React<span class="token punctuation">.</span><span class="token function">useLayoutEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
@@ -1245,7 +1246,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">96.3k</span>&nbsp;字
+                class="white-color">98.3k</span>&nbsp;字
             
             
             
