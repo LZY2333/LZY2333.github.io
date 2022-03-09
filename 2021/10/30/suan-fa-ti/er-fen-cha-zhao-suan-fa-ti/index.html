@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    5 分
                 </div>
                 
 
@@ -508,23 +508,10 @@
 <blockquote>
 <p>mid = left + (right - left) / 2  防止溢出<br>mid = left + (right - left &gt;&gt; 1) 最终完美写法</p>
 </blockquote>
-<h2 id="理解left-和right-循环最终位置"><a href="#理解left-和right-循环最终位置" class="headerlink" title="理解left 和right 循环最终位置"></a>理解left 和right 循环最终位置</h2><p><code>[1,2,3] 1.5</code> 循环结束后,假设无target</p>
-<p>right 指针必然指向 小于target的数中最大的那个数</p>
-<p>left 指针必然指向 小于target的数中最大的那个数 的右侧第一个数(或者说，第一个大于target的数)</p>
-<p>为什么循环结束 left 必然 在 right 右侧一位?</p>
-<p>因为left right 根据 mid 来移动, 循环每次排除一半数据,left 和right 不断接近</p>
-<p>最后,倒数第二轮只有两种情况</p>
-<p>1.mid = left = right - 1  ,</p>
-<p>  此时下一轮有两种情况,left = mid + 1变成 情况2,或 right = mid - 1 得到 <strong>left在right右侧</strong></p>
-<p>2.mid = left = right</p>
-<p>  此时下一轮不管是 right = mid - 1,还是left = mid + 1, 结果都是 <strong>left在right右侧</strong></p>
-<p>二分查找的精髓就在left 和right 最终位置这里</p>
 <h2 id="搜索插入位置-leetcode-35"><a href="#搜索插入位置-leetcode-35" class="headerlink" title="搜索插入位置(leetcode 35)"></a>搜索插入位置(leetcode 35)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/search-insert-position/">leetcode</a></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">searchInsert</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> left <span class="token operator">=</span> <span class="token number">0</span>
     <span class="token keyword">let</span> right <span class="token operator">=</span> nums<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span>
-    <span class="token comment">// 等于那次也必须得判断，因为可能在最后一个mid上,如[1,2,3,4,5,6] 2</span>
-    <span class="token comment">// 先mid = 3,再mid = 2,再mid = 1,再l = r = mid = 2,如果while没这个 =,就没判断了</span>
     <span class="token keyword">while</span><span class="token punctuation">(</span>left <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">let</span> mid <span class="token operator">=</span> left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">)</span>
         <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">===</span> target<span class="token punctuation">)</span> <span class="token keyword">return</span> mid
@@ -532,7 +519,7 @@
         <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> right <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> left
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="在排序数组中查找元素的第一个和最后一个位置-leetcode-34"><a href="#在排序数组中查找元素的第一个和最后一个位置-leetcode-34" class="headerlink" title="在排序数组中查找元素的第一个和最后一个位置(leetcode 34)"></a>在排序数组中查找元素的第一个和最后一个位置(leetcode 34)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">leetcode</a></p>
 <p>这个应该是最强又最好理解的解法了</p>
@@ -546,13 +533,6 @@
         <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             left <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span>
         <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">>=</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">// 相等的时候，还right = mid - 1，相当于要的就是循环结束后的left right状态</span>
-            <span class="token comment">// 真正含义:用right找左边界左侧第一个不是target的数</span>
-            <span class="token comment">// 原理:只要你还 >= target就不停,左右指针必然不停相互靠近,并靠近target</span>
-            <span class="token comment">// 此时有两种情况 [1,2,2,3,4] 2 ,[1,2,3] 2</span>
-            <span class="token comment">// 只要mid = target,就 right = mid - 1</span>
-            <span class="token comment">// right最后必然指向 target数组左边界 左侧的第一个不是target的数</span>
-            <span class="token comment">// 又由于left最终必然在right右侧一位,所以left指向的必然是 target数组左边界</span>
             right <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
@@ -567,7 +547,7 @@
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span> <span class="token operator">===</span> target <span class="token operator">&amp;&amp;</span> nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">===</span> target<span class="token operator">?</span> <span class="token punctuation">[</span>left<span class="token punctuation">,</span>r<span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="搜索旋转排序数组"><a href="#搜索旋转排序数组" class="headerlink" title="搜索旋转排序数组"></a>搜索旋转排序数组</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array/">leetcode</a></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 只在有序那边找</span>
@@ -620,25 +600,6 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="搜索二维矩阵-leetcode-74"><a href="#搜索二维矩阵-leetcode-74" class="headerlink" title="搜索二维矩阵(leetcode 74)"></a>搜索二维矩阵(leetcode 74)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/search-a-2d-matrix/">leetcode</a><br>一波搞定</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">searchMatrix</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">matrix<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
-    height <span class="token operator">=</span> matrix<span class="token punctuation">.</span>length<span class="token punctuation">,</span>
-    length <span class="token operator">=</span> matrix<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">,</span>
-    r <span class="token operator">=</span> height <span class="token operator">*</span> length <span class="token operator">-</span> <span class="token number">1</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>l <span class="token operator">&lt;=</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> <span class="token punctuation">(</span>r <span class="token operator">-</span> l <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">)</span>
-        <span class="token keyword">let</span> midValue <span class="token operator">=</span> matrix<span class="token punctuation">[</span>Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>mid<span class="token operator">/</span>length<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>mid<span class="token operator">%</span>length<span class="token punctuation">]</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>midValue <span class="token operator">===</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>midValue <span class="token operator">&lt;</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> l <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> r <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token boolean">false</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="寻找两个正序数组的中位数-leetcode-4"><a href="#寻找两个正序数组的中位数-leetcode-4" class="headerlink" title="寻找两个正序数组的中位数(leetcode 4)"></a>寻找两个正序数组的中位数(leetcode 4)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/">leetcode</a></p>
-
                 
             </div>
             <hr/>
@@ -1108,7 +1069,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">98.3k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             
