@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    2.6k
                 </div>
                 
 
@@ -446,11 +446,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h1><p>Hooks可以让你在Function组件内使用state及其他react特性,如私有属性 生命周期函数。</p>
-<p>class组件已经不推荐使用了</p>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA">大佬的reactHooks源码解析</a></p>
-<p>包含各个hooks的用法 注意事项 代码实现原理等</p>
-<p>hooks最重要的是保证顺序</p>
+                <h1 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h1><p><strong>什么是hooks</strong></p>
+<p>Hooks直译为钩子，通常指，系统运行到某一时期时，会调用被注册到该时机的回调函数</p>
+<p>如: <code>window.onload</code> 或 <code>addEventListener</code>注册的回调函数</p>
+<p>react中的hooks 以’use’ 开头,让函数式组件拥有了 生命周期、状态管理、逻辑复用等</p>
+<p>所有作为组件需要具备的能力，避开了class式的写法。</p>
+<p><strong>hooks规范</strong></p>
+<p><code>use</code> + 大写字母的单词就是hooks,只能在react函数组件中调用hook,</p>
+<p>只能在最顶层调用hooks,不能在 条件语句 / 嵌套函数 调用</p>
+<p><strong>为什么需要hooks</strong></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA">大佬的reactHooks源码解析，存一下回头看</a></p>
 <h2 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h2><p>给函数组件添加 重复渲染时可读取的 内部state</p>
 <p>参数:   初始state<br>返回值: 当前状态 和 一个用于更新它的函数。(类似this.setState，但不会合并新旧state)</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'./react'</span><span class="token punctuation">;</span>
@@ -670,7 +675,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
     <span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>简单实现</strong><br>注意,<code>dependencies</code> 是潜比较</p>
+<p><strong>简单实现</strong><br>注意,<code>dependencies</code> 是浅比较</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token parameter">callback<span class="token punctuation">,</span>dependencies</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> currentIndex <span class="token operator">=</span> hookIndex<span class="token punctuation">;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span>hookStates<span class="token punctuation">[</span>hookIndex<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -777,6 +782,11 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
         <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
     <span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="延迟场景产生的闭包问题"><a href="#延迟场景产生的闭包问题" class="headerlink" title="延迟场景产生的闭包问题"></a>延迟场景产生的闭包问题</h2><p>函数在<code>useEffect</code>内定义,且用到了组件内的变量,然后延迟被调用,</p>
+<p>此种情况下,产生了闭包,变量在当前宏任务中的修改,不会再函数执行时体现。</p>
+<p>回头补例子。</p>
+
                 
             </div>
             <hr/>
@@ -1246,7 +1256,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">96.3k</span>&nbsp;字
+                class="white-color">96.4k</span>&nbsp;字
             
             
             
