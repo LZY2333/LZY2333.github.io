@@ -8,16 +8,26 @@ tags:
 
 # Hooks
 
-Hooks可以让你在Function组件内使用state及其他react特性,如私有属性 生命周期函数。
+__什么是hooks__
 
-class组件已经不推荐使用了
+Hooks直译为钩子，通常指，系统运行到某一时期时，会调用被注册到该时机的回调函数
 
-[大佬的reactHooks源码解析](https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA)
+如: `window.onload` 或 `addEventListener`注册的回调函数
 
-包含各个hooks的用法 注意事项 代码实现原理等
+react中的hooks 以'use' 开头,让函数式组件拥有了 生命周期、状态管理、逻辑复用等
 
-hooks最重要的是保证顺序
+所有作为组件需要具备的能力，避开了class式的写法。
 
+__hooks规范__
+
+`use` + 大写字母的单词就是hooks,只能在react函数组件中调用hook,
+
+只能在最顶层调用hooks,不能在 条件语句 / 嵌套函数 调用
+
+__为什么需要hooks__
+
+
+[大佬的reactHooks源码解析，存一下回头看](https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA)
 ## useState
 
 给函数组件添加 重复渲染时可读取的 内部state
@@ -296,7 +306,7 @@ function Counter() {
 ```
 
 __简单实现__
-注意,`dependencies` 是潜比较
+注意,`dependencies` 是浅比较
 ```js
 export function useEffect(callback,dependencies){
     let currentIndex = hookIndex;
@@ -423,3 +433,11 @@ function Parent() {
     )
 }
 ```
+
+## 延迟场景产生的闭包问题
+
+函数在`useEffect`内定义,且用到了组件内的变量,然后延迟被调用,
+
+此种情况下,产生了闭包,变量在当前宏任务中的修改,不会再函数执行时体现。
+
+回头补例子。
