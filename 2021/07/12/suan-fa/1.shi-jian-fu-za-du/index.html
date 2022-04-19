@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    806
+                    827
                 </div>
                 
 
@@ -446,8 +446,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h1><h2 id="时间复杂度分析-的优势"><a href="#时间复杂度分析-的优势" class="headerlink" title="时间复杂度分析 的优势"></a>时间复杂度分析 的优势</h2><p><strong>事后统计法</strong>:将程序跑一遍,通过统计/监控 得到算法执行的时间和占用的内存</p>
-<p>缺点: 1.测试结果依赖测试环境 2.测试结果受数据规模的影响很大</p>
+                <h1 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h1><h2 id="为什么需要-时间复杂度分析"><a href="#为什么需要-时间复杂度分析" class="headerlink" title="为什么需要 时间复杂度分析"></a>为什么需要 时间复杂度分析</h2><p>如果 将程序跑一遍,通过统计/监控 得到算法执行的时间和占用的内存(<strong>事后统计法</strong>)</p>
+<p>这样做得到得数据</p>
+<p>1.受测试环境影响 2.受数据规模的影响很大</p>
 <h2 id="大O复杂度表示法"><a href="#大O复杂度表示法" class="headerlink" title="大O复杂度表示法"></a>大O复杂度表示法</h2><p>假设每行代码执行时间一致,每行执行一次为 1个unit_time</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">int <span class="token function">cal</span><span class="token punctuation">(</span><span class="token parameter">int n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   int sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -464,6 +465,7 @@
 <p><strong>大O 时间复杂度</strong>,也称为 <strong>渐进式时间复杂度</strong>,表示 代码执行时间 随数据规模增长 的变化趋势</p>
 <p>当n趋近无穷大,公式中的 低阶 常量 系数 将不影响左右增长趋势,而可以被忽略.</p>
 <p>T(n)=O(f(n)),最终,上述代码的 大O时间复杂度 被记为 T(n) = O(n²)</p>
+<p>T(n) 总执行时间, F(n) 每行代码总执行次数 </p>
 <h2 id="时间复杂度分析规则"><a href="#时间复杂度分析规则" class="headerlink" title="时间复杂度分析规则"></a>时间复杂度分析规则</h2><p>一段代码</p>
 <p>1.只关注循环执行次数最多的一段代码</p>
 <p>2.总的时间复杂度就等于量级最大的那段代码的时间复杂度</p>
@@ -980,7 +982,7 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">96.4k</span>&nbsp;字
+                class="white-color">97.5k</span>&nbsp;字
             
             
             
