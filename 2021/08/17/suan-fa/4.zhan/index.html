@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    790
+                    798
                 </div>
                 
 
@@ -459,6 +459,7 @@
 <h2 id="栈的应用"><a href="#栈的应用" class="headerlink" title="栈的应用"></a>栈的应用</h2><p><strong>函数调用栈</strong> </p>
 <p><strong>表达式求值</strong><br>两个栈,一个保存数字 一个保存运算符;<br>如果 遇到 数字,直接压入 操作数栈;<br>如果 遇到 运算符 就与栈顶元素 进行比较:<br>如果 比 运算符栈 栈顶元素 优先级高 就 将当前运算符压入栈;<br>如果 比 运算符栈 栈顶元素 优先级低 就 先放着当前运算符<br>从操作数栈 取出栈顶2个操作数,<br>从运算符栈 取出栈顶1个运算符,<br>进行计算,再把计算完的结果插入操作数栈顶,<br>然后 当前运算符 继续与 运算符栈 顶元素进行比较</p>
 <p><strong>括号匹配</strong><br>用栈来保存未匹配的 左括号,从左往右扫描字符,<br>当扫描到左括号时压入栈中<br>当扫描到右括号时从栈顶取出一个左括号进行比较,<br>如果匹配,继续扫描剩下的字符,如果不匹配,则说明为非法格式</p>
+<p><strong>浏览器的前进后退</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
  * 基于链表实现的栈。
  *
@@ -990,7 +991,7 @@ exports<span class="token punctuation">.</span>CreatedStack <span class="token o
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">97.5k</span>&nbsp;字
+                class="white-color">97.7k</span>&nbsp;字
             
             
             
