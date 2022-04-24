@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="时间复杂度, 懒前端">
+    <meta name="keywords" content="CSS面试题, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>时间复杂度 | 懒前端</title>
+    <title>CSS面试题 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">时间复杂度</h1>
+                    <h1 class="description center-align post-title">CSS面试题</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                                <span class="chip bg-color">面试题</span>
+                            </a>
+                        
+                            <a href="/tags/CSS/">
+                                <span class="chip bg-color">CSS</span>
                             </a>
                         
                     </div>
@@ -399,8 +403,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                技术栈
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category">
+                                面试
                             </a>
                         
                     </div>
@@ -412,7 +416,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-12
+                    2022-04-25
                 </div>
                 
 
@@ -421,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    827
+                    12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    1 分
                 </div>
                 
 
@@ -446,73 +450,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h1><h2 id="为什么需要-时间复杂度分析"><a href="#为什么需要-时间复杂度分析" class="headerlink" title="为什么需要 时间复杂度分析"></a>为什么需要 时间复杂度分析</h2><p>如果 将程序跑一遍,通过统计/监控 得到算法执行的时间和占用的内存(<strong>事后统计法</strong>)</p>
-<p>这样做得到得数据</p>
-<p>1.受测试环境影响 2.受数据规模的影响很大</p>
-<h2 id="大O复杂度表示法"><a href="#大O复杂度表示法" class="headerlink" title="大O复杂度表示法"></a>大O复杂度表示法</h2><p>假设每行代码执行时间一致,每行执行一次为 1个unit_time</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">int <span class="token function">cal</span><span class="token punctuation">(</span><span class="token parameter">int n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  int sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-  int j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-      sum <span class="token operator">=</span> sum <span class="token operator">+</span>  i <span class="token operator">*</span> j<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>第 2/3/4 每行 1个unit_time, 5/6 行 n个, 7/8 行 n²个,<br>执行时间 T(n) = (2n² + 2n + 3) * unit_time</p>
-<p><strong>大O 时间复杂度</strong>,也称为 <strong>渐进式时间复杂度</strong>,表示 代码执行时间 随数据规模增长 的变化趋势</p>
-<p>当n趋近无穷大,公式中的 低阶 常量 系数 将不影响左右增长趋势,而可以被忽略.</p>
-<p>T(n)=O(f(n)),最终,上述代码的 大O时间复杂度 被记为 T(n) = O(n²)</p>
-<p>T(n) 总执行时间, F(n) 每行代码总执行次数 </p>
-<h2 id="时间复杂度分析规则"><a href="#时间复杂度分析规则" class="headerlink" title="时间复杂度分析规则"></a>时间复杂度分析规则</h2><p>一段代码</p>
-<p>1.只关注循环执行次数最多的一段代码</p>
-<p>2.总的时间复杂度就等于量级最大的那段代码的时间复杂度</p>
-<p>时间复杂度分析规则类别</p>
-<p><strong>最好/最坏时间复杂度</strong>:在最理想/最糟糕 的情况下的时间复杂度<br>(best/worst case time complexity)<br><strong>平均情况时间复杂度</strong>:在平均 的情况下的时间复杂度<br>(average case time complexity)<br><strong>加权平均时间复杂度</strong>/<strong>期望时间复杂度</strong>:计算 平均情况时间复杂度 时,加入了概率权重</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// n表示数组array的长度</span>
-int <span class="token function">find</span><span class="token punctuation">(</span><span class="token parameter">int<span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">,</span> int n<span class="token punctuation">,</span> int x</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  int pos <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-       pos <span class="token operator">=</span> i<span class="token punctuation">;</span>
-       <span class="token keyword">break</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-  <span class="token punctuation">&#125;</span>
-  <span class="token keyword">return</span> pos<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token comment">// 最好/最坏: O(1),O(n)</span>
-<span class="token comment">// 平均:     元素在0~k~n-1中,需要执行k次,元素在n或不在数组中,需要执行n次,</span>
-<span class="token comment">//           总计n+1种情况,共执行1+2+3...+n+n= n(n+3)/2 次,</span>
-<span class="token comment">//           平均 n(n+3)/2(n+1) 次</span>
-<span class="token comment">// 加权平均: 增加考虑每种情况出现概率权重,</span>
-<span class="token comment">//          假设 1/2 不在数组中,则出现在数组中每个位置概率为w = 1/2n,</span>
-<span class="token comment">//          执行次数为 (1+2+3...+n)*w + n*1/2 = (3n+1)/4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><strong>均摊时间复杂度</strong>:摊还分析/平摊分析,针对存在规律的 <strong>平均情况时间复杂度</strong><br>的一种分析思想<br>(amortized case time complexity)</p>
-<blockquote>
-<p>例如 每一次O(n)的操作,会紧跟着n-1次O(1)的操作,将O(n)均摊在n-1次的O(1)上,最终 时间复杂度为O(1)</p>
-</blockquote>
-<h2 id="常见复杂度量级"><a href="#常见复杂度量级" class="headerlink" title="常见复杂度量级"></a>常见复杂度量级</h2><p>常数阶O(1)　　    字典查找、数组索引</p>
-<p>对数阶O(logN)　　    二分查找</p>
-<p>线性阶O(n)             循环</p>
-<p>线性对数阶O(nlogn)  循环+分而治之</p>
-<p>平方阶O(n²)　　      双重循环</p>
-<p>立方阶O(n³)          多重循环</p>
-<p>K次方阶O(n^k)</p>
-<p>指数阶(2^n)</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// logN 对数阶示例</span>
-i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> n<span class="token punctuation">)</span>  <span class="token punctuation">&#123;</span>
-    i <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>空间复杂度,O(1),O(n),O(n²),表示 算法的储存空间 与数据规模之间 的增长关系</p>
-</blockquote>
-
+                <h1 id="CSS面试题"><a href="#CSS面试题" class="headerlink" title="CSS面试题"></a>CSS面试题</h1><h2 id="什么是重绘和重排"><a href="#什么是重绘和重排" class="headerlink" title="什么是重绘和重排"></a>什么是重绘和重排</h2>
                 
             </div>
             <hr/>
@@ -538,7 +476,7 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/07/12/suan-fa/1.shi-jian-fu-za-du/">https://github.com/LZY2333/LZY2333.github.io/2021/07/12/suan-fa/1.shi-jian-fu-za-du/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/04/25/mian-shi-ti/css-mian-shi-ti/">https://github.com/LZY2333/LZY2333.github.io/2022/04/25/mian-shi-ti/css-mian-shi-ti/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -576,8 +514,12 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                                    <span class="chip bg-color">面试题</span>
+                                </a>
+                            
+                                <a href="/tags/CSS/">
+                                    <span class="chip bg-color">CSS</span>
                                 </a>
                             
                         </div>
@@ -747,17 +689,18 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/07/12/suan-fa/2.shu-zu/">
+                <a href="/2022/04/25/mian-shi-ti/css-mian-shi-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="数组">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="CSS面试题">
                         
-                        <span class="card-title">数组</span>
+                        <span class="card-title">CSS面试题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -767,26 +710,31 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-25
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category">
+                                    面试
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                        <span class="chip bg-color">面试题</span>
+                    </a>
+                    
+                    <a href="/tags/CSS/">
+                        <span class="chip bg-color">CSS</span>
                     </a>
                     
                 </div>
@@ -800,13 +748,13 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/09/mian-shi-ti/v8-shi-ru-he-zhi-xing-yi-duan-js-dai-ma-de/">
+                <a href="/2022/04/24/bin/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="V8是如何执行一段JS代码的">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">V8是如何执行一段JS代码的</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -817,27 +765,15 @@ i <span class="token operator">=</span> <span class="token number">1</span><span
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-24
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
-                                    知识点
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            罗紫宇
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
-                    </a>
-                    
                 </div>
                 
             </div>
