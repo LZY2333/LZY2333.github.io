@@ -569,6 +569,96 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2022/04/25/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
+                            
+                            <span class="card-title">Node的Git上传脚本</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Node的Git上传脚本由于我自己用git的时候每次都是重复的 3个操作
+git add ./ git commit -m&quot;XXX&quot;/git push 
+估计能写个node脚本一句话解决,发现了这个Simple Git包
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-25
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/node/">
+                            <span class="chip bg-color">node</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/04/25/bin/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                            
+                            <span class="card-title"></span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                const simpleGit = require('simple-git');
+const git = simpleGit();
+git
+.init()
+.add('.')
+.commit(global.process.argv[2])
+
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-25
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                罗紫宇
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2022/04/25/mian-shi-ti/mian-shi-ti-html/">
                         <div class="card-image">
                             
@@ -582,8 +672,13 @@
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                面试题HTML如何理解HTML语义化增加代码可读性利于SEO,让搜索引擎更容易读懂无CSS的情况下,页面也能有良好的内容结构.
-script 标签中 defer 和 async 的区别  script：阻碍HTML解析,只有下载好并执行完脚
+                                面试题HTML从地址栏输入URL到首屏渲染首屏渲染涉及的知识体系
+用户发出URL请求 到 页面开始解析的过程,叫做 导航
+
+判断地址栏 输入的是 URL规则 数据 还是 搜索内容：
+beforeunloaded
+
+3.浏览器进程 通过 进程
                             
                         </div>
                         <div class="publish-info">
@@ -667,96 +762,6 @@ script 标签中 defer 和 async 的区别  script：阻碍HTML解析,只有下�
                         </a>
                         
                     </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/04/24/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
-                            
-                            <span class="card-title">Node的Git上传脚本</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                Node的Git上传脚本由于我自己用git的时候每次都是重复的 3个操作
-git add ./ git commit -m&quot;XXX&quot;/git push 
-估计能写个node脚本一句话解决,发现了这个Simple Git包
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-24
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
-                                    经验帖
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/node/">
-                            <span class="chip bg-color">node</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/04/24/bin/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
-                            
-                            <span class="card-title"></span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                const simpleGit = require('simple-git');
-const git = simpleGit();
-git
-.init()
-.add('.')
-.commit(global.process.argv[2])
-
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-24
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                罗紫宇
-                                
-                            </span>
-                        </div>
-                    </div>
-
                     
                 </div>
             </div>
@@ -1213,7 +1218,7 @@ react中的hooks 以’use’ 开
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">98.6k</span>&nbsp;字
+                class="white-color">99.1k</span>&nbsp;字
             
             
             
