@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="面试题HTML, 懒前端">
+    <meta name="keywords" content="面试题Chrome, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>面试题HTML | 懒前端</title>
+    <title>面试题Chrome | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">面试题HTML</h1>
+                    <h1 class="description center-align post-title">面试题Chrome</h1>
                 </div>
             </div>
         </div>
@@ -391,8 +391,8 @@
                                 <span class="chip bg-color">面试题</span>
                             </a>
                         
-                            <a href="/tags/HTML/">
-                                <span class="chip bg-color">HTML</span>
+                            <a href="/tags/Chrome/">
+                                <span class="chip bg-color">Chrome</span>
                             </a>
                         
                     </div>
@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    584
+                    713
                 </div>
                 
 
@@ -450,7 +450,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="面试题HTML"><a href="#面试题HTML" class="headerlink" title="面试题HTML"></a>面试题HTML</h1><h2 id="从地址栏输入URL到首屏渲染"><a href="#从地址栏输入URL到首屏渲染" class="headerlink" title="从地址栏输入URL到首屏渲染"></a>从地址栏输入URL到首屏渲染</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/34453198?group_id=957277541711540224">首屏渲染涉及的知识体系</a></p>
+                <h1 id="面试题Chrome"><a href="#面试题Chrome" class="headerlink" title="面试题Chrome"></a>面试题Chrome</h1><h2 id="从地址栏输入URL到首屏渲染"><a href="#从地址栏输入URL到首屏渲染" class="headerlink" title="从地址栏输入URL到首屏渲染"></a>从地址栏输入URL到首屏渲染</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/34453198?group_id=957277541711540224">首屏渲染涉及的知识体系</a></p>
 <p>用户发出URL请求 到 页面开始解析的过程,叫做 <strong>导航</strong></p>
 <ol>
 <li>判断地址栏 输入的是 <strong>URL规则</strong> 数据 还是 <strong>搜索内容：</strong></li>
@@ -459,11 +459,14 @@
 <p>3.浏览器进程 通过 进程通讯(IPC) 把URL请求 发送至网络进程,网络进程开启真正的HTTP请求<br>4.构建请求行信息<br>5.查找本地是否有对应网站缓存<br>6.DNS寻址,本地有IP缓存的话也会直接返回<br>7.等待TCP队列,同一域名最多6个TCP连接</p>
 <p>8.TCP连接,通过IP和端口号,三次握手<br>9.发送HTTP请求,请求行,请求头<br>10.返回相应行,响应头,响应体<br>11.TCP断开连接<br>12.重定向</p>
 <p>13.数据处理Content-Type<br>14.准备渲染进程<br>15.提交文档</p>
+<h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><h3 id="介绍一下浏览器有哪些进程"><a href="#介绍一下浏览器有哪些进程" class="headerlink" title="介绍一下浏览器有哪些进程"></a>介绍一下浏览器有哪些进程</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fredricen/article/details/105217588">浏览器渲染进程的多线程机制</a></p>
+<h3 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h3><h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><h3 id="什么是DNS寻址"><a href="#什么是DNS寻址" class="headerlink" title="什么是DNS寻址"></a>什么是DNS寻址</h3><h3 id="HTTP-请求的过程"><a href="#HTTP-请求的过程" class="headerlink" title="HTTP 请求的过程"></a>HTTP 请求的过程</h3><p>IP 负责把数据包送达目的主机。<br>UDP 负责把数据包送达具体应用。<br>TCP 保证了数据完整地传输，它的连接可分为三个阶段：建立连接、传输数据和断开连接。</p>
 <h3 id="为什么需要三次握手，两次不行吗？"><a href="#为什么需要三次握手，两次不行吗？" class="headerlink" title="为什么需要三次握手，两次不行吗？"></a>为什么需要三次握手，两次不行吗？</h3><p>为了确定传输是可靠的，要确认客户端和服务器的发送和接收能力。</p>
 <p>第一次握手,你在吗我能发送西给你,<br>第二次握手,确认了服务端的发送能力和接收能力，<br>所以第三次握手才可以确认客户端的接收能力。不然容易出现丢包的现象。</p>
-<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><h3 id="HTTP-TCP请求过程"><a href="#HTTP-TCP请求过程" class="headerlink" title="HTTP TCP请求过程"></a>HTTP TCP请求过程</h3><p>IP 负责把数据包送达目的主机。<br>UDP 负责把数据包送达具体应用。<br>TCP 保证了数据完整地传输，它的连接可分为三个阶段：建立连接、传输数据和断开连接。</p>
-<h3 id="HTTPS为什么更安全"><a href="#HTTPS为什么更安全" class="headerlink" title="HTTPS为什么更安全"></a>HTTPS为什么更安全</h3><h3 id="常见请求头响应体字段"><a href="#常见请求头响应体字段" class="headerlink" title="常见请求头响应体字段"></a>常见请求头响应体字段</h3><h3 id="URI和URL"><a href="#URI和URL" class="headerlink" title="URI和URL"></a>URI和URL</h3><h3 id="浏览器-多进程-多线程"><a href="#浏览器-多进程-多线程" class="headerlink" title="浏览器 多进程 多线程"></a>浏览器 多进程 多线程</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fredricen/article/details/105217588">浏览器渲染进程的多线程机制</a></p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="如何理解HTML语义化"><a href="#如何理解HTML语义化" class="headerlink" title="如何理解HTML语义化"></a>如何理解HTML语义化</h3><p>增加代码可读性<br>利于SEO,让搜索引擎更容易读懂<br>无CSS的情况下,页面也能有良好的内容结构.</p>
+<h3 id="五层因特网协议栈"><a href="#五层因特网协议栈" class="headerlink" title="五层因特网协议栈"></a>五层因特网协议栈</h3><h3 id="HTTP-tcp-ip-请求的特点"><a href="#HTTP-tcp-ip-请求的特点" class="headerlink" title="HTTP tcp/ip 请求的特点"></a>HTTP tcp/ip 请求的特点</h3><h3 id="常见请求头字段"><a href="#常见请求头字段" class="headerlink" title="常见请求头字段"></a>常见请求头字段</h3><h3 id="常见响应头字段"><a href="#常见响应头字段" class="headerlink" title="常见响应头字段"></a>常见响应头字段</h3><h3 id="cookie-和-storage有什么区别"><a href="#cookie-和-storage有什么区别" class="headerlink" title="cookie 和 storage有什么区别"></a>cookie 和 storage有什么区别</h3><h3 id="HTTP-1-0-2-0"><a href="#HTTP-1-0-2-0" class="headerlink" title="HTTP 1.0 2.0"></a>HTTP 1.0 2.0</h3><h3 id="HTTPS为什么更安全"><a href="#HTTPS为什么更安全" class="headerlink" title="HTTPS为什么更安全"></a>HTTPS为什么更安全</h3><p>安全</p>
+<h3 id="URI和URL"><a href="#URI和URL" class="headerlink" title="URI和URL"></a>URI和URL</h3><h2 id="浏览器解析过程"><a href="#浏览器解析过程" class="headerlink" title="浏览器解析过程"></a>浏览器解析过程</h2><p>解析html-词法分析然后解析成dom树、解析css生成css规则树、合并成render树，<br>然后layout、painting渲染、复合图层的合成、GPU绘制、外链资源的处理、loaded和domcontentloaded等</p>
+<h2 id="CSS树"><a href="#CSS树" class="headerlink" title="CSS树"></a>CSS树</h2><p>元素的渲染规则，如包含块，控制框，BFC，IFC<br>优化</p>
+<h2 id="JS引擎"><a href="#JS引擎" class="headerlink" title="JS引擎"></a>JS引擎</h2><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="如何理解HTML语义化"><a href="#如何理解HTML语义化" class="headerlink" title="如何理解HTML语义化"></a>如何理解HTML语义化</h3><p>增加代码可读性<br>利于SEO,让搜索引擎更容易读懂<br>无CSS的情况下,页面也能有良好的内容结构.</p>
 <h3 id="script-标签中-defer-和-async-的区别"><a href="#script-标签中-defer-和-async-的区别" class="headerlink" title="script 标签中 defer 和 async 的区别"></a>script 标签中 defer 和 async 的区别</h3><pre><code>  script：阻碍HTML解析,只有下载好并执行完脚本才会继续解析 HTML。
 </code></pre>
 <p>async script：解析HTML过程中进行脚本的异步下载,下载成功立马执行,有可能会阻断 HTML 的解析。<br>defer script：完全不会阻碍HTML的解析,解析完成之后再按照顺序执行脚本。</p>
@@ -493,7 +496,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/04/25/mian-shi-ti/mian-shi-ti-html/">https://github.com/LZY2333/LZY2333.github.io/2022/04/25/mian-shi-ti/mian-shi-ti-html/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/04/25/mian-shi-ti/mian-shi-ti-chrome/">https://github.com/LZY2333/LZY2333.github.io/2022/04/25/mian-shi-ti/mian-shi-ti-chrome/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -535,8 +538,8 @@
                                     <span class="chip bg-color">面试题</span>
                                 </a>
                             
-                                <a href="/tags/HTML/">
-                                    <span class="chip bg-color">HTML</span>
+                                <a href="/tags/Chrome/">
+                                    <span class="chip bg-color">Chrome</span>
                                 </a>
                             
                         </div>
@@ -710,13 +713,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/05/09/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                <a href="/2022/04/29/mian-shi-ti/mian-shi-ti-react/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="面试题React">
                         
-                        <span class="card-title">Node的Git上传脚本</span>
+                        <span class="card-title">面试题React</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -727,14 +730,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-09
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-29
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
-                                    经验帖
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category">
+                                    面试
                                 </a>
                             
                             
@@ -744,8 +747,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/node/">
-                        <span class="chip bg-color">node</span>
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                        <span class="chip bg-color">面试题</span>
                     </a>
                     
                 </div>
@@ -945,7 +952,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99.3k</span>&nbsp;字
+                class="white-color">99.5k</span>&nbsp;字
             
             
             
