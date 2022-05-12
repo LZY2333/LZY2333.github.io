@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="面试题CSS, 懒前端">
+    <meta name="keywords" content="Node的Git上传脚本, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>面试题CSS | 懒前端</title>
+    <title>Node的Git上传脚本 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">面试题CSS</h1>
+                    <h1 class="description center-align post-title">Node的Git上传脚本</h1>
                 </div>
             </div>
         </div>
@@ -387,12 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                                <span class="chip bg-color">面试题</span>
-                            </a>
-                        
-                            <a href="/tags/CSS/">
-                                <span class="chip bg-color">CSS</span>
+                            <a href="/tags/node/">
+                                <span class="chip bg-color">node</span>
                             </a>
                         
                     </div>
@@ -403,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category">
-                                面试
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                经验帖
                             </a>
                         
                     </div>
@@ -416,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-04-25
+                    2022-05-12
                 </div>
                 
 
@@ -425,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    330
+                    110
                 </div>
                 
 
@@ -450,17 +446,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="面试题CSS"><a href="#面试题CSS" class="headerlink" title="面试题CSS"></a>面试题CSS</h1><h2 id="什么是盒模型"><a href="#什么是盒模型" class="headerlink" title="什么是盒模型"></a>什么是盒模型</h2><p>CSS盒模型分为 标准盒模型 IE盒模型, 由 margin border padding content</p>
-<p>标准盒模型 width 和 height 只包括 content的大小<br>IE盒模型 width 和 height 等于 content + padding + border</p>
-<p>box-sizing: content-box(默认值,标准盒模型)<br>box-sizing: border-box(IE盒模型)</p>
-<p>一个 块级 默认定位 未声明 width 的盒子,其宽度为100%,也就是父盒子content的宽度,同时盒子的padding和border会向内挤压空间</p>
-<p>一个 绝对定位 未声明width 的盒子</p>
-<p>普通文档流中块框的垂直外边距才会发生外边距合并，行内框、浮动框或绝对定位之间的外边距不会合并。</p>
-<h2 id="CSS选择器的优先级"><a href="#CSS选择器的优先级" class="headerlink" title="CSS选择器的优先级"></a>CSS选择器的优先级</h2><p>内联 &gt; ID选择器 &gt; 类选择器/属性选择器 &gt; 标签选择器。</p>
-<p>会计算 上面四类选择器的 出现次数,从左往右依次比较,以较大的为准,如果相同,则比较下一位.</p>
-<p>如果四位均相同,则 后出现的会覆盖前面出现的</p>
-<p>!important 的优先级最高,内联+important 的优先级最高</p>
-<h2 id="什么是重绘和重排"><a href="#什么是重绘和重排" class="headerlink" title="什么是重绘和重排"></a>什么是重绘和重排</h2><h2 id="水平垂直的多种实现方式"><a href="#水平垂直的多种实现方式" class="headerlink" title="水平垂直的多种实现方式"></a>水平垂直的多种实现方式</h2><h2 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h2><h2 id="lineHeight如何继承"><a href="#lineHeight如何继承" class="headerlink" title="lineHeight如何继承"></a>lineHeight如何继承</h2><h2 id="对BFC的理解"><a href="#对BFC的理解" class="headerlink" title="对BFC的理解"></a>对BFC的理解</h2><h2 id="实现两栏布局"><a href="#实现两栏布局" class="headerlink" title="实现两栏布局"></a>实现两栏布局</h2><h2 id="实现圣杯布局和双飞翼布局"><a href="#实现圣杯布局和双飞翼布局" class="headerlink" title="实现圣杯布局和双飞翼布局"></a>实现圣杯布局和双飞翼布局</h2>
+                <h1 id="Node的Git上传脚本"><a href="#Node的Git上传脚本" class="headerlink" title="Node的Git上传脚本"></a>Node的Git上传脚本</h1><p>由于我自己用git的时候每次都是重复的 3个操作</p>
+<p><code>git add .</code>/ <code>git commit -m&quot;XXX&quot;</code>/<code>git push</code> </p>
+<p>估计能写个node脚本一句话解决,发现了这个Simple Git包</p>
+<p>好像挺好玩</p>
+<h2 id="Simple-Git"><a href="#Simple-Git" class="headerlink" title="Simple Git"></a>Simple Git</h2><p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/simple-git">npm包</a></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> simpleGit <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'simple-git'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> git <span class="token operator">=</span> <span class="token function">simpleGit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+git
+<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span>global<span class="token punctuation">.</span>process<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Push to master success"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>命令行敲 <code>node bin my-message</code> 就OK了，详细的以后再去研究</p>
+
                 
             </div>
             <hr/>
@@ -486,7 +488,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/04/25/mian-shi-ti/mian-shi-ti-css/">https://github.com/LZY2333/LZY2333.github.io/2022/04/25/mian-shi-ti/mian-shi-ti-css/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/05/12/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">https://github.com/LZY2333/LZY2333.github.io/2022/05/12/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -524,12 +526,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                                    <span class="chip bg-color">面试题</span>
-                                </a>
-                            
-                                <a href="/tags/CSS/">
-                                    <span class="chip bg-color">CSS</span>
+                                <a href="/tags/node/">
+                                    <span class="chip bg-color">node</span>
                                 </a>
                             
                         </div>
@@ -699,17 +697,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/04/25/mian-shi-ti/mian-shi-ti-chrome/">
+                <a href="/2022/05/12/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="面试题Chrome">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
                         
-                        <span class="card-title">面试题Chrome</span>
+                        <span class="card-title">Node的Git上传脚本</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -719,30 +718,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-25
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category">
-                                    面试
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
-                    </a>
-                    
-                    <a href="/tags/Chrome/">
-                        <span class="chip bg-color">Chrome</span>
+                    <a href="/tags/node/">
+                        <span class="chip bg-color">node</span>
                     </a>
                     
                 </div>
@@ -756,31 +752,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/19/mian-shi-ti/mian-shi-ti-algorithm/">
+                <a href="/2022/05/10/yue-du-za-ji/js/yue-du-za-ji-js/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="面试题Algorithm">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="阅读杂记JS">
                         
-                        <span class="card-title">面试题Algorithm</span>
+                        <span class="card-title">阅读杂记JS</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            jS杂记，阅读杂记系列为 【对日常看过的一些有趣帖子的笔记】/【对某一细节进行搜索深入了解后的分析】/【对某一技术原理架构分析后的脑图】，总贴记录 待研究的知识点 及 小知识点，分贴记录大知识点
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category">
-                                    面试
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
@@ -790,12 +786,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">JS基础</span>
                     </a>
                     
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
                 </div>

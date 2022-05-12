@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Node的Git上传脚本, 懒前端">
+    <meta name="keywords" content="阅读杂记React, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Node的Git上传脚本 | 懒前端</title>
+    <title>阅读杂记React | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Node的Git上传脚本</h1>
+                    <h1 class="description center-align post-title">阅读杂记React</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/node/">
-                                <span class="chip bg-color">node</span>
+                            <a href="/tags/React/">
+                                <span class="chip bg-color">React</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                <span class="chip bg-color">杂记</span>
                             </a>
                         
                     </div>
@@ -412,7 +416,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-05-11
+                    2022-04-29
                 </div>
                 
 
@@ -421,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    110
+                    163
                 </div>
                 
 
@@ -446,23 +450,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Node的Git上传脚本"><a href="#Node的Git上传脚本" class="headerlink" title="Node的Git上传脚本"></a>Node的Git上传脚本</h1><p>由于我自己用git的时候每次都是重复的 3个操作</p>
-<p><code>git add .</code>/ <code>git commit -m&quot;XXX&quot;</code>/<code>git push</code> </p>
-<p>估计能写个node脚本一句话解决,发现了这个Simple Git包</p>
-<p>好像挺好玩</p>
-<h2 id="Simple-Git"><a href="#Simple-Git" class="headerlink" title="Simple Git"></a>Simple Git</h2><p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/simple-git">npm包</a></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> simpleGit <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'simple-git'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> git <span class="token operator">=</span> <span class="token function">simpleGit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-git
-<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span>global<span class="token punctuation">.</span>process<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Push to master success"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>命令行敲 <code>node bin my-message</code> 就OK了，详细的以后再去研究</p>
-
+                <h1 id="阅读杂记React"><a href="#阅读杂记React" class="headerlink" title="阅读杂记React"></a>阅读杂记React</h1><h2 id="React事件机制-16和17事件机制有什么不同"><a href="#React事件机制-16和17事件机制有什么不同" class="headerlink" title="React事件机制,16和17事件机制有什么不同"></a>React事件机制,16和17事件机制有什么不同</h2><p>这样做的优点</p>
+<p>抹平浏览器差异,更好的实现跨平台<br>方便</p>
+<h2 id="什么是函数式编程"><a href="#什么是函数式编程" class="headerlink" title="什么是函数式编程"></a>什么是函数式编程</h2><h2 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h2><h2 id="为什么不能在条件语句里写Hook"><a href="#为什么不能在条件语句里写Hook" class="headerlink" title="为什么不能在条件语句里写Hook"></a>为什么不能在条件语句里写Hook</h2><h2 id="useState-useEffect用法及原理"><a href="#useState-useEffect用法及原理" class="headerlink" title="useState useEffect用法及原理"></a>useState useEffect用法及原理</h2><p>useReducer 和 useContext</p>
+<h2 id="自定义Hook-和-useCallback"><a href="#自定义Hook-和-useCallback" class="headerlink" title="自定义Hook 和 useCallback"></a>自定义Hook 和 useCallback</h2><h2 id="useEffect-和-useLayoutEffect-区别"><a href="#useEffect-和-useLayoutEffect-区别" class="headerlink" title="useEffect 和 useLayoutEffect 区别"></a>useEffect 和 useLayoutEffect 区别</h2><h2 id="useCallback-和-useMemo-的区别"><a href="#useCallback-和-useMemo-的区别" class="headerlink" title="useCallback() 和 useMemo() 的区别"></a>useCallback() 和 useMemo() 的区别</h2><h2 id="useEffect-依赖为空数组与-componentDidMount-区别"><a href="#useEffect-依赖为空数组与-componentDidMount-区别" class="headerlink" title="useEffect 依赖为空数组与 componentDidMount 区别"></a>useEffect 依赖为空数组与 componentDidMount 区别</h2><h2 id="HOC-和-hook-的区别"><a href="#HOC-和-hook-的区别" class="headerlink" title="HOC 和 hook 的区别"></a>HOC 和 hook 的区别</h2><h2 id="React-Fiber-的理解"><a href="#React-Fiber-的理解" class="headerlink" title="React Fiber 的理解"></a>React Fiber 的理解</h2><h2 id="react-hooks-与-class-组件对比"><a href="#react-hooks-与-class-组件对比" class="headerlink" title="react hooks 与 class 组件对比"></a>react hooks 与 class 组件对比</h2><h2 id="类组件"><a href="#类组件" class="headerlink" title="类组件"></a>类组件</h2><h3 id="类组件有哪些缺点"><a href="#类组件有哪些缺点" class="headerlink" title="类组件有哪些缺点?"></a>类组件有哪些缺点?</h3><p>(先记一下位置回头总结)[<a target="_blank" rel="noopener" href="https://www.modb.pro/db/122805]">https://www.modb.pro/db/122805]</a></p>
+<h3 id="生命周期有哪些"><a href="#生命周期有哪些" class="headerlink" title="生命周期有哪些"></a>生命周期有哪些</h3><h3 id="setState-同步还是异步"><a href="#setState-同步还是异步" class="headerlink" title="setState 同步还是异步"></a>setState 同步还是异步</h3><h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2>
                 
             </div>
             <hr/>
@@ -488,7 +480,7 @@ git
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/05/11/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">https://github.com/LZY2333/LZY2333.github.io/2022/05/11/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/04/29/yue-du-za-ji/react/yue-du-za-ji-react/">https://github.com/LZY2333/LZY2333.github.io/2022/04/29/yue-du-za-ji/react/yue-du-za-ji-react/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -526,8 +518,12 @@ git
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/node/">
-                                    <span class="chip bg-color">node</span>
+                                <a href="/tags/React/">
+                                    <span class="chip bg-color">React</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                    <span class="chip bg-color">杂记</span>
                                 </a>
                             
                         </div>
@@ -697,30 +693,29 @@ git
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/05/11/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                <a href="/2022/05/10/yue-du-za-ji/js/yue-du-za-ji-js/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="阅读杂记JS">
                         
-                        <span class="card-title">Node的Git上传脚本</span>
+                        <span class="card-title">阅读杂记JS</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            jS杂记，阅读杂记系列为 【对日常看过的一些有趣帖子的笔记】/【对某一细节进行搜索深入了解后的分析】/【对某一技术原理架构分析后的脑图】，总贴记录 待研究的知识点 及 小知识点，分贴记录大知识点
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-11
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-10
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -733,12 +728,15 @@ git
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/node/">
-                        <span class="chip bg-color">node</span>
+                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">JS基础</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
                 </div>
@@ -752,31 +750,31 @@ git
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/05/10/mian-shi-ti/mian-shi-ti-js/">
+                <a href="/2022/04/25/yue-du-za-ji/chrome/yue-du-za-ji-chrome/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="面试题JS">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="阅读杂记Chrome">
                         
-                        <span class="card-title">面试题JS</span>
+                        <span class="card-title">阅读杂记Chrome</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            Chrome杂记，阅读杂记系列为 【对日常看过的一些有趣帖子的笔记】/【对某一细节进行搜索深入了解后的分析】/【对某一技术原理架构分析后的脑图】，总贴记录 待研究的知识点 及 小知识点，分贴记录大知识点
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-25
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category">
-                                    面试
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
@@ -786,12 +784,12 @@ git
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
-                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">JS基础</span>
+                    <a href="/tags/Chrome/">
+                        <span class="chip bg-color">Chrome</span>
                     </a>
                     
                 </div>

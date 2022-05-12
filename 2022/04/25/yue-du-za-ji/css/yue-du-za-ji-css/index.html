@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="面试题Algorithm, 懒前端">
+    <meta name="keywords" content="阅读杂记CSS, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>面试题Algorithm | 懒前端</title>
+    <title>阅读杂记CSS | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">面试题Algorithm</h1>
+                    <h1 class="description center-align post-title">阅读杂记CSS</h1>
                 </div>
             </div>
         </div>
@@ -387,12 +387,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/CSS/">
+                                <span class="chip bg-color">CSS</span>
                             </a>
                         
-                            <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                                <span class="chip bg-color">面试题</span>
+                            <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                <span class="chip bg-color">杂记</span>
                             </a>
                         
                     </div>
@@ -403,8 +403,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category">
-                                面试
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                经验帖
                             </a>
                         
                     </div>
@@ -416,7 +416,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-04-19
+                    2022-04-25
                 </div>
                 
 
@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    331
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    1 分
                 </div>
                 
 
@@ -450,126 +450,17 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="为什么需要-时间复杂度分析"><a href="#为什么需要-时间复杂度分析" class="headerlink" title="为什么需要 时间复杂度分析"></a>为什么需要 时间复杂度分析</h2><p>如果 将程序跑一遍,通过统计/监控 得到算法执行的时间和占用的内存(<strong>事后统计法</strong>)</p>
-<p>这样做得到得数据</p>
-<p>1.受测试环境影响 2.受数据规模的影响很大</p>
-<h2 id="什么是-大O复杂度表示法"><a href="#什么是-大O复杂度表示法" class="headerlink" title="什么是 大O复杂度表示法"></a>什么是 大O复杂度表示法</h2><p><strong>大O 时间复杂度</strong>,也称为 <strong>渐进式时间复杂度</strong>,表示 代码执行时间 随数据规模增长 </p>
-<p>T(n) = O(n²)</p>
-<p>T(n) 总执行时间, F(n) 每行代码总执行次数</p>
-<h2 id="如何进行时间复杂度分析"><a href="#如何进行时间复杂度分析" class="headerlink" title="如何进行时间复杂度分析"></a>如何进行时间复杂度分析</h2><p>一段代码</p>
-<p>1.只关注循环执行次数最多的一段代码</p>
-<p>2.只关注量级最大的那段代码</p>
-<p>时间复杂度分析规则类别</p>
-<p><strong>最好/最坏时间复杂度</strong>:在最理想/最糟糕 的情况下的时间复杂度(best/worst case time complexity)</p>
-<p><strong>平均情况时间复杂度</strong>:在平均 的情况下的时间复杂度(average case time complexity)</p>
-<p><strong>加权平均时间复杂度</strong>/<strong>期望时间复杂度</strong>:计算 平均情况时间复杂度 时,加入了概率权重</p>
-<p><strong>均摊时间复杂度</strong>:摊还分析/平摊分析,针对存在规律的 <strong>平均情况时间复杂度</strong><br>的一种分析思想</p>
-<blockquote>
-<p>例如 每一次O(n)的操作,会紧跟着n-1次O(1)的操作,将O(n)均摊在n-1次的O(1)上,最终 时间复杂度为O(1)</p>
-</blockquote>
-<h2 id="什么是-空间复杂度"><a href="#什么是-空间复杂度" class="headerlink" title="什么是 空间复杂度"></a>什么是 空间复杂度</h2><p>空间复杂度,O(1),O(n),O(n²),表示 算法运行需要的储存空间 与 数据规模 之间 的增长关系</p>
-<h2 id="什么是数组"><a href="#什么是数组" class="headerlink" title="什么是数组"></a>什么是数组</h2><p><strong>线性表结构</strong> 以及 <strong>连续的内存空间</strong> <strong>相同的数据类型</strong>,使数组支持 高效的 下标 <strong>随机访问</strong> 的能力</p>
-<p>缺点:<br>为了保持数据 在内存空间的连续性，插入 删除 操作都会伴随数据搬运。</p>
-<p>插入优化:若数组无序，第k位数据移动到末尾，要插入的数据移动到，k位</p>
-<p>删除优化:标记删除位置，当数组无储存空间时，统一清空重排。</p>
-<p>但是在 <strong>Javascript中不一定是连续分配的</strong>,而可能是 <strong>哈希映射的方式</strong> 存在的。</p>
-<p>JS中的数组底层有两种表现形式 fast 和 slow</p>
-<p>fast: 就是正常的数组,具有固定的长度,并自带扩容功能,内存不够用时申请新地址并进行拷贝</p>
-<p>slow: 其实是个map,散列表 哈希表,键为0 1 2 3,值为数据.</p>
-<h2 id="什么是链表"><a href="#什么是链表" class="headerlink" title="什么是链表"></a>什么是链表</h2><p><strong>储存</strong>: 由 <strong>结点</strong> 组成,包含 数据 和 后继指针,数组需要连续的内存空间,链表的储存用的是 <strong>零散的内存块</strong></p>
-<p><strong>储存</strong>: <strong>数组</strong> 的空间在 <strong>栈</strong> 中分配,<strong>链表</strong> 的空间在 <strong>堆</strong> 中分配</p>
-<p><strong>插入删除</strong>: 数组的 <strong>插入删除</strong> 操作需要保持 内存的连续性 做数据搬移,链表的 <strong>插入删除</strong> 不需要做数据搬移,时间复杂度为O(1)</p>
-<p><strong>查找</strong>: 数组 <strong>下标随机读取</strong> 时间复杂度为O(1),链表 查找 为O(n)</p>
-<p><strong>单链表</strong>: 存在 <strong>头结点</strong> 和 <strong>尾结点</strong>,尾结点的后继指针指向空地址 null.</p>
-<p><strong>循环链表</strong>: 尾结点指向头结点,适合处理具有环形结构特点问题,约瑟夫问题.</p>
-<p><strong>双向链表</strong>: 具有 <strong>前驱指针</strong> (prev)指向前面的结点,支持O(1)找到前驱结点</p>
-<p>数组 可以利用CPU缓存机制,做到快速读取.CPU缓存机制就是CPU读数据是一段一段读的.</p>
-<p>CPU缓存机制是为了弥补读取内存速度过慢CPU计算速度过快之间的差距</p>
-<h2 id="数组链表的优缺点"><a href="#数组链表的优缺点" class="headerlink" title="数组链表的优缺点"></a>数组链表的优缺点</h2><p><strong>数组的优点</strong>: 简单易用,随机访问效率高,查找速度快</p>
-<p><strong>数组的缺点</strong>: 插删效率低,空间利用率低,空间大小固定,空间必须是连续的内存空间</p>
-<p><strong>链表的优点</strong>: 插删效率高,内存利用率高,空间大小不固定</p>
-<p><strong>链表的缺点</strong>: 内存消耗更多,随机访问效率低</p>
-<blockquote>
-<p>数组 一声明就要占用固定大小空间</p>
-</blockquote>
-<h2 id="什么是栈"><a href="#什么是栈" class="headerlink" title="什么是栈"></a>什么是栈</h2><p>只允许在一端插入和删除数据,操作受限的 线性表数据结构</p>
-<p>特性:先进后出,后进先出</p>
-<p>分为 顺序栈,链式栈 两种</p>
-<p>应用: <strong>函数调用栈</strong> <strong>表达式求值</strong> <strong>括号匹配</strong> <strong>浏览器的前进后退</strong></p>
-<h2 id="什么是队列"><a href="#什么是队列" class="headerlink" title="什么是队列"></a>什么是队列</h2><p>只允许在一端插入 另一端删除,操作受限的 线性表数据结构</p>
-<p>特性: 先进先出,后进后出</p>
-<p>分为 顺序队列,链式队列 两种</p>
-<p>队列需要两个指针,标记队列头 和 尾</p>
-<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>冒泡排序: 右侧有序,每一次遍历拿到最大值<br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>相邻元素大小相等时不会进行交换 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong></p>
-<p>插入排序: 左侧有序,左侧有序区间数据右移一位,让给右侧无序区间的第一个数据<br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>发现值相同的元素时插入 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong> (n轮,每轮移动n个数)</p>
-<p>选择排序: 左侧有序,右侧无序区间找到最小值，与左侧有序区间末尾进行交换<br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>是 <strong>不!稳定的排序算法</strong>,<br>任何情况时间复杂度 为 <strong>O(n²)</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 冒泡排序</span>
-<span class="token keyword">const</span> <span class="token function-variable function">bubbleSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// length &lt;= 1 直接return</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> hasChange <span class="token operator">=</span> <span class="token boolean">false</span>
-        <span class="token comment">// 每次冒泡最末尾的数已经位于正确的位置,后续不需要参与比较所以-i-1</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length <span class="token operator">-</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">// 从小到大进行排序</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">const</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
-                arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span>
-                arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp
-                hasChange <span class="token operator">=</span> <span class="token boolean">true</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">// 如果某次冒泡没进行任何交换 说明所有元素已经到位</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>hasChange<span class="token punctuation">)</span> <span class="token keyword">break</span>
-    <span class="token punctuation">&#125;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">const</span> test <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
-<span class="token function">bubbleSort</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 插入排序</span>
-<span class="token keyword">const</span> <span class="token function-variable function">insertionSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">const</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        <span class="token keyword">let</span> j <span class="token operator">=</span> i <span class="token operator">-</span> <span class="token number">1</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span>j<span class="token punctuation">;</span> j <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">// 这里是和temp比大小，不是arr[i]</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> temp<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
-            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-                <span class="token comment">// 找到比j小的数之后要break,j不需要减小了</span>
-                <span class="token keyword">break</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">// temp放这个数后面(j+1)</span>
-        arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp
-    <span class="token punctuation">&#125;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">const</span> testSort <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
-<span class="token function">insertionSort</span><span class="token punctuation">(</span>testSort<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 选择排序</span>
-<span class="token keyword">const</span> <span class="token function-variable function">selectionSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
-    <span class="token comment">// 需要注意这里的边界, 因为需要在内层进行 i+1后的循环，所以外层需要 数组长度-1</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> minIndex <span class="token operator">=</span> i
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> arr<span class="token punctuation">[</span>minIndex<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                minIndex <span class="token operator">=</span> j
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">const</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>minIndex<span class="token punctuation">]</span>
-        arr<span class="token punctuation">[</span>minIndex<span class="token punctuation">]</span> <span class="token operator">=</span> temp
-    <span class="token punctuation">&#125;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">const</span> testSelect <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">]</span>
-<span class="token function">selectionSort</span><span class="token punctuation">(</span>testSelect<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+                <h1 id="阅读杂记CSS"><a href="#阅读杂记CSS" class="headerlink" title="阅读杂记CSS"></a>阅读杂记CSS</h1><h2 id="什么是盒模型"><a href="#什么是盒模型" class="headerlink" title="什么是盒模型"></a>什么是盒模型</h2><p>CSS盒模型分为 标准盒模型 IE盒模型, 由 margin border padding content</p>
+<p>标准盒模型 width 和 height 只包括 content的大小<br>IE盒模型 width 和 height 等于 content + padding + border</p>
+<p>box-sizing: content-box(默认值,标准盒模型)<br>box-sizing: border-box(IE盒模型)</p>
+<p>一个 块级 默认定位 未声明 width 的盒子,其宽度为100%,也就是父盒子content的宽度,同时盒子的padding和border会向内挤压空间</p>
+<p>一个 绝对定位 未声明width 的盒子</p>
+<p>普通文档流中块框的垂直外边距才会发生外边距合并，行内框、浮动框或绝对定位之间的外边距不会合并。</p>
+<h2 id="CSS选择器的优先级"><a href="#CSS选择器的优先级" class="headerlink" title="CSS选择器的优先级"></a>CSS选择器的优先级</h2><p>内联 &gt; ID选择器 &gt; 类选择器/属性选择器 &gt; 标签选择器。</p>
+<p>会计算 上面四类选择器的 出现次数,从左往右依次比较,以较大的为准,如果相同,则比较下一位.</p>
+<p>如果四位均相同,则 后出现的会覆盖前面出现的</p>
+<p>!important 的优先级最高,内联+important 的优先级最高</p>
+<h2 id="什么是重绘和重排"><a href="#什么是重绘和重排" class="headerlink" title="什么是重绘和重排"></a>什么是重绘和重排</h2><h2 id="水平垂直的多种实现方式"><a href="#水平垂直的多种实现方式" class="headerlink" title="水平垂直的多种实现方式"></a>水平垂直的多种实现方式</h2><h2 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h2><h2 id="lineHeight如何继承"><a href="#lineHeight如何继承" class="headerlink" title="lineHeight如何继承"></a>lineHeight如何继承</h2><h2 id="对BFC的理解"><a href="#对BFC的理解" class="headerlink" title="对BFC的理解"></a>对BFC的理解</h2><h2 id="实现两栏布局"><a href="#实现两栏布局" class="headerlink" title="实现两栏布局"></a>实现两栏布局</h2><h2 id="实现圣杯布局和双飞翼布局"><a href="#实现圣杯布局和双飞翼布局" class="headerlink" title="实现圣杯布局和双飞翼布局"></a>实现圣杯布局和双飞翼布局</h2>
                 
             </div>
             <hr/>
@@ -595,7 +486,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/04/19/mian-shi-ti/mian-shi-ti-algorithm/">https://github.com/LZY2333/LZY2333.github.io/2022/04/19/mian-shi-ti/mian-shi-ti-algorithm/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/04/25/yue-du-za-ji/css/yue-du-za-ji-css/">https://github.com/LZY2333/LZY2333.github.io/2022/04/25/yue-du-za-ji/css/yue-du-za-ji-css/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -633,12 +524,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/CSS/">
+                                    <span class="chip bg-color">CSS</span>
                                 </a>
                             
-                                <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                                    <span class="chip bg-color">面试题</span>
+                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                    <span class="chip bg-color">杂记</span>
                                 </a>
                             
                         </div>
@@ -812,19 +703,19 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/25/mian-shi-ti/mian-shi-ti-css/">
+                <a href="/2022/04/25/yue-du-za-ji/chrome/yue-du-za-ji-chrome/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="面试题CSS">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="阅读杂记Chrome">
                         
-                        <span class="card-title">面试题CSS</span>
+                        <span class="card-title">阅读杂记Chrome</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            Chrome杂记，阅读杂记系列为 【对日常看过的一些有趣帖子的笔记】/【对某一细节进行搜索深入了解后的分析】/【对某一技术原理架构分析后的脑图】，总贴记录 待研究的知识点 及 小知识点，分贴记录大知识点
                         
                     </div>
                     <div class="publish-info">
@@ -835,8 +726,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category">
-                                    面试
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
@@ -846,12 +737,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
-                    <a href="/tags/CSS/">
-                        <span class="chip bg-color">CSS</span>
+                    <a href="/tags/Chrome/">
+                        <span class="chip bg-color">Chrome</span>
                     </a>
                     
                 </div>
@@ -865,31 +756,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/03/09/react/redux-zhong-jian-jian-yu-compose/">
+                <a href="/2022/04/19/yue-du-za-ji/algorithm/yue-du-za-ji-algorithm/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Redux中间件与compose">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="阅读杂记Algorithm">
                         
-                        <span class="card-title">Redux中间件与compose</span>
+                        <span class="card-title">阅读杂记Algorithm</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            算法杂记，阅读杂记系列为 【对日常看过的一些有趣帖子的笔记】/【对某一细节进行搜索深入了解后的分析】/【对某一技术原理架构分析后的脑图】，总贴记录 待研究的知识点 及 小知识点，分贴记录大知识点
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-19
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
@@ -899,8 +790,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/React/">
-                        <span class="chip bg-color">React</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
                 </div>
