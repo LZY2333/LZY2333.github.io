@@ -1,13 +1,14 @@
 ---
-title: 面试题Chrome
+title: 阅读杂记Chrome
 date: 2022-04-25 07:11:27
-categories: 面试
+categories: 经验帖
 tags:
-    - 面试题
     - Chrome
+    - 杂记
+summary: Chrome杂记，阅读杂记系列为 【对日常看过的一些有趣帖子的笔记】/【对某一细节进行搜索深入了解后的分析】/【对某一技术原理架构分析后的脑图】，总贴记录 待研究的知识点 及 小知识点，分贴记录大知识点
 ---
 
-# 面试题Chrome
+# 阅读杂记Chrome
 
 
 ## 从地址栏输入URL到首屏渲染
