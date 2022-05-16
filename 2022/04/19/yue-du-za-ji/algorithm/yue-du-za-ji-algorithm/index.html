@@ -500,9 +500,9 @@
 <p>特性: 先进先出,后进后出</p>
 <p>分为 顺序队列,链式队列 两种</p>
 <p>队列需要两个指针,标记队列头 和 尾</p>
-<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>冒泡排序: 右侧有序,每一次遍历拿到最大值<br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>相邻元素大小相等时不会进行交换 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong></p>
-<p>插入排序: 左侧有序,左侧有序区间数据右移一位,让给右侧无序区间的第一个数据<br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>发现值相同的元素时插入 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong> (n轮,每轮移动n个数)</p>
-<p>选择排序: 左侧有序,右侧无序区间找到最小值，与左侧有序区间末尾进行交换<br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>是 <strong>不!稳定的排序算法</strong>,<br>任何情况时间复杂度 为 <strong>O(n²)</strong></p>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>冒泡排序: 右侧有序,外层记录右侧有序个数,内层两两比较放最后<br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>相邻元素大小相等时不会进行交换 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong></p>
+<p>插入排序: 左侧有序,外层记录有序右边界,内层从右边界向左两两比较,插入数据<br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>发现值相同的元素时插入 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong> (n轮,每轮移动n个数)</p>
+<p>选择排序: 左侧有序,外层记录有序右边界，内层从有序右边界向右找出最小数,与有序右边界交换<br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>是 <strong>不!稳定的排序算法</strong>,<br>任何情况时间复杂度 为 <strong>O(n²)</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 冒泡排序</span>
 <span class="token keyword">const</span> <span class="token function-variable function">bubbleSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// length &lt;= 1 直接return</span>
@@ -846,12 +846,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CSS/">
-                        <span class="chip bg-color">CSS</span>
-                    </a>
-                    
                     <a href="/tags/%E6%9D%82%E8%AE%B0/">
                         <span class="chip bg-color">杂记</span>
+                    </a>
+                    
+                    <a href="/tags/CSS/">
+                        <span class="chip bg-color">CSS</span>
                     </a>
                     
                 </div>
@@ -865,13 +865,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/03/09/react/redux-zhong-jian-jian-yu-compose/">
+                <a href="/2022/03/12/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Redux中间件与compose">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
                         
-                        <span class="card-title">Redux中间件与compose</span>
+                        <span class="card-title">Node的Git上传脚本</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -882,14 +882,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-12
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
@@ -899,8 +899,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/React/">
-                        <span class="chip bg-color">React</span>
+                    <a href="/tags/node/">
+                        <span class="chip bg-color">node</span>
                     </a>
                     
                 </div>
@@ -1047,7 +1047,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99.5k</span>&nbsp;字
+                class="white-color">99.6k</span>&nbsp;字
             
             
             
