@@ -141,6 +141,7 @@ __链表的缺点__: 内存消耗更多,随机访问效率低
 是 __不!稳定的排序算法__,
 任何情况时间复杂度 为 __O(n²)__
 
+### 冒泡排序
 ```js
 // 冒泡排序
 const bubbleSort = (arr) => {
@@ -167,6 +168,7 @@ const test = [4, 5, 6, 3, 2, 1]
 bubbleSort(test)
 ```
 
+### 插入排序
 ```js
 // 插入排序
 const insertionSort = (arr) => {
@@ -193,6 +195,7 @@ const testSort = [4, 1, 6, 3, 2, 1]
 insertionSort(testSort)
 ```
 
+### 选择排序
 ```js
 // 选择排序
 const selectionSort = (arr) => {
@@ -214,4 +217,45 @@ const selectionSort = (arr) => {
 }
 const testSelect = [4, 8, 6, 3, 2, 1, 0, 12]
 selectionSort(testSelect)
+```
+
+## 快速排序
+
+```js
+const quickSort = (arr, left, right) => {
+    if (left < right) {
+        let pivot = right
+        let partitionIndex = partition(arr, pivot, left, right)
+        quickSort(arr, left, partitionIndex - 1)
+        quickSort(arr, partitionIndex + 1, right)
+    }
+}
+const partition = (arr, pivot, left, right) => {
+    const pivotVal = arr[pivot]
+    let startIndex = left
+    for (let i = left; i < right; i++) {
+        if (arr[i] < pivotVal) {
+            swap(arr, i, startIndex)
+            startIndex++
+        }
+    }
+    swap(arr, startIndex, pivot)
+    return startIndex
+}
+
+const swap = (arr, i, j) => {
+    const temp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = temp
+}
+
+const testArr = []
+let i = 0
+while (i < 10) {
+    testArr.push(Math.floor(Math.random() * 1000))
+    i++
+}
+console.log('排序前:', testArr)
+quickSort(testArr, 0, testArr.length - 1);
+console.log('排序后:', testArr)
 ```
