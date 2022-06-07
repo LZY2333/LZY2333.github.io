@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="usePolling轮询hooks, 懒前端">
+    <meta name="keywords" content="写了一个通用轮询Hooks, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>usePolling轮询hooks | 懒前端</title>
+    <title>写了一个通用轮询Hooks | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">usePolling轮询hooks</h1>
+                    <h1 class="description center-align post-title">写了一个通用轮询Hooks</h1>
                 </div>
             </div>
         </div>
@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    490
+                    532
                 </div>
                 
 
@@ -446,44 +446,56 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="usePolling轮询hooks"><a href="#usePolling轮询hooks" class="headerlink" title="usePolling轮询hooks"></a>usePolling轮询hooks</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>公司技术栈转了react，技术栈也全面看齐了大厂，敲代码的同时也学到了很多</p>
+                <h1 id="写了一个通用轮询Hooks"><a href="#写了一个通用轮询Hooks" class="headerlink" title="写了一个通用轮询Hooks"></a>写了一个通用轮询Hooks</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>公司技术栈转了react，技术栈也全面看齐了大厂，敲代码的同时也学到了很多</p>
 <p>对自己要求也更高了，每天写代码都在想着要 更简洁更优雅</p>
 <p>业务上有很多轮询的需求，想要一个通用的轮询hooks，可将任意请求改为轮询</p>
 <p>秉着不重复造轮子的理念查了挺久，没有找到非常满意的。</p>
-<p>于是自己写了一个，改了几版，感觉挺好用的，分享一下，大佬轻喷</p>
+<p>于是自己写了一个，改了几版，感觉挺好用的，记录并分享一下，大佬轻喷</p>
 <p>优点:</p>
 <p>1.可由 callback函数 返回的Promise状态自动控制轮询，也可由usePolling返回  开始/停止函数控制轮询</p>
 <p>2.彻底融入组件生命周期，组件销毁时自动取消轮询，无需调用停止函数</p>
 <p>3.使用简单(自卖自夸版)</p>
 <h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">
-<span class="token keyword">const</span> <span class="token function-variable function">Component</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span>useState<span class="token punctuation">,</span>useEffect<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'react'</span>
 
-    <span class="token keyword">const</span> mockGetSomething <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">data</span><span class="token operator">:</span><span class="token string">'something'</span><span class="token punctuation">,</span><span class="token literal-property property">state</span><span class="token operator">:</span><span class="token string">'OK'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">Component</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+
+  <span class="token keyword">const</span> <span class="token function-variable function">mockGetSomething</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token string">'something'</span><span class="token punctuation">,</span> <span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token string">'OK'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
 
-    <span class="token keyword">const</span> <span class="token function-variable function">preparePolling</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> mockGetSomething<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">// do some 数据过滤 or 组件状态改变 or 业务操作......</span>
-            <span class="token keyword">return</span> res
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-        <span class="token comment">// 多写一个then，根据返回数据判断是否需要继续轮询,true继续轮询,false结束轮询</span>
-        <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> res<span class="token punctuation">.</span>state <span class="token operator">===</span> <span class="token string">'OK'</span> <span class="token operator">?</span> <span class="token boolean">true</span> <span class="token operator">:</span> <span class="token boolean">false</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">const</span> <span class="token punctuation">[</span>startPolling<span class="token punctuation">,</span> endPolling<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">usePolling</span><span class="token punctuation">(</span>preparePolling<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> <span class="token function-variable function">preparePolling</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token function">mockGetSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">// do some 数据过滤 or 组件状态改变 or 业务操作......</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+      <span class="token keyword">return</span> res
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+      <span class="token comment">// 多写一个then，根据返回数据判断是否需要继续轮询,true继续轮询,false结束轮询</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> res<span class="token punctuation">.</span>state <span class="token operator">===</span> <span class="token string">'OK'</span> <span class="token operator">?</span> <span class="token boolean">true</span> <span class="token operator">:</span> <span class="token boolean">false</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
 
-    <span class="token comment">// 适合的时机....</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>startPolling<span class="token punctuation">,</span> endPolling<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">usePolling</span><span class="token punctuation">(</span>preparePolling<span class="token punctuation">)</span>
+
+  <span class="token comment">// 适合的时机....</span>
+  <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
     <span class="token function">startPolling</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 
-<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+  <span class="token keyword">return</span> <span class="token operator">&lt;</span>div<span class="token operator">></span> Component test usePolling<span class="token operator">!</span> <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span>useState<span class="token punctuation">,</span>useEffect<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'react'</span>
+
+<span class="token comment">/**
  * 请求改轮询(组件销毁会自动停止轮询,调用endPolling也可主动停止轮询)
  * @param cb 要进行轮询的请求,cb函数返回true继续轮询,返回false或throw error停止轮询
  * @param time 轮询间隔时间
@@ -506,7 +518,7 @@
     <span class="token keyword">const</span> <span class="token function-variable function">startPolling</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">startCount</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">const</span> <span class="token function-variable function">endPolling</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">startCount</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token punctuation">[</span>startPolling<span class="token punctuation">,</span> endPolling<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -532,7 +544,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/06/07/react/usepolling-lun-xun-hooks/">https://github.com/LZY2333/LZY2333.github.io/2022/06/07/react/usepolling-lun-xun-hooks/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/06/07/react/xie-liao-yi-ge-tong-yong-lun-xun-hooks/">https://github.com/LZY2333/LZY2333.github.io/2022/06/07/react/xie-liao-yi-ge-tong-yong-lun-xun-hooks/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -746,13 +758,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/06/07/react/usepolling-lun-xun-hooks/">
+                <a href="/2022/06/07/react/xie-liao-yi-ge-tong-yong-lun-xun-hooks/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="usePolling轮询hooks">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="写了一个通用轮询Hooks">
                         
-                        <span class="card-title">usePolling轮询hooks</span>
+                        <span class="card-title">写了一个通用轮询Hooks</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -978,7 +990,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">101.8k</span>&nbsp;字
+                class="white-color">101.9k</span>&nbsp;字
             
             
             
