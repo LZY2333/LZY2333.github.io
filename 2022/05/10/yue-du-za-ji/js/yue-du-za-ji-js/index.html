@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    95
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -450,7 +450,78 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="阅读杂记JS"><a href="#阅读杂记JS" class="headerlink" title="阅读杂记JS"></a>阅读杂记JS</h1><h2 id="一共有哪些数据类型"><a href="#一共有哪些数据类型" class="headerlink" title="一共有哪些数据类型"></a>一共有哪些数据类型</h2><h2 id="如何判断数据类型"><a href="#如何判断数据类型" class="headerlink" title="如何判断数据类型"></a>如何判断数据类型</h2><h2 id="原型和原型链"><a href="#原型和原型链" class="headerlink" title="原型和原型链"></a>原型和原型链</h2><h2 id="作用域和作用域链"><a href="#作用域和作用域链" class="headerlink" title="作用域和作用域链"></a>作用域和作用域链</h2><h2 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h2><h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><h2 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h2><h2 id="Promise-和-async-await-有什么联系"><a href="#Promise-和-async-await-有什么联系" class="headerlink" title="Promise 和 async/await 有什么联系"></a>Promise 和 async/await 有什么联系</h2><h2 id="手写Promise"><a href="#手写Promise" class="headerlink" title="手写Promise"></a>手写Promise</h2><h2 id="手写call-apply-bind"><a href="#手写call-apply-bind" class="headerlink" title="手写call/apply/bind"></a>手写call/apply/bind</h2><h2 id="手写new"><a href="#手写new" class="headerlink" title="手写new"></a>手写new</h2><h2 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h2><h2 id="0-1-0-2-0-3-如何解决"><a href="#0-1-0-2-0-3-如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3,如何解决"></a>0.1 + 0.2 !== 0.3,如何解决</h2><h2 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h2>
+                <h1 id="阅读杂记JS"><a href="#阅读杂记JS" class="headerlink" title="阅读杂记JS"></a>阅读杂记JS</h1><h2 id="一共有哪些数据类型"><a href="#一共有哪些数据类型" class="headerlink" title="一共有哪些数据类型"></a>一共有哪些数据类型</h2><p>8种: <code>null</code>,<code>undefined</code>,<code>boolean</code>,<code>number</code>,<code>string</code>,<code>Object</code>,<code>Symbol</code>,<code>BigInt</code></p>
+<h3 id="Symbol-表示独一无二的值"><a href="#Symbol-表示独一无二的值" class="headerlink" title="Symbol 表示独一无二的值"></a><code>Symbol</code> 表示独一无二的值</h3><ol>
+<li><p><code>Symbol</code> 接收一个参数表示对<code>Symbol</code>值的一种描述,<code>const s1 = Symbol(&#39;foo&#39;)</code>,</p>
+</li>
+<li><p>传入相同的参数,生成的<code>Symbol</code>也不同</p>
+</li>
+<li><p><code>const s2 = Symbol.for(&#39;foo&#39;)</code>方法会检测上文中是否已存在相同参数创建的<code>Symbol</code>，存在则返回该<code>Symbol</code>，不存在则新建</p>
+</li>
+</ol>
+<p>最常见是在开源库内作为常量,比如用来自定义一个类型 比如 react源码内的 <code>const REACT_ELEMENT = Symbol.for(&#39;react.element&#39;)</code></p>
+<p>或者是作为开源库内的 对象属性, <code>Object.keys</code> 和<code>Object.getOwnPropertyNames</code> 均不会返回<code>Symbol</code>,</p>
+<p><code>Object.getOwnPropertySymbols</code>可以返回对象所有<code>Symbol</code>属性</p>
+<h3 id="BigInt-用来表示大于-2-53-1-的整数"><a href="#BigInt-用来表示大于-2-53-1-的整数" class="headerlink" title="BigInt 用来表示大于 2^53-1 的整数"></a><code>BigInt</code> 用来表示大于 2^53-1 的整数</h3><p><code>BigInt</code> 真没怎么用过,只知道是用来表示 大于 2^53-1 的数的,末尾加n就行</p>
+<p>JS所有数字均以 <strong>双精度64位浮点格式</strong> 表示.</p>
+<h2 id="如何判断数据类型"><a href="#如何判断数据类型" class="headerlink" title="如何判断数据类型"></a>如何判断数据类型</h2><h3 id="typeof-能判断8种基本类型function"><a href="#typeof-能判断8种基本类型function" class="headerlink" title="typeof 能判断8种基本类型function"></a><code>typeof</code> 能判断8种基本类型<code>function</code></h3><p><code>typeof</code> 能判断8种基本类型,及<code>function</code>类型,<code>Object</code>的衍生类型都只能返回<code>object</code>(全部小写)</p>
+<h3 id="instanceof-能判断-实例-的-对象类型"><a href="#instanceof-能判断-实例-的-对象类型" class="headerlink" title="instanceof 能判断 实例 的 对象类型"></a><code>instanceof</code> 能判断 实例 的 对象类型</h3><p><code>instanceof</code> 能判断实例的对象类型,不能判断8种基本数据类型,原理是顺着原型链找,也就是prototype</p>
+<p><code>console.log(people1 instanceof People); // true</code></p>
+<h3 id="Object-prototype-toString-call-能判断所有内置类型"><a href="#Object-prototype-toString-call-能判断所有内置类型" class="headerlink" title="Object.prototype.toString.call() 能判断所有内置类型"></a><code>Object.prototype.toString.call()</code> 能判断所有内置类型</h3><p><code>Object.prototype.toString.call([]); // &quot;[object Array]&quot;</code>(类型首字母大写)</p>
+<h3 id="如何判断变量为数组"><a href="#如何判断变量为数组" class="headerlink" title="如何判断变量为数组"></a>如何判断变量为数组</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js">Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
+arr<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">;</span> <span class="token comment">// true</span>
+arr <span class="token keyword">instanceof</span> <span class="token class-name">Array</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
+<span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// "[object Array]"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="原型和原型链-对象属性的查找"><a href="#原型和原型链-对象属性的查找" class="headerlink" title="原型和原型链(对象属性的查找)"></a>原型和原型链(对象属性的查找)</h2><p><strong>原型</strong>: 每个JS对象创建的时候其<code>prototype</code>都会指向另一个对象,这个对象就是原型.</p>
+<p><strong>原型链</strong>: 每个实例都有自己的原型,原型也是对象,也具有自己的原型,这样的链式结构就是原型链.</p>
+<p>查找对象的属性时,会沿着原型链依次向上查找该属性.</p>
+<h2 id="作用域和作用域链-变量的查找"><a href="#作用域和作用域链-变量的查找" class="headerlink" title="作用域和作用域链(变量的查找)"></a>作用域和作用域链(变量的查找)</h2><p><strong>作用域</strong>: 当前执行代码对变量的查找范围.</p>
+<p><strong>作用域链</strong>:查找变量时,会从当前作用域开始一层层向上查找变量(块级,函数,全局作用域)</p>
+<p><strong>函数的作用域在函数定义的时候就确定了,而不是函数执行时</strong></p>
+<h2 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h2><p><strong>变量对象(Variable object)</strong><br><strong>作用域链(Scope chain)</strong><br><strong>this</strong></p>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>闭包的实现</p>
+<h2 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h2><h2 id="Promise-和-async-await-有什么联系"><a href="#Promise-和-async-await-有什么联系" class="headerlink" title="Promise 和 async/await 有什么联系"></a>Promise 和 async/await 有什么联系</h2><h2 id="手写Promise"><a href="#手写Promise" class="headerlink" title="手写Promise"></a>手写Promise</h2><h2 id="手写call-apply-bind"><a href="#手写call-apply-bind" class="headerlink" title="手写call/apply/bind"></a>手写call/apply/bind</h2><h2 id="手写new"><a href="#手写new" class="headerlink" title="手写new"></a>手写new</h2><h2 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h2><p><strong>浅拷贝</strong>,如果复制的对象是基本数据类型,拷贝的就是值,如果是引用类型,拷贝的就是内存地址,一个对象改变会影响另一个对象</p>
+<h3 id="JSON-parse-JSON-stringify-基本能用版"><a href="#JSON-parse-JSON-stringify-基本能用版" class="headerlink" title="JSON.parse(JSON.stringify()) 基本能用版"></a><code>JSON.parse(JSON.stringify())</code> 基本能用版</h3><ol>
+<li><code>JSON.parse(JSON.stringify())</code>,写法简单,但无法拷贝函数,循环引用,或特殊引用类型.</li>
+</ol>
+<h3 id="forIn遍历-递归自身-丐版"><a href="#forIn遍历-递归自身-丐版" class="headerlink" title="forIn遍历,递归自身,丐版"></a>forIn遍历,递归自身,丐版</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token parameter">target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> target <span class="token operator">!==</span> <span class="token string">'object'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> target<span class="token punctuation">;</span>
+
+    <span class="token keyword">let</span> cloneTarget <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cloneTarget<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">clone</span><span class="token punctuation">(</span>target<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> cloneTarget
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="cloneTarget-兼容数组-map解决循环引用-够用了版"><a href="#cloneTarget-兼容数组-map解决循环引用-够用了版" class="headerlink" title="cloneTarget=[]兼容数组,map解决循环引用,够用了版"></a><code>cloneTarget=[]</code>兼容数组,<code>map</code>解决循环引用,够用了版</h3><p>我没事的时候看架构组源码,看到一个大佬写的很好,就背下来了</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+ * 深拷贝
+ * @param &#123;Object&#125; target 要拷贝的对象
+ * @param &#123;WeakMap&#125; map 用于存储循环引用对象的地址
+ */</span>
+<span class="token keyword">function</span> <span class="token function">deepClone</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WeakMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> target <span class="token operator">!==</span> <span class="token string">'object'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> target<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// `map`解决循环引用</span>
+        <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">let</span> cloneTarget <span class="token operator">=</span> Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token comment">// 兼容数组</span>
+    
+    map<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> cloneTarget<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>obj<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// forIn会循环原型链上的可枚举属性,这里去掉</span>
+            cloneTarget<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">deepClone</span><span class="token punctuation">(</span>target<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">,</span> map<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> cloneTarget
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="WeakMap弱引用-与-强引用"><a href="#WeakMap弱引用-与-强引用" class="headerlink" title="WeakMap弱引用 与 {}强引用"></a>WeakMap弱引用 与 <code>&#123;&#125;</code>强引用</h3><h3 id="forIn循环效率低-while循环效率高-性能优化版"><a href="#forIn循环效率低-while循环效率高-性能优化版" class="headerlink" title="forIn循环效率低,while循环效率高,性能优化版"></a>forIn循环效率低,while循环效率高,性能优化版</h3><h3 id="函数类型及特殊引用类型得专门判断"><a href="#函数类型及特殊引用类型得专门判断" class="headerlink" title="函数类型及特殊引用类型得专门判断"></a>函数类型及特殊引用类型得专门判断</h3><p><code>Map</code>, <code>Set</code> 等类型得专门判断</p>
+<h2 id="0-1-0-2-0-3-如何解决"><a href="#0-1-0-2-0-3-如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3,如何解决"></a>0.1 + 0.2 !== 0.3,如何解决</h2><h2 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h2>
                 
             </div>
             <hr/>
@@ -928,7 +999,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">101.9k</span>&nbsp;字
+                class="white-color">102.8k</span>&nbsp;字
             
             
             
