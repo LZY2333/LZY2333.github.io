@@ -1,12 +1,12 @@
 ---
-title: usePolling轮询hooks
+title: 写了一个通用轮询Hooks
 date: 2022-06-07 20:27:21
 categories: 经验帖
 tags: 
     - React
 ---
 
-# usePolling轮询hooks
+# 写了一个通用轮询Hooks
 
 ## 前言
 
@@ -18,7 +18,7 @@ tags:
 
 秉着不重复造轮子的理念查了挺久，没有找到非常满意的。
 
-于是自己写了一个，改了几版，感觉挺好用的，分享一下，大佬轻喷
+于是自己写了一个，改了几版，感觉挺好用的，记录并分享一下，大佬轻喷
 
 优点:
 
@@ -32,30 +32,40 @@ tags:
 
 ```js
 
-const Component = () => {
+import {useState,useEffect} from 'react'
 
-    const mockGetSomething = new Promise((resolve,reject) => {
-        setTimeout(() => {
-            resolve({data:'something',state:'OK'})
-        },1000)
+export const Component = () => {
+
+  const mockGetSomething = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({ data: 'something', state: 'OK' })
+      }, 1000)
     })
+  }
 
-    const preparePolling = () => {
-        return mockGetSomething.then((res) => {
-            // do some 数据过滤 or 组件状态改变 or 业务操作......
-            return res
-        })
-        // 多写一个then，根据返回数据判断是否需要继续轮询,true继续轮询,false结束轮询
-        .then((res) => {
-            return res.state === 'OK' ? true : false
-        }).catch((error) => {
-            return false
-        })
-    }
-    const [startPolling, endPolling] = usePolling(preparePolling)
+  const preparePolling = () => {
+    return mockGetSomething().then((res) => {
+      // do some 数据过滤 or 组件状态改变 or 业务操作......
+      console.log(res.data)
+      return res
+    })
+      // 多写一个then，根据返回数据判断是否需要继续轮询,true继续轮询,false结束轮询
+      .then((res) => {
+        return res.state === 'OK' ? true : false
+      }).catch((error) => {
+        return false
+      })
+  }
 
-    // 适合的时机....
+  const [startPolling, endPolling] = usePolling(preparePolling)
+
+  // 适合的时机....
+  useEffect(() => {
     startPolling()
+  },[])
+
+  return <div> Component test usePolling! </div>
 }
 
 ```
@@ -63,6 +73,8 @@ const Component = () => {
 ## 源码
 
 ```js
+import {useState,useEffect} from 'react'
+
 /**
  * 请求改轮询(组件销毁会自动停止轮询,调用endPolling也可主动停止轮询)
  * @param cb 要进行轮询的请求,cb函数返回true继续轮询,返回false或throw error停止轮询
