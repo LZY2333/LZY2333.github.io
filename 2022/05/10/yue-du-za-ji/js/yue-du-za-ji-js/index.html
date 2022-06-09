@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    1.6k
                 </div>
                 
 
@@ -485,8 +485,14 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
 <p><strong>执行上下文</strong>: 包含了当前代码在执行期间要用到的 this、变量、对象以及函数等.<br>(所谓的变量提升就在这里发生)</p>
 <p><strong>执行上下文栈</strong>: 用来管理这些执行上下文,是一个 先进后出的 栈结构.</p>
 <p>JS执行时首先会遇到全局代码,栈内压入全局上下文.<br>然后执行到一个函数时,会 从全局执行上下文中取出这段函数的代码进行编译<br>创建该函数的执行上下文,又压入栈内.函数执行完毕,又弹出该执行上下文.</p>
-<p><strong>执行上下文栈</strong> 其实是 JavaScript 引擎追踪函数执行的一个机制，<br>当一次有多个函数被调用时，通过调用栈就能够追踪到哪个函数正在被执行以及各函数之间的调用关系。</p>
+<p><strong>执行上下文栈</strong> 其实就是 JavaScript 引擎追踪函数执行的一个机制，<br>当一次有多个函数被调用时，通过调用栈就能够追踪到哪个函数正在被执行以及各函数之间的调用关系。</p>
 <p><strong>栈溢出</strong> 函数递归没有终止条件,不停压入 执行上下文,导致栈溢出</p>
+<h3 id="什么是变量提升"><a href="#什么是变量提升" class="headerlink" title="什么是变量提升"></a>什么是变量提升</h3><p>JS的执行机制是 以代码块为单位，先编译后执行，分为编译阶段和执行阶段</p>
+<p>编译阶段会生成两部分 执行上下文 和 可执行代码</p>
+<p>在执行代码之前，其实已经将所有的变量 在 执行上下文 准备好了</p>
+<p>变量提升是JS的一个重要设计缺陷, 在ES6中 用 块级作用域 配合 const let 避免这种缺陷。</p>
+<p><strong>作用域</strong>: 函数与变量的可访问范围 全局作用域 函数作用域 块级作用域</p>
+<p>JS的设计者一开始也没想到JS会这么火,没有设计的那么复杂。<br>没想到简单恰恰导致了JS火起来，而火起来后又需要更多的规范</p>
 <h3 id="什么是变量对象"><a href="#什么是变量对象" class="headerlink" title="什么是变量对象"></a>什么是变量对象</h3><p><strong>变量对象(Variable object)</strong><br><strong>作用域链(Scope chain)</strong><br><strong>this</strong></p>
 <h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>闭包的实现</p>
 <h2 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h2><h2 id="Promise-和-async-await-有什么联系"><a href="#Promise-和-async-await-有什么联系" class="headerlink" title="Promise 和 async/await 有什么联系"></a>Promise 和 async/await 有什么联系</h2><h2 id="手写Promise"><a href="#手写Promise" class="headerlink" title="手写Promise"></a>手写Promise</h2><h2 id="手写call-apply-bind"><a href="#手写call-apply-bind" class="headerlink" title="手写call/apply/bind"></a>手写call/apply/bind</h2><h2 id="手写new"><a href="#手写new" class="headerlink" title="手写new"></a>手写new</h2><h2 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h2><p><strong>浅拷贝</strong>,如果复制的对象是基本数据类型,拷贝的就是值,如果是引用类型,拷贝的就是内存地址,一个对象改变会影响另一个对象</p>
@@ -1007,7 +1013,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">103.1k</span>&nbsp;字
+                class="white-color">103.4k</span>&nbsp;字
             
             
             
