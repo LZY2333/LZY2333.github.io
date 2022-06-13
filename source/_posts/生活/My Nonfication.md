@@ -15,9 +15,9 @@ summary: 为了踏出的每一步都能够富有真实的意义，为了有一�
 曲：あっこゴリラ/PARKGOLF
 编曲：PARKGOLF
 
-![《My Nonfiction》QQ音乐链接](https://c.y.qq.com/base/fcgi-bin/u?__=R8MgYcYyOzOa)
+[《My Nonfiction》QQ音乐链接](https://c.y.qq.com/base/fcgi-bin/u?__=R8MgYcYyOzOa)
 
-![《My Nonfiction》BiliBili链接](https://www.bilibili.com/video/BV1iZ4y1y7Nw?share_source=copy_web)
+[《My Nonfiction》BiliBili链接](https://www.bilibili.com/video/BV1iZ4y1y7Nw?share_source=copy_web)
 
 这首RAP 节奏感强 燃 励志 中心明确
 
