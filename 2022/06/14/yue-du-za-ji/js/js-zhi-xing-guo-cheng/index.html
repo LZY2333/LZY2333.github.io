@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    957
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 
@@ -470,11 +470,10 @@
 <h3 id="初始化执行上下文"><a href="#初始化执行上下文" class="headerlink" title="初始化执行上下文"></a>初始化执行上下文</h3><p>主要初始化 执行上下文 的三个重要属性, <strong>变量对象(Variable object)</strong> <strong>作用域链(Outer)</strong> <strong>This</strong></p>
 <h4 id="1-作用域链（Scope-Chain）"><a href="#1-作用域链（Scope-Chain）" class="headerlink" title="1.作用域链（Scope Chain）"></a>1.作用域链（Scope Chain）</h4><p>复制函数 [[scope]] 属性创建作用域链</p>
 <blockquote>
-<p>函数是一个对象,[[scope]] 属性 就是早就挂在函数对象上的(?todo….)</p>
+<p>注意是复制而不是修改,因为函数可能被多次调用,应当保证每次调用时,变量初始状态相同</p>
 </blockquote>
-<h4 id="2-变量对象（Variable-Object）"><a href="#2-变量对象（Variable-Object）" class="headerlink" title="2.变量对象（Variable Object）"></a>2.变量对象（Variable Object）</h4><p>全局上下文 中 <strong>全局对象(其window属性指向自己)</strong> 就是 <strong>变量对象</strong> </p>
-<p>函数上下文 中 <strong>活动对象(activation object, AO)</strong> 就是 <strong>变量对象</strong></p>
-<p>将 形参 函数声明 和 var变量 let/const变量 均作为 活动对象的属性名</p>
+<h4 id="2-变量对象（Variable-Object）"><a href="#2-变量对象（Variable-Object）" class="headerlink" title="2.变量对象（Variable Object）"></a>2.变量对象（Variable Object）</h4><p>将 形参(arguments) 函数声明 和 var变量 let/const变量 均作为 <strong>活动对象</strong> 的属性</p>
+<p>将 <strong>活动对象</strong> 压入 <strong>作用域链</strong> 顶端</p>
 <table>
 <thead>
 <tr>
@@ -510,14 +509,25 @@
 </tr>
 </tbody></table>
 <p>let/const 创建了但是没有初始化,所以在赋值前被调用即报错 未初始化，<strong>暂时性死区</strong></p>
-<p>将 <strong>变量对象</strong> 压入 <strong>作用域链</strong> 顶端</p>
-<h4 id="3-This"><a href="#3-This" class="headerlink" title="3.This"></a>3.This</h4><h3 id="第三步执行阶段"><a href="#第三步执行阶段" class="headerlink" title="第三步执行阶段"></a>第三步执行阶段</h3><p><strong>变量对象(Variable object，VO)</strong> 变量环境/词法环境 </p>
-<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p><strong>作用域</strong>: 函数和变量的可访问的范围，生效范围 (全局作用域 函数作用域 块级作用域)</p>
-<p>1.变量能够引用，函数能够生效的区域。<br>2.限制了你对内存空间上值的获取和修改。<br>3.JS引擎根据名称来查找变量的一套规则。<br>4.JS引擎通过查找作用域来解析标识符。</p>
+<p>全局上下文 中 <strong>全局对象(其window属性指向自己)</strong> 就是 <strong>变量对象</strong> </p>
+<p>函数上下文 中 <strong>活动对象(activation object, AO)</strong> 就是 <strong>变量对象</strong></p>
+<h4 id="3-This"><a href="#3-This" class="headerlink" title="3.This"></a>3.This</h4><h3 id="第三步执行阶段"><a href="#第三步执行阶段" class="headerlink" title="第三步执行阶段"></a>第三步执行阶段</h3><h3 id="什么是原型链"><a href="#什么是原型链" class="headerlink" title="什么是原型链"></a>什么是原型链</h3><p><strong>作用域链机制的意义</strong>: 查找变量时,会沿着原型链向下查找</p>
+<p><strong>原型链机制的意义</strong>: 查找对象的属性时,会沿着原型链依次向上查找该属性.</p>
+<p><strong>This机制的意义</strong>: 为了在对象内部的方法中使用对象内部的属性(然后用到原型链)</p>
+<h3 id="什么是作用域链"><a href="#什么是作用域链" class="headerlink" title="什么是作用域链"></a>什么是作用域链</h3><p><strong>作用域</strong>: 是JS查找变量的一套规则,函数和变量的可访问的范围，生效范围.</p>
+<p><strong>作用域链</strong>: 是JS查找变量的一套规则,本质上是由多个执行上下文的变量对象构成的链表,</p>
+<p>查找变量时,会沿着作用域链自上而下查找.</p>
+<p><strong>作用域链的产生</strong>: 函数创建的时候，会产生一个内部属性 [[scope]],</p>
+<p>并根据 <strong>词法作用域</strong>,一层层将父代码段的 变量对象保存其中.</p>
+<p><strong>词法作用域</strong>: 这也是为什么说 js是 <strong>词法作用域</strong>/<strong>静态作用域</strong>,</p>
+<p>因为函数他所能引用的外部变量[[scope]],在函数创建的时候就已经决定了,而不是函数执行的时候</p>
+<p><strong>变量对象(Variable object，VO)</strong> 变量环境/词法环境 </p>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>1.变量能够引用，函数能够生效的区域。<br>2.限制了你对内存空间上值的获取和修改。<br>3.JS引擎根据名称来查找变量的一套规则。<br>4.JS引擎通过查找作用域来解析标识符。</p>
 <p>JS是 <strong>词法作用域</strong> <strong>静态作用域</strong>,所以函数的作用域在函数定义的时候就确定了</p>
-<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>看了二十多篇文章,都把我看蒙了,还是这四位最靠谱…</p>
+<h3 id="似乎过时了-回头查查看"><a href="#似乎过时了-回头查查看" class="headerlink" title="似乎过时了,回头查查看"></a>似乎过时了,回头查查看</h3><p>这文章是不是有点过时了，AO, VO是es3时代的说法？<br>现在是lexical environment：词法环境，variable environment：变量环境吧？</p>
+<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>看了二十多篇文章,都把我看懵了…</p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0972f9ed4a8c">吉古力 JS引擎线程的执行过程的三个阶段</a></p>
-<p><a href="https://github.com/mqyqingfeng/Blog/issues/5">冴羽 JavaScript深入之变量对象</a></p>
+<p><a href="https://github.com/mqyqingfeng/Blog/issues/8">冴羽 JavaScript深入之执行上下文</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903682283143181">[译] 理解 JavaScript 中的执行上下文和执行栈</a></p>
 <p><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/119046">李兵《浏览器工作原理与实践》浏览器中的JavaScript执行机制</a></p>
 
@@ -1000,7 +1010,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">106.4k</span>&nbsp;字
+                class="white-color">106.7k</span>&nbsp;字
             
             
             
