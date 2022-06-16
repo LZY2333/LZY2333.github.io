@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="作用域链和原型链, 懒前端">
+    <meta name="keywords" content="JS执行过程, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>作用域链和原型链 | 懒前端</title>
+    <title>JS执行过程 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">作用域链和原型链</h1>
+                    <h1 class="description center-align post-title">JS执行过程</h1>
                 </div>
             </div>
         </div>
@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    957
                 </div>
                 
 
@@ -450,60 +450,76 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="作用域链和原型链"><a href="#作用域链和原型链" class="headerlink" title="作用域链和原型链"></a>作用域链和原型链</h1><h2 id="JS执行"><a href="#JS执行" class="headerlink" title="JS执行"></a>JS执行</h2><p>JS是 <strong>解释型语言</strong>,边编译边执行.</p>
+                <h1 id="JS执行过程"><a href="#JS执行过程" class="headerlink" title="JS执行过程"></a>JS执行过程</h1><h3 id="JS执行"><a href="#JS执行" class="headerlink" title="JS执行"></a>JS执行</h3><p>JS是 <strong>解释型语言</strong>,边编译边执行.</p>
 <p>JS执行 以 代码段 为单位,分为 三个阶段:<strong>语法分析</strong> / <strong>预编译阶段</strong> / <strong>执行阶段</strong></p>
 <p>代码段 有三种: 全局代码 函数代码 eval代码</p>
-<h2 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h2><p>将代码分成 token,将 token解析成AST语法树(语法检查,报错)</p>
-<p>分析该js脚本代码块的语法是否正确，如果出现不正确，则向外抛出一个语法错误（SyntaxError），停止该js代码块的执行，然后继续查找并加载下一个代码块</p>
+<h3 id="第一步，语法分析"><a href="#第一步，语法分析" class="headerlink" title="第一步，语法分析"></a>第一步，语法分析</h3><p>将代码分成 token,将 token解析成AST语法树(语法检查,报错)</p>
+<p>分析该js脚本代码块的语法是否正确，</p>
+<p>如果语法不正确，则抛出一个语法错误，停止该代码块的执行，然后继续查找并加载下一个代码块</p>
 <p>如果语法正确，则进入预编译阶段。</p>
-<h2 id="预编译阶段"><a href="#预编译阶段" class="headerlink" title="预编译阶段"></a>预编译阶段</h2><h3 id="执行上下文-执行上下文栈"><a href="#执行上下文-执行上下文栈" class="headerlink" title="执行上下文 执行上下文栈"></a>执行上下文 执行上下文栈</h3><p>每进入一个 代码段,便会创建相应的 <strong>执行上下文</strong>, 压入 <strong>执行上下文栈</strong></p>
-<p><strong>执行上下文</strong> 是一段代码时的运行环境，包括执行期间要用到的 <strong>变量对象(Variable object)</strong> / <strong>作用域链(Outer)</strong> / <strong>This</strong></p>
+<h3 id="第二步，预编译阶段"><a href="#第二步，预编译阶段" class="headerlink" title="第二步，预编译阶段"></a>第二步，预编译阶段</h3><h3 id="创建执行上下文，压入执行上下文栈"><a href="#创建执行上下文，压入执行上下文栈" class="headerlink" title="创建执行上下文，压入执行上下文栈"></a>创建执行上下文，压入执行上下文栈</h3><p>每进入一个 代码段,便会创建相应的 <strong>执行上下文</strong>, 压入 <strong>执行上下文栈</strong></p>
+<p><strong>执行上下文</strong> 是一段代码时的运行环境，包括执行期间要用到的 <strong>变量对象</strong> / <strong>作用域链</strong> / <strong>This</strong></p>
 <p><strong>执行上下文栈</strong>  用来管理这些执行上下文，是一个 先进后出的 栈结构.</p>
-<p>JS执行时首先会遇到全局代码，栈内压入 全局执行上下文.<br>然后执行到一个函数时，会 从 全局执行上下文 中取出这段函数的代码进行编译<br>创建该函数的执行上下文，又压入栈内.函数执行完毕，又弹出该执行上下文.</p>
 <p><strong>执行上下文栈</strong> 其实就是 JavaScript 引擎追踪函数执行的一个机制</p>
+<p>JS执行时首先会遇到全局代码，栈内压入 全局执行上下文.</p>
+<p>然后执行到一个函数时，会 从 全局执行上下文 中取出这段函数的代码进行编译</p>
+<p>创建该函数的执行上下文，又压入栈内.函数执行完毕，又弹出该执行上下文.</p>
 <blockquote>
 <p>执行上下文栈,和函数执行时的变量查找没什么关系<br>代码段有 三种,执行上下文也是对应的三种 全局执行上下文 函数执行上下文 eval执行上下文</p>
 </blockquote>
-<h3 id="执行上下文的初始化"><a href="#执行上下文的初始化" class="headerlink" title="执行上下文的初始化"></a>执行上下文的初始化</h3><ol>
-<li><strong>作用域链（Scope Chain）</strong></li>
-</ol>
-<p>复制函数 [[scope]] 属性创建作用域链</p>
-<ol start="2">
-<li><strong>变量对象（Variable Object）</strong></li>
-</ol>
-<p>全局上下文 中 <strong>全局对象(其window属性指向自己)</strong> 就是 <strong>变量对象</strong> </p>
+<h3 id="初始化执行上下文"><a href="#初始化执行上下文" class="headerlink" title="初始化执行上下文"></a>初始化执行上下文</h3><p>主要初始化 执行上下文 的三个重要属性, <strong>变量对象(Variable object)</strong> <strong>作用域链(Outer)</strong> <strong>This</strong></p>
+<h4 id="1-作用域链（Scope-Chain）"><a href="#1-作用域链（Scope-Chain）" class="headerlink" title="1.作用域链（Scope Chain）"></a>1.作用域链（Scope Chain）</h4><p>复制函数 [[scope]] 属性创建作用域链</p>
+<blockquote>
+<p>函数是一个对象,[[scope]] 属性 就是早就挂在函数对象上的(?todo….)</p>
+</blockquote>
+<h4 id="2-变量对象（Variable-Object）"><a href="#2-变量对象（Variable-Object）" class="headerlink" title="2.变量对象（Variable Object）"></a>2.变量对象（Variable Object）</h4><p>全局上下文 中 <strong>全局对象(其window属性指向自己)</strong> 就是 <strong>变量对象</strong> </p>
 <p>函数上下文 中 <strong>活动对象(activation object, AO)</strong> 就是 <strong>变量对象</strong></p>
 <p>将 形参 函数声明 和 var变量 let/const变量 均作为 活动对象的属性名</p>
-<p>| —      | — |  —  |   —      |<br>|形参       | 创建 | 初始化 | 并赋值实参  |<br>|函数声明    | 创建 | 初始化 | 并赋值函数体|<br>|var变量    | 创建 | 初始化 |            |<br>|let/const | 创建 |        |           |</p>
+<table>
+<thead>
+<tr>
+<th>变量类型</th>
+<th>是否创建</th>
+<th>是否初始化</th>
+<th>是否赋值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>形参</td>
+<td>创建</td>
+<td>初始化</td>
+<td>并赋值实参</td>
+</tr>
+<tr>
+<td>函数声明</td>
+<td>创建</td>
+<td>初始化</td>
+<td>并赋值函数体</td>
+</tr>
+<tr>
+<td>var变量</td>
+<td>创建</td>
+<td>初始化</td>
+<td></td>
+</tr>
+<tr>
+<td>let/const</td>
+<td>创建</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
 <p>let/const 创建了但是没有初始化,所以在赋值前被调用即报错 未初始化，<strong>暂时性死区</strong></p>
 <p>将 <strong>变量对象</strong> 压入 <strong>作用域链</strong> 顶端</p>
-<p><strong>This</strong></p>
-<h2 id="执行阶段"><a href="#执行阶段" class="headerlink" title="执行阶段"></a>执行阶段</h2><p><strong>预处理(预编译)</strong> </p>
-<p>(局部预编译)</p>
-<ol>
-<li>创建一个Active Object对象</li>
-</ol>
-<p>2.</p>
-<ol start="3">
-<li><strong>执行阶段</strong>: </li>
-</ol>
-<p>JS是解释型语言,无需预先编译,原理是一边编译一边执行.</p>
-<p>实际上JS执行 以代码块为单位(全局代码 函数代码 eval代码) 分为 编译阶段 和 执行阶段.</p>
-<p>每当一个代码块被 调用,即 执行这两个阶段.</p>
-<p><strong>编译阶段</strong></p>
-<p>生成两部分, 作用域<code>[[Scope]]</code>, 可执行代码</p>
-<p><strong>变量对象(Variable object，VO)</strong> 变量环境/词法环境 </p>
-<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><p><strong>作用域</strong>: 函数和变量的可访问的范围，生效范围 (全局作用域 函数作用域 块级作用域)</p>
+<h4 id="3-This"><a href="#3-This" class="headerlink" title="3.This"></a>3.This</h4><h3 id="第三步执行阶段"><a href="#第三步执行阶段" class="headerlink" title="第三步执行阶段"></a>第三步执行阶段</h3><p><strong>变量对象(Variable object，VO)</strong> 变量环境/词法环境 </p>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p><strong>作用域</strong>: 函数和变量的可访问的范围，生效范围 (全局作用域 函数作用域 块级作用域)</p>
 <p>1.变量能够引用，函数能够生效的区域。<br>2.限制了你对内存空间上值的获取和修改。<br>3.JS引擎根据名称来查找变量的一套规则。<br>4.JS引擎通过查找作用域来解析标识符。</p>
 <p>JS是 <strong>词法作用域</strong> <strong>静态作用域</strong>,所以函数的作用域在函数定义的时候就确定了</p>
-<h2 id="感谢大佬"><a href="#感谢大佬" class="headerlink" title="感谢大佬"></a>感谢大佬</h2><p>看了二十多篇文章,都快把我看蒙了,还是这四位最靠谱…</p>
+<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>看了二十多篇文章,都把我看蒙了,还是这四位最靠谱…</p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0972f9ed4a8c">吉古力 JS引擎线程的执行过程的三个阶段</a></p>
 <p><a href="https://github.com/mqyqingfeng/Blog/issues/5">冴羽 JavaScript深入之变量对象</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903682283143181">[译] 理解 JavaScript 中的执行上下文和执行栈</a></p>
 <p><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/119046">李兵《浏览器工作原理与实践》浏览器中的JavaScript执行机制</a></p>
-<p><a target="_blank" rel="noopener" href="https://developer.51cto.com/article/659440.html">JavaScript中的预编译如何进行？看完这篇就够了</a></p>
-<p>[刻刻帝丶《JavaScript内部属性[[Scope]]与作用域链及其性能问题》](<a target="_blank" rel="noopener" href="https://blog.csdn.net/q1056843325/article/details/53086893?locationNum=12&amp;fps=1">https://blog.csdn.net/q1056843325/article/details/53086893?locationNum=12&amp;fps=1</a>)</p>
-<p>[孤岛浅滩《JS—[[scope]]/执行上下文/作用域/this》](<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37851778/article/details/75456954">https://blog.csdn.net/m0_37851778/article/details/75456954</a>)</p>
 
                 
             </div>
@@ -530,7 +546,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/06/14/yue-du-za-ji/js/zuo-yong-yu-lian-he-yuan-xing-lian/">https://github.com/LZY2333/LZY2333.github.io/2022/06/14/yue-du-za-ji/js/zuo-yong-yu-lian-he-yuan-xing-lian/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/06/14/yue-du-za-ji/js/js-zhi-xing-guo-cheng/">https://github.com/LZY2333/LZY2333.github.io/2022/06/14/yue-du-za-ji/js/js-zhi-xing-guo-cheng/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -748,19 +764,19 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/06/14/yue-du-za-ji/js/zuo-yong-yu-lian-he-yuan-xing-lian/">
+                <a href="/2022/06/14/yue-du-za-ji/js/js-zhi-xing-guo-cheng/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="作用域链和原型链">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="JS执行过程">
                         
-                        <span class="card-title">作用域链和原型链</span>
+                        <span class="card-title">JS执行过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            作用域链是JS引擎查找变量的规则，原型链是JS引擎查找对象属性的规则
+                            JS执行以代码段为单位,分为 三个阶段:语法分析 /预编译阶段/ 执行阶段。作用域链是JS引擎查找变量的规则，原型链是JS引擎查找对象属性的规则
                         
                     </div>
                     <div class="publish-info">
@@ -984,7 +1000,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">106.6k</span>&nbsp;字
+                class="white-color">106.4k</span>&nbsp;字
             
             
             
