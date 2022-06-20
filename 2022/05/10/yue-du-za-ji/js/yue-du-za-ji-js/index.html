@@ -479,11 +479,12 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
 <h2 id="执行上下文-变量的查找"><a href="#执行上下文-变量的查找" class="headerlink" title="执行上下文(变量的查找)"></a>执行上下文(变量的查找)</h2><h3 id="什么是执行上下文栈，调用栈"><a href="#什么是执行上下文栈，调用栈" class="headerlink" title="什么是执行上下文栈，调用栈"></a>什么是执行上下文栈，调用栈</h3><p><strong>JS执行机制</strong>: 以代码块为单位 先编译后执行，分为 <strong>编译阶段</strong> 和 <strong>执行阶段</strong>.</p>
 <p>(“代码块”有三种:全局代码、函数代码、eval代码。)</p>
 <p><strong>编译阶段</strong>: 会生成两部分 <strong>执行上下文</strong> 和 <strong>可执行代码</strong></p>
-<p><strong>执行上下文</strong>: 包含了当前代码在执行期间要用到的 This、变量、对象以及函数等.<br>(<strong>变量对象(Variable object)</strong>:变量环境/词法环境 <strong>作用域链(Outer)</strong> <strong>This</strong>)</p>
+<p><strong>执行上下文</strong>: 是一段代码时的运行环境，包括执行期间要用到的 <strong>变量对象</strong> / <strong>作用域链</strong> / <strong>This</strong><br>                (<strong>变量对象(Variable object)</strong>:变量环境/词法环境 <strong>作用域链(Outer)</strong> <strong>This</strong>)</p>
 <p><strong>执行上下文栈</strong>: 用来管理这些执行上下文，是一个 先进后出的 栈结构.</p>
-<p>JS执行时首先会遇到全局代码，栈内压入全局上下文.<br>然后执行到一个函数时，会 从全局执行上下文中取出这段函数的代码进行编译<br>创建该函数的执行上下文，又压入栈内.函数执行完毕，又弹出该执行上下文.</p>
-<p><strong>执行上下文栈</strong> 其实就是 JavaScript 引擎追踪函数执行的一个机制，和函数执行时的变量查找没什么关系<br>当一次有多个函数被调用时，通过调用栈就能够追踪到哪个函数正在被执行以及各函数之间的调用关系。</p>
-<p><strong>栈溢出</strong> 函数递归没有终止条件，不停压入 执行上下文，导致栈溢出</p>
+<p><strong>执行上下文栈</strong> 其实就是 JavaScript 引擎追踪函数执行的一个机制，和函数执行时的变量查找没什么关系<br>    当一次有多个函数被调用时，通过调用栈就能够追踪到哪个函数正在被执行以及各函数之间的调用关系。</p>
+<p>JS执行时首先会遇到全局代码，栈内压入 全局执行上下文.</p>
+<p>然后执行到一个函数时，会 从 全局执行上下文 中取出这段函数的代码进行编译</p>
+<p>创建该函数的执行上下文，又压入栈内.函数执行完毕，又弹出该执行上下文.</p>
 <h3 id="什么是变量提升"><a href="#什么是变量提升" class="headerlink" title="什么是变量提升"></a>什么是变量提升</h3><p>JS的执行机制是 以代码块为单位，先编译后执行，分为编译阶段和执行阶段</p>
 <p>编译阶段会生成两部分 执行上下文 和 可执行代码</p>
 <p>在执行代码之前，其实已经将所有的变量 在 执行上下文 准备好了</p>
@@ -1046,7 +1047,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">106.7k</span>&nbsp;字
+                class="white-color">107.2k</span>&nbsp;字
             
             
             
