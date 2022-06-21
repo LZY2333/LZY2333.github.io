@@ -523,9 +523,17 @@
   VariableEnvironment <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="词法环境-和-变量环境（ES5时代）"><a href="#词法环境-和-变量环境（ES5时代）" class="headerlink" title="词法环境 和 变量环境（ES5时代）"></a>词法环境 和 变量环境（ES5时代）</h3><p><strong>词法环境__（Lexical Environment）,<br>一个 标识符（变量/函数的名称） 与 变量（实际对象/原始值的引用） 相映射的结构,<br>包括<br>1.__环境记录__（environment record） 储存变量和函数生命的实际位置<br>2. __对外部环境的引用</strong> 意味着可以访问外部词法环境,</p>
-<p><strong>词法环境</strong> 存在两种类型<br>1.<strong>全局环境__（在全局上下文中，或with中）对外部的环境引用为null<br>2.__函数环境__（在函数环境中）包含了一个 __arguments对象</strong></p>
-<p><strong>环境记录</strong>,存在两种类型<br>2.__对象环境记录__（在全局环境中）用于定义 全局执行上下文出现的变量和函数的关联<br>1.__声明性环境记录__（在函数环境中） 储存 变量/函数/参数 </p>
+<h3 id="词法环境-和-变量环境（ES5时代）"><a href="#词法环境-和-变量环境（ES5时代）" class="headerlink" title="词法环境 和 变量环境（ES5时代）"></a>词法环境 和 变量环境（ES5时代）</h3><h4 id="词法环境（Lexical-Environment）"><a href="#词法环境（Lexical-Environment）" class="headerlink" title="词法环境（Lexical Environment）"></a>词法环境（Lexical Environment）</h4><p>一个 标识符（变量/函数的名称） 与 变量（实际对象/原始值的引用） 相映射的结构,包括</p>
+<p>1.__环境记录__（environment record） 储存变量和函数生命的实际位置</p>
+<ol start="2">
+<li><strong>对外部环境的引用</strong> 意味着可以访问外部词法环境,</li>
+</ol>
+<p><strong>词法环境</strong> 存在两种类型</p>
+<p>1.__全局环境__（在全局上下文中，或with中）对外部的环境引用为null</p>
+<p>2.<strong>函数环境__（在函数环境中）包含了一个 __arguments对象</strong></p>
+<p><strong>环境记录</strong>,存在两种类型</p>
+<p>2.__对象环境记录__（在全局环境中）用于定义 全局执行上下文出现的变量和函数的关联</p>
+<p>1.__声明性环境记录__（在函数环境中） 储存 变量/函数/参数 </p>
 <p><strong>arguments对象</strong>,伪数组,包含了 函数参数 与 索引 的映射,及 参数个数.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 词法环境伪代码</span>
 GlobalExectionContext <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 全局执行上下文</span>
@@ -546,8 +554,12 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
   <span class="token punctuation">&#125;</span>  
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>__变量环境__（VariableEnvironment）</p>
-<p>1.变量环境 就是 词法环境的一种,具有 词法环境 的所有属性<br>2.在ES6中, 变量环境 与 词法环境 的区别在于,<br>    <strong>词法环境</strong> 储存 函数声明/变量（let和const）的绑定,<br>    <strong>变量环境</strong> 仅储存 变量（var）的绑定</p>
+<h4 id="变量环境（VariableEnvironment）"><a href="#变量环境（VariableEnvironment）" class="headerlink" title="变量环境（VariableEnvironment）"></a>变量环境（VariableEnvironment）</h4><p>1.变量环境 就是 词法环境的一种,具有 词法环境 的所有属性</p>
+<p>2.在ES6中, 变量环境 与 词法环境 的区别在于,</p>
+<p><strong>词法环境</strong> 储存 函数声明/变量（let和const）的绑定,</p>
+<p><strong>变量环境</strong> 仅储存 变量（var）的绑定</p>
+<h4 id="var-和-let-const"><a href="#var-和-let-const" class="headerlink" title="var 和 let/const"></a>var 和 let/const</h4><p>var变量提升是JS的一个重要设计缺陷， 会导致 变量污染 变量覆盖，</p>
+<p>在ES6中 用 块级作用域（词法环境） 配合 const let 避免这种缺陷。</p>
 <p>执行上下文创建阶段</p>
 <table>
 <thead>
@@ -586,7 +598,9 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
 <p>let/const 创建了但是没有初始化,所以在赋值前被调用即报错 未初始化，<strong>暂时性死区</strong></p>
 <h3 id="JS执行（ES5）"><a href="#JS执行（ES5）" class="headerlink" title="JS执行（ES5）"></a>JS执行（ES5）</h3><p>创建阶段 与ES3类似,创建当前执行上下文内的 this，词法环境，变量环境，outer</p>
 <p>注意 执行阶段 变量查找时，同一 执行上下文内 代表 块级作用域的 词法环境 优先级更高</p>
-<p>变量查找顺序:<br>1.沿着当前 执行上下文内 的 词法环境栈 顶向下查找,找到栈底,再找 变量环境，<br>2.沿着 作用域链，在外部作用域中查找 外一层 的执行上下文，重复第一步。</p>
+<p>变量查找顺序:</p>
+<p>1.沿着当前 执行上下文内 的 词法环境栈 顶向下查找,找到栈底,再找 变量环境，</p>
+<p>2.沿着 作用域链，在外部作用域中查找 外一层 的执行上下文，重复第一步。</p>
 <h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>理解闭包的产生比理解闭包的概念更重要,</p>
 <p><strong>闭包的产生</strong>,根据词法作用域规则,函数的作用域链由函数声明位置决定,声明位置在内部的函数总是可以访问外部函数的变量,</p>
 <p>即使内部函数的调用位置,不在其声明的外层函数内,甚至外部函数已经执行结束,</p>
@@ -1081,7 +1095,7 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">108.2k</span>&nbsp;字
+                class="white-color">108.3k</span>&nbsp;字
             
             
             
