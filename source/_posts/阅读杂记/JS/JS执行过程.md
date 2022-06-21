@@ -26,7 +26,9 @@ __This机制的意义__: JS 为了在对象内部的方法中使用对象内部�
 
 **constructor**:每一个原型都具有的属性，该属性指向关联这个*原型的构造函数*。
 
-每一个JS对象在创建时都会与之关联一个对象，这个对象就是原型，每一个对象都会从原型"继承"属性。
+每一个JS对象在创建时都会与之关联一个对象，这个对象就是原型，
+
+每一个对象都会从原型"继承"属性,查找对象的属性时，会沿着原型链依次向上查找该属性.
 
 [深入原型到原型链](https://luoziyu.cn/2021/02/07/javascript/shen-ru-js-xi-lie/1.cong-yuan-xing-dao-yuan-xing-lian/)
 
@@ -287,11 +289,27 @@ __闭包__
 
 而 未被引用的外部变量 会通过 tree-shaking的方式 被销毁。
 
+```js
+var data = [];
+
+for (var i = 0; i < 3; i++) {
+  data[i] = (function (i) {
+        return function(){
+            console.log(i);
+        }
+  })(i);
+  // 虽然自执行函数已经执行完了，但是当时的i已经被内部函数的闭包记住
+  // 不再去全局vo中找i，而是在 自执行函数中就已经被记住
+}
+
+data[0](); // 0
+data[1](); // 1
+data[2](); // 2
+```
+
 ### 感谢
 
 看了二十多篇文章，都把我看懵了...
-
-ES5时代
 
 [面试官：说说执行上下文吧](https://juejin.cn/post/6844904158957404167#comment)
 
@@ -300,8 +318,6 @@ ES5时代
 [彻底搞懂作用域、执行上下文、词法环境](https://juejin.cn/post/7043408377661095967#heading-6)
 
 [[译] 理解 JavaScript 中的执行上下文和执行栈](https://juejin.cn/post/6844903682283143181)
-
-ES3时代文章
 
 [冴羽 JavaScript深入之执行上下文](https://github.com/mqyqingfeng/Blog/issues/8)
 
