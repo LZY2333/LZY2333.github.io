@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    10 分
                 </div>
                 
 
@@ -473,15 +473,18 @@ arr<span class="token punctuation">.</span>__proto__ <span class="token operator
 arr <span class="token keyword">instanceof</span> <span class="token class-name">Array</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
 <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// "[object Array]"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="原型和原型链-对象属性的查找"><a href="#原型和原型链-对象属性的查找" class="headerlink" title="原型和原型链(对象属性的查找)"></a>原型和原型链(对象属性的查找)</h2><p><strong>原型</strong>: 每个JS对象创建的时候其<code>prototype</code>都会指向另一个对象，这个对象就是原型.</p>
-<p><strong>原型链</strong>: 每个实例都有自己的原型，原型也是对象，也具有自己的原型，这样的链式结构就是原型链.</p>
-<p>查找对象的属性时，会沿着原型链依次向上查找该属性.</p>
-<h2 id="执行上下文-变量的查找"><a href="#执行上下文-变量的查找" class="headerlink" title="执行上下文(变量的查找)"></a>执行上下文(变量的查找)</h2><h3 id="什么是执行上下文栈，调用栈"><a href="#什么是执行上下文栈，调用栈" class="headerlink" title="什么是执行上下文栈，调用栈"></a>什么是执行上下文栈，调用栈</h3><p><strong>JS执行机制</strong>: 以代码块为单位 先编译后执行，分为 <strong>编译阶段</strong> 和 <strong>执行阶段</strong>.</p>
-<p>(“代码块”有三种:全局代码、函数代码、eval代码。)</p>
-<p><strong>编译阶段</strong>: 会生成两部分 <strong>执行上下文</strong> 和 <strong>可执行代码</strong></p>
-<p><strong>执行上下文</strong>: 是一段代码时的运行环境，包括执行期间要用到的 <strong>变量对象</strong> / <strong>作用域链</strong> / <strong>This</strong><br>                (<strong>变量对象(Variable object)</strong>:变量环境/词法环境 <strong>作用域链(Outer)</strong> <strong>This</strong>)</p>
+<h2 id="原型和原型链-对象属性的查找"><a href="#原型和原型链-对象属性的查找" class="headerlink" title="原型和原型链(对象属性的查找)"></a>原型和原型链(对象属性的查找)</h2><p><strong>prototype</strong>:每个函数都具有的属性，且只有函数才有的属性。函数的prototype所指向的对象，就是该函数作为构造函数创建的<em>实例的原型对象</em>。</p>
+<p><strong><strong>proto</strong></strong>:每一个JavaScript对象（除nul）都具有的属性，这个属性会指向该<em>对象的原型</em>。</p>
+<p><strong>constructor</strong>:每一个原型都具有的属性，该属性指向关联这个<em>原型的构造函数</em>。</p>
+<p>每一个JS对象在创建时都会与之关联一个对象，这个对象就是原型，</p>
+<p>每一个对象都会从原型”继承”属性,查找对象的属性时，会沿着原型链依次向上查找该属性.</p>
+<h2 id="执行上下文-变量的查找"><a href="#执行上下文-变量的查找" class="headerlink" title="执行上下文(变量的查找)"></a>执行上下文(变量的查找)</h2><h3 id="什么是执行上下文栈，调用栈"><a href="#什么是执行上下文栈，调用栈" class="headerlink" title="什么是执行上下文栈，调用栈"></a>什么是执行上下文栈，调用栈</h3><p><strong>JS执行机制</strong>: 以代码块为单位 先编译后执行，分为 <strong>创建阶段</strong> 和 <strong>执行阶段</strong>.</p>
+<p>（”代码块”有三种:全局代码、函数代码、eval代码。）</p>
+<p><strong>创建阶段</strong>: 会生成两部分 <strong>执行上下文</strong> 和 <strong>可执行代码</strong></p>
+<p><strong>执行上下文</strong>: 是一段代码时的运行环境，包括执行期间要用到的 <strong>变量对象</strong> / <strong>作用域链</strong> / <strong>This</strong></p>
 <p><strong>执行上下文栈</strong>: 用来管理这些执行上下文，是一个 先进后出的 栈结构.</p>
-<p><strong>执行上下文栈</strong> 其实就是 JavaScript 引擎追踪函数执行的一个机制，和函数执行时的变量查找没什么关系<br>    当一次有多个函数被调用时，通过调用栈就能够追踪到哪个函数正在被执行以及各函数之间的调用关系。</p>
+<p><strong>执行上下文栈</strong> 其实就是 JavaScript 引擎追踪函数执行的一个机制，和函数执行时的变量查找没什么关系</p>
+<p>当一次有多个函数被调用时，通过调用栈就能够追踪到哪个函数正在被执行以及各函数之间的调用关系。</p>
 <p>JS执行时首先会遇到全局代码，栈内压入 全局执行上下文.</p>
 <p>然后执行到一个函数时，会 从 全局执行上下文 中取出这段函数的代码进行编译</p>
 <p>创建该函数的执行上下文，又压入栈内.函数执行完毕，又弹出该执行上下文.</p>
@@ -513,14 +516,34 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
 <span class="token keyword">var</span> myName <span class="token operator">=</span> <span class="token string">"lzy外"</span>
 <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// "lzy 外"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>作用域</strong>: 函数和变量的可被访问的范围，生效范围 (全局作用域 函数作用域 块级作用域)</p>
-<p>1.变量能够引用，函数能够生效的区域。<br>2.限制了你对内存空间上值的获取和修改。<br>3.JS引擎根据名称来查找变量的一套规则。<br>4.JS引擎通过查找作用域来解析标识符。</p>
-<p><strong>作用域链</strong>: 查找变量的路径，在 <strong>执行上下文</strong> 的 <strong>变量环境</strong> 中，包含一个外部引用 <code>outer</code> 值向外部的 <strong>执行上下文</strong></p>
-<p><strong>词法作用域</strong>: <strong>函数的作用域包括作用域链 在函数定义 函数编译的时候就确定了，与函数调用无关</strong></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/q1056843325/article/details/53086893?locationNum=12&fps=1">刻刻帝丶大佬的文章</a></p>
-<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p><strong>闭包</strong>: 函数定义时，可访问的外部函数变量集合(可以访问，但不一定访问了，因为当前内部函数没访问，其他内部函数访问了也会被保留并算在内)<br><strong>闭包</strong>: 根据词法作用域规则，内部函数总是可以访问到外部函数(outer)中的变量，即使外部函数已经执行结束，内部函数引用的外部函数的变量依旧存在于内存，未被内部函数引用的外部变量会被销毁</p>
-<p><strong>闭包产生的条件</strong>: 必须存在内部函数使用了外部函数的变量，无需内部函数被外部持有</p>
-<p>__多个内部函数共享共同一个闭包__，<br>当外部函数有多个内部函数，只要任意内部函数使用了外部函数的变量，所有内部函数均持有闭包，且共享同一个闭包.</p>
+<p><strong>作用域</strong></p>
+<p>其实就是 变量对象， 代表 函数和变量的可被访问的范围，生效范围.</p>
+<p>变量存在于哪个 作用域 或 属于哪个变量对象，就可以在这个变量对象内被访问.</p>
+<p><strong>作用域链</strong></p>
+<p>是JS查找变量的一套规则，本质上是由多个执行上下文的变量对象构成的链表，</p>
+<p>链表的层级由 词法作用域 决定，查找变量时，会沿着作用域链查找.</p>
+<p><strong>作用域链1</strong> （函数创建时产生）</p>
+<p>外层代码段编译时， 作为一个对象， 会产生一个内部属性 [[scope]]，</p>
+<p>并根据 词法作用域，从内到外层层将父代码段的 变量对象 保存其中.</p>
+<p><strong>词法作用域</strong></p>
+<p>也是 __静态作用域__，JS的 作用域 由函数定义的位置决定，而不是执行时的 调用栈决定.</p>
+<p>因为函数他所能引用的外部变量[[scope]]，在函数创建的时候就已经决定了，而不是函数执行的时候</p>
+<p><strong>作用域链2</strong> （函数调用时产生）</p>
+<p>（进入自己的创建阶段，创建自己的执行上下文，压入执行上下文栈）</p>
+<p>复制自己 [[scope]]属性 创建作用域链2， 创建自己的AO并初始化， 压入作用域链顶端.</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>理解闭包的产生比理解闭包的概念更重要，</p>
+<p><strong>闭包的产生</strong></p>
+<p>根据词法作用域规则，函数的作用域链由函数声明位置决定，声明位置在内部的函数总是可以访问外部函数的变量，</p>
+<p>即使内部函数的调用位置，不在其声明的外层函数内，甚至外部函数已经执行结束，</p>
+<p>但内部函数 引用的外部函数变量依旧保存在内存中，这些变量的集合称为闭包.</p>
+<p><strong>闭包</strong></p>
+<p>函数与其引用的外部函数词法环境的集合.（函数，自己内部的变量，外部词法环境，可访问的外部变量）</p>
+<p>闭包存在两种情况，一种是 内部函数正常在内部执行时，外部词法环境变量均存在，<strong>只要函数执行就存在闭包</strong></p>
+<p>一种是 内部函数执行时外部函数执行上下文已被销毁，</p>
+<p>当外部函数已被销毁，内部函数 引用了的外部变量依旧会被保存，</p>
+<p>而 未被引用的外部变量 会通过 tree-shaking的方式 被销毁。</p>
+<p>__多个内部函数共享共同一个闭包__，</p>
+<p>当外部函数有多个内部函数，只要任意内部函数使用了外部函数的变量，所有内部函数均持有闭包，且共享同一个闭包.</p>
 <p>返回内部函数时，JS引擎会提前分析闭包内部函数的词法环境，有引用的外部变量都不会被gc回收.</p>
 <h3 id="This"><a href="#This" class="headerlink" title="This"></a>This</h3><p><strong>This机制</strong>: 使用对象来调用其某个方法属性，该方法内部的This，指向的是对象</p>
 <p><strong>This机制的意义</strong>: 为了在对象内部的方法中使用对象内部的属性(然后用到原型链)</p>
@@ -1047,7 +1070,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">108.4k</span>&nbsp;字
+                class="white-color">108.8k</span>&nbsp;字
             
             
             

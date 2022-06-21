@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.9k
+                    3k
                 </div>
                 
 
@@ -457,7 +457,8 @@
 <h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p><strong>prototype</strong>:每个函数都具有的属性，且只有函数才有的属性。函数的prototype所指向的对象，就是该函数作为构造函数创建的<em>实例的原型对象</em>。</p>
 <p><strong><strong>proto</strong></strong>:每一个JavaScript对象（除nul）都具有的属性，这个属性会指向该<em>对象的原型</em>。</p>
 <p><strong>constructor</strong>:每一个原型都具有的属性，该属性指向关联这个<em>原型的构造函数</em>。</p>
-<p>每一个JS对象在创建时都会与之关联一个对象，这个对象就是原型，每一个对象都会从原型”继承”属性。</p>
+<p>每一个JS对象在创建时都会与之关联一个对象，这个对象就是原型，</p>
+<p>每一个对象都会从原型”继承”属性,查找对象的属性时，会沿着原型链依次向上查找该属性.</p>
 <p><a target="_blank" rel="noopener" href="https://luoziyu.cn/2021/02/07/javascript/shen-ru-js-xi-lie/1.cong-yuan-xing-dao-yuan-xing-lian/">深入原型到原型链</a></p>
 <h3 id="执行上下文（ES3时代）"><a href="#执行上下文（ES3时代）" class="headerlink" title="执行上下文（ES3时代）"></a>执行上下文（ES3时代）</h3><p><strong>JS执行机制</strong>: 以代码块为单位 先编译后执行，分为 <strong>创建阶段</strong> 和 <strong>执行阶段</strong>.</p>
 <p>（”代码块”有三种:全局代码、函数代码、eval代码。）</p>
@@ -613,13 +614,27 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
 <p>一种是 内部函数执行时外部函数执行上下文已被销毁，</p>
 <p>当外部函数已被销毁，内部函数 引用了的外部变量依旧会被保存，</p>
 <p>而 未被引用的外部变量 会通过 tree-shaking的方式 被销毁。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  data<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">i</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 虽然自执行函数已经执行完了，但是当时的i已经被内部函数的闭包记住</span>
+  <span class="token comment">// 不再去全局vo中找i，而是在 自执行函数中就已经被记住</span>
+<span class="token punctuation">&#125;</span>
+
+data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 0</span>
+data<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1</span>
+data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>看了二十多篇文章，都把我看懵了…</p>
-<p>ES5时代</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904158957404167#comment">面试官：说说执行上下文吧</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904145372053511#heading-4">JS夯实之执行上下文与词法环境</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7043408377661095967#heading-6">彻底搞懂作用域、执行上下文、词法环境</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903682283143181">[译] 理解 JavaScript 中的执行上下文和执行栈</a></p>
-<p>ES3时代文章</p>
 <p><a href="https://github.com/mqyqingfeng/Blog/issues/8">冴羽 JavaScript深入之执行上下文</a></p>
 <p><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/119046">李兵《浏览器工作原理与实践》浏览器中的JavaScript执行机制</a></p>
 
@@ -1102,7 +1117,7 @@ FunctionExectionContext <span class="token operator">=</span> <span class="token
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">108.4k</span>&nbsp;字
+                class="white-color">108.8k</span>&nbsp;字
             
             
             
