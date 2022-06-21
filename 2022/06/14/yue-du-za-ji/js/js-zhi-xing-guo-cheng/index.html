@@ -460,17 +460,14 @@
 <p>(“代码块”有三种:全局代码、函数代码、eval代码。)</p>
 <p><strong>创建阶段</strong>: 会生成两部分 <strong>执行上下文</strong> 和 <strong>可执行代码</strong></p>
 <p><strong>执行上下文</strong>: 是一段代码时的运行环境，包括执行期间要用到的 <strong>变量对象</strong> / <strong>作用域链</strong> / <strong>This</strong></p>
-<pre><code>            (__变量对象(Variable object)__:变量环境/词法环境 __作用域链(Outer)__ __This__)
-</code></pre>
 <p><strong>执行上下文栈</strong>: 用来管理这些执行上下文，是一个 先进后出的 栈结构.</p>
 <p><strong>执行上下文栈</strong> 其实就是 JavaScript 引擎追踪函数执行的一个机制，和函数执行时的变量查找没什么关系</p>
-<pre><code>当一次有多个函数被调用时，通过调用栈就能够追踪到哪个函数正在被执行以及各函数之间的调用关系。
-</code></pre>
+<p>当一次有多个函数被调用时，通过调用栈就能够追踪到哪个函数正在被执行以及各函数之间的调用关系。</p>
 <p>JS执行时首先会遇到全局代码，栈内压入 全局执行上下文.</p>
 <p>然后执行到一个函数时，会 从 全局执行上下文 中取出这段函数的代码进行编译</p>
 <p>创建该函数的执行上下文，又压入栈内.函数执行完毕，又弹出该执行上下文.</p>
 <h3 id="变量对象（ES3时代）"><a href="#变量对象（ES3时代）" class="headerlink" title="变量对象（ES3时代）"></a>变量对象（ES3时代）</h3><p><strong>变量对象</strong> / <strong>作用域链</strong> / <strong>This</strong>,是执行上下文的三个重要属性</p>
-<p><strong>变量对象</strong> 包含 当前上下文定义的 <strong>形参(arguments)</strong> <strong>函数声明</strong> <strong>变量</strong> 的对象, 用于可执行代码执行时查找变变量，<br>            在进入执行上下文时(创建阶段) 时创建</p>
+<p><strong>变量对象</strong> 包含 当前上下文定义的 <strong>形参(arguments)</strong> <strong>函数声明</strong> <strong>变量</strong> 的对象, 用于可执行代码执行时查找变变量，<br>在进入执行上下文时(创建阶段) 时创建</p>
 <p><strong>全局对象(GO)</strong> 全局执行上下文 的 变量对象 就是 全局变量的宿主, 就是全局对象 其 window属性指向自己</p>
 <p><strong>活动对象(AO)</strong> 函数执行上下文 的 变量对象.</p>
 <p>变量对象 只是一个储存了所有变量的对象的概念</p>
@@ -493,21 +490,26 @@
 <span class="token comment">//     d: undefined</span>
 <span class="token comment">// &#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="作用域链（ES3时代）"><a href="#作用域链（ES3时代）" class="headerlink" title="作用域链（ES3时代）"></a>作用域链（ES3时代）</h3><p><strong>作用域</strong>: 其实就是 变量对象, 代表 函数和变量的可被访问的范围，生效范围.</p>
-<pre><code>        变量存在于哪个 作用域 或 属于哪个变量对象,就可以在这个变量对象内被访问.
-</code></pre>
-<p><strong>作用域链</strong>: 是JS查找变量的一套规则,本质上是由多个执行上下文的变量对象构成的链表,</p>
-<pre><code>        链表的层级由 词法作用域 决定,查找变量时,会沿着作用域链查找.
-</code></pre>
-<p>函数创建时的 <strong>作用域链1</strong>: 外层代码段编译时, 作为一个对象, 会产生一个内部属性 [[scope]],</p>
-<pre><code>        并根据 词法作用域,从内到外层层将父代码段的 变量对象 保存其中.
-</code></pre>
-<p><strong>词法作用域</strong>: 也是 <strong>静态作用域</strong>,JS的 作用域 由函数定义的位置决定,而不是执行时的 调用栈决定.</p>
-<pre><code>    因为函数他所能引用的外部变量[[scope]],在函数创建的时候就已经决定了,而不是函数执行的时候
-</code></pre>
-<p>函数调用时的 <strong>作用域链2</strong>: (进入自己的创建阶段,创建自己的执行上下文,压入执行上下文栈)</p>
-<pre><code>    复制自己 [[scope]]属性 创建作用域链2, 创建自己的AO并初始化, 压入作用域链顶端.
-</code></pre>
+<h3 id="作用域链（ES3时代）"><a href="#作用域链（ES3时代）" class="headerlink" title="作用域链（ES3时代）"></a>作用域链（ES3时代）</h3><ol>
+<li><strong>作用域</strong>: 其实就是 变量对象, 代表 函数和变量的可被访问的范围，生效范围.</li>
+</ol>
+<p>变量存在于哪个 作用域 或 属于哪个变量对象,就可以在这个变量对象内被访问.</p>
+<ol start="2">
+<li><strong>作用域链</strong>: 是JS查找变量的一套规则,本质上是由多个执行上下文的变量对象构成的链表,</li>
+</ol>
+<p>链表的层级由 词法作用域 决定,查找变量时,会沿着作用域链查找.</p>
+<ol start="3">
+<li>函数创建时的 <strong>作用域链1</strong>: 外层代码段编译时, 作为一个对象, 会产生一个内部属性 [[scope]],</li>
+</ol>
+<p>并根据 词法作用域,从内到外层层将父代码段的 变量对象 保存其中.</p>
+<ol start="4">
+<li><strong>词法作用域</strong>: 也是 <strong>静态作用域</strong>,JS的 作用域 由函数定义的位置决定,而不是执行时的 调用栈决定.</li>
+</ol>
+<p>因为函数他所能引用的外部变量[[scope]],在函数创建的时候就已经决定了,而不是函数执行的时候</p>
+<ol start="5">
+<li>函数调用时的 <strong>作用域链2</strong>: (进入自己的创建阶段,创建自己的执行上下文,压入执行上下文栈)</li>
+</ol>
+<p>复制自己 [[scope]]属性 创建作用域链2, 创建自己的AO并初始化, 压入作用域链顶端.</p>
 <h3 id="This（ES3时代）"><a href="#This（ES3时代）" class="headerlink" title="This（ES3时代）"></a>This（ES3时代）</h3><p>当前可执行代码块的调用者</p>
 <h3 id="JS执行（ES3时代）"><a href="#JS执行（ES3时代）" class="headerlink" title="JS执行（ES3时代）"></a>JS执行（ES3时代）</h3><p>JS是 <strong>解释型语言</strong>,边编译边执行.</p>
 <p>JS执行 以 代码段 为单位,主要分为 三个阶段:<strong>语法分析</strong> / <strong>创建阶段</strong> / <strong>执行阶段</strong></p>
@@ -529,7 +531,7 @@
 <p>此时的 VO 不能被直接访问，只有进入执行阶段，成为 活动对象（Active Object） 才能被访问。<br><strong>This</strong></p>
 <h4 id="第三步，执行阶段"><a href="#第三步，执行阶段" class="headerlink" title="第三步，执行阶段"></a>第三步，执行阶段</h4><p>S 代码开始逐条执行，在这个阶段，JS 引擎开始对定义的变量赋值、开始顺着作用域链访问变量，</p>
 <p>如果内部有函数调用就创建一个新的执行上下文压入执行栈并把控制权交出</p>
-<h3 id="第四步，销毁阶段"><a href="#第四步，销毁阶段" class="headerlink" title="第四步，销毁阶段"></a>第四步，销毁阶段</h3><p>当前执行上下文（局部环境）会被弹出执行上下文栈并且销毁，控制权被重新交给执行栈上一层的执行上下文</p>
+<h4 id="第四步，销毁阶段"><a href="#第四步，销毁阶段" class="headerlink" title="第四步，销毁阶段"></a>第四步，销毁阶段</h4><p>当前执行上下文（局部环境）会被弹出执行上下文栈并且销毁，控制权被重新交给执行栈上一层的执行上下文</p>
 <h3 id="ES5时代"><a href="#ES5时代" class="headerlink" title="ES5时代"></a>ES5时代</h3><table>
 <thead>
 <tr>
@@ -1054,7 +1056,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">107.3k</span>&nbsp;字
+                class="white-color">107.2k</span>&nbsp;字
             
             
             
