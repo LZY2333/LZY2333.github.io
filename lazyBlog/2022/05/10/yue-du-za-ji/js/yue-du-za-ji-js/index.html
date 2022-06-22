@@ -552,8 +552,8 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
 <blockquote>
 <p>普通函数的This默认指向全局对象window<br>各种开源库中 函数返回函数 经常会先bind(This)一下，就是因为这个缺陷<br>原型链 与 作用域链 机制类似，却不是一套</p>
 </blockquote>
-<h2 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h2><h2 id="Promise-和-async-await-有什么联系"><a href="#Promise-和-async-await-有什么联系" class="headerlink" title="Promise 和 async/await 有什么联系"></a>Promise 和 async/await 有什么联系</h2><h2 id="手写Promise"><a href="#手写Promise" class="headerlink" title="手写Promise"></a>手写Promise</h2><h2 id="手写call-apply-bind"><a href="#手写call-apply-bind" class="headerlink" title="手写call/apply/bind"></a>手写call/apply/bind</h2><h2 id="手写new"><a href="#手写new" class="headerlink" title="手写new"></a>手写new</h2><h2 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h2><p>__浅拷贝__，如果复制的对象是基本数据类型，拷贝的就是值，如果是引用类型，拷贝的就是内存地址，一个对象改变会影响另一个对象</p>
-<h3 id="JSON-parse-JSON-stringify-基本能用版"><a href="#JSON-parse-JSON-stringify-基本能用版" class="headerlink" title="JSON.parse(JSON.stringify()) 基本能用版"></a><code>JSON.parse(JSON.stringify())</code> 基本能用版</h3><ol>
+<h2 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h2><h2 id="Promise-和-async-await-有什么联系"><a href="#Promise-和-async-await-有什么联系" class="headerlink" title="Promise 和 async/await 有什么联系"></a>Promise 和 async/await 有什么联系</h2><h2 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h2><h2 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h2><h2 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h2><p>__浅拷贝__，如果复制的对象是基本数据类型，拷贝的就是值，如果是引用类型，拷贝的就是内存地址，一个对象改变会影响另一个对象</p>
+<h3 id="JSON-parse-JSON-stringify-基本能用版"><a href="#JSON-parse-JSON-stringify-基本能用版" class="headerlink" title="JSON.parse(JSON.stringify()) 基本能用版"></a>JSON.parse(JSON.stringify()) 基本能用版</h3><ol>
 <li><code>JSON.parse(JSON.stringify())</code>，写法简单，但无法拷贝函数，循环引用，或特殊引用类型.</li>
 </ol>
 <h3 id="forIn遍历，递归自身，丐版"><a href="#forIn遍历，递归自身，丐版" class="headerlink" title="forIn遍历，递归自身，丐版"></a>forIn遍历，递归自身，丐版</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token parameter">target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -566,8 +566,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
     <span class="token keyword">return</span> cloneTarget
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="cloneTarget-兼容数组，map解决循环引用，够用了版"><a href="#cloneTarget-兼容数组，map解决循环引用，够用了版" class="headerlink" title="cloneTarget=[]兼容数组，map解决循环引用，够用了版"></a><code>cloneTarget=[]</code>兼容数组，<code>map</code>解决循环引用，够用了版</h3><p>我没事的时候看架构组源码，看到一个大佬写的很好，就背下来了</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+<h3 id="cloneTarget-兼容数组，map解决循环引用，够用了版"><a href="#cloneTarget-兼容数组，map解决循环引用，够用了版" class="headerlink" title="cloneTarget=[]兼容数组，map解决循环引用，够用了版"></a>cloneTarget=[]兼容数组，map解决循环引用，够用了版</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
  * 深拷贝
  * @param &#123;Object&#125; target 要拷贝的对象
  * @param &#123;WeakMap&#125; map 用于存储循环引用对象的地址
@@ -591,8 +590,8 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
     <span class="token keyword">return</span> cloneTarget
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="WeakMap弱引用-与-强引用"><a href="#WeakMap弱引用-与-强引用" class="headerlink" title="WeakMap弱引用 与 {}强引用"></a>WeakMap弱引用 与 <code>&#123;&#125;</code>强引用</h3><h3 id="forIn循环效率低，while循环效率高，性能优化版"><a href="#forIn循环效率低，while循环效率高，性能优化版" class="headerlink" title="forIn循环效率低，while循环效率高，性能优化版"></a>forIn循环效率低，while循环效率高，性能优化版</h3><h3 id="函数类型及特殊引用类型得专门判断"><a href="#函数类型及特殊引用类型得专门判断" class="headerlink" title="函数类型及特殊引用类型得专门判断"></a>函数类型及特殊引用类型得专门判断</h3><p><code>Map</code>， <code>Set</code> 等类型得专门判断</p>
-<h2 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h2><h2 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h2>
+<h3 id="WeakMap弱引用-与-强引用"><a href="#WeakMap弱引用-与-强引用" class="headerlink" title="WeakMap弱引用 与 {}强引用"></a>WeakMap弱引用 与 {}强引用</h3><h3 id="forIn循环效率低，while循环效率高，性能优化版"><a href="#forIn循环效率低，while循环效率高，性能优化版" class="headerlink" title="forIn循环效率低，while循环效率高，性能优化版"></a>forIn循环效率低，while循环效率高，性能优化版</h3><h3 id="函数类型及特殊引用类型得专门判断"><a href="#函数类型及特殊引用类型得专门判断" class="headerlink" title="函数类型及特殊引用类型得专门判断"></a>函数类型及特殊引用类型得专门判断</h3><p><code>Map</code>， <code>Set</code> 等类型得专门判断</p>
+
                 
             </div>
             <hr/>
@@ -1070,7 +1069,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">108.8k</span>&nbsp;字
+                class="white-color">110.2k</span>&nbsp;字
             
             
             
