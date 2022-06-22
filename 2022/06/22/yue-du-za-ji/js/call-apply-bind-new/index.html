@@ -571,7 +571,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <p>注意 <code>if (this instanceof newFn) &#123;&#125;</code></p>
 <p>new 函数 的时候,会将当前 函数 的this绑定 由其自己为构造函数，创建的新对象，再执行</p>
 <p>换句话说，当 this 指向的是 该函数的实例 时，代表正在进行new操作。</p>
-<h4 id="源码-完全实现"><a href="#源码-完全实现" class="headerlink" title="源码(完全实现)"></a>源码(完全实现)</h4><p>感觉略复杂，目前是 完全抄 若川大佬的，回头细品，待续…</p>
+<h4 id="源码-完全实现"><a href="#源码-完全实现" class="headerlink" title="源码(完全实现)"></a>源码(完全实现)</h4><p>过于复杂，先贴着，待续…</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 第三版 实现new调用</span>
 <span class="token class-name">Function</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">bind2</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">bind</span><span class="token punctuation">(</span><span class="token parameter">thisArg</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> <span class="token keyword">this</span> <span class="token operator">!==</span> <span class="token string">'function'</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
