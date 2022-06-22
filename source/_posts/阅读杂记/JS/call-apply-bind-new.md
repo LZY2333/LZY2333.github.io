@@ -4,6 +4,7 @@ date: 2022-06-22 20:48:50
 categories: 经验帖
 tags:
     - JS基础
+summary: call(context,arg1,arg2...)/apply(context,[arg1,arg2...])/bind(context,arg1,arg2...),三个函数均可以改变函数的this指向,手写一波源码
 ---
 
 # call-apply-bind-new
