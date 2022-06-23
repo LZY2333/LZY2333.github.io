@@ -49,6 +49,8 @@ Function.prototype.call2 = function (context) { // 不能写箭头函数,不然t
 }
 ```
 
+存在fn属性被覆盖的问题，`Object.hasOwnProperty`检查一下有没有成员，有得话就先保存下来，弄完后再赋值回去
+
 ### apply(context,[arg1,arg2...])
 
 ES6
@@ -68,6 +70,7 @@ Function.prototype.apply2 = function (context, arr) {
     context.fn = this;
 
     var args = [];  // arguments => arr,1 => 0
+    if()
     for (var i = 0, len = arr ? arr.length : 0; i < len; i++) {
         args.push('arr[' + i + ']');
     }
