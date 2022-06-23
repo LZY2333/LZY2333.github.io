@@ -70,7 +70,6 @@ Function.prototype.apply2 = function (context, arr) {
     context.fn = this;
 
     var args = [];  // arguments => arr,1 => 0
-    if()
     for (var i = 0, len = arr ? arr.length : 0; i < len; i++) {
         args.push('arr[' + i + ']');
     }
@@ -86,29 +85,30 @@ Function.prototype.apply2 = function (context, arr) {
 #### 源码(不考虑new的情况)
 ES6
 ```js
-Function.prototype.bind2 = function (context, ...args) {
+Function.prototype.bind2 = function (context) {
     if(typeof this !== 'function'){
         throw new TypeError(this + 'must be a function');
     }
-    const self = this
-    args = args ? args : []
-    return function (...newArgs) { // 用闭包保留了context
-        return fn.apply(context, [...args,...newArgs])
-    }
+
+    const args = [...arguments].slice(1)
+    const self = this;
+    return function fn() { // 用闭包保留了 原函数self
+        return self.apply(context, args.concat(...arguments) );
+    };
 }
 ```
 
 ES3
 ```js
-Function.prototype.bind2 = function bind(thisArg){
+Function.prototype.bind2 = function bind(context){
     if(typeof this !== 'function'){
         throw new TypeError(this + 'must be a function');
     }
     var self = this;
     var args = [].slice.call(arguments, 1);
-    return function (){
+    return function fn(){
         var boundArgs = [].slice.call(arguments);
-        return self.apply(thisArg, args.concat(boundArgs));
+        return self.apply(context, args.concat(boundArgs));
     };
 }
 ```
@@ -155,27 +155,29 @@ console.log(obj.friend);
 
 ES6
 ```js
-Function.prototype.bind2 = function (context, ...args) {
+Function.prototype.bind2 = function (context) {
     if(typeof this !== 'function'){
         throw new TypeError(this + 'must be a function');
     }
-    const fn = this
-    args = args ? args : []
-    return function newFn(...newFnArgs) {
-        if (this instanceof newFn) {
-            return new fn(...args, ...newFnArgs)
-        }
-        return fn.apply(context, [...args,...newFnArgs])
-    }
+
+    const args = [...arguments].slice(1)
+    const self = this;
+    return function fn() { // 用闭包保留了 原函数self
+        return self.apply( this instanceof fn ? this : context, args.concat(...arguments) );
+    };
+}
 }
 ```
 
-注意 `if (this instanceof newFn) {}`
+注意 `if (this instanceof fn) {}`
 
 new 函数 的时候,会将当前 函数 的this绑定 由其自己为构造函数，创建的新对象，再执行
 
 换句话说，当 this 指向的是 该函数的实例 时，代表正在进行new操作。
 
+new 新函数 时，需要使用 原函数 绑定 new 的时候创建的 新对象 执行原函数,也就是apply(this)
+
+正常调用 新函数时，需要 apply(context) 绑定 context进行调用。
 
 #### 源码(完全实现)
 
