@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    102
+                    336
                 </div>
                 
 
@@ -447,10 +447,17 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="Fiber"><a href="#Fiber" class="headerlink" title="Fiber"></a>Fiber</h1><p>React16以前没有fiber</p>
-<h3 id="why-Fiber"><a href="#why-Fiber" class="headerlink" title="why Fiber ?"></a>why Fiber ?</h3><p>在react15的时候，dom节点的渲染，是对虚拟节点遍历，创建节点，然后再递归遍历其子节点，创建子节点。</p>
-<p>如果层级特别深，会导致同步任务执行太久，阻塞浏览器进程。</p>
-<p>特别是UI渲染与JS执行互斥，影响UI渲染，造成卡顿效果。</p>
-<p>且递归是无法暂停的。</p>
+<h3 id="Fiber解决了什么痛点？"><a href="#Fiber解决了什么痛点？" class="headerlink" title="Fiber解决了什么痛点？"></a>Fiber解决了什么痛点？</h3><p>在react15的时候，dom节点的渲染，是对虚拟节点遍历，创建节点，然后再递归遍历其子节点，创建子节点。</p>
+<p>如果层级特别深，节点多，会导致JS任务执行太久，阻塞UI渲染线程，造成卡顿效果。</p>
+<p>递归无法暂停的，且消耗性能。</p>
+<h3 id="Fiber的执行时间片–帧"><a href="#Fiber的执行时间片–帧" class="headerlink" title="Fiber的执行时间片–帧"></a>Fiber的执行时间片–帧</h3><p>我们希望React的执行是可以暂停的，切分为无数个小任务分段执行，及时将进程让渡给UI渲染，</p>
+<p>这个分段即为 帧,小任务即为 fiber数据结构</p>
+<p>浏览器的渲染一般以 1000ms / 60帧 为单位，此时人眼不会感觉到卡顿，</p>
+<p>换句话说 <strong>在需要不断进行UI渲染的情况下，每一帧，每一段16.6ms，会进行一次 UI渲染</strong></p>
+<p>而UI渲染完之后，这16.6ms会有剩余，</p>
+<p>使用这个剩余时间进行JS的执行，并在下个帧开始前及时停止，就是fiber的实现原理。</p>
+<h3 id="Fiber-1"><a href="#Fiber-1" class="headerlink" title="Fiber"></a>Fiber</h3><p>Fiber 是一个执行单元，每次执行完一个执行单元，React就会检查还剩多少时间，如果没有时间把控制权交出去</p>
+<p>Fiber 是一个数据结构，使用链表，将每一个 vdom 内部表示为一个fiber</p>
 
                 
             </div>
@@ -923,7 +930,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">113.6k</span>&nbsp;字
+                class="white-color">113.9k</span>&nbsp;字
             
             
             
