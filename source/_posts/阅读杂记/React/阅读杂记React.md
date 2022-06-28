@@ -12,6 +12,10 @@ summary: jS杂记，阅读杂记系列为 【对日常看过的一些有趣帖�
 
 ## 请说一下React中的渲染流程
 
+## React15 和 16 执行过程的区别
+
+初始化  更新
+
 
 
 ## React事件机制,16和17事件机制有什么不同
@@ -55,3 +59,8 @@ useReducer 和 useContext
 ### setState 同步还是异步
 
 ## 性能优化
+
+## React 涉及的算法
+
+## LRU算法
+在React16.6引入了Suspense和React.lazy，用来分割组件代码。
