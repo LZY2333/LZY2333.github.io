@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Fiber, 懒前端">
+    <meta name="keywords" content="Fiber原理, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Fiber | 懒前端</title>
+    <title>Fiber原理 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Fiber</h1>
+                    <h1 class="description center-align post-title">Fiber原理</h1>
                 </div>
             </div>
         </div>
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    336
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -446,18 +446,102 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Fiber"><a href="#Fiber" class="headerlink" title="Fiber"></a>Fiber</h1><p>React16以前没有fiber</p>
-<h3 id="Fiber解决了什么痛点？"><a href="#Fiber解决了什么痛点？" class="headerlink" title="Fiber解决了什么痛点？"></a>Fiber解决了什么痛点？</h3><p>在react15的时候，dom节点的渲染，是对虚拟节点遍历，创建节点，然后再递归遍历其子节点，创建子节点。</p>
-<p>如果层级特别深，节点多，会导致JS任务执行太久，阻塞UI渲染线程，造成卡顿效果。</p>
-<p>递归无法暂停的，且消耗性能。</p>
-<h3 id="Fiber的执行时间片–帧"><a href="#Fiber的执行时间片–帧" class="headerlink" title="Fiber的执行时间片–帧"></a>Fiber的执行时间片–帧</h3><p>我们希望React的执行是可以暂停的，切分为无数个小任务分段执行，及时将进程让渡给UI渲染，</p>
-<p>这个分段即为 帧,小任务即为 fiber数据结构</p>
-<p>浏览器的渲染一般以 1000ms / 60帧 为单位，此时人眼不会感觉到卡顿，</p>
-<p>换句话说 <strong>在需要不断进行UI渲染的情况下，每一帧，每一段16.6ms，会进行一次 UI渲染</strong></p>
-<p>而UI渲染完之后，这16.6ms会有剩余，</p>
-<p>使用这个剩余时间进行JS的执行，并在下个帧开始前及时停止，就是fiber的实现原理。</p>
-<h3 id="Fiber-1"><a href="#Fiber-1" class="headerlink" title="Fiber"></a>Fiber</h3><p>Fiber 是一个执行单元，每次执行完一个执行单元，React就会检查还剩多少时间，如果没有时间把控制权交出去</p>
-<p>Fiber 是一个数据结构，使用链表，将每一个 vdom 内部表示为一个fiber</p>
+                <h1 id="Fiber"><a href="#Fiber" class="headerlink" title="Fiber"></a>Fiber</h1><p>React16 以上的版本中使用了 Fiber 架构</p>
+<p>React Fiber 是 React 核心算法的重新实现。</p>
+<p>它的主要特点是渐进式渲染: 能够将渲染工作分割成块，并将其分散到多个帧。</p>
+<h3 id="Fiber解决什么痛点"><a href="#Fiber解决什么痛点" class="headerlink" title="Fiber解决什么痛点"></a>Fiber解决什么痛点</h3><p>React15更新时 采用深度优先遍历 递归比对vdom树 同步更新变动的节点 的策略， <strong>Reconciliation协调</strong> 阶段</p>
+<p>这种递归调用 调用栈太深 资源占用高 无法中断, 执行时间长 导致一直占用主线程, 引起浏览器卡顿</p>
+<p>于是引入 Fiber 进行调度, 把 <strong>Reconciliation协调</strong> 过程拆分为 更小粒度 可随时停止 可继续执行</p>
+<p>适时地让出 执行权, 让浏览器能及时响应用户交互 UI渲染</p>
+<p>那么问题来了,</p>
+<p>应该什么时候执行,什么时候让出执行权?</p>
+<p>如何让出执行权?</p>
+<p>如何拆分成更小粒度?</p>
+<h3 id="帧"><a href="#帧" class="headerlink" title="帧"></a>帧</h3><p>浏览器的页面是一帧一帧绘制出来的,帧率与设备刷新率保持一致.</p>
+<p>假设60hz, 即1000ms刷新60次, 一帧16.6ms, 此时页面渲染是流畅的.</p>
+<p>每一帧的开头, 浏览器需要进行 事件处理 UI渲染等高优先级操作, 之后是空闲阶段</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4f288e9135ed414d871ad2fd2715d85d~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp" alt="一个完整的帧"></p>
+<ol>
+<li>event事件</li>
+<li>timer定时器</li>
+<li>begin Frame 开始帧</li>
+<li>requestAnimationFrame (请求动画帧)</li>
+<li>Layout布局</li>
+<li>Pain绘制</li>
+<li>requestIdleCallback (Idle Peroid 空闲时间)</li>
+</ol>
+<p><strong>Fiber基本原理</strong></p>
+<p>在 浏览器每帧的空闲阶段 执行 已被拆分成小任务的 协调, 在每一个小任务 执行完后检查 当前帧剩余时间,</p>
+<p>如仍有剩余则继续下一个小任务, 如果当前帧已到时限则停止执行,等待下一帧的空闲时间继续执行,</p>
+<p>知道 当前协调执行完毕.</p>
+<p><strong>requestAnimationFrame</strong> 浏览器提供的Api,其注册是回调函数会在4.阶段专门执行.</p>
+<p><strong>requestIdleCallback</strong> 浏览器提供的Api,其注册是回调函数会在空闲阶段执行.</p>
+<h3 id="什么是Fiber"><a href="#什么是Fiber" class="headerlink" title="什么是Fiber"></a>什么是Fiber</h3><ol>
+<li><p>Fiber 可以理解为是一个执行单元，也可以理解为是一种数据结构。</p>
+</li>
+<li><p>Fiber 将React的更新进行了更细粒度的拆分，使得其可以被中断和恢复，不阻塞主进程执行高优先级的任务</p>
+</li>
+</ol>
+<h3 id="Fiber的链表结构"><a href="#Fiber的链表结构" class="headerlink" title="Fiber的链表结构"></a>Fiber的链表结构</h3><p>Fiber 是一个单链表树结构, 以 单链表 的数据结构, 以 后续遍历 的顺序,储存了 vdom树结构</p>
+<h3 id="之后的内容均未定…-TODO…"><a href="#之后的内容均未定…-TODO…" class="headerlink" title="之后的内容均未定…..TODO….."></a>之后的内容均未定…..TODO…..</h3><p>Fiber 的粒度为 vdom, 每一个 vdom 内都被表示为 一个Fiber(整个React也是一个Fiber)</p>
+<p>Fiber 的链表结构,每一个单元包含了 payload（数据）和nextUpdate（指向下一个单元的指针）</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 一个更新单元,例如一次setState,在创建时 nextUpdate为空,在进入updateQueue内才会用上</span>
+<span class="token keyword">class</span> <span class="token class-name">Update</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">payload<span class="token punctuation">,</span> nextUpdate</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>payload <span class="token operator">=</span> payload <span class="token comment">// setState 传的数据 或 函数</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>nextUpdate <span class="token operator">=</span> nextUpdate <span class="token comment">// 下一个要执行的 Update 的指针</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 更新队列</span>
+<span class="token keyword">class</span> <span class="token class-name">UpdateQueue</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>baseState <span class="token operator">=</span> <span class="token keyword">null</span> <span class="token comment">// 总状态,上一次的状态</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>firstUpdate <span class="token operator">=</span> <span class="token keyword">null</span> <span class="token comment">// 更新链表的头</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lastUpdate <span class="token operator">=</span> <span class="token keyword">null</span> <span class="token comment">// 更新链表的尾</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">enqueueUpdate</span><span class="token punctuation">(</span><span class="token parameter">update</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 当前链表是空链表</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>firstUpdate<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>firstUpdate <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>lastUpdate <span class="token operator">=</span> update
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 当前链表不为空</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>lastUpdate<span class="token punctuation">.</span>nextUpdate <span class="token operator">=</span> update
+            <span class="token keyword">this</span><span class="token punctuation">.</span>lastUpdate <span class="token operator">=</span> update
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 获取state，然后遍历这个链表，进行更新</span>
+    <span class="token function">forceUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> currentState <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>baseState <span class="token operator">||</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        <span class="token keyword">let</span> currentUpdate <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>firstUpdate
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>currentUpdate<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 判断是函数还是对象，是函数则需要执行，是对象则直接返回</span>
+            <span class="token keyword">let</span> nextState <span class="token operator">=</span> <span class="token keyword">typeof</span> currentUpdate<span class="token punctuation">.</span>payload <span class="token operator">===</span> <span class="token string">'function'</span> <span class="token operator">?</span> currentUpdate<span class="token punctuation">.</span><span class="token function">payload</span><span class="token punctuation">(</span>currentState<span class="token punctuation">)</span> <span class="token operator">:</span> currentUpdate<span class="token punctuation">.</span>payload
+            currentState <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span>currentState<span class="token punctuation">,</span> <span class="token operator">...</span>nextState <span class="token punctuation">&#125;</span>
+            currentUpdate <span class="token operator">=</span> currentUpdate<span class="token punctuation">.</span>nextUpdate
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 更新完成后清空链表</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>firstUpdate <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>lastUpdate <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>baseState <span class="token operator">=</span> currentState
+        <span class="token keyword">return</span> currentState
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">let</span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UpdateQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+queue<span class="token punctuation">.</span><span class="token function">enqueueUpdate</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Update</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'www'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+queue<span class="token punctuation">.</span><span class="token function">enqueueUpdate</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Update</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">age</span><span class="token operator">:</span> <span class="token number">10</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+queue<span class="token punctuation">.</span><span class="token function">enqueueUpdate</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Update</span><span class="token punctuation">(</span><span class="token parameter">state</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">age</span><span class="token operator">:</span> state<span class="token punctuation">.</span>age <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+queue<span class="token punctuation">.</span><span class="token function">enqueueUpdate</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Update</span><span class="token punctuation">(</span><span class="token parameter">state</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">age</span><span class="token operator">:</span> state<span class="token punctuation">.</span>age <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+queue<span class="token punctuation">.</span><span class="token function">forceUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>queue<span class="token punctuation">.</span>baseState<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>特别像vue2的依赖收集!!!!</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/49496872/answer/2137978516">如何理解 React Fiber 架构？</a></p>
+<h3 id="为什么Vue不需要Fiber"><a href="#为什么Vue不需要Fiber" class="headerlink" title="为什么Vue不需要Fiber"></a>为什么Vue不需要Fiber</h3><p>Vue的更新粒度为组件级,更新粒度更小</p>
+<p>React的不论在哪setState,都是从根节点开始更新的</p>
+<p>react因为先天的不足——无法精确更新，所以需要react fiber把组件渲染工作切片；而vue基于数据劫持，更新粒度很小，没有这个压力；</p>
+<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>有一说一,这篇文章对Fiber的结构讲得不是很清楚<a target="_blank" rel="noopener" href="https://juejin.cn/post/6943896410987659277#comment">走进React Fiber的世界</a></p>
 
                 
             </div>
@@ -484,7 +568,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/06/26/react/fiber/">https://github.com/LZY2333/LZY2333.github.io/2022/06/26/react/fiber/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/06/26/react/fiber-yuan-li/">https://github.com/LZY2333/LZY2333.github.io/2022/06/26/react/fiber-yuan-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -698,13 +782,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/06/26/react/fiber/">
+                <a href="/2022/06/26/react/fiber-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Fiber">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Fiber原理">
                         
-                        <span class="card-title">Fiber</span>
+                        <span class="card-title">Fiber原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -930,7 +1014,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">113.9k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             
