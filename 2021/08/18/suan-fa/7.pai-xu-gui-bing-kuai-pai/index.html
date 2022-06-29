@@ -512,7 +512,9 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token function">mergeSort</span><span class="token punctuation">(</span>testArr<span class="token punctuation">)</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序后:'</span><span class="token punctuation">,</span>res<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>稳定的排序算法</strong><br><code>mergeArr()</code>递归分解函数中:<br><code>left[leftIndex] &lt;= right[rightIndex]</code>中的等号<br><code>temp.concat(left.slice(leftIndex)).concat(right.slice(rightIndex))</code><br>中的temp与concat顺序,left.concat与right的顺序<br>保证了 归并排序 是 稳定的排序</p>
+<p><strong>稳定的排序算法</strong></p>
+<p>相等的元素,<code>left</code>数组内的数具有优先权,保证了其稳定排序</p>
+<p><code>mergeArr()</code>递归分解函数中:<br><code>left[leftIndex] &lt;= right[rightIndex]</code>中的等号<br><code>temp.concat(left.slice(leftIndex)).concat(right.slice(rightIndex))</code><br>中的temp与concat顺序,left.concat与right的顺序<br>保证了 归并排序 是 稳定的排序</p>
 <p><strong>时间复杂度:O(nlogn)</strong><br>公式推演太复杂,高中和大学的基本忘了.<br>自己想了一个思路,每一层遍历都是n,共log2n层,所以是nlogn</p>
 <p><strong>空间复杂度:O(n)</strong></p>
 <p>归并排序 没有 快排 应用广泛,因为 <strong>归并排序不是原地排序算法</strong></p>
@@ -1109,7 +1111,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">114.7k</span>&nbsp;字
+                class="white-color">115.5k</span>&nbsp;字
             
             
             

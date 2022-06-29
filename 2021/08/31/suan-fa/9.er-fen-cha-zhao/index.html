@@ -471,7 +471,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <blockquote>
 <p>注意循环退出条件是 low &lt;= high<br>注意 high = mid - 1,low = mid + 1,没这个 1 可能会死循环(high=low时)<br>(low + high) / 2 可优化为 low + (high - low) / 2,防止high+low溢出<br>必须是顺序表结构(数组),必须是有序数据<br>理论上二分查找可以解决的问题,散列表 二叉树都能解决,但是需要更多额外空间<br>所以限制内存空间及 数据量较大时 使用 二分查找</p>
 </blockquote>
-<p>查找k次,2的k次方能覆盖n个元素<br>__时间复杂度O(logn)</p>
+<p>查找k次,2的k次方能覆盖n个元素<br><strong>时间复杂度O(logn)</strong></p>
 <h2 id="查找第一个等于给定值"><a href="#查找第一个等于给定值" class="headerlink" title="查找第一个等于给定值"></a>查找第一个等于给定值</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">binaryFindFirst</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">sortedArr<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>sortedArr<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
     <span class="token keyword">let</span> low <span class="token operator">=</span> <span class="token number">0</span>
@@ -1026,7 +1026,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">114.7k</span>&nbsp;字
+                class="white-color">115.5k</span>&nbsp;字
             
             
             

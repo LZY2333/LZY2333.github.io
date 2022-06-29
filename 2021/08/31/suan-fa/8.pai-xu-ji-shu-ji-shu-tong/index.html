@@ -447,8 +447,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="排序-计数-基数-桶"><a href="#排序-计数-基数-桶" class="headerlink" title="排序(计数,基数,桶)"></a>排序(计数,基数,桶)</h1><p>对数据有要求,但时间复杂度为O(n)</p>
-<h2 id="桶排序-BucketSort"><a href="#桶排序-BucketSort" class="headerlink" title="桶排序(BucketSort)"></a>桶排序(BucketSort)</h2><p>桶排序实际上是一种思想,<br>主要用于排序 大批量数据(10GB),<br>进行外部排序(数据储存在外部磁盘中),<br>进行分批次排序</p>
-<p>先扫描一遍文件,确定数据范围,如1-100<br>首先,定义每个’桶’内存放的数据区间,如1-10,11-20…91-100<br>然后,扫描数据将数据存放在属于自己范围内的桶内<br>再次,依次对各个桶进行排序<br>最后,按顺序 直接拼接 桶内数据.</p>
+<h2 id="桶排序-BucketSort"><a href="#桶排序-BucketSort" class="headerlink" title="桶排序(BucketSort)"></a>桶排序(BucketSort)</h2><p>桶排序实际上是一种思想,主要用于排序 大批量数据(10GB),<br>进行外部排序(数据储存在外部磁盘中),<br>进行分批次排序</p>
+<p>先扫描一遍文件,<strong>确定数据范围</strong>,如1-100<br>首先,<strong>划分每个’桶’内存放的数据区间</strong>,如1-10,11-20…91-100<br>然后,扫描数据将数据存放在属于自己范围内的桶内<br>再次,依次对各个桶进行排序<br>最后,按顺序 直接拼接 各桶数据.</p>
 <p>数据量大可继续分桶,数据不均匀可桶内再分桶</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/** 找到数据范围,确定每个桶范围,创建桶,数据分桶,对每个桶调用排序 */</span>
 
@@ -1056,7 +1056,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">114.7k</span>&nbsp;字
+                class="white-color">115.5k</span>&nbsp;字
             
             
             

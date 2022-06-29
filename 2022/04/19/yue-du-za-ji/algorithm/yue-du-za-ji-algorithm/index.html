@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.9k
+                    2.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    11 分
                 </div>
                 
 
@@ -502,7 +502,10 @@
 <p>队列需要两个指针,标记队列头 和 尾</p>
 <h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>冒泡排序: 右侧有序,外层记录左边界，内层从左往右,<code>0 length, hasChanged, 0 -i-1,全是j</code><br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>相邻元素大小相等时不会进行交换 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong></p>
 <p>插入排序: 左侧有序,外层记录右边界，内层从右往左,<code>1 length, temp j, i-1 0</code><br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>发现值相同的元素时插入 是 <strong>稳定的排序算法</strong>,<br>时间复杂度 为 <strong>O(n²)</strong> (n轮,每轮移动n个数)</p>
-<p>选择排序: 左侧有序,外层记录右边界，内层从右往右,<code>0 length-1, minIndex, i+1 length</code><br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>是 <strong>不!稳定的排序算法</strong>,<br>任何情况时间复杂度 为 <strong>O(n²)</strong></p>
+<p>选择排序: 左侧有序,外层记录左边界，内层从右往右,<code>0 length-1, minIndex, i+1 length</code><br>空间复杂度为 <strong>O(1)</strong>,是 <strong>原地排序算法</strong>,<br>是 <strong>不!稳定的排序算法</strong>,<br>任何情况时间复杂度 为 <strong>O(n²)</strong></p>
+<p><strong>插入排序 比 冒泡排序 性能更好</strong></p>
+<p>插入排序和冒泡排序的元素交换次数都是原始数据的逆序度</p>
+<p>但每次交换 冒泡排序需要 3个赋值操作，插入排序只需要1个</p>
 <h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 冒泡排序</span>
 <span class="token keyword">const</span> <span class="token function-variable function">bubbleSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// length &lt;= 1 直接return</span>
@@ -572,7 +575,17 @@
 <span class="token keyword">const</span> testSelect <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">]</span>
 <span class="token function">selectionSort</span><span class="token punctuation">(</span>testSelect<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">quickSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<h2 id="快速排序-归并排序"><a href="#快速排序-归并排序" class="headerlink" title="快速排序/归并排序"></a>快速排序/归并排序</h2><p>快速排序: <strong>时间复杂度O(nlogn)</strong>,<strong>空间复杂度O(1)</strong>,<strong>不稳定的排序算法</strong>,<strong>原地排序</strong></p>
+<p>归并排序: <strong>时间复杂度:O(nlogn)</strong>,<strong>空间复杂度:O(n)</strong>, <strong>稳定的排序算法</strong>,<strong>非原地排序</strong></p>
+<p>快速排序 极端情况下时间复杂度退化成O(n²),例如选中有序数组的最后一位做为pivot</p>
+<p>防止极端情况: </p>
+<p>三数取中法(每次从要排序的区间中 首 尾 中 取数 中值作为pivot,可5数取中,等)</p>
+<p>随机法(每次从要排序的区间中随机选择pivot)</p>
+<p>归并排序 相等的元素,<code>left</code>数组内的数具有优先权,保证了其稳定排序</p>
+<blockquote>
+<p>归并 自下而上, 快排 自上而下</p>
+</blockquote>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">quickSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">let</span> pivot <span class="token operator">=</span> right
         <span class="token keyword">let</span> partitionIndex <span class="token operator">=</span> <span class="token function">partition</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> pivot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">)</span>
@@ -608,6 +621,68 @@
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序前:'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span>
 <span class="token function">quickSort</span><span class="token punctuation">(</span>testArr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> testArr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序后:'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">mergeSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> arr
+    <span class="token keyword">const</span> middle <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> left <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> middle<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> right <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>middle<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">mergeArr</span><span class="token punctuation">(</span><span class="token function">mergeSort</span><span class="token punctuation">(</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">mergeSort</span><span class="token punctuation">(</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">const</span> <span class="token function-variable function">mergeArr</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> temp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">let</span> leftIndex <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> rightIndex <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>left<span class="token punctuation">.</span>length <span class="token operator">></span> leftIndex <span class="token operator">&amp;&amp;</span> right<span class="token punctuation">.</span>length <span class="token operator">></span> rightIndex<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>left<span class="token punctuation">[</span>leftIndex<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> right<span class="token punctuation">[</span>rightIndex<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            temp<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>left<span class="token punctuation">[</span>leftIndex<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            leftIndex<span class="token operator">++</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            temp<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>right<span class="token punctuation">[</span>rightIndex<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            rightIndex<span class="token operator">++</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> temp<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>left<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>leftIndex<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>right<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>rightIndex<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">10</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    arr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    count<span class="token operator">--</span>
+<span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序前:'</span><span class="token punctuation">,</span> arr<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序后:'</span><span class="token punctuation">,</span> <span class="token function">mergeSort</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="桶排序-BucketSort"><a href="#桶排序-BucketSort" class="headerlink" title="桶排序(BucketSort)"></a>桶排序(BucketSort)</h3><p>桶排序实际上是一种思想,主要用于排序 大批量数据(10GB),<br>进行外部排序(数据储存在外部磁盘中),<br>进行分批次排序</p>
+<p>先扫描一遍文件,<strong>确定数据范围</strong>,如1-100<br>首先,<strong>划分每个’桶’内存放的数据区间</strong>,如1-10,11-20…91-100<br>然后,扫描数据将数据存放在属于自己范围内的桶内<br>再次,依次对各个桶进行排序<br>最后,按顺序 直接拼接 各桶数据.</p>
+<p>数据量大可继续分桶,数据不均匀可桶内再分桶</p>
+<h2 id="二分查找-BinarySearch"><a href="#二分查找-BinarySearch" class="headerlink" title="二分查找(BinarySearch)"></a>二分查找(BinarySearch)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 数组必须有序 不存在重复</span>
+<span class="token keyword">const</span> <span class="token function-variable function">BinarySearch</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">sortedArr<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>sortedArr<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
+    <span class="token keyword">let</span> low <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> high <span class="token operator">=</span> sortedArr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>low <span class="token operator">&lt;=</span> high<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> mid <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>low <span class="token operator">+</span> high<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>target <span class="token operator">===</span> sortedArr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> mid
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>target <span class="token operator">&lt;</span> sortedArr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            high <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            low <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">,</span> <span class="token number">42</span><span class="token punctuation">,</span> <span class="token number">44</span><span class="token punctuation">,</span> <span class="token number">54</span><span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">,</span> <span class="token number">77</span><span class="token punctuation">,</span> <span class="token number">102</span><span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">BinarySearch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">44</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">BinarySearch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">BinarySearch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">102</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">BinarySearch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">1111</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>注意循环退出条件是 low &lt;= high<br>注意 high = mid - 1,low = mid + 1,没这个 1 可能会死循环(high=low时)<br>(low + high) / 2 可优化为 low + (high - low) / 2,防止high+low溢出<br>必须是顺序表结构(数组),必须是有序数据<br>理论上二分查找可以解决的问题,散列表 二叉树都能解决,但是需要更多额外空间<br>所以限制内存空间及 数据量较大时 使用 二分查找</p>
+</blockquote>
+<p>查找k次,2的k次方能覆盖n个元素<br><strong>时间复杂度O(logn)</strong></p>
 
                 
             </div>
@@ -1086,7 +1161,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">114.7k</span>&nbsp;字
+                class="white-color">115.5k</span>&nbsp;字
             
             
             
