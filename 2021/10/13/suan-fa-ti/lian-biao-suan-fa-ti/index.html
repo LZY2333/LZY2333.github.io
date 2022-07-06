@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2.2k
                 </div>
                 
 
@@ -461,6 +461,14 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> root<span class="token punctuation">.</span>next
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token comment">// 极简</span>
+<span class="token keyword">var</span> <span class="token function-variable function">reverseList</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> <span class="token punctuation">[</span>prev<span class="token punctuation">,</span> current<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token keyword">null</span><span class="token punctuation">,</span> head<span class="token punctuation">]</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">[</span>current<span class="token punctuation">.</span>next<span class="token punctuation">,</span> prev<span class="token punctuation">,</span> current<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span>prev<span class="token punctuation">,</span> current<span class="token punctuation">,</span> current<span class="token punctuation">.</span>next<span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> prev
+<span class="token punctuation">&#125;</span>
 <span class="token comment">// 递归</span>
 <span class="token keyword">var</span> <span class="token function-variable function">reverseList</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>head <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> head<span class="token punctuation">.</span>next <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
@@ -470,7 +478,7 @@
     <span class="token comment">// 每一层 递归都记录了当前结点，所以直接把next置为null也没关系</span>
     <span class="token comment">// 外层会继续将next 置为前一个数</span>
     <span class="token keyword">return</span> newHead<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="3、相交链表（-LeetCode-160-）-未解出"><a href="#3、相交链表（-LeetCode-160-）-未解出" class="headerlink" title="3、相交链表（ LeetCode 160 ）(未解出)"></a>3、相交链表（ LeetCode 160 ）(未解出)</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 反转链表</span>
 <span class="token keyword">var</span> <span class="token function-variable function">getIntersectionNode</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">headA<span class="token punctuation">,</span> headB</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
