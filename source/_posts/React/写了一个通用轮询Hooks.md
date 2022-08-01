@@ -95,7 +95,7 @@ export function usePolling(cb: () => Promise<boolean>, time = 2000): [startPolli
             }, time);
         }
     }, [countTime]);
-    const startPolling = () => startCount(1);
+    const startPolling = () => startCount(countTime + 1);
     const endPolling = () => startCount(0);
     return [startPolling, endPolling];
 }
