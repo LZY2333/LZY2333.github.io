@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-20
+                    2022-09-08
                 </div>
                 
 
@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    1.7k
                 </div>
                 
 
@@ -449,10 +449,21 @@
                 <h1 id="TS笔记"><a href="#TS笔记" class="headerlink" title="TS笔记"></a>TS笔记</h1><p>计划三天看完TS课程,此为课程笔记</p>
 <p>2021-09-22 - 2021-09-24</p>
 <h2 id="一点准备"><a href="#一点准备" class="headerlink" title="一点准备"></a>一点准备</h2><p><code>npm i typescript -g</code> 全局安装TS编译器<br><code>npm i ts-node -g</code> 安装好后可在vscode右键run直接运行ts<br><code>tsc hello.ts</code>可运行编译文件<br><code>tsc --init</code>生成TS配置文件</p>
+<p>配置tsconfig.json</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span>
+  <span class="token string-property property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token string-property property">"target"</span><span class="token operator">:</span> <span class="token string">"es5"</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"module"</span><span class="token operator">:</span> <span class="token string">"commonjs"</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"outDir"</span><span class="token operator">:</span> <span class="token string">"./js"</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>运行vscode检视任务<br>vscode -&gt; 终端 -&gt; 运行生成任务 -&gt; tsc:监视</p>
+<p>这样保存ts文件时 会自动编译出js文件,方便查看</p>
 <h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p><strong>布尔</strong> <strong>数字</strong> <strong>字符串</strong> <strong>数组</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let married: boolean &#x3D; false;   &#x2F;&#x2F; bolean
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let married: boolean &#x3D; false;   &#x2F;&#x2F; boolean
 let age: number &#x3D; 25;           &#x2F;&#x2F; number
-let firstname: string &#x3D; &#39;lzy&#39;; &#x2F;&#x2F; string
+let firstName: string &#x3D; &#39;lzy&#39;; &#x2F;&#x2F; string
 
 let arr2: number[]&#x3D;[4,5,6];     &#x2F;&#x2F; array
 let arr3: Array&lt;number&gt;&#x3D;[7,8,9];&#x2F;&#x2F; array<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -476,10 +487,11 @@ const enum Color2 &#123;
     Yellow,&#x2F;&#x2F; 默认值为1
     Blue&#x2F;&#x2F; 默认值为2
 &#125;
-&#x2F;&#x2F; 常量枚举的变量名(如Red)会在编译时被删除,节省变量名开销,因为是常量,必然是固定值
-let myColors &#x3D; [Colors.Red, Colors.Yellow, Colors.Blue];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#x2F;&#x2F; 常量枚举的变量名(如Red)会在编译时被完全删除,节省变量名开销,因为是常量,必然是固定值,调用这个固定值的地方会直接被替换为值
+
+let myColors &#x3D; [Colors.Red, Colors.Yellow, Colors.Blue];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>any</strong><br>任意类型,可以被赋值任何类型数据的类型</p>
-<p><strong>null</strong> <strong>undefined</strong><br>null 和 undefined 是其他类型的子类型,可以赋值给任意类型.<br>但,TS配置文件设置了strictNullChecks:true时,直接这样赋值会报错</p>
+<p><strong>null</strong> <strong>undefined</strong><br>null 和 undefined 是其他类型的子类型,可以赋值给任意类型.<br>但,TS配置文件设置了strictNullChecks:true时,直接这样赋值会报错<br>null 和 undefined 可以相互赋值</p>
 <p><strong>void</strong><br>表示没有任何类型,当函数没有返回值时,被认为是void类型</p>
 <p><strong>never</strong><br>never 是其他类型的子类型,表示永远不会被执行到的值</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function error(message: string): never &#123;
@@ -531,16 +543,16 @@ console.log((name as boolean).length); &#x2F;&#x2F; 报错,不能指定为联合
 console.log((name as any as boolean).length); &#x2F;&#x2F; 双重断言,OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="字面量类型和类型字面量"><a href="#字面量类型和类型字面量" class="headerlink" title="字面量类型和类型字面量"></a>字面量类型和类型字面量</h2><p><strong>字面量类型</strong> 一个字面量就是一个类型,类型和值必须一致.</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const up:&#39;Up&#39; &#x3D; &#39;Up&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const up:&#39;Up&#39; &#x3D; &#39;Up&#39;
+type OneToFive &#x3D; 1 | 2 | 3 | 4 | 5;
+type Bool &#x3D; true | false;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>字面量类型本身并不是很实用，但是可以在一个联合类型中组合成一个强大的抽象</p>
 <p><strong>类型字面量</strong> 写法很像一个对象</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Person &#x3D; &#123;
   name:string,
   age:number
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>字符串字面量类型 和 联合类型 的区别</p>
-<p>字面量类型 限定了 变量中的 值 只能是 某几个字符串 中的一个<br>联合类型   限定了 变量中的 值 只能算 某几个类型  中的一种</p>
 <h2 id="TS函数"><a href="#TS函数" class="headerlink" title="TS函数"></a>TS函数</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 简单定义方法
 function hello(name:string):void &#123;
     console.log(&#39;hello&#39;,name);
@@ -620,7 +632,7 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/09/20/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">https://github.com/LZY2333/LZY2333.github.io/2021/09/20/typescript/1.ts-ji-chu-lei-xing-he-han-shu/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/09/08/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">https://github.com/LZY2333/LZY2333.github.io/2022/09/08/typescript/1.ts-ji-chu-lei-xing-he-han-shu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -829,17 +841,18 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/09/21/typescript/2.ts-lei/">
+                <a href="/2022/09/08/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="2.TS类">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="1.TS基础类型和函数">
                         
-                        <span class="card-title">2.TS类</span>
+                        <span class="card-title">1.TS基础类型和函数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -849,9 +862,9 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-21
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -864,6 +877,7 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -882,31 +896,31 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/17/suan-fa/12.er-cha-shu/">
+                <a href="/2022/08/17/sheng-huo/yi-chang-mian-tan-zhi-hao-liao-wo-de-jing-shen-nei-hao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="二叉树">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="一场面瘫治好了我的精神内耗">
                         
-                        <span class="card-title">二叉树</span>
+                        <span class="card-title">一场面瘫治好了我的精神内耗</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            这场病就像我在生活中无力感的具现。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-17
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-17
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
+                                    生活区
                                 </a>
                             
                             
@@ -916,8 +930,8 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">JS基础</span>
                     </a>
                     
                 </div>
