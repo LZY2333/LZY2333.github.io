@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-17
+                    2022-09-19
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    2.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    10 分
                 </div>
                 
 
@@ -529,38 +529,201 @@ module<span class="token punctuation">.</span><span class="token function-variab
 
 
 <p>3.<code>cross-env NODE_ENV=production webpack</code> 可改变node环境变量 <code>process.env.NODE_ENV</code></p>
-<p>process.env.NODE_ENV 在 src内的 是被webpack识别并捕获替换的字面量</p>
-<p>process.env.NODE_ENV 在 webpack配置文件中 是undefined</p>
 <p>process代表webpack运行的node进程,env代表环境变量,NODE_ENV代表一个key</p>
 <p>通过<code>cross-env</code>可设定任意key值,包括NODE_ENV</p>
 <p>需要先<code>npm i cross-env --D</code> 此module名意为,跨平台环境变量</p>
 <p>因为win和mac的环境变量设置的命令行语句不同,</p>
 <p>例如,win平台需要set命令<code>set NODE_ENV=production webpack</code>,mac平台不需要加set</p>
+<p>__在scripts命令中注入的NODE_ENV只能被webpack的构建脚本访问，而被webpack打包的源码中是无法访问到的__</p>
+<p>借助webpack的DefinePlugin插件,可以对源码进行替换</p>
 <ol start="4">
-<li><strong>DefinePlugin</strong> 用来设置模块内的全局变量,可以用于模块内的字符串替换</li>
+<li><p><strong>DefinePlugin</strong> 设置了一些key value，用于打包的时候进行替换。也可以修改 源代码中的<code>process.env.NODE_ENV</code>,进行字面量替换.<br>当然这里的<code>process.env.NODE_ENV</code> 可以是任何字符串.<br>比如<code>&#39;abc&#39;:&#39;cba&#39;</code>,只要webpack发现源码里有 变量类型的<code>abc</code>,就会被替换为<code>&#39;cba&#39;</code></p>
+<p>注意:源码里的 字符串类型的 <code>&#39;abc&#39;</code> 则不会被替换成 <code>&#39;cba&#39;</code>,不会被识别<br>只有 变量<code>abc</code>,会被替换为  <code>&#39;cba&#39;</code>,</p>
+</li>
 </ol>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>DefinePlugin</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
         <span class="token string-property property">'process.env.NODE_ENV'</span><span class="token operator">:</span> <span class="token string">'production'</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token comment">// 当然这个production也可以使用变量,比如读dev里的production</span>
-    <span class="token comment">// 但是注意 使用变量时得加上 JSON.stringify(dev.production) 或 '"'+ a + '"'</span>
-    <span class="token comment">// 不加的话替换过去会没有双引号,从而在运行的时候被视为变量,或错误,而非字符串字面量</span>
-    <span class="token comment">// 当然这个字符串也可以随便写 abcd啥的,就是个编译时的字符串替换</span>
-<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">]</span>
+<span class="token comment">// 配合上 cross-env NODE_ENV=production webpack,可以这样写</span>
+<span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>DefinePlugin</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        <span class="token string-property property">'process.env.NODE_ENV'</span><span class="token operator">:</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">]</span>
+    <span class="token comment">// 注意 使用变量时得加上 JSON.stringify(dev.production) 或 '"'+ a + '"'</span>
+    <span class="token comment">// 不加的话替换过去会没有双引号,变成 没引号的 production,从而在运行的时候被视为变量,或错误,而非字符串字面量</span>
+    <span class="token comment">// 当然这个字符串也可以随便写 abcd啥的,就是个编译时的字符串替换</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>cross-env 用的最多</strong> 因为webpack.config文件能拿到,又能用于修改mode值,从而修改模块内.</p>
+<p>5.<strong>最佳实践</strong> cross-env修改node中的变量,webpack读取到node中的变量,再通过DefinePlugin 传给源码进行字面量替换</p>
+<ol start="6">
+<li><code>dotenv</code> 包,可以自动加载<code>.env</code>文件下的 <code>key/value</code>,进 <code>process.env</code></li>
+</ol>
 <h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>插件可以执行范围更广的任务</p>
 <p>比如: 打包优化 资源管理 输入环境变量 生成输入文件</p>
-<h2 id="loader与插件配置"><a href="#loader与插件配置" class="headerlink" title="loader与插件配置"></a>loader与插件配置</h2><h3 id="webpack-dev-server开发服务器的原理"><a href="#webpack-dev-server开发服务器的原理" class="headerlink" title="webpack-dev-server开发服务器的原理"></a>webpack-dev-server开发服务器的原理</h3><ul>
-<li>也是会用webpack从入口文件进行打包，然后输出到输出目录，这个输出是输出的内存文件系统里去了</li>
+<h2 id="loader与插件配置"><a href="#loader与插件配置" class="headerlink" title="loader与插件配置"></a>loader与插件配置</h2><h3 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h3><p><strong>相关配置</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token literal-property property">devServer</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">port</span><span class="token operator">:</span> <span class="token number">8080</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">open</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token keyword">static</span><span class="token operator">:</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'public'</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>原理</strong></p>
+<ol>
+<li>也是会用webpack从入口文件进行打包，然后输出到输出目录，</li>
+<li>此输出目录 只在内存,未写入硬盘,在文件夹里看不到</li>
 <li>然后会启动http服务器预览我们的项目 </li>
-</ul>
-<p>less 用于把less编译成CSS<br>less-loader 在webpack中使用，负责调用less包<br>node-sass 用于把sass编译成CSS<br>sass-loader</p>
-<p>background-image: url(~image/kf.jpg);<br>//为了引入node_modules下面的资源文件，比如说bootstrap，可以添加 ~前缀</p>
-<p>CSS兼容 性和importLoaders<br>importLoaders 允许或者说启动几个数量的loaders应用在import 的文件</p>
-<p>webpack4 关于图片需要 使用file-loader url-loader<br>webpack5 不再需要<br>file-loader=&gt;asset/resource 把图片拷贝到输出目录里去，返回一个输出后的路径，包括文件<br>url-loader=&gt;asset/inline 不拷贝文件，直接把源文件变成base64字符串内嵌到输出结果</p>
-<p>js兼容性<br>polyfill preset-env preset-react<br>eslint<br>eslint prettier git hooks 放在一起<br>source可以放在一起</p>
-<p>1.直接引入<br>每次使用都需要手工导入<br>2.插件引入<br>如果使用webpack.ProvidePlugin插件引入的话，则不再需要你在模块手工引入<br>3.但在没有全局变量，你在模块外是不能访问的<br>如果想在任何地方访问此变量，需要把此变量设置为环境变量 <code>window.isarray</code><br>expose-loader 可以把模块添加到全局对象上<br>以上三种方式，都需要打包库的代码，不能使用CDN</p>
+</ol>
+<p><code>localhost:8080/xxx</code> 可以获取到打包好的项目文件.<br><code>static</code> 配置项指将指定文件夹作为静态目录文件,也可以直接<code>localhost:8080/xxx</code></p>
+<p>http服务器内部其实是 <strong>express实现的</strong>,托管了两个静态文件根目录</p>
+<h3 id="StyleLoader-CSSLoader-postcss"><a href="#StyleLoader-CSSLoader-postcss" class="headerlink" title="StyleLoader CSSLoader postcss"></a>StyleLoader CSSLoader postcss</h3><p>styleLoader 处理cssLoader导出的叔祖,通过Style标签,插入DOM<br>cssLoader 对import和url()进行处理,将样式作为字符串存为数组,然后作为JS导出<br>postcss 处理CSS浏览器兼容性,加入各厂商前缀.</p>
+<p>需要额外的配置文件<code>postcss.config.js</code>,<br>或package.json中添加 <code>&quot;browserslist&quot;: &#123;&quot;development&quot; : [&quot;xxx&quot;]&#125;</code></p>
+<h3 id="读取图片"><a href="#读取图片" class="headerlink" title="读取图片"></a>读取图片</h3><p>webpack4 关于图片需要 使用file-loader url-loader<br>file-loader=&gt;asset/resource 把图片拷贝到输出目录里去，返回一个输出后的路径，包括文件<br>url-loader=&gt;asset/inline 不拷贝文件，直接把源文件变成base64字符串内嵌到输出结果</p>
+<p>webpack5 不再需要,内置了</p>
+<p><strong>配置方法</strong></p>
+<pre class="line-numbers language-JS" data-language="JS"><code class="language-JS">&#123;
+    (
+        test: &#x2F;\.png$&#x2F;,
+        &#x2F;&#x2F; use:[&quot;file-loader&quot;],
+        type: &#39;asset&#x2F;resource&#39;,
+        generator: &#123;
+          filename: &#39;png&#x2F;[hash][ext]&#39;,&#x2F;&#x2F; 指定文件位置
+        &#125;,
+    &#125;,
+    &#123;
+        test: &#x2F;\.ico$&#x2F;, &#x2F;&#x2F; 会把ico文件变成base64字符串并返回给调用者
+        &#x2F;&#x2F; use:[&quot;url-loader&quot;],
+        type: &#39;asset&#x2F;inline&#39;,
+    &#125;,
+    &#123;
+        test: &#x2F;\.jpg$&#x2F;, &#x2F;&#x2F; 会把txt内容直接返回
+        &#x2F;&#x2F; use:[&quot;raw-loader&quot;],
+        type: &#39;asset&#39;, &#x2F;&#x2F; 表示可以根据实际情况进行自选择是resource还inline
+        parser: &#123;
+          dataUrlCondition: &#123;
+            maxSize: 4 * 1024, &#x2F;&#x2F; 如果文件大小小于4K就走inline,如果大于4K就resource
+          &#125;,
+        &#125;,
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>如果是服务器地址,那图片的打包路径怎么办?</strong></p>
+<p>webpack 集成了插件<code>clean-webpack-plugin</code>使用配置 <code>output:&#123;clean:true&#125;</code> 打包前清除 dist目录</p>
+<p>webpack-merge包用于 合并不同环境的配置文件</p>
+<h3 id="JS兼容性-Babel"><a href="#JS兼容性-Babel" class="headerlink" title="JS兼容性 Babel"></a>JS兼容性 Babel</h3><p><strong>配置方法</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token literal-property property">module</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">rules</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.jsx?$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token literal-property property">use</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'babel-loader'</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">presets</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'@babel/preset-env'</span><span class="token punctuation">,</span> <span class="token string">'@babel/preset-react'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+              <span class="token punctuation">[</span><span class="token string">'@babel/plugin-proposal-decorators'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">legacy</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+              <span class="token punctuation">[</span><span class="token string">'@babel/plugin-proposal-private-property-in-object'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">loose</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+              <span class="token punctuation">[</span><span class="token string">'@babel/plugin-proposal-private-methods'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">loose</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+              <span class="token punctuation">[</span><span class="token string">'@babel/plugin-proposal-class-properties'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">loose</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>babel-loader<br>@babel/core<br>@babel/preset-env<br>@babel/preset-react<br>@babel/plugin-proposal-decorators<br>@babel/plugin-proposal-private-property-in-object<br>@babel/plugin-proposal-private-methods<br>@babel/plugin-proposal-class-properties</p>
+<p>源文件 的 ES6 JSX 转换 为浏览器能读懂的ES5</p>
+<ol>
+<li><code>babel-loader</code> 读取源文件 调用<code>@babel/core</code> 进行转换,但也不认识各种语法</li>
+<li><code>@babel/core</code> 调用插件进行转换各类语法</li>
+<li>各类语法太多,不可能一个个引用,所以有了<code>preset</code></li>
+<li><code>@babel/preset-env</code> 转ES5要用的插件包,<code>@babel/preset-react</code> 转换React语法要的插件包</li>
+<li><code>plugins</code> 代表转换需要的额外插件,装饰器 私有属性 私有方法 类的属性</li>
+<li><code>plugins</code> 可以写成二维数组,每个插件的第二个参数 是该插件的配置</li>
+</ol>
+<h3 id="ESLint预校验"><a href="#ESLint预校验" class="headerlink" title="ESLint预校验"></a>ESLint预校验</h3><p><strong>设置方法</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token literal-property property">module</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">rules</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.jsx?$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'eslint-loader'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">exclude</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">node_modules</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">fix</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">enforce</span><span class="token operator">:</span> <span class="token string">'pre'</span><span class="token punctuation">,</span> <span class="token comment">// 指定loader的类型 pre normal post inline</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>enforce 决定配置的执行顺序,比如两个jsx的配置,pre会先执行.</p>
+<p><code>.eslintrc.js</code> 进行配置</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// root: true 代表根规则,规则是可以继承的,如这里extends继承了,root就注释掉</span>
+  <span class="token literal-property property">parser</span><span class="token operator">:</span> <span class="token string">'babel-eslint'</span><span class="token punctuation">,</span> <span class="token comment">// 识别ES6语法等等</span>
+  <span class="token keyword">extends</span><span class="token operator">:</span> <span class="token string">'airbnb'</span><span class="token punctuation">,</span> <span class="token comment">// 使用别人配好的语法</span>
+  <span class="token literal-property property">parserOptions</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">sourceType</span><span class="token operator">:</span> <span class="token string">'module'</span><span class="token punctuation">,</span> <span class="token comment">//</span>
+    <span class="token literal-property property">ecmaVersion</span><span class="token operator">:</span> <span class="token number">2015</span><span class="token punctuation">,</span>  <span class="token comment">// ES6</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">env</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">browser</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">node</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">rules</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token string-property property">'no-param-reassign'</span><span class="token operator">:</span> <span class="token string">'off'</span><span class="token punctuation">,</span> <span class="token comment">// 覆盖airbnb的设置</span>
+    <span class="token string-property property">'no-console'</span><span class="token operator">:</span> <span class="token string">'off'</span><span class="token punctuation">,</span>
+    <span class="token string-property property">'no-unused-vars'</span><span class="token operator">:</span> <span class="token string">'off'</span><span class="token punctuation">,</span>
+    <span class="token string-property property">'linebreak-style'</span><span class="token operator">:</span> <span class="token string">'off'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>VSCode插件 ESLint 可以编码时对源代码进行实时检查</strong></p>
+<p><strong>Webpack插件 ESLint-loader 会在编译时进行报错提示或修复</strong></p>
+<p>在项目下 创建 <code>.vscode</code>文件夹 创建<code>setting.json</code> 可对vscode的设置统一更改</p>
+<p>这样可以给项目成员统一开启ESLint自动修复</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span>
+  <span class="token string-property property">"eslint.validate"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"javascript"</span><span class="token punctuation">,</span>
+    <span class="token string">"javascriptreact"</span><span class="token punctuation">,</span>
+    <span class="token string">"typescript"</span><span class="token punctuation">,</span>
+    <span class="token string">"typescriptreact"</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"editor.codeActionsOnSave"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token string-property property">"source.fixAll.eslint"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong><code>.vscode</code>文件夹 还有哪些作用?</strong></p>
+<h3 id="服务器代理配置"><a href="#服务器代理配置" class="headerlink" title="服务器代理配置"></a>服务器代理配置</h3><p><strong>配置方法</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token literal-property property">devServer</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">port</span><span class="token operator">:</span> <span class="token number">8080</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">open</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token keyword">static</span><span class="token operator">:</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'public'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 当你已经有一个后台接口API服务器的可以直接 代理过去,避免跨域</span>
+    <span class="token literal-property property">proxy</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token string-property property">'/api1'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token string">'http://localhost:3000'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">pathRewrite</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token string-property property">'^/api'</span><span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+          <span class="token string-property property">'^/home/name/api'</span><span class="token operator">:</span> <span class="token string">'/home/name'</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token string-property property">'/api2'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token string">'http://localhost:4000'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">pathRewrite</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token string-property property">'^/api'</span><span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+          <span class="token string-property property">'^/home/name/api'</span><span class="token operator">:</span> <span class="token string">'/home/name'</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token comment">// 如果你没有后台服务器，直接把mock功能直接定义在这里</span>
+    <span class="token function">onBeforeSetupMiddleware</span><span class="token punctuation">(</span><span class="token parameter">devServer</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">// app其实就是webpack-dev-sever里面的express的app</span>
+      devServer<span class="token punctuation">.</span>app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/xxx'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+          <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'zhufeng'</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -587,7 +750,7 @@ module<span class="token punctuation">.</span><span class="token function-variab
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/11/17/webpack/webpack-ji-chu/">https://github.com/LZY2333/LZY2333.github.io/2021/11/17/webpack/webpack-ji-chu/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/09/19/webpack/webpack-ji-chu/">https://github.com/LZY2333/LZY2333.github.io/2022/09/19/webpack/webpack-ji-chu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -796,17 +959,18 @@ module<span class="token punctuation">.</span><span class="token function-variab
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/17/mian-shi-ti/es6-ji-js-lei-xing/">
+                <a href="/2022/09/19/webpack/webpack-ji-chu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="ES6及JS类型">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Webpack基础">
                         
-                        <span class="card-title">ES6及JS类型</span>
+                        <span class="card-title">Webpack基础</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -816,26 +980,27 @@ module<span class="token punctuation">.</span><span class="token function-variab
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-17
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
-                                    知识点
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                    技术栈
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
+                    <a href="/tags/Webpack/">
+                        <span class="chip bg-color">Webpack</span>
                     </a>
                     
                 </div>
@@ -849,13 +1014,13 @@ module<span class="token punctuation">.</span><span class="token function-variab
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/15/suan-fa/14.dui/">
+                <a href="/2022/09/14/wei-qian-duan/systemjs-mo-kuai-jia-zai-qi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="堆">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="SystemJS">
                         
-                        <span class="card-title">堆</span>
+                        <span class="card-title">SystemJS</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -866,7 +1031,7 @@ module<span class="token punctuation">.</span><span class="token function-variab
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-14
                             </span>
                         <span class="publish-author">
                             
@@ -883,8 +1048,8 @@ module<span class="token punctuation">.</span><span class="token function-variab
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">
+                        <span class="chip bg-color">微前端</span>
                     </a>
                     
                 </div>
@@ -1031,7 +1196,7 @@ module<span class="token punctuation">.</span><span class="token function-variab
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">117k</span>&nbsp;字
+                class="white-color">117.9k</span>&nbsp;字
             
             
             
