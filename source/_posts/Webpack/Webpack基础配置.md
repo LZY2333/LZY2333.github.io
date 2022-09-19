@@ -1,34 +1,13 @@
 ---
-title: Webpack基础
+title: Webpack基础配置
 date: 2022-09-19 04:10:44
 categories: 技术栈
 tags: 
     - Webpack
 ---
 
-# Webpack基础
+## Webpack基础配置
 
-## 大纲
-
-- webpack5安装的基本使用
-- 入口、输出、loader、plugin、mode模式
-- 开发环境配置
-  - 开发服务器
-  - 支持CSS
-  - 支持less sass
-  - 处理CSS兼容
-  - 处理JS和JS兼容
-  - 如何配置使用图片等静态资料
-  - eslint代码校验
-  - sourcemap
-  - 打包第三方包
-  - 拷贝静态文件
-  - 如何配置服务器代码
-- 生成环境配置
-  - 压缩JS CSS HTML
-  - 提取单独CSS文件
-
-## 基础配置
 
 ### webpack.config.js
 
@@ -119,8 +98,9 @@ __生产环境__,可能需要分离 CSS 成单独的文件,以便多个页面共
 
 ,需要压缩 HTML/CSS/JS 代码,需要压缩图片
 
+[webpack5三种mode默认配置对比](https://juejin.cn/post/6957976536905416712#heading-25)
 
-__如何 命令行 动态启用不同的环境__
+### 如何 命令行 动态启用不同的环境
 
 mode一般不在配置文件中写死,而在命令行中设置.
 
@@ -145,7 +125,6 @@ module.exports = (env,argv) => {
     // 则env.abc === true
 }
 ```
-
 
 3.`cross-env NODE_ENV=production webpack` 可改变node环境变量 `process.env.NODE_ENV`
 
@@ -243,7 +222,7 @@ webpack5 不再需要,内置了
 __配置方法__
 ```JS
 {
-    (
+    {
         test: /\.png$/,
         // use:["file-loader"],
         type: 'asset/resource',
@@ -265,6 +244,7 @@ __配置方法__
             maxSize: 4 * 1024, // 如果文件大小小于4K就走inline,如果大于4K就resource
           },
         },
+    }
 }
 ```
 
