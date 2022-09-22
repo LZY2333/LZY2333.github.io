@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Webpack5模块打包分析, 懒前端">
+    <meta name="keywords" content="Webpack模块打包分析, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Webpack5模块打包分析 | 懒前端</title>
+    <title>Webpack模块打包分析 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Webpack5模块打包分析</h1>
+                    <h1 class="description center-align post-title">Webpack模块打包分析</h1>
                 </div>
             </div>
         </div>
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    2.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    9 分
                 </div>
                 
 
@@ -446,13 +446,94 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Webpack5模块打包分析"><a href="#Webpack5模块打包分析" class="headerlink" title="Webpack5模块打包分析"></a>Webpack5模块打包分析</h2><p>JS模块化规范有多种,就不展开分析了,</p>
-<p>这里 主要分析一下 Webpack 对 ESModule 的打包方式, 所有模块都是大同小异</p>
-<p>只要对Webpack按需配置,就可以完成 </p>
-<p>webpack的打包本质上是 按规则正则匹配源码 然后替换为 新的代码,</p>
-<p>在这一替换的过程中,实现了 模块合并 代码优化 浏览器兼容 等一系列功能</p>
-<p>其中模块化是前端工程化中不可缺少的一环,源码的分块分层,组件的复用,项目模块懒加载等,都依赖于模块化的存在.</p>
-<h3 id="CommonJS规范"><a href="#CommonJS规范" class="headerlink" title="CommonJS规范"></a>CommonJS规范</h3><p>Webpack对该模式的打包方式代码较为简单,先做个基础</p>
+                <h2 id="Webpack模块打包分析"><a href="#Webpack模块打包分析" class="headerlink" title="Webpack模块打包分析"></a>Webpack模块打包分析</h2><h3 id="从脚本仔到工程师"><a href="#从脚本仔到工程师" class="headerlink" title="从脚本仔到工程师"></a>从脚本仔到工程师</h3><p>1995年，最初的JavaScript诞生.</p>
+<p>用于在客户端进行一些DOM的修改，为用户减少一些流量请求。</p>
+<p>那时的HTML页面任何一个文字的修改都需要从后台获取全部的文件。</p>
+<p>当然，最为重要的是，以那时的带宽来说，每一丝流量都弥足珍贵。</p>
+<p>作为一门初生的脚本语言，地位卑微，甚至连他的命名都是为了蹭上Java的热度。</p>
+<p>直到浏览器大热，成为大家网上冲浪的第一选择，JavaScript的地位也随之水涨船高。</p>
+<p>日益提升的网站体量，一个简单的JS文件显然无法承载大量复杂的需求。</p>
+<p>无数开发者揭竿而起，提出自己新思想，开源自己的封装库，</p>
+<p>从 原生JS  到  脚本库 到 模板语法 到 框架， </p>
+<p>前端从一个脚本语言的刀耕火种，到现在的 组件化 模块化 工程化。</p>
+<p>前端开发者花了20年时间，<strong>从 脚本仔 变成了 工程师</strong></p>
+<p>在前端工程化中，<code>Rollup</code>/<code>Gulp</code>/<code>Webpack</code>等一众打包工具功不可没</p>
+<p>本系列将探索 对目前最流行的前端打包方案  __Webpack5 __ 进行探索 </p>
+<h3 id="Webpack5之模块化打包"><a href="#Webpack5之模块化打包" class="headerlink" title="Webpack5之模块化打包"></a>Webpack5之模块化打包</h3><p>模块化是前端工程化中 最为基础的一环,</p>
+<p>源码的分块分层,组件的复用,项目模块懒加载等,都依赖于模块化的存在.</p>
+<p>本篇精心选取了Webpack最简单的 <strong>模块化打包</strong> 原理,带大家迈开了解Webpack的第一脚</p>
+<p>帮助大家从整个项目的维度上理解前端工程!</p>
+<p><strong>PS:本文章使用的Webpack配置如下:</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> HtmlWebpackPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'html-webpack-plugin'</span><span class="token punctuation">)</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">mode</span><span class="token operator">:</span> <span class="token string">'development'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">devtool</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token comment">// 不要sourcemap</span>
+    <span class="token literal-property property">entry</span><span class="token operator">:</span> <span class="token string">'./src/index.js'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">output</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">path</span><span class="token operator">:</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'dist'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">filename</span><span class="token operator">:</span><span class="token string">'main.js'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token keyword">new</span> <span class="token class-name">HtmlWebpackPlugin</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">template</span><span class="token operator">:</span><span class="token string">'./src/index.html'</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="CommonJS规范"><a href="#CommonJS规范" class="headerlink" title="CommonJS规范"></a>CommonJS规范</h3><p>有模块化,就有模块化规范,所谓的规范,便是大家约定好的代码语法,</p>
+<p>而Webpack也会按照既定的语法,对整个项目进行打包.本质上是对源码进行正则匹配,然后替换.</p>
+<p>前端的模块化规范有多种,这里只介绍最重要的两种: <strong>CommonJS规范</strong>   <strong>ESModule规范</strong></p>
+<p>其代表使用者分别是 <strong>NodeJS</strong> 和  <strong>ES6语法</strong>.</p>
+<p>Webpack对 <strong>CommonJS规范</strong> 的打包方式代码相对简单,其语法如此次模拟文件所示</p>
+<p><strong>模拟的文件结构</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// index.js 引用index2.js</span>
+<span class="token keyword">let</span> index2 <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./index2.js'</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>index2<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// index2.js 导出一个字段</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token string">'index2'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>那么这样简单的两个模块组成的项目，Webpack会如何实现打包呢?</p>
+<p>多说无益，话都在源码里! <strong>仅仅 35 行</strong>,你上你也行.</p>
+<p><strong>打包后的全部源码带注释</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 打包结束后的main.js,自执行函数,script标记加载完后立即执行</span>
+<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+     <span class="token comment">// key为路径,value为模块内容包裹成的函数</span>
+    <span class="token keyword">var</span> __webpack_modules__ <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        <span class="token string-property property">"./src/index2.js"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">module</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+            module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token string">'index2'</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+     <span class="token comment">// 如果缓存里有该模块,就使用缓存中的模块</span>
+    <span class="token keyword">var</span> __webpack_module_cache__ <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">function</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token parameter">moduleId</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">var</span> cachedModule <span class="token operator">=</span> __webpack_module_cache__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cachedModule <span class="token operator">!==</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> cachedModule<span class="token punctuation">.</span>exports<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 创建一个新模块并将其放入缓存</span>
+        <span class="token keyword">var</span> module <span class="token operator">=</span> __webpack_module_cache__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">exports</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token comment">// 执行模块时 传入三个参数, module module.exports 以及 require,</span>
+        <span class="token comment">// 以供嵌套递归引用模块</span>
+        __webpack_modules__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span><span class="token punctuation">(</span>module<span class="token punctuation">,</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">,</span>
+                                      __webpack_require__<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 最终返回该模块的exports</span>
+        <span class="token keyword">return</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">var</span> __webpack_exports__ <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token comment">// 自执行函数,分割作用域,防止变量污染</span>
+    <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 最终,入口文件的代码开始执行</span>
+        <span class="token keyword">let</span> index2 <span class="token operator">=</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token string">"./src/index2.js"</span><span class="token punctuation">)</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>index2<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>解析</strong></p>
 <p>当文件中存在 <code>require()</code> <code>module.exports</code> 等关键字时,会被webpack识别为CommonJS模块规范</p>
 <p>打包后的main.js会在webpack创建的 <code>index.html</code> 文件中通过添加标签 <code>&lt;script defer src=&quot;main.js&quot;&gt;&lt;/script&gt;</code> 引用</p>
 <ol>
@@ -468,53 +549,8 @@
 <blockquote>
 <p>浏览器本身不支持模块化,使用函数来模拟模块化的效果,node也是如此,require exports等全局变量其实就是函数的参数<br>注意 (模块函数) 为什么有最外层的括号,该函数后续是拿出来直接执行的, 箭头函数自执行需要这样写 (()=&gt;{})()</p>
 </blockquote>
-<p><strong>模拟的文件结构</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// index.js 引用index2.js</span>
-<span class="token keyword">let</span> index2 <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./index2.js'</span><span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>index2<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// index2.js 导出一个字段</span>
-module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token string">'index2'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><strong>打包后的全部源码注释</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 打包结束后的main.js,自执行函数,script标记加载完后立即执行</span>
-<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">var</span> __webpack_modules__ <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token comment">// key为路径,value为模块内容包裹成的函数</span>
-        <span class="token string-property property">"./src/index2.js"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">module</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-            module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token string">'index2'</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">var</span> __webpack_module_cache__ <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token comment">// 如果缓存里有该模块,就使用缓存中的模块</span>
-    <span class="token keyword">function</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token parameter">moduleId</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">var</span> cachedModule <span class="token operator">=</span> __webpack_module_cache__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>cachedModule <span class="token operator">!==</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> cachedModule<span class="token punctuation">.</span>exports<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">// 创建一个新模块并将其放入缓存</span>
-        <span class="token keyword">var</span> module <span class="token operator">=</span> __webpack_module_cache__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
-            <span class="token literal-property property">exports</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-        <span class="token comment">// 执行模块时 传入三个参数, module module.exports 以及 require,以供嵌套递归引用模块</span>
-        __webpack_modules__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span><span class="token punctuation">(</span>module<span class="token punctuation">,</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">,</span> __webpack_require__<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 最终返回该模块的exports</span>
-        <span class="token keyword">return</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">var</span> __webpack_exports__ <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    <span class="token comment">// 自执行函数,分割作用域,防止变量污染</span>
-    <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 最终,入口文件的代码开始执行</span>
-        <span class="token keyword">let</span> index2 <span class="token operator">=</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token string">"./src/index2.js"</span><span class="token punctuation">)</span>
-        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>index2<span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="ESModule规范"><a href="#ESModule规范" class="headerlink" title="ESModule规范"></a>ESModule规范</h3><p>可以看到实现了三个重要部分:</p>
-<p><code>__webpack_modules__</code> 文件路径为key,包裹为函数的模块为value 的Map结构<br><code>__webpack_require__</code> 函数类型,实现导入功能(<code>import</code>)<br><code>__webpack_exports__</code> 对象类型,实现导出功能(<code>export</code>)</p>
-<p><code>__webpack_require__</code>,通过 key(文件路径) 从 Map<code>__webpack_modules__</code>获取到 引用的 模块函数 并执行,执行时</p>
-<p>传入<code>__webpack_exports__</code>对象 供 被引用的模块函数 导出数据</p>
-<p>传入<code>__webpack_require__</code>函数 供 被引用的模块函数 递归调用 引用模块</p>
+<p>热身完毕，来看看最重要，最常用的 ESModule，Webpack又是如何打包的吧。</p>
+<h3 id="ESModule规范"><a href="#ESModule规范" class="headerlink" title="ESModule规范"></a>ESModule规范</h3><p>ESModule规范的语法如下，同时也是此次模拟打包的项目文件</p>
 <p><strong>模拟的文件结构</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 入口文件index</span>
 <span class="token keyword">import</span> index2 <span class="token keyword">from</span> <span class="token string">'./index2'</span>
@@ -524,22 +560,29 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token keyword">const</span> index2 <span class="token operator">=</span> <span class="token string">'index2'</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> index2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>打包后的全部源码注释</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<p>话不多说，直接上源码，心急的同学可以先看后面的分析，再看源码，方便理解。</p>
+<p>(为了Word排版，做了一定的折叠。)</p>
+<p><strong>打包后的全部源码带注释</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// webpackBootstrap</span>
     <span class="token string">"use strict"</span><span class="token punctuation">;</span>
     <span class="token keyword">var</span> __webpack_modules__ <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
         <span class="token string-property property">"./src/index2.js"</span><span class="token operator">:</span>
-            <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">__unused_webpack_module<span class="token punctuation">,</span> __webpack_exports__<span class="token punctuation">,</span> __webpack_require__</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+            <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">__unused_webpack_module<span class="token punctuation">,</span> __webpack_exports__<span class="token punctuation">,</span>
+              __webpack_require__</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">// 标记该模块为ESModule</span>
                 __webpack_require__<span class="token punctuation">.</span><span class="token function">r</span><span class="token punctuation">(</span>__webpack_exports__<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// 通过d绑定要导出的数据到__webpack_exports__上</span>
                 __webpack_require__<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span>__webpack_exports__<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
-                    <span class="token string-property property">"default"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>__WEBPACK_DEFAULT_EXPORT__<span class="token punctuation">)</span>
+                    <span class="token string-property property">"default"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>__WEBPACK_DEFAULT_EXPORT__<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    <span class="token string-property property">"test"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>test<span class="token punctuation">)</span>
                 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">const</span> index2 <span class="token operator">=</span> <span class="token string">'index2'</span>
-                <span class="token keyword">const</span> __WEBPACK_DEFAULT_EXPORT__ <span class="token operator">=</span> <span class="token punctuation">(</span>index2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// 模块内的代码执行</span>
+                <span class="token keyword">const</span> __WEBPACK_DEFAULT_EXPORT__ <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token string">'index2'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">const</span> test <span class="token operator">=</span> <span class="token string">'test'</span>
             <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">var</span> __webpack_module_cache__ <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token comment">// 依旧是缓存</span>
+    <span class="token keyword">var</span> __webpack_module_cache__ <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
     <span class="token keyword">function</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token parameter">moduleId</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">var</span> cachedModule <span class="token operator">=</span> __webpack_module_cache__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span><span class="token punctuation">;</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>cachedModule <span class="token operator">!==</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -549,73 +592,100 @@ console<span class="token punctuation">.</span><span class="token function">log<
         <span class="token keyword">var</span> module <span class="token operator">=</span> __webpack_module_cache__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
             <span class="token literal-property property">exports</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
         <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-        __webpack_modules__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span><span class="token punctuation">(</span>module<span class="token punctuation">,</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">,</span> __webpack_require__<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 根据moduleId拿到模块,传入exports供挂载导出数据,执行该module</span>
+        __webpack_modules__<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span><span class="token punctuation">(</span>module<span class="token punctuation">,</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">,</span>
+                                      __webpack_require__<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 
     <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 定义getter函数 for harmony exports(这里没搞懂什么叫harmony exports)</span>
+        <span class="token comment">// 绑定definition对象内的属性 到 exports上,即要导出的而数据</span>
         __webpack_require__<span class="token punctuation">.</span><span class="token function-variable function">d</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">exports<span class="token punctuation">,</span> definition</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
             <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> key <span class="token keyword">in</span> definition<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>__webpack_require__<span class="token punctuation">.</span><span class="token function">o</span><span class="token punctuation">(</span>definition<span class="token punctuation">,</span> key<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>__webpack_require__<span class="token punctuation">.</span><span class="token function">o</span><span class="token punctuation">(</span>exports<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                    Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>exports<span class="token punctuation">,</span> key<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">enumerable</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token literal-property property">get</span><span class="token operator">:</span> definition<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// definition: &#123; "default": () => (...), "test": () => (test) &#125;</span>
+                <span class="token comment">// definition上有的属性，exports上没有的属性，就绑定上去</span>
+                <span class="token comment">// 之后，外部模块使用如test属性时，实际上是调用`() => (test)`，</span>
+                <span class="token comment">// 由于闭包原则，此时会拿到内部模块此test变量的最新值</span>
+                <span class="token comment">// 这就是harmony exports</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>__webpack_require__<span class="token punctuation">.</span><span class="token function">o</span><span class="token punctuation">(</span>definition<span class="token punctuation">,</span> key<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> 
+                    <span class="token operator">!</span>__webpack_require__<span class="token punctuation">.</span><span class="token function">o</span><span class="token punctuation">(</span>exports<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>exports<span class="token punctuation">,</span> key<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> 
+                        <span class="token literal-property property">enumerable</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token literal-property property">get</span><span class="token operator">:</span> definition<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                 <span class="token punctuation">&#125;</span>
             <span class="token punctuation">&#125;</span>
         <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        __webpack_require__<span class="token punctuation">.</span><span class="token function-variable function">o</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">obj<span class="token punctuation">,</span> prop</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> prop<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment">// 判断是否有某属性</span>
+        __webpack_require__<span class="token punctuation">.</span><span class="token function-variable function">o</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">obj<span class="token punctuation">,</span> prop</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>
+            <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> prop<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 为该模块的export新增__esModule属性,以供处理混合使用 ESModule 和 CommonJS 的情况</span>
+        <span class="token comment">// 为该模块的export新增__esModule属性,</span>
+        <span class="token comment">// 以供处理混合使用 ESModule 和 CommonJS 的情况</span>
         __webpack_require__<span class="token punctuation">.</span><span class="token function-variable function">r</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">exports</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-             <span class="token comment">// 如果浏览器支持 Symbol属性,就使用Symbol进行属性定义</span>
-             <span class="token comment">// 注:Symbol可以在几乎所有框架内看到,用于作为独一无二的属性Key值</span>
+            <span class="token comment">// 如果浏览器支持 Symbol属性,就使用Symbol进行属性定义</span>
+            <span class="token comment">// 注:Symbol可以在几乎所有框架内看到,用于作为独一无二的属性Key值</span>
             <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> Symbol <span class="token operator">!==</span> <span class="token string">'undefined'</span> <span class="token operator">&amp;&amp;</span> Symbol<span class="token punctuation">.</span>toStringTag<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>exports<span class="token punctuation">,</span> Symbol<span class="token punctuation">.</span>toStringTag<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token string">'Module'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>exports<span class="token punctuation">,</span> Symbol<span class="token punctuation">.</span>toStringTag<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+                    <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token string">'Module'</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token punctuation">&#125;</span>
             Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>exports<span class="token punctuation">,</span> <span class="token string">'__esModule'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
+    <span class="token comment">// 开始处理index模块，入口模块，整个程序开始运行</span>
     <span class="token keyword">var</span> __webpack_exports__ <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
     <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 标记其导出为ESModule</span>
         __webpack_require__<span class="token punctuation">.</span><span class="token function">r</span><span class="token punctuation">(</span>__webpack_exports__<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">var</span> _index2__WEBPACK_IMPORTED_MODULE_0__ <span class="token operator">=</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token string">"./src/index2.js"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
+        <span class="token comment">// 执行index2模块，拿到其exports</span>
+        <span class="token keyword">var</span> _index2__WEBPACK_IMPORTED_MODULE_0__ <span class="token operator">=</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span>
+            <span class="token string">"./src/index2.js"</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 执行index主要代码</span>
         console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>_index2__WEBPACK_IMPORTED_MODULE_0__<span class="token punctuation">[</span><span class="token string">"default"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>_index2__WEBPACK_IMPORTED_MODULE_0__<span class="token punctuation">.</span>test<span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="按需加载"><a href="#按需加载" class="headerlink" title="按需加载"></a>按需加载</h3><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>不同设置 不同模块化的规范 都会影响 Webpack打包后的代码</p>
+<p>可以看到与CommonJS规范 <strong>几乎相同</strong> ！！！</p>
+<p>实现了 <strong>三个重要部分</strong>:</p>
+<p><code>__webpack_modules__</code> 文件路径为key,包裹为函数的模块为value 的Map结构<br><code>__webpack_require__</code> 函数类型,实现导入功能(<code>import</code>)<br><code>__webpack_exports__</code> 对象类型,实现导出功能(<code>export</code>)</p>
+<p><code>__webpack_require__</code>,通过 key(文件路径) 从 Map<code>__webpack_modules__</code><br>                        获取到 引用的 模块函数 并执行,执行时</p>
+<p>传入<code>__webpack_exports__</code>对象 供 被引用的模块函数 导出数据</p>
+<p>传入<code>__webpack_require__</code>函数 供 被引用的模块函数 递归调用 引用模块</p>
+<p><strong>三个工具函数</strong>:<br><code>__webpack_require__.o</code> 判断某对象是否有某属性<br><code>__webpack_require__.r</code> 将exports对象标记为ESModule<br><code>__webpack_require__.d</code> 通过给exports对象设置getter属性,绑定要导出的数据</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>不同设置 不同模块化的规范 都会影响 Webpack打包后的代码</p>
 <p>这些都不影响其模块化打包的 <strong>核心逻辑</strong>:</p>
 <ol>
 <li><p>实现导出: 将<code>__webpack_exports__</code>对象传入 模块函数供挂载,</p>
 </li>
-<li><p>实现导入: 使用一个全局对象作为储存所有模块的Map结构,导入函数<code>__webpack_require__</code>自动在该Map下检索模块并执行</p>
+<li><p>实现导入: 使用一个全局对象作为储存所有模块的Map结构,</p>
+<p>​        导入函数<code>__webpack_require__</code>自动在该Map下检索模块并执行</p>
 </li>
 <li><p>使用函数模拟模块: 引用模块时才执行该模块代码,隔离各模块作用域</p>
 </li>
 <li><p>从入门模块开始执行,递归调用运行模块,整个项目开始启动</p>
 </li>
 </ol>
+<p>Webpack最后再将打包好的main.js包装为Script标签,插入准备好的模板HTML文件.</p>
+<p>试想一下,用户访问网页,nginx返回index.html,浏览器执行到script标签时</p>
+<p>又从服务器请求main.js资源, 加载完成之后开始执行main.js,</p>
+<p>整个框架开始运作,根据代码在body中插入各类DOM结构</p>
+<p>整个web应用便这样运行了起来.</p>
 <h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>Webpack替我们抹平了多种规范,写法的差异,让我们的 编码更轻松,源码更优雅</p>
-<p>这篇文章讲解了 相对简单 最基础 也最容易产生疑惑的 模块化原理,而这只是webpack学习序幕的第一步.</p>
-<p>很多源码就是这样,不了解时会觉得深不可测,查找资料研究以后会感叹大道至简,豁然开朗.</p>
-<p>如果你非常喜欢我的Webpack系列,请点赞支持,后续可能推出Webpack 按需加载, 热更新, AST, Tree-Shaking 等原理的讲解.</p>
+<p>这篇文章讲解了 相对简单 最基础 也最容易产生疑惑的 模块化原理,</p>
+<p>而这只是webpack学习序幕的第一步.</p>
+<p>很多源码就是这样,不了解时会觉得深不可测,查找资料研究以后会感叹大道至简.</p>
+<p>如果你非常喜欢我的Webpack系列,请点赞支持,</p>
+<p>后续可能推出Webpack 按需加载, 热更新, AST, Tree-Shaking 等原理的讲解.</p>
 <p>如果你对框架技术更为关注,请在评论区留言,Vue 和 React 源码也可以拉出来和大家唠一唠.</p>
-<p>感谢以下大佬的文章</p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903760188145672#comment">Webpack 将代码打包成什么样子？</a></p>
-<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000010955254">webpack模块化原理-ES module</a></p>
-<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000011435407">webpack模块化原理-Code Splitting</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903861166014478">commonjs 与 esm 的区别</a></p>
-<p>为什么webpack可以将任何资源转换为浏览器认识的资源？</p>
-<p>webpack本质上应该是正则匹配字符串并拼接</p>
-<p>cmj导出值 </p>
-<p>esm’导出引用， esm的导出是箭头函数，并且是重写get方法，会实时去原模块拿最新的值</p>
-<p>但是cmj如果导出的是一个对象，那还是会与原模块实时同步的，因为对象是同一地址</p>
+<p>感谢大家，我是紫宇，一个间歇性努力的懒前端.</p>
 
                 
             </div>
@@ -851,18 +921,17 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/09/19/webpack/webpack-mo-kuai-da-bao-fen-xi/">
+                <a href="/2022/09/22/webpack/webpackz-zhi-ast-yu-fa-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Webpack5模块打包分析">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Webpack之AST语法树">
                         
-                        <span class="card-title">Webpack5模块打包分析</span>
+                        <span class="card-title">Webpack之AST语法树</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -872,9 +941,9 @@ console<span class="token punctuation">.</span><span class="token function">log<
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-19
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-22
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -887,7 +956,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1088,7 +1156,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">119.5k</span>&nbsp;字
+                class="white-color">120.3k</span>&nbsp;字
             
             
             
