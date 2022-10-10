@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.2k
+                    2.3k
                 </div>
                 
 
@@ -446,13 +446,19 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="链表算法题"><a href="#链表算法题" class="headerlink" title="链表算法题"></a>链表算法题</h1><p>先考虑是否要创建一个新的变量专门接收数据</p>
+                <h1 id="链表算法题"><a href="#链表算法题" class="headerlink" title="链表算法题"></a>链表算法题</h1><p>链表题常见解法</p>
+<ol>
+<li><p>创建一个新链表。<code>let newHead = new ListNode()</code></p>
+</li>
+<li><p>记录 <strong>被循环的节点</strong> 的next。<code>const next = currentNode.next</code></p>
+</li>
+</ol>
 <p>链表考什么？就是哨兵节点+虚拟节点+链表指针的移动</p>
 <p>双指针</p>
 <p>头部可能插值的问题都需要一个头空结点</p>
 <p>p1之后插入节点p,<code>p.next = p1.next; p1.next = p</code></p>
 <p>要删除一个节点，需要知道这个节点的前一个节点，判断条件得是<code>p.next</code>。</p>
-<h2 id="2、反转链表（-LeetCode-206-）"><a href="#2、反转链表（-LeetCode-206-）" class="headerlink" title="2、反转链表（ LeetCode 206 ）"></a>2、反转链表（ LeetCode 206 ）</h2><p>一个一个插入到newRoot节点后面</p>
+<h2 id="2、反转链表（-LeetCode-206-）"><a href="#2、反转链表（-LeetCode-206-）" class="headerlink" title="2、反转链表（ LeetCode 206 ）"></a>2、反转链表（ LeetCode 206 ）</h2><p>一个一个插入到newRoot节点后面，先记录下一个节点，再 currentNode.next = root.next</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">reverseList</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// root 可以直接改为 = null</span>
     <span class="token keyword">let</span> currentNode <span class="token operator">=</span> head
@@ -473,6 +479,10 @@
     <span class="token keyword">return</span> prev
 <span class="token punctuation">&#125;</span>
 <span class="token comment">// 递归</span>
+<span class="token comment">// 假设列表的其余部分已经被反转，现在我们应该如何反转当前节点？</span>
+<span class="token comment">// 1.如果为null则当前就是头节点，返回</span>
+<span class="token comment">// 2.先反转后续的节点</span>
+<span class="token comment">// 3.再反转当前节点</span>
 <span class="token keyword">var</span> <span class="token function-variable function">reverseList</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>head <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> head<span class="token punctuation">.</span>next <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
     <span class="token keyword">const</span> newHead <span class="token operator">=</span> <span class="token function">reverseList</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 从最后一个结点开始轮，此处返回最后一个结点</span>
@@ -481,7 +491,7 @@
     <span class="token comment">// 每一层 递归都记录了当前结点，所以直接把next置为null也没关系</span>
     <span class="token comment">// 外层会继续将next 置为前一个数</span>
     <span class="token keyword">return</span> newHead<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="3、相交链表（-LeetCode-160-）-未解出"><a href="#3、相交链表（-LeetCode-160-）-未解出" class="headerlink" title="3、相交链表（ LeetCode 160 ）(未解出)"></a>3、相交链表（ LeetCode 160 ）(未解出)</h2><p>两个指针把两个链都走一遍，走的路程是等长的</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 反转链表</span>
@@ -1239,7 +1249,7 @@ return tmpHead.next
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">120.8k</span>&nbsp;字
+                class="white-color">120.4k</span>&nbsp;字
             
             
             
