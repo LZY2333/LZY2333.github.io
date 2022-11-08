@@ -348,7 +348,13 @@ react因为先天的不足——无法精确更新，所以需要react fiber把�
 
 ### 感谢
 
+
+
 有一说一,这篇文章对Fiber的结构讲得不是很清楚[走进React Fiber的世界](https://juejin.cn/post/6943896410987659277#comment)
 
 
 
+### 回头看
+[为什么 React 的 Diff 算法不采用 Vue 的双端对比算法？](https://juejin.cn/post/7116141318853623839#heading-10)
+
+[函数式组件与类组件有何不同？](https://overreacted.io/zh-hans/how-are-function-components-different-from-classes/)
