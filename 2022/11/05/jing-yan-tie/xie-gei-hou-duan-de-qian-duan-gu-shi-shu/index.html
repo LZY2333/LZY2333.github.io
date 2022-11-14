@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="懒前端">
+    <meta name="keywords" content="写给后端的前端故事书, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>懒前端</title>
+    <title>写给后端的前端故事书 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">写给后端的前端故事书</h1>
                 </div>
             </div>
         </div>
@@ -385,12 +385,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/React/">
+                                <span class="chip bg-color">React</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                经验帖
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -399,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-14
+                    2022-11-05
                 </div>
                 
 
@@ -408,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    5 分
                 </div>
                 
 
@@ -433,151 +446,78 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="React原理十问"><a href="#React原理十问" class="headerlink" title="React原理十问"></a>React原理十问</h2><p>从最简单的一个函数组件开始。</p>
-<p>总结了React使用者应该知道的十个实现原理。</p>
-<p>我在讲的过程中会尽量运行代码出来给你们看，如果比较麻烦的，我就直接说结论了。</p>
-<p>本次分享主要基于React15讲述React原理，其他版本为辅，可能顺便讲一讲和其他框架的区别。</p>
-<p>16   fiber<br>16.8 hooks<br>18   优先级调度 并发执行</p>
-<p>我认为React15框架是所有框架里最简单的</p>
-<p>但即使去掉react-router，去掉redux，光React15知识点依旧很多</p>
-<p>其中最重要的，也是我认为所有框架最重要的两条线，沿着这两条线来研究源码，可以事半功倍。</p>
-<p>要理解一个框架，最终要的是 初始化 和 更新</p>
-<p>初始化原理: React如何将实现组件化，如何将组件渲染成DOM?</p>
-<p>更新原理: React如何将数据变化响应到视图？</p>
-<p>JSX 类组件和函数组件 DOM-DIFF hooks 生命周期</p>
-<p>我基本是想到哪里讲到哪里，有什么问题可以直接问，能多讲一些。</p>
-<h3 id="1-代码中所有JSX其实都是函数"><a href="#1-代码中所有JSX其实都是函数" class="headerlink" title="1.代码中所有JSX其实都是函数"></a>1.代码中所有JSX其实都是函数</h3><p><strong>React17以前</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> babel <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@babel/core'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> sourceCode <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
-&lt;h1>
-  hello&lt;span style=&#123;&#123; color: 'red' &#125;&#125;>world&lt;/span>
-&lt;/h1>
-</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> result <span class="token operator">=</span> babel<span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span>sourceCode<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
-  <span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">[</span><span class="token string">"@babel/plugin-transform-react-jsx"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">runtime</span><span class="token operator">:</span> <span class="token string">'classic'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">]</span>
-  <span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>code<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>印象中的前端 HTML CSS JS</p>
+<p>现在的前端  </p>
+<p>工程化: NodeJS(+ npm包) Webpack5(+ 插件包) rollup gulp Vite </p>
+<p>语法扩展: Less(CSS超集)，TypeScript(JS超集) ES6 ES7…..</p>
+<p>框架(+ 全家桶): React(+ React-router + Redux + Axios) Vue Vue3 Angular</p>
+<p>组件库: Antd AntdPro Element</p>
+<p>小程序…..</p>
+<p>微前端…..</p>
+<h3 id="前端的发展"><a href="#前端的发展" class="headerlink" title="前端的发展"></a>前端的发展</h3><h4 id="静态HTML-无JavaScript"><a href="#静态HTML-无JavaScript" class="headerlink" title="静态HTML(无JavaScript)"></a>静态HTML(无JavaScript)</h4><p>最早的网页还不能够被称为前端，只是一个个完全静态的HTML页面，浏览器通过URL发起请求，便返回HTML文件，浏览器解析展示HTML文件内容。</p>
+<p>任何一个微小的改变，比如:用户名，都需要服务器返回一个全新的HTML文件，</p>
+<p>为了应对成千上万的用户(意味着显示成千上万的不同用户名)，后端开发了 ASP JSP 等动态修改创建HTML</p>
+<p>此时所有的浏览器交互都由 <strong>后端处理</strong></p>
+<h4 id="原生JavaScript"><a href="#原生JavaScript" class="headerlink" title="原生JavaScript"></a>原生JavaScript</h4><p>在1995年，那时的每一丝流量都尤为珍贵，浏览器标准的主导者 Netscape 网景公司，提出了浏览器脚本的概念。</p>
+<p>JavaScript因此被开发出来，并引入浏览器。</p>
+<p>JavaScript的第一版诞生只花了十天，其语法是借鉴了多种语言的大杂烩。</p>
+<p>起初只是作为一个简单脚本语言，弱类型，即时编译，总之一切从简。</p>
+<p>甚至为了蹭Java热度，将名字定为了JavaScript。</p>
+<p>但是小小的语言有着大大的能量。</p>
+<p>JS的诞生，让客户端进行DOM操作成为了现实，从而做到在客户端处理交互，节省了大量HTML文件的请求。</p>
+<p>页面也由纯静态转换为了非静态，提供了与用户的大量交互。</p>
+<p><strong>原生JS操作DOM</strong></p>
+<h4 id="Jquery"><a href="#Jquery" class="headerlink" title="Jquery"></a>Jquery</h4><h4 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h4><p>MVVM最重要的特性是 <strong>响应式更新__，或者说 __双向绑定</strong></p>
+<p>比如一个倒计时效果,用原生JS我们必须先找到dom，然后再修改dom。</p>
+<p>而用了MVVM框架，一切都简单了，修改数据，页面就会展示最新的数据weis</p>
+<p>那么问题来了，前端的这一步步发展到底是为了什么？</p>
+<p>解决了什么需求，怎么他就提高了生产力？</p>
+<h4 id="前端的发展到底解决了什么需求？？？"><a href="#前端的发展到底解决了什么需求？？？" class="headerlink" title="前端的发展到底解决了什么需求？？？"></a>前端的发展到底解决了什么需求？？？</h4><p>思考这样一系列问题:</p>
+<p>网页 和 TXT文本/Word 的最大区别是什么 ？</p>
+<p><strong>交互</strong></p>
+<p>如何实现交互 ？ 如何让用户产生交互的感觉 ？</p>
+<p>用户事件 引发的一系列网页变化，</p>
+<h3 id="前端框架"><a href="#前端框架" class="headerlink" title="前端框架"></a>前端框架</h3><p>以前前端存在的最大问题：</p>
+<p>当然，组件化的可拆分，使得他 能</p>
+<p>更好的复用，一处修改，处处均改</p>
+<p>更好的分工，</p>
+<p>更好的测试，</p>
+<p>更小的心智负担。</p>
+<p>提升了工程性</p>
+<h3 id="react"><a href="#react" class="headerlink" title="react"></a>react</h3><h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>前端简单吗，真的很简单，入门简单，弱类型语言，无需环境配置，打开浏览器就能运行。</p>
+<p>前端难吗，真的很难，难精，调用接口，拼拼组件，谁都会写。</p>
+<p>但是，这每一个技术背后的原理，理念，都是需要深究，并且值得深究的。</p>
+<p>我在做框架源码分享的时候，有人问过我，有没有实战的意义，我更想听实战的东西。</p>
+<p>很可惜，没有。</p>
+<p>一个框架的所有标准写法都在官方文档里，不在源码里，</p>
+<p>即使源码中出现的操作，也不一定能在开发中安全调用。</p>
+<p>读源码最大的作用是，学习思想，学习设计模式，学习其干练的代码，运用在平常的开发中。</p>
+<p>而往往这些是最容易被忽视的，不计入工作量的。</p>
+<p>如果硬要说在框架的使用上有什么区别的话，那就是更敢写了，更确定该怎么写了，bug更少了。</p>
+<p>就像我在React中每写一行代码，都能想象出这行代码如何运行，什么时候运行，改变了哪些状态。</p>
+<p>当在查找bug时，能一眼看出语法错误，能根据bug现象不看代码直接找到问题所在。</p>
+<p>这些可以称之为基础的东西 在长时间使用该技术的 程序员眼中 也有另一种种存在方式【经验】。</p>
+<p>源码难</p>
+<p>但是出现问题的时候，</p>
+<p>当潮水退去的时候，我们就会知道，到底是谁在裸泳。</p>
+<p>我不认为，从前端转后端是个好的选择，</p>
+<p>我觉得，或许从后端转前端，才是弃暗投明。</p>
+<h3 id="技术积累-与-业务积累"><a href="#技术积累-与-业务积累" class="headerlink" title="技术积累 与 业务积累"></a>技术积累 与 业务积累</h3><p>当然，这是技术分享会，谈的是技术积累，</p>
+<p>职业的规划还有另一条路，业务积累，熟悉项目，熟悉业务，熟悉客户，能针对业务提出更好的解决方案。</p>
+<p>同时，我觉得这才是公司真正需要的人，毕竟 <strong>技术，是不赚钱的</strong></p>
+<p>就像上一期 特斯拉融合项目，我听到需求第一反应是，这么复杂，需要多少时间，如何实现，旧代码要不要重构。(当然还有，千万别分给我。)</p>
+<p>孙工一语道破其中玄机，人家想要的就是简单方便，何必做这么多校验。</p>
+<p>对于技术来讲，业务就是降维打击。(例如:我写半天代码，事后吹的神乎其神，敏敏姐说，以后代发没有支付了，好的，我回去删代码)</p>
+<p>这就是业务积累。</p>
+<p>当然，技术积累，业务积累，都是不可获取的，需要一个平衡。</p>
+<p>因为总有绕不开的业务，需要技术支持，</p>
+<p>更大的业务体量，总需要更高的系统要求，工程化要求，需要技术支持。</p>
+<p>作为一个程序员，不止是职业发展的矛盾与制衡，还有程序员社区的爱恨情仇，还有对优秀技术的不断探索，对技术大佬的毕恭毕敬，等等。</p>
+<p>什么vite编译比webpack快十倍，什么的vue3语法更友好。</p>
+<p>茫茫码海，谁主沉浮</p>
+<p>30年河东，30年河西。</p>
+<p>这是江湖，是哲学，是浪漫，是艺术。</p>
 
-<span class="token comment">// React.createElement("h1", null, "hello", React.createElement("span", &#123;</span>
-<span class="token comment">//   style: &#123;</span>
-<span class="token comment">//     color: 'red'</span>
-<span class="token comment">//   &#125;</span>
-<span class="token comment">// &#125;, "world"));</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>众所周知，所有函数组件都是返回一个JSX，</p>
-<p>而现在我们知道了，编译后的函数组件，其实就是返回一个<code>React.createElement()</code></p>
-<p>babel对JSX语法进行正则匹配，通过AST语法树，将JSX代码替换为了<code>React.createElement()</code></p>
-<p><strong>React17开始</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> babel <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@babel/core'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> sourceCode <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
-&lt;h1>
-  hello&lt;span style=&#123;&#123; color: 'red' &#125;&#125;>world&lt;/span>
-&lt;/h1>
-</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> result <span class="token operator">=</span> babel<span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span>sourceCode<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
-  <span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">[</span><span class="token string">"@babel/plugin-transform-react-jsx"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">runtime</span><span class="token operator">:</span> <span class="token string">'automatic'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">]</span>
-  <span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>code<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment">// import &#123; jsx &#125; from "react/jsx-runtime";</span>
-<span class="token comment">// jsx("h1", &#123;</span>
-<span class="token comment">//   children: ["hello", jsx("span", &#123;</span>
-<span class="token comment">//     style: &#123;</span>
-<span class="token comment">//       color: 'red'</span>
-<span class="token comment">//     &#125;,</span>
-<span class="token comment">//     children: "world"</span>
-<span class="token comment">//   &#125;)]</span>
-<span class="token comment">// &#125;);</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>和替换成 <code>React.createElement()</code> 异曲同工</p>
-<p>React17开始将JSX库单独提出，以便其他库使用JSX语法，而可以不引入React。</p>
-<blockquote>
-<p>其实所有框架 组件的 HTML模板部分 都是如此 被打包为 一个函数，当组件被调用时，返回虚拟DOM</p>
-</blockquote>
-<p>ESLint</p>
-<h3 id="2-函数组件的调用原理"><a href="#2-函数组件的调用原理" class="headerlink" title="2.函数组件的调用原理"></a>2.函数组件的调用原理</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">FunctionComponent</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token operator">&lt;</span>h1 className<span class="token operator">=</span><span class="token string">'title'</span> style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">color</span><span class="token operator">:</span> props<span class="token punctuation">.</span>color <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">></span><span class="token punctuation">&#123;</span>props<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token operator">:</span><span class="token punctuation">&#123;</span>props<span class="token punctuation">.</span>children<span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">let</span> element <span class="token operator">=</span> <span class="token operator">&lt;</span>FunctionComponent color<span class="token operator">=</span><span class="token string">"orange"</span> name<span class="token operator">=</span><span class="token string">"luoziyu"</span> age<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token number">25</span><span class="token punctuation">&#125;</span> <span class="token operator">></span>我是函数组件的儿子<span class="token operator">&lt;</span><span class="token operator">/</span>FunctionComponent<span class="token operator">></span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
-ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>antd组件库</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">FunctionComponent</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> React<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">"h1"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">className</span><span class="token operator">:</span> <span class="token string">"title"</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">style</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-            <span class="token literal-property property">color</span><span class="token operator">:</span> props<span class="token punctuation">.</span>color
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> props<span class="token punctuation">.</span>name<span class="token punctuation">,</span> <span class="token string">":"</span><span class="token punctuation">,</span> props<span class="token punctuation">.</span>children<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">let</span> element <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span>FunctionComponent<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
-  <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">"orange"</span><span class="token punctuation">,</span>
-  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"luoziyu"</span><span class="token punctuation">,</span>
-  <span class="token literal-property property">age</span><span class="token operator">:</span> <span class="token number">25</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token string">"\u6211\u662F\u51FD\u6570\u7EC4\u4EF6\u7684\u513F\u5B50"</span><span class="token punctuation">)</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span>
-<span class="token comment">// &#123;</span>
-<span class="token comment">//     $$typeof: Symbol(react.element),</span>
-<span class="token comment">//     key: undefined,</span>
-<span class="token comment">//     props: &#123;</span>
-<span class="token comment">//         color: "orange",</span>
-<span class="token comment">//         name: "luoziyu",</span>
-<span class="token comment">//         age: 25,</span>
-<span class="token comment">//         children: &#123;</span>
-<span class="token comment">//             props: "我是函数组件的儿子"</span>
-<span class="token comment">//         &#125;</span>
-<span class="token comment">//     &#125;,</span>
-<span class="token comment">//     ref: undefined,</span>
-<span class="token comment">//     type: FunctionComponent(props)</span>
-<span class="token comment">// &#125;</span>
-ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>函数组件调用也是JSX语法，在打包后，同样将被编译为<code>createElement</code>函数的形式。</p>
-<p>不同的是:</p>
-<p>原生节点直接将DOM标签作为类型传入，组件节点则传入组件函数本身作为类型</p>
-<p>这也是为什么函数需要先引入后使用，需要当前执行上下文中存在此函数，才能执行。</p>
-<blockquote>
-<p>注意：分清哪部分代码在编译时执行，哪部分代码在浏览器中执行</p>
-</blockquote>
-<p>展示代码</p>
-<h4 id="区分-源码-和-打包后的代码-和-虚拟DOM"><a href="#区分-源码-和-打包后的代码-和-虚拟DOM" class="headerlink" title="区分 源码 和 打包后的代码 和 虚拟DOM"></a>区分 源码 和 打包后的代码 和 虚拟DOM</h4><p><strong>打包后，被正则匹配转换成函数，用函数去描述一个的HTML结构</strong></p>
-<p><strong>浏览器运行后，函数执行返回虚拟DOM，用虚拟DOM去描述HTML结构</strong></p>
-<p>组件源码(JSX) –&gt; 打包后的组件代码(createElement()) –&gt; 浏览器运行后的组件返回值(描述真实DOM结构的对象)({})</p>
-<p><strong>选择打包为函数，而不是直接打包为虚拟DOM，都返回的是全新的互不影响的虚拟DOM对象</strong></p>
-<h4 id="createElement如何参与组件更新"><a href="#createElement如何参与组件更新" class="headerlink" title="createElement如何参与组件更新"></a>createElement如何参与组件更新</h4><p>JSX中必然存在很多组件 状态变量，或父组件传入的props变量，例如<code>(&lt;div&gt;&#123;&#123;name&#125;&#125;&lt;/div&gt;)</code></p>
-<p>这些变量会编译进<code>createElement()</code>，类似于<code>createElement(&#39;div&#39;,name)</code></p>
-<p>每一次组件属性更新，执行到<code>return createElement(&#39;div&#39;,name)</code>,都相当于传入了最新的name值</p>
-<p><code>createElement(&#39;div&#39;,name)</code>返回最新虚拟DOM，然后DOM Diff 比较新旧虚拟DOM节点,</p>
-<p>如果新虚拟DOM节点 和 旧虚拟DOM节点类似，则复用 旧真实DOM节点，更新渲染真实DOM。</p>
-<p>如果新虚拟DOM节点 和 旧虚拟DOM节点较大不同，则删除 旧真实DOM节点，创建新真实DOM节点</p>
-<p>(Diff的根本目的是尽量复用旧DOM节点，从而节省性能)</p>
-<h3 id="React-createElement-和-ReactDOM-render-原理"><a href="#React-createElement-和-ReactDOM-render-原理" class="headerlink" title="React.createElement 和 ReactDOM.render 原理"></a>React.createElement 和 ReactDOM.render 原理</h3><p>现在我们知道了，要理解react，这两个函数就是我们的切入点，</p>
-<p>理解了这两个函数，就能理解react的运行</p>
-<p>直接上代码</p>
-<p>这期的时间应该勉强够讲完函数组件的初始化，还有类组件的初始化和更新</p>
-<p>因为函数组件的更新涉及hooks，讲起来就多了</p>
-<p>函数组件的初始化更好理解，类组件的更新更好理解(代码简单，思想是一样的)</p>
-<p>React的原理就是这么简单(不含fiber时)</p>
-<p>react的事件绑定</p>
-<p>类组件的更新是合并，函数组件的更新是直接替换，</p>
-<p>每一个虚拟DOM都会对应一个真实DOM吗 </p>
-<p>createDOM 递归调用，会产生多层虚拟DOM，最终会层层传递，返回一个唯一根节点的真实DOM</p>
-<p>vdom.oldRenderVdom上会挂载其渲染的子Vdom(多层函数组件嵌套)，而子vdom链的终点，必然是一个真实DOM</p>
-<p>每一个组件渲染的时候都能想象其渲染过程，更新的时候想象其更新过程。</p>
-<p>更新和初始化是两条基本不同的运行路线，</p>
-<p>再稍微多讲一点，代码都会开始变复杂了。</p>
-<h3 id="组件的更新以及为什么说React不是MVVM框架"><a href="#组件的更新以及为什么说React不是MVVM框架" class="headerlink" title="组件的更新以及为什么说React不是MVVM框架"></a>组件的更新以及为什么说React不是MVVM框架</h3><p>上面聊的所有其实都是 React项目的初始化，或者说组件的初始化</p>
-<p>因为，组件的更新 相对复杂(但也很简单)，并且 组件的更新 和初始化异曲同工。</p>
-<p>所有框架的学习有两点关键，跟着这两个流程走，能思路更为清晰。</p>
-<p>也就是 <strong>初始化</strong> 和 <strong>更新</strong></p>
-<p><strong>更新</strong></p>
-<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><h3 id="DOMDiff"><a href="#DOMDiff" class="headerlink" title="DOMDiff"></a>DOMDiff</h3>
                 
             </div>
             <hr/>
@@ -603,7 +543,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/11/14/react/react2022/">https://github.com/LZY2333/LZY2333.github.io/2022/11/14/react/react2022/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/11/05/jing-yan-tie/xie-gei-hou-duan-de-qian-duan-gu-shi-shu/">https://github.com/LZY2333/LZY2333.github.io/2022/11/05/jing-yan-tie/xie-gei-hou-duan-de-qian-duan-gu-shi-shu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -640,7 +580,11 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/React/">
+                                    <span class="chip bg-color">React</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -812,74 +756,25 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/11/14/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">
+                <a href="/2022/11/14/sheng-huo/exist/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="1.TS基础类型和函数">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Exist">
                         
-                        <span class="card-title">1.TS基础类型和函数</span>
+                        <span class="card-title">Exist</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            终于意识到 渴求之物 皆在吾心 并非无法控制的力量 而是必要的强大 若是向坚信之心奋勇迸发 终能找到答案
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
                         </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/TypeScript/">
-                        <span class="chip bg-color">TypeScript</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/11/14/typescript/typescript-za-ji/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="TypeScript杂记">
-                        
-                        <span class="card-title">TypeScript杂记</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            TypeScript是Javascript的超集，遵循最新的ES5/ES6规范。Typescript扩展了Javascript语法。
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
-                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -897,6 +792,55 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
                     
                     <a href="/tags/%E6%AD%8C%E8%AF%8D/">
                         <span class="chip bg-color">歌词</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/11/01/react/react2022/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="React2022">
+                        
+                        <span class="card-title">React2022</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                    技术栈
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
                     </a>
                     
                 </div>
@@ -1043,7 +987,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">124.7k</span>&nbsp;字
+                class="white-color">126.3k</span>&nbsp;字
             
             
             
