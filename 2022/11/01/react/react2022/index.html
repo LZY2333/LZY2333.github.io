@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="React2022, 懒前端">
+    <meta name="keywords" content="React复习记录, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>React2022 | 懒前端</title>
+    <title>React复习记录 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">React2022</h1>
+                    <h1 class="description center-align post-title">React复习记录</h1>
                 </div>
             </div>
         </div>
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    8 分
                 </div>
                 
 
@@ -446,20 +446,14 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="React原理十问"><a href="#React原理十问" class="headerlink" title="React原理十问"></a>React原理十问</h2><p>从最简单的一个函数组件开始。</p>
-<p>总结了React使用者应该知道的十个实现原理。</p>
-<p>我在讲的过程中会尽量运行代码出来给你们看，如果比较麻烦的，我就直接说结论了。</p>
-<p>本次分享主要基于React15讲述React原理，其他版本为辅，可能顺便讲一讲和其他框架的区别。</p>
-<p>16   fiber<br>16.8 hooks<br>18   优先级调度 并发执行</p>
-<p>我认为React15框架是所有框架里最简单的</p>
-<p>但即使去掉react-router，去掉redux，光React15知识点依旧很多</p>
-<p>其中最重要的，也是我认为所有框架最重要的两条线，沿着这两条线来研究源码，可以事半功倍。</p>
-<p>要理解一个框架，最终要的是 初始化 和 更新</p>
-<p>初始化原理: React如何将实现组件化，如何将组件渲染成DOM?</p>
-<p>更新原理: React如何将数据变化响应到视图？</p>
-<p>JSX 类组件和函数组件 DOM-DIFF hooks 生命周期</p>
-<p>我基本是想到哪里讲到哪里，有什么问题可以直接问，能多讲一些。</p>
-<h3 id="1-代码中所有JSX其实都是函数"><a href="#1-代码中所有JSX其实都是函数" class="headerlink" title="1.代码中所有JSX其实都是函数"></a>1.代码中所有JSX其实都是函数</h3><p><strong>React17以前</strong></p>
+                <h2 id="React复习记录"><a href="#React复习记录" class="headerlink" title="React复习记录"></a>React复习记录</h2><p>本篇讲述 <strong>React15原理</strong>,从 <strong>初始化</strong> 以及 <strong>更新</strong> 两条线路进行.</p>
+<p>同时我认为,要学习前端框架的原理,沿着这两条线进行学习,有事半功倍的效果.</p>
+<p>React几个重要版本更新, 16 fiber, 16.8 hooks, 18 优先级调度 并发执行.</p>
+<p>其中fiber,是 React 核心算法的重新实现,也就是说其核心思想依旧不变.</p>
+<p>从React15开始,理解React原理,再加入fiber等后续更新,也更能理解fiber的存在价值.</p>
+<p>最后要说的是,React15真的很简单,是我看过所有框架原理中最容易理解的一个.</p>
+<p>相信读完本文,你也会感叹,原来是这样!</p>
+<h3 id="1-代码中所有JSX其实都是函数"><a href="#1-代码中所有JSX其实都是函数" class="headerlink" title="1. 代码中所有JSX其实都是函数"></a>1. 代码中所有JSX其实都是函数</h3><p><strong>React17以前</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> babel <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@babel/core'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> sourceCode <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
 &lt;h1>
@@ -479,8 +473,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token comment">//   &#125;</span>
 <span class="token comment">// &#125;, "world"));</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>众所周知，所有函数组件都是返回一个JSX，</p>
-<p>而现在我们知道了，编译后的函数组件，其实就是返回一个<code>React.createElement()</code></p>
+<p>编译后的函数组件，其实就是返回一个<code>React.createElement()</code></p>
 <p>babel对JSX语法进行正则匹配，通过AST语法树，将JSX代码替换为了<code>React.createElement()</code></p>
 <p><strong>React17开始</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> babel <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@babel/core'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -511,15 +504,15 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <blockquote>
 <p>其实所有框架 组件的 HTML模板部分 都是如此 被打包为 一个函数，当组件被调用时，返回虚拟DOM</p>
 </blockquote>
-<p>ESLint</p>
-<h3 id="2-函数组件的调用原理"><a href="#2-函数组件的调用原理" class="headerlink" title="2.函数组件的调用原理"></a>2.函数组件的调用原理</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">FunctionComponent</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<h3 id="2-函数组件的调用原理"><a href="#2-函数组件的调用原理" class="headerlink" title="2. 函数组件的调用原理"></a>2. 函数组件的调用原理</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">FunctionComponent</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> <span class="token operator">&lt;</span>h1 className<span class="token operator">=</span><span class="token string">'title'</span> style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token literal-property property">color</span><span class="token operator">:</span> props<span class="token punctuation">.</span>color <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">></span><span class="token punctuation">&#123;</span>props<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token operator">:</span><span class="token punctuation">&#123;</span>props<span class="token punctuation">.</span>children<span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">let</span> element <span class="token operator">=</span> <span class="token operator">&lt;</span>FunctionComponent color<span class="token operator">=</span><span class="token string">"orange"</span> name<span class="token operator">=</span><span class="token string">"luoziyu"</span> age<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token number">25</span><span class="token punctuation">&#125;</span> <span class="token operator">></span>我是函数组件的儿子<span class="token operator">&lt;</span><span class="token operator">/</span>FunctionComponent<span class="token operator">></span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
 ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>antd组件库</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">FunctionComponent</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 定义一个函数组件,叫XXXXX</span>
+<span class="token keyword">function</span> <span class="token constant">XXXXX</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> React<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">"h1"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
         <span class="token literal-property property">className</span><span class="token operator">:</span> <span class="token string">"title"</span><span class="token punctuation">,</span>
         <span class="token literal-property property">style</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
@@ -528,7 +521,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
     <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> props<span class="token punctuation">.</span>name<span class="token punctuation">,</span> <span class="token string">":"</span><span class="token punctuation">,</span> props<span class="token punctuation">.</span>children<span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span>
 
-<span class="token keyword">let</span> element <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span>FunctionComponent<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">let</span> element <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token constant">XXXXX</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
   <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">"orange"</span><span class="token punctuation">,</span>
   <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"luoziyu"</span><span class="token punctuation">,</span>
   <span class="token literal-property property">age</span><span class="token operator">:</span> <span class="token number">25</span>
@@ -547,44 +540,131 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token comment">//         &#125;</span>
 <span class="token comment">//     &#125;,</span>
 <span class="token comment">//     ref: undefined,</span>
-<span class="token comment">//     type: FunctionComponent(props)</span>
+<span class="token comment">//     type: XXXXX</span>
 <span class="token comment">// &#125;</span>
-ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>函数组件调用也是JSX语法，在打包后，同样将被编译为<code>createElement</code>函数的形式。</p>
 <p>不同的是:</p>
-<p>原生节点直接将DOM标签作为类型传入，组件节点则传入组件函数本身作为类型</p>
-<p>这也是为什么函数需要先引入后使用，需要当前执行上下文中存在此函数，才能执行。</p>
-<blockquote>
-<p>注意：分清哪部分代码在编译时执行，哪部分代码在浏览器中执行</p>
-</blockquote>
-<p>展示代码</p>
-<h4 id="区分-源码-和-打包后的代码-和-虚拟DOM"><a href="#区分-源码-和-打包后的代码-和-虚拟DOM" class="headerlink" title="区分 源码 和 打包后的代码 和 虚拟DOM"></a>区分 源码 和 打包后的代码 和 虚拟DOM</h4><p><strong>打包后，被正则匹配转换成函数，用函数去描述一个的HTML结构</strong></p>
-<p><strong>浏览器运行后，函数执行返回虚拟DOM，用虚拟DOM去描述HTML结构</strong></p>
+<p>原生节点直接将DOM标签作为 type 传入，函数组件节点则传入 函数本身 作为 type</p>
+<p>(,供后续调用,后面会讲到,注意这个type 就是 函数XXXXX,后续可随时拿出来调用)</p>
+<p>这也是为什么函数需要先引入后使用，因为 需要当前执行上下文中存在此函数，才能执行。</p>
 <p>组件源码(JSX) –&gt; 打包后的组件代码(createElement()) –&gt; 浏览器运行后的组件返回值(描述真实DOM结构的对象)({})</p>
 <p><strong>选择打包为函数，而不是直接打包为虚拟DOM，都返回的是全新的互不影响的虚拟DOM对象</strong></p>
-<h4 id="createElement如何参与组件更新"><a href="#createElement如何参与组件更新" class="headerlink" title="createElement如何参与组件更新"></a>createElement如何参与组件更新</h4><p>JSX中必然存在很多组件 状态变量，或父组件传入的props变量，例如<code>(&lt;div&gt;&#123;&#123;name&#125;&#125;&lt;/div&gt;)</code></p>
-<p>这些变量会编译进<code>createElement()</code>，类似于<code>createElement(&#39;div&#39;,name)</code></p>
-<p>每一次组件属性更新，执行到<code>return createElement(&#39;div&#39;,name)</code>,都相当于传入了最新的name值</p>
-<p><code>createElement(&#39;div&#39;,name)</code>返回最新虚拟DOM，然后DOM Diff 比较新旧虚拟DOM节点,</p>
-<p>如果新虚拟DOM节点 和 旧虚拟DOM节点类似，则复用 旧真实DOM节点，更新渲染真实DOM。</p>
-<p>如果新虚拟DOM节点 和 旧虚拟DOM节点较大不同，则删除 旧真实DOM节点，创建新真实DOM节点</p>
-<p>(Diff的根本目的是尽量复用旧DOM节点，从而节省性能)</p>
-<h3 id="React-createElement-和-ReactDOM-render-原理"><a href="#React-createElement-和-ReactDOM-render-原理" class="headerlink" title="React.createElement 和 ReactDOM.render 原理"></a>React.createElement 和 ReactDOM.render 原理</h3><p>现在我们知道了，要理解react，这两个函数就是我们的切入点，</p>
-<p>理解了这两个函数，就能理解react的运行</p>
-<p>直接上代码</p>
-<p>这期的时间应该勉强够讲完函数组件的初始化，还有类组件的初始化和更新</p>
-<p>因为函数组件的更新涉及hooks，讲起来就多了</p>
-<p>函数组件的初始化更好理解，类组件的更新更好理解(代码简单，思想是一样的)</p>
-<p>React的原理就是这么简单(不含fiber时)</p>
-<p>react的事件绑定</p>
-<p>类组件的更新是合并，函数组件的更新是直接替换，</p>
-<p>每一个虚拟DOM都会对应一个真实DOM吗 </p>
-<p>createDOM 递归调用，会产生多层虚拟DOM，最终会层层传递，返回一个唯一根节点的真实DOM</p>
-<p>vdom.oldRenderVdom上会挂载其渲染的子Vdom(多层函数组件嵌套)，而子vdom链的终点，必然是一个真实DOM</p>
-<p>每一个组件渲染的时候都能想象其渲染过程，更新的时候想象其更新过程。</p>
-<p>更新和初始化是两条基本不同的运行路线，</p>
-<p>再稍微多讲一点，代码都会开始变复杂了。</p>
+<p>那么很明显,要理解react, createElement 和 render 这两个函数就是突破口.</p>
+<h3 id="React-createElement-和-ReactDOM-render-原理"><a href="#React-createElement-和-ReactDOM-render-原理" class="headerlink" title="React.createElement 和 ReactDOM.render 原理"></a>React.createElement 和 ReactDOM.render 原理</h3><p><code>React.createElement</code> 很简单,就是根据传入属性返回 虚拟DOM对象，以下称vdom，其中最重要的属性为Type</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span>
+    $$<span class="token keyword">typeof</span><span class="token operator">:</span> <span class="token constant">REACT_ELEMENT</span><span class="token punctuation">,</span><span class="token comment">// react元素标识</span>
+    type<span class="token punctuation">,</span><span class="token comment">//虚拟DOM元素的类型 'div' 'h1' 或 FunctionComponent</span>
+    ref<span class="token punctuation">,</span>
+    key<span class="token punctuation">,</span>
+    props<span class="token comment">// 这是属性对象 id className style ....</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>ReactDOM.render</code> 代表渲染，使用<code>createDOM</code>将 虚拟节点 转换为真实节点，并通过<code>appendChild</code>挂载在容器中,完成渲染。</p>
+<p>其中的<code>createDOM</code>,会判断传入的 vdom 的 type 属性,进行不同的操作,</p>
+<p>例如 type 为<code>h1</code>等原生标签时, 直接通过 <code>document.createElement(type)</code> 创建真实DOM并返回,此时<code>createDOM</code>任务完成.</p>
+<p>而当 type 为 函数组件时, 则会通过 调用该函数(也就是type)<code>type(props)</code>,得到函数组件返回的 第二层vdom.</p>
+<p>(注意,函数组件本身是vdom,调用函数组件,会返回一个第二层vdom)</p>
+<p>然后对第二层vdom 再次调用 <code>createDOM</code>,形成递归,(如果是函数组件返回函数组件,会产生多层递归,多层vdom)</p>
+<p>直到获取到 原生标签产生的真实dom,这层的<code>createDOM</code>递归才算结束, 创建真实DOM并返回.</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+ * 需要把虚拟DOM转换成真实DOM并且插入容器中
+ * @param &#123;*&#125; vdom 虚拟DOM 
+ * @param &#123;*&#125; container 容器
+ */</span>
+<span class="token keyword">function</span> <span class="token function">render</span><span class="token punctuation">(</span><span class="token parameter">vdom<span class="token punctuation">,</span> container</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">mount</span><span class="token punctuation">(</span>vdom<span class="token punctuation">,</span> container<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">mount</span><span class="token punctuation">(</span><span class="token parameter">vdom<span class="token punctuation">,</span> container</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> newDOM <span class="token operator">=</span> <span class="token function">createDOM</span><span class="token punctuation">(</span>vdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  container<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>newDOM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">createDOM</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> type<span class="token punctuation">,</span> props <span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
+    <span class="token keyword">let</span> dom<span class="token punctuation">;</span><span class="token comment">//真实DOM</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> type <span class="token operator">===</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果是组件vdom,就调用相应处理</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>type<span class="token punctuation">.</span>isReactComponent<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 下面两个函数也是返回真实DOM</span>
+            <span class="token keyword">return</span> <span class="token function">mountClassComponent</span><span class="token punctuation">(</span>vdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token function">mountFunctionComponent</span><span class="token punctuation">(</span>vdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果是原生标签,直接创建真实DOM</span>
+        dom <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//让vdom的dom属性指定它创建出来的真实DOM</span>
+    vdom<span class="token punctuation">.</span>dom <span class="token operator">=</span> dom<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> dom<span class="token punctuation">;</span> <span class="token comment">// 返回真实DOM,给mount()函数,mount函数负责把真实DOM进行挂载</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// *调用render,拿到第二层vdom后,又循环调用了createDOM,给第二层vdom进行转换成真实dom,再返回</span>
+<span class="token keyword">function</span> <span class="token function">mountClassComponent</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//获取函数本身</span>
+    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">type</span><span class="token operator">:</span> ClassComponent<span class="token punctuation">,</span> props <span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
+    <span class="token comment">//把属性对象传递给函数执行，返回要渲染的虚拟DOM</span>
+    <span class="token keyword">let</span> classInstance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassComponent</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> renderVdom <span class="token operator">=</span> classInstance<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//把上一次render渲染得到的虚拟DOM</span>
+    vdom<span class="token punctuation">.</span>oldRenderVdom <span class="token operator">=</span> classInstance<span class="token punctuation">.</span>oldRenderVdom <span class="token operator">=</span> renderVdom<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">createDOM</span><span class="token punctuation">(</span>renderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">mountFunctionComponent</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//获取函数本身</span>
+    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> type<span class="token punctuation">,</span> props <span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
+    <span class="token comment">//把属性对象传递给函数执行，返回要渲染的虚拟DOM</span>
+    <span class="token keyword">let</span> renderVdom <span class="token operator">=</span> <span class="token function">type</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//vdom.老的要渲染的虚拟DOM=renderVdom,方便后面的DOM-Diff</span>
+    vdom<span class="token punctuation">.</span>oldRenderVdom <span class="token operator">=</span> renderVdom<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">createDOM</span><span class="token punctuation">(</span>renderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>额外注意, 组件的 vdom虽然没挂载真实DOM,但是挂载了 <code>oldRenderVdom</code>,也就是第二层vdom.</p>
+<p>其代表意义是 <strong>该函数组件上一次渲染的vdom</strong>, </p>
+<p>而第二层vdom 如果是原生标签 则没有此属性,<code>oldRenderVdom</code>为组件专属属性,用于DOM-Diff.</p>
+<p>原生标签也有自己的属性 <code>dom</code> 指向其渲染的 真实DOM.</p>
+<blockquote>
+<p>并非每个vdom都有自己对应的真实dom,或者说可能多层vdom对应一个真实dom,因为组件的存在.</p>
+</blockquote>
+<p>当前真实DOM完成,<strong>children属性上的子vdom开始渲染真实dom并挂载</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">createDOM</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> type<span class="token punctuation">,</span> props <span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
+  <span class="token keyword">let</span> dom<span class="token punctuation">;</span>
+  <span class="token comment">// 创建当前层真实DOM</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">===</span> <span class="token constant">REACT_TEXT</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    dom <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createTextNode</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> type <span class="token operator">===</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>type<span class="token punctuation">.</span>isReactComponent<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token function">mountClassComponent</span><span class="token punctuation">(</span>vdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token function">mountFunctionComponent</span><span class="token punctuation">(</span>vdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    dom <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//更新真实dom的属性,如style</span>
+    <span class="token function">updateProps</span><span class="token punctuation">(</span>dom<span class="token punctuation">,</span> props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">//子vdom开始mount</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> props<span class="token punctuation">.</span>children <span class="token operator">===</span> <span class="token string">'object'</span> <span class="token operator">&amp;&amp;</span> props<span class="token punctuation">.</span>children<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">mount</span><span class="token punctuation">(</span>props<span class="token punctuation">.</span>children<span class="token punctuation">,</span> dom<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>props<span class="token punctuation">.</span>children<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">reconcileChildren</span><span class="token punctuation">(</span>props<span class="token punctuation">.</span>children<span class="token punctuation">,</span> dom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token comment">//在创建真实DOM的，把虚拟DOM和真实DOM进行关联</span>
+  vdom<span class="token punctuation">.</span>dom <span class="token operator">=</span> dom<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> dom<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">reconcileChildren</span><span class="token punctuation">(</span><span class="token parameter">children<span class="token punctuation">,</span> parentDOM</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> children<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">mount</span><span class="token punctuation">(</span>children<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> parentDOM<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意代码: 父真实dom先产生,后完成自己的mount(也就是appendChild)过程,</p>
+<p>子真实dom后产生,却先于父节点完成自己的mount过程,把自己挂在父节点上.</p>
+<p>自上而下,又自下而上的感觉.</p>
+<p>最后一步,根真实dom 挂载在 root容器上,浏览器开始渲染dom,展示出视图,React初始化完成.</p>
 <h3 id="组件的更新以及为什么说React不是MVVM框架"><a href="#组件的更新以及为什么说React不是MVVM框架" class="headerlink" title="组件的更新以及为什么说React不是MVVM框架"></a>组件的更新以及为什么说React不是MVVM框架</h3><p>上面聊的所有其实都是 React项目的初始化，或者说组件的初始化</p>
 <p>因为，组件的更新 相对复杂(但也很简单)，并且 组件的更新 和初始化异曲同工。</p>
 <p>所有框架的学习有两点关键，跟着这两个流程走，能思路更为清晰。</p>
@@ -1060,7 +1140,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">126.3k</span>&nbsp;字
+                class="white-color">126.6k</span>&nbsp;字
             
             
             
