@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="1.TS基础类型和函数, 懒前端">
+    <meta name="keywords" content="Exist, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>1.TS基础类型和函数 | 懒前端</title>
+    <title>Exist | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">1.TS基础类型和函数</h1>
+                    <h1 class="description center-align post-title">Exist</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/TypeScript/">
-                                <span class="chip bg-color">TypeScript</span>
+                            <a href="/tags/%E6%AD%8C%E8%AF%8D/">
+                                <span class="chip bg-color">歌词</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                技术栈
+                            <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
+                                生活区
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-09-08
+                    2022-11-14
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    170
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    1 分
                 </div>
                 
 
@@ -446,166 +446,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS笔记"><a href="#TS笔记" class="headerlink" title="TS笔记"></a>TS笔记</h1><p>计划三天看完TS课程,此为课程笔记</p>
-<p>2021-09-22 - 2021-09-24</p>
-<h2 id="一点准备"><a href="#一点准备" class="headerlink" title="一点准备"></a>一点准备</h2><p><code>npm i typescript -g</code> 全局安装TS编译器<br><code>npm i ts-node -g</code> 安装好后可在vscode右键run直接运行ts<br><code>tsc hello.ts</code>可运行编译文件<br><code>tsc --init</code>生成TS配置文件</p>
-<p>配置tsconfig.json</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span>
-  <span class="token string-property property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-    <span class="token string-property property">"target"</span><span class="token operator">:</span> <span class="token string">"es5"</span><span class="token punctuation">,</span>
-    <span class="token string-property property">"module"</span><span class="token operator">:</span> <span class="token string">"commonjs"</span><span class="token punctuation">,</span>
-    <span class="token string-property property">"outDir"</span><span class="token operator">:</span> <span class="token string">"./js"</span>
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>运行vscode检视任务<br>vscode -&gt; 终端 -&gt; 运行生成任务 -&gt; tsc:监视</p>
-<p>这样保存ts文件时 会自动编译出js文件,方便查看</p>
-<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p><strong>布尔</strong> <strong>数字</strong> <strong>字符串</strong> <strong>数组</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let married: boolean &#x3D; false;   &#x2F;&#x2F; boolean
-let age: number &#x3D; 25;           &#x2F;&#x2F; number
-let firstName: string &#x3D; &#39;lzy&#39;; &#x2F;&#x2F; string
-
-let arr2: number[]&#x3D;[4,5,6];     &#x2F;&#x2F; array
-let arr3: Array&lt;number&gt;&#x3D;[7,8,9];&#x2F;&#x2F; array<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><strong>元组</strong>: 表示 类型 和 数量 固定的 数组<br>与数组的区别: 每一项可以是不同类型, 有预定义的长度, </p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const animal:[string,number,boolean] &#x3D; [&#39;lzy&#39;,25,true];  &#x2F;&#x2F; tuple
-let lzy:[string,number] &#x3D; [&#39;lzy&#39;,5]; &#x2F;&#x2F; tuple
-lzy[0].length; &#x2F;&#x2F; OK
-lzy[1].toFixed(2); &#x2F;&#x2F; OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><strong>枚举</strong>: 该数据类型的变量 只能为事先写好的几个类型</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 普通枚举
-enum Color &#123;
-    Red,&#x2F;&#x2F; 默认值为 0 
-    Yellow,&#x2F;&#x2F; 默认值为1
-    Blue&#x2F;&#x2F; 默认值为2
-&#125;
-&#x2F;&#x2F; 常量枚举
-const enum Color2 &#123;
-    Red,&#x2F;&#x2F; 默认值为 0 
-    Yellow,&#x2F;&#x2F; 默认值为1
-    Blue&#x2F;&#x2F; 默认值为2
-&#125;
-&#x2F;&#x2F; 常量枚举的变量名(如Red)会在编译时被完全删除,节省变量名开销,因为是常量,必然是固定值,调用这个固定值的地方会直接被替换为值
-
-let myColors &#x3D; [Colors.Red, Colors.Yellow, Colors.Blue];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>any</strong><br>任意类型,可以被赋值任何类型数据的类型</p>
-<p><strong>null</strong> <strong>undefined</strong><br>null 和 undefined 是其他类型的子类型,可以赋值给任意类型.<br>但,TS配置文件设置了strictNullChecks:true时,直接这样赋值会报错<br>null 和 undefined 可以相互赋值</p>
-<p><strong>void</strong><br>表示没有任何类型,当函数没有返回值时,被认为是void类型</p>
-<p><strong>never</strong><br>never 是其他类型的子类型,表示永远不会被执行到的值</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function error(message: string): never &#123;
-    throw new Error(message);
-&#125;
-function fn(x: number | string) &#123;
-  if (typeof x &#x3D;&#x3D;&#x3D; &#39;number&#39;) &#123;
-    &#x2F;&#x2F; x: number 类型
-  &#125; else if (typeof x &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
-    &#x2F;&#x2F; x: string 类型
-  &#125; else &#123;
-    &#x2F;&#x2F; x: never 类型
-    &#x2F;&#x2F; --strictNullChecks 模式下，这里的代码将不会被执行，x 无法被观察
-  &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>never 和 void 的区别: void 可以是 null 或 undefined<br>拥有 never 返回值类型的函数无法正常返回，无法终止，或会抛出异常。</p>
-<p><strong>symbol</strong><br>表示唯一不变的类型</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const sym1 &#x3D; Symbol(&#39;key&#39;);
-const sym2 &#x3D; Symbol(&#39;key&#39;);
-Symbol(&#39;key&#39;) &#x3D;&#x3D;&#x3D; Symbol(&#39;key&#39;) &#x2F;&#x2F; false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>使用Symbol 需要 ES6 编译辅助库</p>
-<p><strong>bigint</strong><br>可以安全的 储存 和 操作 大整数</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const max &#x3D; Number.MAX_SAFE_INTEGER;&#x2F;&#x2F; 2**53-1
-console.log(max + 1 &#x3D;&#x3D;&#x3D; max + 2); &#x2F;&#x2F; true,因为溢出了
-
-const max:bigint &#x3D; BigInt(Number.MAX_SAFE_INTEGER);
-console.log(max + 1 &#x3D;&#x3D;&#x3D; max + 2); &#x2F;&#x2F; 报错,BigInt 不能直接 + number类型
-console.log(max + 1n &#x3D;&#x3D;&#x3D; max + 2n); &#x2F;&#x2F; 代表BigInt(1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>使用 BigInt 需要 ESNext 的编译辅助库<br>JS 原始数据类型 BigInt Number,ts 里的类型 bigint number</p>
-<h2 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h2><p>指 编程语言中 能自动推导出 值 的类型的能力,一般强类型语言才有<br>定义未赋值时,会推论为any类型</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let username2;
-username2 &#x3D; 25; &#x2F;&#x2F; 自动推理为number类型
-username2 &#x3D; &#39;lzy&#39;;&#x2F;&#x2F; string类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="包装对象"><a href="#包装对象" class="headerlink" title="包装对象"></a>包装对象</h2><p>JS有两类数据类型, 原始数据类型(null undefined boolean number string Symbol) 和 对象类型<br>所有原始数据类型都没有 属性 或 方法 可供使用,仅仅是储存一个数据.</p>
-<p>但字符串数据 却可以直接调用 splice等方法,<br>这是因为 当 调用 基本数据类型 的方法时, JS 会把 原始数据类型 强制性切换为 对象类型,<br>c# Java中都有这个概念,叫 <strong>自动装箱</strong>,</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let isOK: boolean &#x3D; true; &#x2F;&#x2F; 编译通过
-let isOK: boolean &#x3D; Boolean(1) &#x2F;&#x2F; 编译通过
-let isOK: boolean &#x3D; new Boolean(1); &#x2F;&#x2F; 编译失败 期望的 isOK 是一个原始数据类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型"></a>联合类型</h2><p>表示 取值可以时多种类型中的一种<br>未赋值时 联合类型 上只能访问 两个类型共有的 属性或方法</p>
-<pre class="line-numbers language-TS" data-language="TS"><code class="language-TS">let name: string | number
-console.log(name!.toString()); &#x2F;&#x2F; 调用两者共有的方法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h2 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h2><p>将联合类型的变量 指定为 更加具体的类型</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let name: string | number;
-console.log((name as string).length);
-console.log((name as boolean).length); &#x2F;&#x2F; 报错,不能指定为联合类型外的类型
-console.log((name as any as boolean).length); &#x2F;&#x2F; 双重断言,OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="字面量类型和类型字面量"><a href="#字面量类型和类型字面量" class="headerlink" title="字面量类型和类型字面量"></a>字面量类型和类型字面量</h2><p><strong>字面量类型</strong> 一个字面量就是一个类型,类型和值必须一致.</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const up:&#39;Up&#39; &#x3D; &#39;Up&#39;
-type OneToFive &#x3D; 1 | 2 | 3 | 4 | 5;
-type Bool &#x3D; true | false;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>字面量类型本身并不是很实用，但是可以在一个联合类型中组合成一个强大的抽象</p>
-<p><strong>类型字面量</strong> 写法很像一个对象</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Person &#x3D; &#123;
-  name:string,
-  age:number
-&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="TS函数"><a href="#TS函数" class="headerlink" title="TS函数"></a>TS函数</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 简单定义方法
-function hello(name:string):void &#123;
-    console.log(&#39;hello&#39;,name);
-&#125;
-
-&#x2F;&#x2F; 定义 函数类型
-type GetUsernameFunction &#x3D; (x:string,y:string)&#x3D;&gt;string;
-let getUsername:GetUsernameFunction &#x3D; 
-function(firstName,lastName)&#123;
-  return firstName + lastName;
-&#125;
-
-&#x2F;&#x2F; 默认参数,可选参数 和 ES6一样
-function print(name:string &#x3D; &#39;lzy&#39;,age?:number):void &#123;
-    console.log(name,age);
-&#125;
-
-&#x2F;&#x2F; 函数重载
-&#x2F;&#x2F; TS中的函数重载,表现为 同一个函数提供多个函数类型定义
-&#x2F;&#x2F; Java中的重载,表现为 同名函数 参数不一样
-let obj: any&#x3D;&#123;&#125;;
-function attr(val: string): void;
-function attr(val: number): void;
-function attr(val: any): void &#123;
-    if (typeof val &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
-        obj.name&#x3D;val;
-    &#125; else &#123;
-        obj.age&#x3D;val;
-    &#125;
-&#125;
-attr(&#39;lzy&#39;); &#x2F;&#x2F; ok
-attr(25); &#x2F;&#x2F; ok
-attr(true); &#x2F;&#x2F; 报错
-
-&#x2F;&#x2F; 上面的重载和这里一样的效果,那这样看重载好像也没什么用?
-function attr2(val: string|number): void &#123;
-    if (typeof val &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
-        obj.name&#x3D;val;
-    &#125; else &#123;
-        obj.age&#x3D;val;
-    &#125;
-&#125;
-&#x2F;&#x2F; 重载解决了下面这种情况
-&#x2F;&#x2F; 要求两个参数,要不都是string,要不都是string[]
-function attr3(a: string,b: string): void;
-function attr3(a: string[],b: string[]): void;
-function attr3(a: any,b: any): void &#123;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="其它笔记"><a href="#其它笔记" class="headerlink" title="其它笔记"></a>其它笔记</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 非空断言,表示让TS编译器不用操心,这里a必然不为null
-a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>类 也是一个 类型(就像symbol,number,boolean一样),<br>构造完一个类后得到两个类型,一个构造函数类型 一个实例类型.</p>
+                <h2 id="《Exist》"><a href="#《Exist》" class="headerlink" title="《Exist》"></a>《Exist》</h2><p>《Exist》 - MOB CHOIR<br>词：六ツ見純代<br>曲：前口ワタル</p>
+<p><a target="_blank" rel="noopener" href="https://c.y.qq.com/base/fcgi-bin/u?__=JwwCrfOGd8eG">《Exist》QQ音乐链接</a></p>
+<h2 id="Exist"><a href="#Exist" class="headerlink" title="Exist"></a>Exist</h2><p>目を閉じても　浮遊する卯月<br>失うほどに　焼き付くshape<br>今際の惜別に　迫ってく無常<br>この手で掴む　Missing piece</p>
+<p>うそぶく程　嘘言わない<br>不乱じゃない本音<br>ふと気づけば　守られてた<br>自白にだ<br>野心の鎧　纏いながら<br>見切れてる友情<br>大丈夫さ　最初から<br>分かっていた</p>
+<p>そう、1人じゃない　受け入れて</p>
+<p>ひび割れてく　日々の隙間<br>埋もれさせない　揺蕩う道<br>望めば望むほど　何もいらない<br>やっと気づいた　In my heart</p>
+<p>制御出来ない　力じゃなく<br>必要な強さを<br>核心へと　突き進めば<br>この答え<br>象ってく　真の願い<br>そこにある誠実<br>不思議なほど　一縷なのは<br>認めたから</p>
+<p>さぁ、旅立ちを　鮮やかに</p>
+<p>煽られては　離されてく<br>あの時の欠乏<br>流されても　指針じゃない<br>故のメリット<br>胸の奥で　境界する<br>繋がりの行く末<br>濁りの無い　この思い<br>昇華させて</p>
+<p>そう、1人じゃない　受け入れて</p>
 
                 
             </div>
@@ -632,7 +482,7 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/09/08/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">https://github.com/LZY2333/LZY2333.github.io/2022/09/08/typescript/1.ts-ji-chu-lei-xing-he-han-shu/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/11/14/sheng-huo/exist/">https://github.com/LZY2333/LZY2333.github.io/2022/11/14/sheng-huo/exist/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -670,8 +520,8 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/TypeScript/">
-                                    <span class="chip bg-color">TypeScript</span>
+                                <a href="/tags/%E6%AD%8C%E8%AF%8D/">
+                                    <span class="chip bg-color">歌词</span>
                                 </a>
                             
                         </div>
@@ -845,31 +695,31 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/09/14/wei-qian-duan/qiankun-xue-xi-bi-ji/">
+                <a href="/2022/11/14/typescript/typescript-za-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="qiankun学习笔记">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Exist">
                         
-                        <span class="card-title">qiankun学习笔记</span>
+                        <span class="card-title">Exist</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            TypeScript是Javascript的超集，遵循最新的ES5/ES6规范。Typescript扩展了Javascript语法。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-14
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
+                                    生活区
                                 </a>
                             
                             
@@ -879,8 +729,8 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">
-                        <span class="chip bg-color">微前端</span>
+                    <a href="/tags/%E6%AD%8C%E8%AF%8D/">
+                        <span class="chip bg-color">歌词</span>
                     </a>
                     
                 </div>
@@ -894,13 +744,13 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/08/08/css/advancedcss-sass/">
+                <a href="/2022/10/21/jing-yan-tie/qian-duan-gong-cheng-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="AdvancedCSS&amp;Sass">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="从脚本仔到前端工程师--前端如何一步步走到工程化">
                         
-                        <span class="card-title">AdvancedCSS&amp;Sass</span>
+                        <span class="card-title">从脚本仔到前端工程师--前端如何一步步走到工程化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -911,14 +761,14 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-21
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
@@ -928,8 +778,8 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CSS/">
-                        <span class="chip bg-color">CSS</span>
+                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">JS基础</span>
                     </a>
                     
                 </div>
@@ -1076,7 +926,7 @@ a!.b.c &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><spa
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">123.5k</span>&nbsp;字
+                class="white-color">124.7k</span>&nbsp;字
             
             
             

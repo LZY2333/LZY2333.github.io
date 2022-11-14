@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="3.TS接口, 懒前端">
+    <meta name="keywords" content="1.TS基础类型和函数, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>3.TS接口 | 懒前端</title>
+    <title>1.TS基础类型和函数 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">3.TS接口</h1>
+                    <h1 class="description center-align post-title">1.TS基础类型和函数</h1>
                 </div>
             </div>
         </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-23
+                    2022-11-14
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    2.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    10 分
                 </div>
                 
 
@@ -446,185 +446,236 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS接口"><a href="#TS接口" class="headerlink" title="TS接口"></a>TS接口</h1><p><strong>接口</strong> 定义一个类型,以 <strong>约束变量</strong> 或 <strong>约束类</strong>,<br>类型检查器会以接口类型为标准对值的结构进行类型检查.<br>“鸭式辨型法”:如果它走起 路来像鸭子,叫起来也是鸭子,那么它就是鸭子</p>
-<blockquote>
-<p>一个类可以 继承另一个类 并实现多个接口<br>一个类可以 <strong>实现多个接口</strong> ，一个接口也可以 <strong>被多个类实现</strong><br>一个类可以只能 <strong>继承一个父类</strong> , 可以 <strong>被多个子类继承</strong></p>
-</blockquote>
-<p>变量后面<code>:xxx</code>可能是,<code>type</code>定义的类型,可能是<code>class</code>定义的类,<br>可能是 <code>interface</code> 定义的接口,可能是 字面量,可能是 js原始类型</p>
-<h2 id="接口约束-变量的值-为特定Object"><a href="#接口约束-变量的值-为特定Object" class="headerlink" title="接口约束 变量的值 为特定Object"></a>接口约束 变量的值 为特定Object</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束变量 接收的值 必须为对象
-interface Speakable&#123;
-    speak():void;
-    name:string;
-&#125;
-let speakMan:Speakable &#x3D; &#123;
-    speak()&#123;&#125;,&#x2F;&#x2F;少属性会报错
-    name,
-    age&#x2F;&#x2F;多属性也会报错
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h1 id="TS笔记"><a href="#TS笔记" class="headerlink" title="TS笔记"></a>TS笔记</h1><p>计划三天看完TS课程,此为课程笔记</p>
+<h2 id="一点准备"><a href="#一点准备" class="headerlink" title="一点准备"></a>一点准备</h2><p><code>npm i typescript -g</code> 全局安装TS编译器<br><code>npm i ts-node -g</code> 安装好后可在vscode右键run直接运行ts<br><code>tsc hello.ts</code>可运行编译文件<br><code>tsc --init</code>生成TS配置文件</p>
+<p>配置tsconfig.json</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span>
+  <span class="token string-property property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token string-property property">"target"</span><span class="token operator">:</span> <span class="token string">"es5"</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"module"</span><span class="token operator">:</span> <span class="token string">"commonjs"</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"outDir"</span><span class="token operator">:</span> <span class="token string">"./js"</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>可选属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
-  color?: string;
-  width?: number;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>任意属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;无法预先知道有哪些新的属性的时候,可以使用 &#96;[propName:string]:any&#96;,propName名字是任意的
-interface SquareConfig &#123;
-    color?: string;
-    width?: number;
-    [propName: string]: any;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>只读属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 只读属性,只在创建的时候可以赋值
-interface Point &#123;
-    readonly x: number;
-    readonly y: number;
-&#125;
-let p1: Point &#x3D; &#123; x: 10, y: 20 &#125;;
-p1.x &#x3D; 5; &#x2F;&#x2F; error!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>变量用const，属性用readonly</p>
-</blockquote>
-<p><strong>对象字面量 直接作为参数时 会经历 额外属性检查</strong><br><strong>而改写成 对象 再作为参数 传入函数调用,则不会 检查对象上的额外属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
-    height: number;
-    width: number;
-&#125;
+<p>运行vscode检视任务<br>vscode -&gt; 终端 -&gt; 运行生成任务 -&gt; tsc:监视</p>
+<p>这样保存ts文件时 会自动编译出js文件,方便查看</p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p><strong>布尔</strong> <strong>数字</strong> <strong>字符串</strong> <strong>数组</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let married: boolean &#x3D; false;   &#x2F;&#x2F; boolean
+let age: number &#x3D; 25;           &#x2F;&#x2F; number
+let firstName: string &#x3D; &#39;lzy&#39;; &#x2F;&#x2F; string
 
-function createSquare(config: SquareConfig):void &#123;&#125;
-&#x2F;&#x2F; 报错error: &#39;colour&#39; not expected in type &#39;SquareConfig&#39;
-&#x2F;&#x2F; 因为直接传入了 对象字面量,所以经历了额外属性检查,
-&#x2F;&#x2F; 不允许拥有接口定义外的额外属性
-let mySquare &#x3D; createSquare(&#123;height:100, width: 100,colour: &quot;red&quot;&#125;);
-&#x2F;&#x2F; 解决方案1,不适用 对象字面量,改写成对象 再作为参数传入
-let squareOptions &#x3D; &#123; colour: &quot;red&quot;, width: 100 &#125;;
-let mySquare &#x3D; createSquare(squareOptions);
-&#x2F;&#x2F; 解决方案2,在 interface SquareConfig 中增加 [propName: string]: any;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+let arr2: number[]&#x3D;[4,5,6];     &#x2F;&#x2F; array
+let arr3: Array&lt;number&gt;&#x3D;[7,8,9];&#x2F;&#x2F; array
+let arr4: (string | number)[]&#x3D;[7,8,9,&#39;a&#39;];&#x2F;&#x2F; array<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="接口继承"><a href="#接口继承" class="headerlink" title="接口继承"></a>接口继承</h2><p>类继承接口</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable&#123; &#x2F;&#x2F; 代表具有speak函数的对象
-    speak():void;
+<p><strong>元组</strong>: 表示 类型 和 数量 固定的 数组<br>与数组的区别: 每一项可以是不同类型, 有预定义的长度, </p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const animal:[string,number,boolean] &#x3D; [&#39;lzy&#39;,25,true];  &#x2F;&#x2F; tuple
+let lzy:[string,number] &#x3D; [&#39;lzy&#39;,5]; &#x2F;&#x2F; tuple
+&#x2F;&#x2F; 此处如果没定义类型，则在TS中下面两行会报错。因为类型
+lzy[0].length; &#x2F;&#x2F; OK
+lzy[1].toFixed(2); &#x2F;&#x2F; OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>枚举</strong>: 该数据类型的变量 只能为事先写好的几个类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 普通枚举
+enum Color &#123;
+    Red,&#x2F;&#x2F; 默认值为 0 
+    Yellow,&#x2F;&#x2F; 默认值为1
+    Blue&#x2F;&#x2F; 默认值为2
 &#125;
-interface Eatable&#123; &#x2F;&#x2F; 代表具有eat函数的对象
-    eat():void
+&#x2F;&#x2F; 常量枚举
+const enum Color2 &#123;
+    Red,&#x2F;&#x2F; 默认值为 0 
+    Yellow,&#x2F;&#x2F; 默认值为1
+    Blue&#x2F;&#x2F; 默认值为2
 &#125;
-&#x2F;&#x2F;一个类可以实现多个接口,继承后必须满足接口的条件(实现接口)
-class Person implements Speakable,Eatable&#123;
-    speak()&#123;
-        console.log(&#39;Person说话&#39;);
-    &#125;
-    eat()&#123;&#125;
+&#x2F;&#x2F; 常量枚举的变量名(如Red)会在编译时被完全删除,节省变量名开销,因为是常量,必然是固定值,调用这个固定值的地方会直接被替换为值
+
+let myColors &#x3D; [Colors.Red, Colors.Yellow, Colors.Blue];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>any</strong><br>任意类型,可以被赋值任何类型数据的类型</p>
+<p><strong>null</strong> <strong>undefined</strong><br>null 和 undefined 是其他类型的子类型,可以赋值给任意类型.<br>但,TS配置文件设置了strictNullChecks:true时,直接这样赋值会报错<br>null 和 undefined 可以相互赋值</p>
+<p><strong>void</strong><br>表示没有任何类型,当函数没有返回值时,被认为是void类型</p>
+<p><strong>never</strong><br>never 是其他类型的子类型,表示永远不会被执行到的值</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function error(message: string): never &#123;
+    throw new Error(message);
+&#125;
+function fn(x: number | string) &#123;
+  if (typeof x &#x3D;&#x3D;&#x3D; &#39;number&#39;) &#123;
+    &#x2F;&#x2F; x: number 类型
+  &#125; else if (typeof x &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
+    &#x2F;&#x2F; x: string 类型
+  &#125; else &#123;
+    &#x2F;&#x2F; x: never 类型
+    &#x2F;&#x2F; --strictNullChecks 模式下，这里的代码将不会被执行，x 无法被观察
+  &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>接口继承另一个接口</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable &#123;
-    speak(): void
-&#125;
-interface SpeakChinese extends Speakable &#123;
-    speakChinese(): void
-&#125;
-class Person implements SpeakChinese &#123;
-    speak() &#123;
-        console.log(&#39;Person&#39;)
+<p>never 和 void 的区别: void 可以是 null 或 undefined<br>拥有 never 返回值类型的函数无法正常返回，无法终止，或会抛出异常。</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function validateCheck (v:never) &#123;&#125;
+function test (stringOrNumber: string | number) &#123;
+    if(typeof stringOrNumber &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
+        return 
     &#125;
-    speakChinese() &#123;
-        console.log(&#39;speakChinese&#39;)
+    &#x2F;&#x2F; 报错number类型不能赋值给never
+    validateCheck(stringOrNumber)
+&#125;
+
+function validateCheck (v:never) &#123;&#125;
+function test (stringOrNumber: string | number) &#123;
+    if(typeof stringOrNumber &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
+        return 
+    &#125; if(typeof stringOrNumber &#x3D;&#x3D;&#x3D; &#39;number&#39;) &#123;
+        return
     &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    &#x2F;&#x2F; OK!
+    validateCheck(stringOrNumber)
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>接口继承多个接口</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Shape &#123;
-    color: string;
+<p><strong>symbol</strong><br>表示唯一不变的类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const sym1 &#x3D; Symbol(&#39;key&#39;);
+const sym2 &#x3D; Symbol(&#39;key&#39;);
+&#x2F;&#x2F; 报错:此条件将始终返回false
+console.log(sym1 &#x3D;&#x3D;&#x3D; sym2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用Symbol 需要 ES6 编译辅助库</p>
+<p><strong>bigint</strong><br>可以安全的 储存 和 操作 大整数</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const max &#x3D; Number.MAX_SAFE_INTEGER;&#x2F;&#x2F; 2**53-1
+console.log(max + 1 &#x3D;&#x3D;&#x3D; max + 2); &#x2F;&#x2F; true,因为溢出了
+
+const max:bigint &#x3D; BigInt(Number.MAX_SAFE_INTEGER);
+console.log(max + 1 &#x3D;&#x3D;&#x3D; max + 2); &#x2F;&#x2F; 报错,BigInt 不能直接 + number类型
+console.log(max + 1n &#x3D;&#x3D;&#x3D; max + 2n); &#x2F;&#x2F; 代表BigInt(1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用 BigInt 需要 ESNext 的编译辅助库<br>JS 原始数据类型 BigInt Number,ts 里的类型 bigint number</p>
+<h2 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h2><p>指 编程语言中 能自动推导出 值 的类型的能力,一般强类型语言才有<br>定义未赋值时,会推论为any类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let username2;
+username2 &#x3D; 25; &#x2F;&#x2F; 自动推理为number类型
+username2 &#x3D; &#39;lzy&#39;;&#x2F;&#x2F; string类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="包装对象"><a href="#包装对象" class="headerlink" title="包装对象"></a>包装对象</h2><p>JS有两类数据类型, 原始数据类型(null undefined boolean number string Symbol) 和 对象类型<br>所有原始数据类型都没有 属性 或 方法 可供使用,仅仅是储存一个数据.</p>
+<p>但字符串数据 却可以直接调用 splice等方法,<br>这是因为 当 调用 基本数据类型 的方法时, JS 会把 原始数据类型 强制性切换为 对象类型,<br>c# Java中都有这个概念,叫 <strong>自动装箱</strong>,</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let isOK: boolean &#x3D; true; &#x2F;&#x2F; 编译通过
+let isOK: boolean &#x3D; Boolean(1) &#x2F;&#x2F; 编译通过
+let isOK: boolean &#x3D; new Boolean(1); &#x2F;&#x2F; 编译失败 期望的 isOK 是一个原始数据类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型"></a>联合类型</h2><p>表示 取值可以时多种类型中的一种<br>未赋值时 联合类型 上只能访问 两个类型共有的 属性或方法</p>
+<pre class="line-numbers language-TS" data-language="TS"><code class="language-TS">let name:string | number &#x2F;&#x2F; 联合类型  
+console.log(name!.toString()); &#x2F;&#x2F; 公共方法
+name &#x3D; 10;
+console.log(name!.toFixed(2)); &#x2F;&#x2F; number方法
+name &#x3D; &#39;zf&#39;;
+console.log(name!.toLowerCase()); &#x2F;&#x2F; 字符串方法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h2><p>将联合类型的变量 指定为 更加具体的类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let name: string | number;
+console.log((name as string).length);
+console.log((name as boolean).length); &#x2F;&#x2F; 报错,不能指定为联合类型外的类型
+console.log((name as any as boolean).length); &#x2F;&#x2F; 双重断言,OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="字面量类型和类型字面量"><a href="#字面量类型和类型字面量" class="headerlink" title="字面量类型和类型字面量"></a>字面量类型和类型字面量</h2><p><strong>字面量类型</strong> 一个字面量就是一个类型,类型和值必须一致.</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const up:&#39;Up&#39; &#x3D; &#39;Up&#39; &#x2F;&#x2F; 这样写也是字面量类型，只不过无法复用
+type OneToFive &#x3D; 1 | 2 | 3 | 4 | 5;
+type Bool &#x3D; true | false;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>字面量类型本身并不是很实用，但是可以在一个联合类型中组合成一个强大的抽象</p>
+<p><strong>类型字面量</strong> 写法很像一个对象</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Person &#x3D; &#123;
+  name:string,
+  age:number
+&#125;;
+
+&#x2F;&#x2F; 注意写法: 不要和enum的写法搞混
+enum Color &#123;
+    Red,&#x2F;&#x2F; 默认值为 0 
+    Yellow,&#x2F;&#x2F; 默认值为1
+    Blue&#x2F;&#x2F; 默认值为2
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="TS函数"><a href="#TS函数" class="headerlink" title="TS函数"></a>TS函数</h2><p>函数的类型约束主要是 入参 和 返回值</p>
+<p>函数的声明方式有两种，function关键字来声明 表达式声明</p>
+<p>表达式声明时，如果把类型约束写在函数里，则变量类型是根据函数推导出来的类型。</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; function关键字声明 定义类型
+function hello(name:string):void &#123;
+    console.log(&#39;hello&#39;,name);
 &#125;
 
-interface PenStroke &#123;
-    penWidth: number;
+&#x2F;&#x2F; 表达式声明 定义类型
+type GetUsernameFunction &#x3D; (x:string,y:string)&#x3D;&gt;string;
+type GetUsernameFunction2 &#x3D; &#123;(x:string,y:string):string&#125;
+let getUsername:GetUsernameFunction &#x3D; 
+function(firstName,lastName)&#123;
+  return firstName + lastName;
 &#125;
+&#x2F;&#x2F; 表达式声明时，如果把类型约束写在函数里，则变量类型是根据函数推导出来的类型。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-interface Square extends Shape, PenStroke &#123;
-    sideLength: number;
+<p>支持 <strong>可选</strong> <strong>默认值</strong> <strong>剩余参数</strong> <strong>函数重载</strong> 四种写法</p>
+<p>注意<code>print(name:string = &#39;lzy&#39;,age?:number)</code> 可不传第二个参数，</p>
+<p>age的类型改成<code>age:number | undefined</code> 还是必须传第二个参数，只不过可以为undefined</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 默认参数,可选参数 和 ES6一样
+function print(name:string &#x3D; &#39;lzy&#39;,age?:number):void &#123;
+    console.log(name,age);
 &#125;
+&#x2F;&#x2F; 剩余参数
+const sum &#x3D; (...args: string[]): string &#x3D;&gt; &#123;
+    return args.reduce((memo, current) &#x3D;&gt; memo +&#x3D; current, &#39;&#39;)
+&#125;
+sum(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-let square &#x3D; &lt;Square&gt;&#123;&#125;; &#x2F;&#x2F; Square类型的对象
-square.color &#x3D; &quot;blue&quot;;
-square.sideLength &#x3D; 10;
-square.penWidth &#x3D; 5.0;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="接口约束-变量的值-为-函数类型"><a href="#接口约束-变量的值-为-函数类型" class="headerlink" title="接口约束 变量的值 为 函数类型"></a>接口约束 变量的值 为 函数类型</h2><p>约束 变量 的值为 特定类型函数</p>
-<p>对于约束 函数变量 的值时,值(函数) 的参数名不需要和接口中一致,<br><strong>只要求 对应位置上的参数类型是兼容的</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SearchFunc &#123;
-  (source: string, subString: string): boolean;
-&#125;
-let mySearch: SearchFunc;
-&#x2F;&#x2F; 下面的src sub 不指定类型也会根据function内进行类型推断
-mySearch &#x3D; function(src: string, sub: string): boolean &#123;
-  let result &#x3D; src.search(sub);
-  return result &gt; -1;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="接口约束-类的值-的定义"><a href="#接口约束-类的值-的定义" class="headerlink" title="接口约束 类的值 的定义"></a>接口约束 类的值 的定义</h2><p><strong>类 实现(implements) 接口,即完成 接口 对类的约束</strong></p>
-<p><strong>创建一个类可代表两个类型,静态部分的类型,实例部分的类型</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable &#123;
-    name: string;               &#x2F;&#x2F;约束具有某属性
-    speak(words: string): void  &#x2F;&#x2F;约束具有某方法 
-&#125;
-class Dog implements Speakable &#123;
-    name!: string;
-    speak(words:string) &#123;
-        console.log(words);
-    &#125;
-&#125;
-let dog &#x3D; new Dog();
-dog.speak(&#39;汪汪汪&#39;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>但上面的接口Speakable 只约束的是 类的定义(静态类型)</p>
-<h2 id="接口约束-变量的值-为特定-的构造函数-类"><a href="#接口约束-变量的值-为特定-的构造函数-类" class="headerlink" title="接口约束 变量的值 为特定 的构造函数(类)"></a>接口约束 变量的值 为特定 的构造函数(类)</h2><p><strong>不加new是约束变量为函数的,加new是约束变量为 特定(通过约束构造函数)类的</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface WithNameClass&#123;
-  new(name:string):Animal
-&#125;
-class Animal&#123;
-  constructor(public name:string)&#123;
+<p>注意: 函数的重载，无法用泛型替代。????????? 存疑???</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 函数重载
+&#x2F;&#x2F; TS中的函数重载,表现为 同一个函数提供多个函数类型定义
+&#x2F;&#x2F; Java中的重载,表现为 同名函数 参数不一样
+function toArray(value: number): number[];
+function toArray(value: string): string[];
+function toArray(value: string | number): string[] | number[] &#123;
+  &#x2F;&#x2F; 只有一个具体的实现
+  &#x2F;&#x2F; 此处返回值可不写 : string[] | number[] ，但入参必须能兼容上面两个重载。
+  if (typeof value &#x3D;&#x3D;&#x3D; &quot;string&quot;) &#123;
+    return value.split(&quot;&quot;);
+  &#125; else &#123;
+    return value.toString().split(&quot;&quot;).map(Number);
   &#125;
 &#125;
-&#x2F;&#x2F; 约束clazz这个对象的构造函数必须带name
-function createAnimal(clazz:WithNameClass,name:string)&#123;
-   return new clazz(name);
-&#125;
-let a &#x3D; createAnimal(Animal,&#39;zhufeng&#39;);
-console.log(a.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+let arr1 &#x3D; toArray(1);
+let arr2 &#x3D; toArray(&quot;2&quot;);
 
-<h2 id="接口约束-变量的值-为特定的-索引"><a href="#接口约束-变量的值-为特定的-索引" class="headerlink" title="接口约束 变量的值 为特定的 索引"></a>接口约束 变量的值 为特定的 索引</h2><p>对数组和对象进行约束</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 表示index必须为number,值必须为string
-interface UserInterface &#123;
-  [index:number]:string
+&#x2F;&#x2F; 上面的重载和这里一样的效果,那这样看重载好像也没什么用?
+function attr2(val: string|number): void &#123;
+    if (typeof val &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;
+        obj.name&#x3D;val;
+    &#125; else &#123;
+        obj.age&#x3D;val;
+    &#125;
 &#125;
-let arr:UserInterface &#x3D; [&#39;lzy1&#39;,&#39;lzy2&#39;];
-console.log(arr);
-&#x2F;&#x2F; 表示键必须是string,值必须是string
-interface UserInterface2 &#123;
-  [index:string]:string
-&#125;
-let obj:UserInterface2 &#x3D; &#123;name:&#39;lzy&#39;&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#x2F;&#x2F; 重载解决了下面这种情况
+&#x2F;&#x2F; 要求两个参数,要不都是string,要不都是string[]
+function attr3(a: string,b: string): void;
+function attr3(a: string[],b: string[]): void;
+function attr3(a: any,b: any): void &#123;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface NumberDictionary &#123;
-  [index: string]: number;
-  length: number;    &#x2F;&#x2F; 可以，length是number类型
-  name: string       &#x2F;&#x2F; 错误，&#96;name&#96;的类型与索引类型返回值的类型不匹配
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="typeof-keyof-函数this类型约束"><a href="#typeof-keyof-函数this类型约束" class="headerlink" title="typeof keyof 函数this类型约束"></a>typeof keyof 函数this类型约束</h2><p>TS中:</p>
+<p>typeof 取变量的类型</p>
+<p>keyof 取的是类型的key的集合</p>
+<p>this 可在函数的第一个参数处做类型约束</p>
+<blockquote>
+<p>注意: 如果 type 关键字后面的 typeof 会被视为 TS语法，具有获取 实例类型的功能，<br>或 getName(this: typeof person, key: PersonKey) 冒号后的typeof，也能被识别为TS<br>返回的是 类型本身<br>而语句中的 typeof 会被视为 js语法， 非获取类型的功能，而是返回类型字符串</p>
+</blockquote>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">const person &#x3D; &#123; name: &quot;lzy&quot;, age: 25 &#125;
+type Person &#x3D; typeof person;
+type PersonKey &#x3D; keyof Person;
 
-<h2 id="接口约束-变量的值-为-混合类型"><a href="#接口约束-变量的值-为-混合类型" class="headerlink" title="接口约束 变量的值 为 混合类型"></a>接口约束 变量的值 为 混合类型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束一个函数,同时这个函数还作为对象加了两个属性
-interface Counter &#123;
-    (start: number): string;
-    interval: number;
-    reset(): void;
+function getName(this: Person, key: PersonKey) &#123;
+  return this[key];
 &#125;
-function getCounter(): Counter &#123;
-    let counter &#x3D; &lt;Counter&gt;function (start: number) &#123; &#125;;
-    counter.interval &#x3D; 123;
-    counter.reset &#x3D; function () &#123; &#125;;
-    return counter;
-&#125;
+getName.call(person, &quot;name&quot;);
 
-let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+let a &#x3D; typeof person
+&#x2F;&#x2F; let a: &quot;string&quot; | &quot;number&quot; | &quot;bigint&quot; | &quot;boolean&quot; | &quot;symbol&quot; | &quot;undefined&quot; | &quot;object&quot; | &quot;function&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="其它笔记"><a href="#其它笔记" class="headerlink" title="其它笔记"></a>其它笔记</h2><p><code>?.</code> 是js语法，链运算判断符，这个值没有值就不继续取值了</p>
+<p><code>!</code> 是TS语法，非空断言，断言该值必不为空，无需进行null检测。</p>
+<p>注意: <code>ele?.style.color = &quot;red&quot;</code> 编译器会报错，</p>
+<p>因为 <code>ele?.</code> 真不存在时实际上是返回undefined，运行会报错。 </p>
+<p>类 也是一个 类型(就像symbol,number,boolean一样),</p>
+<p>构造完一个类后得到两个类型,一个构造函数类型 一个实例类型.</p>
+
                 
             </div>
             <hr/>
@@ -650,7 +701,7 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/09/23/typescript/3.ts-jie-kou/">https://github.com/LZY2333/LZY2333.github.io/2021/09/23/typescript/3.ts-jie-kou/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/11/14/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">https://github.com/LZY2333/LZY2333.github.io/2022/11/14/typescript/1.ts-ji-chu-lei-xing-he-han-shu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -859,17 +910,18 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/09/24/typescript/4.ts-fan-xing/">
+                <a href="/2022/11/14/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="4.TS泛型">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="1.TS基础类型和函数">
                         
-                        <span class="card-title">4.TS泛型</span>
+                        <span class="card-title">1.TS基础类型和函数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -879,9 +931,9 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-24
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -894,6 +946,7 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -912,13 +965,13 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/21/typescript/2.ts-lei/">
+                <a href="/2022/11/14/react/react2022/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="2.TS类">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">2.TS类</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -929,27 +982,15 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            罗紫宇
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/TypeScript/">
-                        <span class="chip bg-color">TypeScript</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -1094,7 +1135,7 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">123.5k</span>&nbsp;字
+                class="white-color">124.7k</span>&nbsp;字
             
             
             
