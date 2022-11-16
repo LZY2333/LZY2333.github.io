@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.3k
+                    6.4k
                 </div>
                 
 
@@ -849,8 +849,8 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <p>新旧vdom进行对比，更新节点，这个对比过程就是 DOM-Diff，</p>
 <p>先对父vdom进行对比，再处理其子节点，处理子节点时将用到 DOM-Diff。</p>
 <p><strong>DOM-Diff的根本目的是复用老真实dom,减少渲染消耗</strong></p>
-<p><strong>DOM-Diff算法是针对 新旧子节点数组 的对比算法</strong></p>
-<h4 id="当前节点对比无dom-diff"><a href="#当前节点对比无dom-diff" class="headerlink" title="当前节点对比无dom-diff"></a>当前节点对比无dom-diff</h4><p>父vdom或者说当前vdom的比较非常简单</p>
+<p><code>compareTwoVdom</code>, <code>updateChildren</code></p>
+<h4 id="当前节点对比"><a href="#当前节点对比" class="headerlink" title="当前节点对比"></a>当前节点对比</h4><p>父vdom或者说当前vdom的比较非常简单</p>
 <p><strong>当前新旧vdom type不同时会直接销毁并重新整个子孙分支</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 当前节点对比,不同的直接删除,或新增整个分支,不保留其子节点</span>
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">compareTwoVdom</span><span class="token punctuation">(</span><span class="token parameter">parentDOM<span class="token punctuation">,</span> oldVdom<span class="token punctuation">,</span> newVdom<span class="token punctuation">,</span> nextDOM</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -906,13 +906,12 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="子节点对比需要用到DOM-Diff"><a href="#子节点对比需要用到DOM-Diff" class="headerlink" title="子节点对比需要用到DOM-Diff"></a>子节点对比需要用到DOM-Diff</h4><p><strong>Key属性</strong>,每个子节点通过key属性是否相同,判断是否为同一节点,同一节点保留并复用旧真实dom.</p>
-<p><strong>为什么需要DOM-Diff</strong></p>
+<h4 id="子节点对比"><a href="#子节点对比" class="headerlink" title="子节点对比"></a>子节点对比</h4><p><strong>Key属性</strong>,每个子节点通过key属性是否相同,判断是否为同一节点,同一节点保留并复用旧真实dom.</p>
+<p><strong>为什么子节点对比这么复杂</strong></p>
 <p>因为孩子节点是数组类型,可能存在位置的变换,直接按位对比会有较大误差.</p>
 <p>例如 第一个子节点被删除时,后面依次补位.</p>
 <p>此时新旧节点对比,如果直接按位对比,本可复用的节点,被判定为无法复用,造成性能损耗.</p>
-<p><strong>DOM-Diff只考虑当前层,不考虑跨层移动</strong></p>
-<p><strong>DOM-Diff算法</strong></p>
+<p><strong>子节点对比</strong></p>
 <ol>
 <li><p>用map储存好oldVChildren, 然后依次一个个检查 newVChildren 数组中的元素, </p>
 </li>
@@ -1121,6 +1120,9 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="9-生命周期"><a href="#9-生命周期" class="headerlink" title="9. 生命周期"></a>9. 生命周期</h3><h3 id="10-Hooks"><a href="#10-Hooks" class="headerlink" title="10. Hooks"></a>10. Hooks</h3><p>见另一文章</p>
+<p><strong>React每次更新都是从根节点开始更新的,全量更新,全量DOM-Diff</strong></p>
+<p>因为React没有依赖收集,也没有watcher对组件数据进行监控,无法精确定位到组件</p>
+<p><strong>类组件 函数组件的触发更新在scheduleUpdate</strong></p>
 <h3 id="11-router原理"><a href="#11-router原理" class="headerlink" title="11. router原理"></a>11. router原理</h3><h3 id="pureComponent原理"><a href="#pureComponent原理" class="headerlink" title="pureComponent原理"></a>pureComponent原理</h3><p>如果一个组件仅依赖props 和 states进行更新， </p>
 <p>则只需要判断 props 和 states 是否改变来决定该组件是否需要重新渲染，</p>
 <p>如果没变则不进行更新渲染，以减少渲染次数。</p>
@@ -1623,7 +1625,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">131.1k</span>&nbsp;字
+                class="white-color">131.2k</span>&nbsp;字
             
             
             
