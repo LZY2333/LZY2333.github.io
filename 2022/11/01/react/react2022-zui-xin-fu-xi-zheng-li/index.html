@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.1k
+                    6.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    26 分
+                    27 分
                 </div>
                 
 
@@ -987,11 +987,66 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="8-context穿透传值原理"><a href="#8-context穿透传值原理" class="headerlink" title="8. context穿透传值原理"></a>8. context穿透传值原理</h3><p><strong>就是provider和consumer指向同一个对象,从这个对象上拿值</strong></p>
+<h3 id="8-context穿透传值原理"><a href="#8-context穿透传值原理" class="headerlink" title="8. context穿透传值原理"></a>8. context穿透传值原理</h3><h4 id="context使用方式"><a href="#context使用方式" class="headerlink" title="context使用方式"></a>context使用方式</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// * 1.这里必须这样创建context</span>
+<span class="token keyword">let</span> ThemeContext <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">createContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token punctuation">&#123;</span> Provider<span class="token punctuation">,</span> Consumer <span class="token punctuation">&#125;</span> <span class="token operator">=</span> ThemeContext<span class="token punctuation">;</span>
+
+<span class="token keyword">let</span> style <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">margin</span><span class="token operator">:</span> <span class="token string">'5px'</span><span class="token punctuation">,</span> <span class="token literal-property property">padding</span><span class="token operator">:</span> <span class="token string">'5px'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+        <span class="token comment">// * 必须写 &lt;Consumer>&#123; (接受context)=>&#123;&#125; &#125;&lt;/Consumer></span>
+        <span class="token operator">&lt;</span>Consumer<span class="token operator">></span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token comment">// 额外提一点,注意这里是括号,不是大括号,用大括号得写return,括号可以省略return</span>
+                <span class="token punctuation">(</span><span class="token parameter">contextValue</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>
+                    <span class="token operator">&lt;</span>div style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token operator">...</span>style<span class="token punctuation">,</span> <span class="token literal-property property">border</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">5px solid </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>contextValue<span class="token punctuation">.</span>color<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">></span> Header <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+                <span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>Consumer<span class="token operator">></span>
+    <span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// * 2. 类组件这里必须写 static contextType = 创建的那个context对象</span>
+    <span class="token keyword">static</span> contextType <span class="token operator">=</span> ThemeContext 
+    <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>
+            <span class="token comment">// 类组件这里必须 从 this.context 读provider传递的值</span>
+            <span class="token operator">&lt;</span>div style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token operator">...</span>style<span class="token punctuation">,</span> <span class="token literal-property property">border</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">5px solid </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>context<span class="token punctuation">.</span>color<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">></span> Main <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Page</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">'black'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function-variable function">changeColor</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">color</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> color <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> contextValue <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>color<span class="token punctuation">,</span> <span class="token literal-property property">changeColor</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>changeColor <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>
+            <span class="token comment">// * 3. 这里必须传值写value</span>
+            <span class="token operator">&lt;</span>Provider value<span class="token operator">=</span><span class="token punctuation">&#123;</span>contextValue<span class="token punctuation">&#125;</span><span class="token operator">></span> 
+                <span class="token operator">&lt;</span>div style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token operator">...</span>style<span class="token punctuation">,</span> <span class="token literal-property property">width</span><span class="token operator">:</span> <span class="token string">'250px'</span><span class="token punctuation">,</span> <span class="token literal-property property">border</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">5px solid </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>color<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">></span>
+                    Page <span class="token operator">&lt;</span>Header <span class="token operator">/</span><span class="token operator">></span> <span class="token operator">&lt;</span>Main <span class="token operator">/</span><span class="token operator">></span>
+                <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>Provider <span class="token operator">></span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h4 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h4><p><strong>就是provider和consumer指向同一个对象,从这个对象上拿值</strong></p>
+<p><strong>渲染 context provider consumer 就是渲染其 子vdom，就像函数组件，类组件一样。</strong></p>
 <p><code>react.createContext()</code>,返回一个对象context,内含provider,consumer,这两个对象,又循环引用context</p>
-<p><strong>渲染</strong><br>当<code>createDom()</code> 创建DOM节点时发现类型为provider,就把provider接受的props,绑在<code>provider._contexts._currentValue</code>身上<br>当<code>createDom()</code> 发现当前节点类型为consumer,因为两者的<code>_contexts</code>指向一个对象,就从其<code>consumer._contexts._currentValue</code>身上读值<br>函数组件,将读到的值传给 子函数组件 执行返回新vdom,再递归<code>createDom()</code></p>
+<p><strong>渲染</strong><br>当<code>createDom()</code> 创建DOM节点时发现类型为provider,就把provider接受的props,绑在<code>provider._contexts._currentValue</code>身上</p>
+<p>当<code>createDom()</code> 发现当前节点类型为consumer,因为两者的<code>_contexts</code>指向一个对象,就从其<code>consumer._contexts._currentValue</code>身上读value</p>
+<p>函数组件,将读到的值传给 子函数组件 执行返回新vdom,再递归<code>createDom()</code></p>
 <p>类组件,在创建 实例的时候,拿到类上的static属性赋给实例,<code>classInstance.context = ClassComponent.contextType._currentValue;</code></p>
-<p><strong>更新</strong><br>新旧vdom 同type 进入<code>updateElement</code>,判断vdom类型为<code>provider</code>和<code>consumer</code>时,<br><code>provider</code> 用新props的value,更新context对象,并继续<code>compareTwoVdom</code>其子组件<br><code>consumer</code> 从<code>_context._currentValue</code>,拿到属性,调用子函数,返回新vdom,并递归<code>compareTwoVdom</code></p>
+<p><strong>更新</strong></p>
+<p>新旧vdom 同type 进入<code>updateElement</code>,判断vdom类型为<code>provider</code>和<code>consumer</code>时,</p>
+<p><code>provider</code> 用新props的value,更新context对象,并继续<code>compareTwoVdom</code>其子组件</p>
+<p><code>consumer</code> 从<code>_context._currentValue</code>,拿到属性,调用子函数,返回新vdom,并递归<code>compareTwoVdom</code></p>
 <p>类组件,<code>forceUpdate()</code>内<code>this.context = this.constructor.contextType._currentValue;</code></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// react.createContext()</span>
 <span class="token keyword">function</span> <span class="token function">createContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1059,62 +1114,46 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>currentDOM<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token keyword">let</span> parentDOM <span class="token operator">=</span> currentDOM<span class="token punctuation">.</span>parentNode<span class="token punctuation">;</span>
     <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> type<span class="token punctuation">,</span> props <span class="token punctuation">&#125;</span> <span class="token operator">=</span> newVdom<span class="token punctuation">;</span>
-    <span class="token keyword">let</span> context <span class="token operator">=</span> type<span class="token punctuation">.</span>_context<span class="token punctuation">;</span> <span class="token comment">// 从_context._currentValue,拿到属性,调用子函数</span>
+    <span class="token keyword">let</span> context <span class="token operator">=</span> type<span class="token punctuation">.</span>_context<span class="token punctuation">;</span> <span class="token comment">// 从_context._currentValue,拿到value,调用子函数</span>
     <span class="token keyword">let</span> newRenderVdom <span class="token operator">=</span> props<span class="token punctuation">.</span><span class="token function">children</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>_currentValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">compareTwoVdom</span><span class="token punctuation">(</span>parentDOM<span class="token punctuation">,</span> oldVdom<span class="token punctuation">.</span>oldRenderVdom<span class="token punctuation">,</span> newRenderVdom<span class="token punctuation">)</span><span class="token punctuation">;</span>
     newVdom<span class="token punctuation">.</span>oldRenderVdom <span class="token operator">=</span> newRenderVdom<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>context使用方式</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// * 1.这里必须这样创建context</span>
-<span class="token keyword">let</span> ThemeContext <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">createContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> <span class="token punctuation">&#123;</span> Provider<span class="token punctuation">,</span> Consumer <span class="token punctuation">&#125;</span> <span class="token operator">=</span> ThemeContext<span class="token punctuation">;</span>
-
-<span class="token keyword">let</span> style <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">margin</span><span class="token operator">:</span> <span class="token string">'5px'</span><span class="token punctuation">,</span> <span class="token literal-property property">padding</span><span class="token operator">:</span> <span class="token string">'5px'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">function</span> <span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token punctuation">(</span>
-        <span class="token comment">// * 必须写 &lt;Consumer>&#123; (接受context)=>&#123;&#125; &#125;&lt;/Consumer></span>
-        <span class="token operator">&lt;</span>Consumer<span class="token operator">></span>
-            <span class="token punctuation">&#123;</span>
-                <span class="token comment">// 额外提一点,注意这里是括号,不是大括号,用大括号得写return,括号可以省略return</span>
-                <span class="token punctuation">(</span><span class="token parameter">contextValue</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>
-                    <span class="token operator">&lt;</span>div style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token operator">...</span>style<span class="token punctuation">,</span> <span class="token literal-property property">border</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">5px solid </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>contextValue<span class="token punctuation">.</span>color<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">></span> Header <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
-                <span class="token punctuation">)</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>Consumer<span class="token operator">></span>
-    <span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// * 2. 类组件这里必须写 static contextType = 创建的那个context对象</span>
-    <span class="token keyword">static</span> contextType <span class="token operator">=</span> ThemeContext 
-    <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>
-            <span class="token comment">// 类组件这里必须 从 this.context 读provider传递的值</span>
-            <span class="token operator">&lt;</span>div style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token operator">...</span>style<span class="token punctuation">,</span> <span class="token literal-property property">border</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">5px solid </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>context<span class="token punctuation">.</span>color<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">></span> Main <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
-        <span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span>
+<h3 id="9-生命周期"><a href="#9-生命周期" class="headerlink" title="9. 生命周期"></a>9. 生命周期</h3><h3 id="10-Hooks"><a href="#10-Hooks" class="headerlink" title="10. Hooks"></a>10. Hooks</h3><p>见另一文章</p>
+<h3 id="11-router原理"><a href="#11-router原理" class="headerlink" title="11. router原理"></a>11. router原理</h3><h3 id="pureComponent原理"><a href="#pureComponent原理" class="headerlink" title="pureComponent原理"></a>pureComponent原理</h3><p>如果一个组件仅依赖props 和 states进行更新， </p>
+<p>则只需要判断 props 和 states 是否改变来决定该组件是否需要重新渲染，</p>
+<p>如果没变则不进行更新渲染，以减少渲染次数。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 注意，继承了 PureComponent 的 类组件，重新shouldComponentUpdate方法的话，会覆盖此处。</span>
+<span class="token comment">// 想相当于自定义了更新规则。</span>
+<span class="token keyword">class</span> <span class="token class-name">PureComponent</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">shouldComponentUpdate</span><span class="token punctuation">(</span><span class="token parameter">newProps<span class="token punctuation">,</span> nextState</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token operator">!</span><span class="token function">shallowEqual</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">,</span> newProps<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token operator">!</span><span class="token function">shallowEqual</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">,</span> nextState<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 
-<span class="token keyword">class</span> <span class="token class-name">Page</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">super</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">'black'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">shallowEqual</span><span class="token punctuation">(</span><span class="token parameter">obj1<span class="token punctuation">,</span> obj2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>obj1 <span class="token operator">===</span> obj2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> obj1 <span class="token operator">!==</span> <span class="token string">'object'</span> <span class="token operator">||</span> obj1 <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> <span class="token keyword">typeof</span> obj2 <span class="token operator">!==</span> <span class="token string">'object'</span> <span class="token operator">||</span> obj2 <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">let</span> keys1 <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>obj1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> keys2 <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>obj2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>keys1<span class="token punctuation">.</span>length <span class="token operator">!==</span> keys2<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> key <span class="token keyword">of</span> keys1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>obj2<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token operator">||</span> obj1<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">!==</span> obj2<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token function-variable function">changeColor</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">color</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> color <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-    <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> contextValue <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>color<span class="token punctuation">,</span> <span class="token literal-property property">changeColor</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>changeColor <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>
-            <span class="token comment">// * 3. 这里必须传值写value</span>
-            <span class="token operator">&lt;</span>Provider value<span class="token operator">=</span><span class="token punctuation">&#123;</span>contextValue<span class="token punctuation">&#125;</span><span class="token operator">></span> 
-                <span class="token operator">&lt;</span>div style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token operator">...</span>style<span class="token punctuation">,</span> <span class="token literal-property property">width</span><span class="token operator">:</span> <span class="token string">'250px'</span><span class="token punctuation">,</span> <span class="token literal-property property">border</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">5px solid </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>color<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">></span>
-                    Page <span class="token operator">&lt;</span>Header <span class="token operator">/</span><span class="token operator">></span> <span class="token operator">&lt;</span>Main <span class="token operator">/</span><span class="token operator">></span>
-                <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
-            <span class="token operator">&lt;</span><span class="token operator">/</span>Provider <span class="token operator">></span>
-        <span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//obj1=&#123;home:&#123;name:'bj'&#125;&#125; obj2=&#123;home:&#123;name:'bj'&#125;&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="9-router原理"><a href="#9-router原理" class="headerlink" title="9. router原理"></a>9. router原理</h3><h3 id="10-redux原理"><a href="#10-redux原理" class="headerlink" title="10. redux原理"></a>10. redux原理</h3>
+<h3 id="12-redux原理"><a href="#12-redux原理" class="headerlink" title="12. redux原理"></a>12. redux原理</h3>
                 
             </div>
             <hr/>
@@ -1584,7 +1623,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">130.7k</span>&nbsp;字
+                class="white-color">131.1k</span>&nbsp;字
             
             
             

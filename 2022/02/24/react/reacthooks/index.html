@@ -446,54 +446,59 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h1><p><strong>什么是hooks</strong></p>
-<p>Hooks直译为钩子，通常指，系统运行到某一时期时，会调用被注册到该时机的回调函数</p>
+                <h1 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h1><p>Hooks 让函数式组件拥有了 生命周期、状态管理、逻辑复用等,</p>
+<p>所有作为组件应当具备的能力,并避开了class式的写法。</p>
+<p><strong>什么是hooks</strong></p>
+<p>Hooks直译为钩子,通常指,系统运行到某一时期时,会调用被注册到该时机的回调函数</p>
 <p>如: <code>window.onload</code> 或 <code>addEventListener</code>注册的回调函数</p>
-<p>react中的hooks 以’use’ 开头,让函数式组件拥有了 生命周期、状态管理、逻辑复用等</p>
-<p>所有作为组件需要具备的能力，避开了class式的写法。</p>
 <p><strong>hooks规范</strong></p>
 <p><code>use</code> + 大写字母的单词就是hooks,只能在react函数组件中调用hook,</p>
 <p>只能在最顶层调用hooks,不能在 条件语句 / 嵌套函数 调用</p>
 <p><strong>为什么需要hooks</strong></p>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA">大佬的reactHooks源码解析，存一下回头看</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA">大佬的reactHooks源码解析,存一下回头看</a></p>
+<p><a target="_blank" rel="noopener" href="https://react.docschina.org/docs/hooks-intro.html#motivation">React官网-为什么我们创造了Hooks</a></p>
 <h2 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h2><p>给函数组件添加 重复渲染时可读取的 内部state</p>
-<p>参数:   初始state<br>返回值: 当前状态 和 一个用于更新它的函数。(类似this.setState，但不会合并新旧state)</p>
+<p>参数:   初始state<br>返回值: 当前状态 和 一个用于更新它的函数。(类似this.setState,但不会合并新旧state)</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'./react'</span><span class="token punctuation">;</span>
 
 <span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token comment">// 初始化的时候number就是0,后续更新渲染,useState返回的就是setNumber改变后的值</span>
     <span class="token keyword">const</span> <span class="token punctuation">[</span>number<span class="token punctuation">,</span>setNumber<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 重新渲染的时候返回的number不一样了</span>
-
-    <span class="token keyword">let</span> <span class="token function-variable function">handleClick</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">setNumber</span><span class="token punctuation">(</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">// setNumber调用之后会重新渲染，重新渲染的时候</span>
+    <span class="token keyword">let</span> <span class="token function-variable function">handleClick</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">setNumber</span><span class="token punctuation">(</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">// setNumber调用之后会重新渲染,重新渲染的时候</span>
     <span class="token keyword">return</span> <span class="token punctuation">(</span>
         <span class="token operator">&lt;</span>div<span class="token operator">></span>
             <span class="token operator">&lt;</span>p<span class="token operator">></span><span class="token punctuation">&#123;</span>number<span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
             <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">&#123;</span>handleClick<span class="token punctuation">&#125;</span><span class="token operator">></span><span class="token operator">+</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
         <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
     <span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>简单实现</strong>(实际上是用了fiber，本质上是链表，非数组储存，且更复杂)</p>
-<p>一个 __全局数组__，一个 __全局下标__，初始为0.</p>
-<p>每次 useState，数据都放在 <strong>全局下标</strong> 对应的 全局数组位置中， 最后 <strong>全局下标</strong> +1.</p>
-<p>第一个 useState 的数据放在 0的位置 ,第二个useState 放在 1的位置.</p>
-<p>更新渲染的时候,再次将 <strong>全局下标</strong> 置为0,这样 第一个 useState执行 又会读取到 0位置的数据,并返回.</p>
-<p>而 第二个 useState 执行时,又读到了 1位置的数据.</p>
-<p><strong>这也是为什么react 不允许 有条件的调用useState,必须保证每次useState顺序相同</strong></p>
-<p>每次 useState，返回的函数 都会 保存 <strong>当前下标</strong>, 调用该函数的时候,修改当前下标对应的数据,再进行更新.</p>
-<p><strong>useState只会覆盖原值，不会合并原值</strong></p>
+<h3 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h3><p>(实际上是用了fiber,本质上是链表,非数组储存,且更复杂)</p>
+<p>一个 <strong>全局数组hookStates</strong> 一个 <strong>全局下标hookIndex</strong> 初始为0.</p>
+<p>初始化时,</p>
+<p>整个应用的 <code>useState</code> 随着组件初始化被依次调用,</p>
+<p>每个<code>useState</code> 将数据都放在 <code>hookIndex</code> 对应的 <code>hookStates[hookIndex]</code>中, 最后 <code>hookIndex++</code>.</p>
+<p>也就是说 <code>hookStates[0]</code> 对应第一个 <code>useState</code>, <code>hookStates[1]</code> 对应第二个 <code>useState</code>,以此类推.</p>
+<p>并且，每个 <code>useState</code> 记录下 <code>currentIndex = hookIndex</code>, 也就是自己数据存放的位置，</p>
+<p>当，某个 <code>useState</code> 的 <code>setState</code> 被调用时就修改 <code>hookStates[currentIndex]</code> 的数据，并触发更新.</p>
+<p>更新时，</p>
+<p>再次将 全局变量 <code>hookIndex</code> 置为 0, </p>
+<p>这样 第一个 useState 返回 <code>hookStates[hookIndex]</code>，并最后 <code>hookIndex++</code>.</p>
+<p>而 第二个 useState 执行时,又能再次读到 1 位置的数据，并返回.</p>
+<p><strong>这也是为什么react 不允许 条件调用useState,必须保证每次useState顺序相同</strong></p>
+<p><strong>useState只会覆盖原值,不会合并原值</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> hookStates <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 一个全局对象存放了所有函数组件的 useState</span>
 <span class="token keyword">let</span> hookIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token keyword">let</span> scheduleUpdate<span class="token punctuation">;</span>
 <span class="token keyword">function</span> <span class="token function">render</span><span class="token punctuation">(</span><span class="token parameter">vdom<span class="token punctuation">,</span> container</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token function">mount</span><span class="token punctuation">(</span>vdom<span class="token punctuation">,</span>container<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function-variable function">scheduleUpdate</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
-        hookIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// 把索引置为0，再次渲染，按照渲染顺序，每个函数组件又会从useState拿到自己的最新state</span>
-        <span class="token function">compareTwoVdom</span><span class="token punctuation">(</span>container<span class="token punctuation">,</span>vdom<span class="token punctuation">,</span>vdom<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 同一个vdom进行比较，但是其子节点state已不一样</span>
+        hookIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// 把索引置为0,再次渲染,按照渲染顺序,每个函数组件又会从useState拿到自己的最新state</span>
+        <span class="token function">compareTwoVdom</span><span class="token punctuation">(</span>container<span class="token punctuation">,</span>vdom<span class="token punctuation">,</span>vdom<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 同一个vdom进行比较,但是其子节点state已不一样</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token parameter">initialState</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token comment">// 初次渲染的时候，返回初始值，和 setState。再次渲染函数组件时 还会调用useState，返回的就是 最新state</span>
+    <span class="token comment">// 初次渲染的时候,返回初始值,和 setState。再次渲染函数组件时 还会调用useState,返回的就是 最新state</span>
     hookStates<span class="token punctuation">[</span>hookIndex<span class="token punctuation">]</span> <span class="token operator">=</span> hookStates<span class="token punctuation">[</span>hookIndex<span class="token punctuation">]</span><span class="token operator">||</span>initialState<span class="token punctuation">;</span>
     <span class="token keyword">let</span> currentIndex <span class="token operator">=</span> hookIndex<span class="token punctuation">;</span>
     <span class="token keyword">function</span> <span class="token function">setState</span><span class="token punctuation">(</span><span class="token parameter">newState</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -502,8 +507,8 @@
         <span class="token function">scheduleUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token punctuation">[</span>hookStates<span class="token punctuation">[</span>hookIndex<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span>setState<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token comment">// 每存放完一个state，hookIndex+1，按渲染顺序放好 每个函数组件的state</span>
-    <span class="token comment">// 更新渲染的时候每个函数组件都会 再次依次按顺序调用 useState，hookIndex按老顺序++</span>
+    <span class="token comment">// 每存放完一个state,hookIndex+1,按渲染顺序放好 每个函数组件的state</span>
+    <span class="token comment">// 更新渲染的时候每个函数组件都会 再次依次按顺序调用 useState,hookIndex按老顺序++</span>
     <span class="token comment">// 每个函数组件都会拿到自己那份 最新的hookStates[hookIndex]值 并返回</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
@@ -516,8 +521,8 @@
     <span class="token function">setUser</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>这里是怕对象没改变导致UI不更新，而下面两个是怕对象改变导致UI更新</p>
-<h2 id="useCallback-useMemo"><a href="#useCallback-useMemo" class="headerlink" title="useCallback + useMemo"></a>useCallback + useMemo</h2><p>把内联回调函数及依赖项数组作为参数传入 useCallback，它将返回该回调函数的 memoized 版本，依赖项改变时返回新对象。<br>把创建函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算</p>
+<p>这里是怕对象没改变导致UI不更新,而下面两个是怕对象改变导致UI更新</p>
+<h2 id="useCallback-useMemo"><a href="#useCallback-useMemo" class="headerlink" title="useCallback + useMemo"></a>useCallback + useMemo</h2><p>把内联回调函数及依赖项数组作为参数传入 useCallback,它将返回该回调函数的 memoized 版本,依赖项改变时返回新对象。<br>把创建函数和依赖项数组作为参数传入 useMemo,它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
 
 <span class="token keyword">let</span>  <span class="token function-variable function">Child</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">&#123;</span>data<span class="token punctuation">,</span>handleClick<span class="token punctuation">&#125;</span></span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
@@ -608,7 +613,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
             <span class="token keyword">let</span> newState <span class="token operator">=</span> <span class="token function">reducer</span><span class="token punctuation">(</span>oldState<span class="token punctuation">,</span> action<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 给reducer传入action</span>
             hookStates<span class="token punctuation">[</span>currentIndex<span class="token punctuation">]</span> <span class="token operator">=</span> newState<span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">//判断action是不是函数，如果是传入老状态，计算新状态</span>
+            <span class="token comment">//判断action是不是函数,如果是传入老状态,计算新状态</span>
             <span class="token keyword">let</span> newState <span class="token operator">=</span> <span class="token keyword">typeof</span> action <span class="token operator">===</span> <span class="token string">'function'</span> <span class="token operator">?</span> <span class="token function">action</span><span class="token punctuation">(</span>oldState<span class="token punctuation">)</span> <span class="token operator">:</span> action<span class="token punctuation">;</span>
             hookStates<span class="token punctuation">[</span>currentIndex<span class="token punctuation">]</span> <span class="token operator">=</span> newState<span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
@@ -657,7 +662,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
 
 <h2 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h2><p><code>useEffect</code> 操作副作用,其接收的函数会在组件渲染完成后执行.</p>
 <p>在函数组件主体内（这里指在 React 渲染阶段）改变 DOM、添加订阅、设置定时器、记录日志</p>
-<p>以及执行其他包含副作用的操作都是不被允许的，因为这可能会产生莫名其妙的 bug 并破坏 UI 的一致性.</p>
+<p>以及执行其他包含副作用的操作都是不被允许的,因为这可能会产生莫名其妙的 bug 并破坏 UI 的一致性.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> <span class="token punctuation">[</span>number<span class="token punctuation">,</span> setNumber<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     React<span class="token punctuation">.</span><span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
@@ -747,7 +752,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
     <span class="token keyword">return</span> hookStates<span class="token punctuation">[</span>hookIndex<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="forwardRef-useImperativeHandle"><a href="#forwardRef-useImperativeHandle" class="headerlink" title="forwardRef + useImperativeHandle"></a>forwardRef + useImperativeHandle</h2><p><code>useRef</code>: 获取原生DOM,或组件<br><code>forwardRef</code>: 转发父组件的ref,子组件须接受props和ref作为参数,子组件可将ref挂在到自身某个dom元素上<br><code>useImperativeHandle</code>:在函数式组件中，用于定义暴露给父组件的ref方法。</p>
+<h2 id="forwardRef-useImperativeHandle"><a href="#forwardRef-useImperativeHandle" class="headerlink" title="forwardRef + useImperativeHandle"></a>forwardRef + useImperativeHandle</h2><p><code>useRef</code>: 获取原生DOM,或组件<br><code>forwardRef</code>: 转发父组件的ref,子组件须接受props和ref作为参数,子组件可将ref挂在到自身某个dom元素上<br><code>useImperativeHandle</code>:在函数式组件中,用于定义暴露给父组件的ref方法。</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Child</span><span class="token punctuation">(</span><span class="token parameter">props<span class="token punctuation">,</span> ref</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> inputRef <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useRef</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     React<span class="token punctuation">.</span><span class="token function">useImperativeHandle</span><span class="token punctuation">(</span>ref<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>
@@ -1256,7 +1261,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">130.7k</span>&nbsp;字
+                class="white-color">131.1k</span>&nbsp;字
             
             
             
