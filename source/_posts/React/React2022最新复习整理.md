@@ -692,23 +692,87 @@ function updateChildren(parentDOM, oldVChildren, newVChildren) {
 
 ### 8. context穿透传值原理
 
+
+#### context使用方式
+
+```js
+// * 1.这里必须这样创建context
+let ThemeContext = React.createContext();
+const { Provider, Consumer } = ThemeContext;
+
+let style = { margin: '5px', padding: '5px' };
+function Header() {
+    return (
+        // * 必须写 <Consumer>{ (接受context)=>{} }</Consumer>
+        <Consumer>
+            {
+                // 额外提一点,注意这里是括号,不是大括号,用大括号得写return,括号可以省略return
+                (contextValue) => (
+                    <div style={{ ...style, border: `5px solid ${contextValue.color}` }}> Header </div>
+                )
+            }
+        </Consumer>
+    )
+}
+class Main extends React.Component {
+    // * 2. 类组件这里必须写 static contextType = 创建的那个context对象
+    static contextType = ThemeContext 
+    render() {
+        return (
+            // 类组件这里必须 从 this.context 读provider传递的值
+            <div style={{ ...style, border: `5px solid ${this.context.color}` }}> Main </div>
+        )
+    }
+}
+
+class Page extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { color: 'black' };
+    }
+    changeColor = (color) => { this.setState({ color }); }
+    render() {
+        let contextValue = { color: this.state.color, changeColor: this.changeColor };
+        return (
+            // * 3. 这里必须传值写value
+            <Provider value={contextValue}> 
+                <div style={{ ...style, width: '250px', border: `5px solid ${this.state.color}` }}>
+                    Page <Header /> <Main />
+                </div>
+            </Provider >
+        )
+    }
+}
+```
+
+
+#### 原理理解
+
 __就是provider和consumer指向同一个对象,从这个对象上拿值__
+
+__渲染 context provider consumer 就是渲染其 子vdom，就像函数组件，类组件一样。__
 
 `react.createContext()`,返回一个对象context,内含provider,consumer,这两个对象,又循环引用context
 
 __渲染__
 当`createDom()` 创建DOM节点时发现类型为provider,就把provider接受的props,绑在`provider._contexts._currentValue`身上
-当`createDom()` 发现当前节点类型为consumer,因为两者的`_contexts`指向一个对象,就从其`consumer._contexts._currentValue`身上读值
+
+当`createDom()` 发现当前节点类型为consumer,因为两者的`_contexts`指向一个对象,就从其`consumer._contexts._currentValue`身上读value
+
 函数组件,将读到的值传给 子函数组件 执行返回新vdom,再递归`createDom()`
 
 类组件,在创建 实例的时候,拿到类上的static属性赋给实例,`classInstance.context = ClassComponent.contextType._currentValue;`
 
 __更新__
+
 新旧vdom 同type 进入`updateElement`,判断vdom类型为`provider`和`consumer`时,
+
 `provider` 用新props的value,更新context对象,并继续`compareTwoVdom`其子组件
+
 `consumer` 从`_context._currentValue`,拿到属性,调用子函数,返回新vdom,并递归`compareTwoVdom`
 
 类组件,`forceUpdate()`内`this.context = this.constructor.contextType._currentValue;`
+
 ```js
 // react.createContext()
 function createContext() {
@@ -778,66 +842,60 @@ function updateContextComponent(oldVdom, newVdom) {
     if (!currentDOM) return;
     let parentDOM = currentDOM.parentNode;
     let { type, props } = newVdom;
-    let context = type._context; // 从_context._currentValue,拿到属性,调用子函数
+    let context = type._context; // 从_context._currentValue,拿到value,调用子函数
     let newRenderVdom = props.children(context._currentValue);
     compareTwoVdom(parentDOM, oldVdom.oldRenderVdom, newRenderVdom);
     newVdom.oldRenderVdom = newRenderVdom;
 }
 ```
 
-__context使用方式__
+### 9. 生命周期
+
+### 10. Hooks
+
+见另一文章
+
+### 11. router原理
+
+
+
+### pureComponent原理
+
+如果一个组件仅依赖props 和 states进行更新， 
+
+则只需要判断 props 和 states 是否改变来决定该组件是否需要重新渲染，
+
+如果没变则不进行更新渲染，以减少渲染次数。
+
 ```js
-// * 1.这里必须这样创建context
-let ThemeContext = React.createContext();
-const { Provider, Consumer } = ThemeContext;
-
-let style = { margin: '5px', padding: '5px' };
-function Header() {
-    return (
-        // * 必须写 <Consumer>{ (接受context)=>{} }</Consumer>
-        <Consumer>
-            {
-                // 额外提一点,注意这里是括号,不是大括号,用大括号得写return,括号可以省略return
-                (contextValue) => (
-                    <div style={{ ...style, border: `5px solid ${contextValue.color}` }}> Header </div>
-                )
-            }
-        </Consumer>
-    )
-}
-class Main extends React.Component {
-    // * 2. 类组件这里必须写 static contextType = 创建的那个context对象
-    static contextType = ThemeContext 
-    render() {
-        return (
-            // 类组件这里必须 从 this.context 读provider传递的值
-            <div style={{ ...style, border: `5px solid ${this.context.color}` }}> Main </div>
-        )
-    }
+// 注意，继承了 PureComponent 的 类组件，重新shouldComponentUpdate方法的话，会覆盖此处。
+// 想相当于自定义了更新规则。
+class PureComponent extends Component {
+  shouldComponentUpdate(newProps, nextState) {
+    return !shallowEqual(this.props, newProps) || !shallowEqual(this.state, nextState)
+  }
 }
 
-class Page extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { color: 'black' };
+export function shallowEqual(obj1, obj2) {
+  if (obj1 === obj2) {
+    return true;
+  }
+  if (typeof obj1 !== 'object' || obj1 === null || typeof obj2 !== 'object' || obj2 === null) {
+    return false;
+  }
+  let keys1 = Object.keys(obj1);
+  let keys2 = Object.keys(obj2);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (let key of keys1) {
+    if (!obj2.hasOwnProperty(key) || obj1[key] !== obj2[key]) {
+      return false;
     }
-    changeColor = (color) => { this.setState({ color }); }
-    render() {
-        let contextValue = { color: this.state.color, changeColor: this.changeColor };
-        return (
-            // * 3. 这里必须传值写value
-            <Provider value={contextValue}> 
-                <div style={{ ...style, width: '250px', border: `5px solid ${this.state.color}` }}>
-                    Page <Header /> <Main />
-                </div>
-            </Provider >
-        )
-    }
+  }
+  return true;
 }
+//obj1={home:{name:'bj'}} obj2={home:{name:'bj'}}
 ```
 
-### 9. router原理
-
-
-
-### 10. redux原理
+### 12. redux原理

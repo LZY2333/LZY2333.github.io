@@ -8,15 +8,15 @@ tags:
 
 # Hooks
 
+Hooks 让函数式组件拥有了 生命周期、状态管理、逻辑复用等,
+
+所有作为组件应当具备的能力,并避开了class式的写法。
+
 __什么是hooks__
 
-Hooks直译为钩子，通常指，系统运行到某一时期时，会调用被注册到该时机的回调函数
+Hooks直译为钩子,通常指,系统运行到某一时期时,会调用被注册到该时机的回调函数
 
 如: `window.onload` 或 `addEventListener`注册的回调函数
-
-react中的hooks 以'use' 开头,让函数式组件拥有了 生命周期、状态管理、逻辑复用等
-
-所有作为组件需要具备的能力，避开了class式的写法。
 
 __hooks规范__
 
@@ -26,14 +26,15 @@ __hooks规范__
 
 __为什么需要hooks__
 
+[大佬的reactHooks源码解析,存一下回头看](https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA)
 
-[大佬的reactHooks源码解析，存一下回头看](https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA)
+[React官网-为什么我们创造了Hooks](https://react.docschina.org/docs/hooks-intro.html#motivation)
 ## useState
 
 给函数组件添加 重复渲染时可读取的 内部state
 
 参数:   初始state
-返回值: 当前状态 和 一个用于更新它的函数。(类似this.setState，但不会合并新旧state)
+返回值: 当前状态 和 一个用于更新它的函数。(类似this.setState,但不会合并新旧state)
 
 ```js
 import React from './react';
@@ -41,8 +42,7 @@ import React from './react';
 function App(){
     // 初始化的时候number就是0,后续更新渲染,useState返回的就是setNumber改变后的值
     const [number,setNumber] = React.useState(0); // 重新渲染的时候返回的number不一样了
-
-    let handleClick = () => setNumber(number+1) // setNumber调用之后会重新渲染，重新渲染的时候
+    let handleClick = () => setNumber(number+1) // setNumber调用之后会重新渲染,重新渲染的时候
     return (
         <div>
             <p>{number}</p>
@@ -52,24 +52,35 @@ function App(){
 }
 ```
 
-__简单实现__(实际上是用了fiber，本质上是链表，非数组储存，且更复杂)
+### 简单实现
 
-一个 __全局数组__，一个 __全局下标__，初始为0.
+(实际上是用了fiber,本质上是链表,非数组储存,且更复杂)
 
-每次 useState，数据都放在 __全局下标__ 对应的 全局数组位置中， 最后 __全局下标__ +1.
+一个 __全局数组hookStates__ 一个 __全局下标hookIndex__ 初始为0.
 
-第一个 useState 的数据放在 0的位置 ,第二个useState 放在 1的位置.
+初始化时,
+ 
+整个应用的 `useState` 随着组件初始化被依次调用,
 
-更新渲染的时候,再次将 __全局下标__ 置为0,这样 第一个 useState执行 又会读取到 0位置的数据,并返回.
+每个`useState` 将数据都放在 `hookIndex` 对应的 `hookStates[hookIndex]`中, 最后 `hookIndex++`.
 
-而 第二个 useState 执行时,又读到了 1位置的数据.
+也就是说 `hookStates[0]` 对应第一个 `useState`, `hookStates[1]` 对应第二个 `useState`,以此类推.
 
-__这也是为什么react 不允许 有条件的调用useState,必须保证每次useState顺序相同__
+并且，每个 `useState` 记录下 `currentIndex = hookIndex`, 也就是自己数据存放的位置，
 
+当，某个 `useState` 的 `setState` 被调用时就修改 `hookStates[currentIndex]` 的数据，并触发更新.
 
-每次 useState，返回的函数 都会 保存 __当前下标__, 调用该函数的时候,修改当前下标对应的数据,再进行更新.
+更新时，
 
-__useState只会覆盖原值，不会合并原值__
+再次将 全局变量 `hookIndex` 置为 0, 
+
+这样 第一个 useState 返回 `hookStates[hookIndex]`，并最后 `hookIndex++`.
+
+而 第二个 useState 执行时,又能再次读到 1 位置的数据，并返回.
+
+__这也是为什么react 不允许 条件调用useState,必须保证每次useState顺序相同__
+
+__useState只会覆盖原值,不会合并原值__
 
 ```js
 let hookStates = []; // 一个全局对象存放了所有函数组件的 useState
@@ -78,12 +89,12 @@ let scheduleUpdate;
 function render(vdom, container) {
     mount(vdom,container);
     scheduleUpdate = ()=>{
-        hookIndex = 0; // 把索引置为0，再次渲染，按照渲染顺序，每个函数组件又会从useState拿到自己的最新state
-        compareTwoVdom(container,vdom,vdom); // 同一个vdom进行比较，但是其子节点state已不一样
+        hookIndex = 0; // 把索引置为0,再次渲染,按照渲染顺序,每个函数组件又会从useState拿到自己的最新state
+        compareTwoVdom(container,vdom,vdom); // 同一个vdom进行比较,但是其子节点state已不一样
     }
 }
 export function useState(initialState){
-    // 初次渲染的时候，返回初始值，和 setState。再次渲染函数组件时 还会调用useState，返回的就是 最新state
+    // 初次渲染的时候,返回初始值,和 setState。再次渲染函数组件时 还会调用useState,返回的就是 最新state
     hookStates[hookIndex] = hookStates[hookIndex]||initialState;
     let currentIndex = hookIndex;
     function setState(newState){
@@ -92,8 +103,8 @@ export function useState(initialState){
         scheduleUpdate();
     }
     return [hookStates[hookIndex++],setState];
-    // 每存放完一个state，hookIndex+1，按渲染顺序放好 每个函数组件的state
-    // 更新渲染的时候每个函数组件都会 再次依次按顺序调用 useState，hookIndex按老顺序++
+    // 每存放完一个state,hookIndex+1,按渲染顺序放好 每个函数组件的state
+    // 更新渲染的时候每个函数组件都会 再次依次按顺序调用 useState,hookIndex按老顺序++
     // 每个函数组件都会拿到自己那份 最新的hookStates[hookIndex]值 并返回
 }
 ```
@@ -112,12 +123,12 @@ const onClick = ()=>{
 }
 ```
 
-这里是怕对象没改变导致UI不更新，而下面两个是怕对象改变导致UI更新
+这里是怕对象没改变导致UI不更新,而下面两个是怕对象改变导致UI更新
 
 ## useCallback + useMemo
 
-把内联回调函数及依赖项数组作为参数传入 useCallback，它将返回该回调函数的 memoized 版本，依赖项改变时返回新对象。
-把创建函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算
+把内联回调函数及依赖项数组作为参数传入 useCallback,它将返回该回调函数的 memoized 版本,依赖项改变时返回新对象。
+把创建函数和依赖项数组作为参数传入 useMemo,它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算
 
 ```js
 import React from 'react';
@@ -223,7 +234,7 @@ export function useReducer(reducer, initialState) {
             let newState = reducer(oldState, action); // 给reducer传入action
             hookStates[currentIndex] = newState;
         } else {
-            //判断action是不是函数，如果是传入老状态，计算新状态
+            //判断action是不是函数,如果是传入老状态,计算新状态
             let newState = typeof action === 'function' ? action(oldState) : action;
             hookStates[currentIndex] = newState;
         }
@@ -284,7 +295,7 @@ function useContext(context){
 
 在函数组件主体内（这里指在 React 渲染阶段）改变 DOM、添加订阅、设置定时器、记录日志
 
-以及执行其他包含副作用的操作都是不被允许的，因为这可能会产生莫名其妙的 bug 并破坏 UI 的一致性.
+以及执行其他包含副作用的操作都是不被允许的,因为这可能会产生莫名其妙的 bug 并破坏 UI 的一致性.
 
 ```js
 function Counter() {
@@ -395,7 +406,7 @@ export function useRef(initialState) {
 
 `useRef`: 获取原生DOM,或组件
 `forwardRef`: 转发父组件的ref,子组件须接受props和ref作为参数,子组件可将ref挂在到自身某个dom元素上
-`useImperativeHandle`:在函数式组件中，用于定义暴露给父组件的ref方法。
+`useImperativeHandle`:在函数式组件中,用于定义暴露给父组件的ref方法。
 
 ```js
 function Child(props, ref) {
