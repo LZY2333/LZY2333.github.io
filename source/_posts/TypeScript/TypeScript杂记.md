@@ -161,3 +161,171 @@ type PersonName = Person["name"];
 type PersonNum = Person["address"]["num"]; // 316
 type PropTypeUnion = keyof Person; // 取key name | age | address
 type PropTypeValueUnion = Person[keyof Person]; // 取值 string | {num:316}
+```
+
+### extends联合类型(待补充)
+
+__extends 联合类型,调用时传入变量的类型,必须小于或等于联合类型(范围更小)__
+
+__普通type,调用时传入变量的类型,属性必须多于或等于type(范围更小)__
+
+```ts
+type LengthWise = string|string[]
+function logger2<T extends LengthWise>(val: T) {
+    console.log(val.length)
+}
+logger2(['s'])
+```
+
+### interface函数写法问题
+
+```ts
+// 用于约束类时函数写法
+interface A {
+  a(): void // 约束类中的原型方法
+  a: () => void // 约束类中的实例方法
+}
+```
+// 对于对象来说有什么区别? 逆变和协变的时候会讲
+
+### 交叉类型& 联合类型|
+
+__交叉类型& 是综合了其成员的所有属性的类型,是 其任意 交叉成员的子类__
+
+交叉类型& 属性更多了,约束更多了,所以是子集
+```ts
+interface Person1 {
+    handsome: string;
+    address: {
+        n: string;
+    };
+}
+
+interface Person2 {
+    high: string;
+    address: {
+        n: number;
+    };
+}
+
+type Person = Person1 & Person2;
+type Temp = Person["address"]["n"]; // Temp类型是never
+
+let p: Person = {
+    high: "",
+    handsome: "",
+    // address: {} // error:不能将类型“{}”分配给类型“{ n: string; } & { n: number; }”
+    address: null // OK, address是never类型
+};
+let p1: Person1 = p // OK
+let p2: Person2 = p // OK
+```
+
+```ts
+function mixin<T, U>(a: T, b: U): T & U {
+    return { ...a, ...b };
+}
+type Compute<T> = { [P in keyof T]: T[P] }; // 是个循环
+
+let r = mixin({ a: 1, b: 2 }, { c: 3, b: "2" });
+// 交叉后的结果 涵盖所有的内容
+
+type x = Compute<typeof r>
+//   type x = {
+//     a: number;
+//     b: never;
+//     c: number;
+// }
+```
+
+__联合类型| 表示一个值可以是其成员类型之一,只能调用其成员类型的共有属性__
+
+必须至少具有成员类型之一全部属性,可额外具有其他成员类型属性,不可增加未知属性(似乎有兼容性原理在里面????)
+
+```ts
+interface Bird {
+    fly();
+    layEggs();
+}
+
+interface Fish {
+    swim();
+    layEggs();
+}
+
+function getSmallPet(): Fish | Bird {
+    return 
+}
+
+let pet = getSmallPet();
+pet.layEggs(); // okay
+pet.swim();    // errors:类型“Fish | Bird”上不存在属性“swim”
+```
+
+__二者区别__
+
+```ts
+interface a1 { j: number, k: number }
+interface a2 { i: number, k: number }
+
+// 交叉类型: i j k,一个不能多一个不能少
+let a: a1 & a2 = {
+    j: 1,
+    i: 2,
+    k: 3,
+    // xxx: 4 // error
+}
+// 联合类型: 必须至少具有成员类型之一全部属性,可额外具有其他成员类型属性,不可增加未知属性
+let b: a1 | a2 = {
+    j: 1,
+    i: 2, // j 和 i 可以没有其中之一
+    k: 3,
+    // xxx: 4 // error:只能存在已知类型
+}
+```
+
+### 写一个type具有给定type的所有属性 或 部分属性
+
+```ts
+type LengthWise = { a: string, b: number }
+// 条件约束
+// extends 属性多于等于LengthWise
+function logger2<T extends LengthWise>(val: T) {
+    console.log(val.a)
+}
+logger2({ a: '1', b: 2, c: '3' })
+// 属性少于等于LengthWise
+// 相当于每个属性都有?的LengthWise
+type key2 = {
+    [key in keyof LengthWise]?: LengthWise[key]
+}
+function logger3(val: key2) {
+    console.log(val.a)
+}
+logger3({ a: '1' })
+```
+
+### 分发机制引发的问题
+
+__联合类型 通过泛型传入 且 未经过任何运算,会触发分发机制__
+```ts
+interface Fish { name: "鱼"; }
+interface Water { type: "水"; }
+interface Bird { name: "鸟"; }
+interface Sky { type: "太空"; }
+
+type SelectType<T> = T extends Fish ? Water : Sky;
+
+// 两种类型分别传入,并返回结果
+// type T7 = Water | Sky
+type T7 = SelectType<Bird | Fish>;
+
+// 非泛型使用,未触发分发
+ // type T8 =  Sky
+type T8 = Bird | Fish extends Fish ? Water : Sky;
+
+// 经过了运算,未触发分发
+ // type T9 = Sky
+type SelectType2<T> = T[] extends Fish[] ? Water : Sky;
+type T9 = SelectType<Bird | Fish>;
+```
