@@ -1,9 +1,9 @@
 ---
 title: TypeScript杂记
 date: 2022-11-14 10:34:47
-categories: 生活区
+categories: 技术栈
 tags: 
-    - 歌词
+    - TypeScript
 summary: TypeScript是Javascript的超集，遵循最新的ES5/ES6规范。Typescript扩展了Javascript语法。
 ---
 
@@ -307,7 +307,7 @@ logger3({ a: '1' })
 
 ### 分发机制引发的问题
 
-__联合类型 通过泛型传入 且 未经过任何运算,会触发分发机制__
+__联合类型 通过泛型传入 且 直接作为裸类型使用时,会触发分发机制__
 ```ts
 interface Fish { name: "鱼"; }
 interface Water { type: "水"; }
@@ -328,4 +328,33 @@ type T8 = Bird | Fish extends Fish ? Water : Sky;
  // type T9 = Sky
 type SelectType2<T> = T[] extends Fish[] ? Water : Sky;
 type T9 = SelectType<Bird | Fish>;
+```
+
+__分发机制 会在条件类型内引发 子类判断异常的问题__
+
+由于分发机制，
+
+T7中的1 2 3 分别和 1 | 2 做了比较，得到了 true | false 的type，也就是boolean
+
+而理论上，我们希望的是 type 1 | 2 | 3 与 type 1 | 2，做比较，得到 false
+```ts
+type UnionAssets1<T, U> = T extends U ? true : false;
+type T7 = UnionAssets1<1 | 2 | 3, 1 | 2>; // boolean
+
+// 解决方案
+type NoDistribute<T> = T & {}; // 避免分发机制
+type UnionAssets<T, U> = NoDistribute<T> extends U ? true : false;
+type T8 = UnionAssets<1 | 2, 1 | 2 | 3>; // true
+type T9 = UnionAssets<1 | 2 | 3, 1 | 2>; // false
+
+```
+
+__any也会有分发问题__
+
+__never也会有分发问题, 但只在泛型传递的时候会返回never， 不分发就正常__
+```ts
+type T10 = any extends "123" ? true : false; // boolean
+
+type isNever<T> = T extends never ? true : false;
+type T11 = isNever<never>; // never
 ```
