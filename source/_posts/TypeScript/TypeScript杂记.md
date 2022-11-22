@@ -358,3 +358,19 @@ type T10 = any extends "123" ? true : false; // boolean
 type isNever<T> = T extends never ? true : false;
 type T11 = isNever<never>; // never
 ```
+
+### 操作符 keyof 
+
+keyof 索引类型查询,返回值是一个 联合类型
+
+typeof 类型查询
+
+必须在type关键字后使用,属于TS的领域.
+
+### readonly 创建字面量类型
+
+```ts
+type x = readonly ['1',2,'3']
+function b(a:x) { }
+b(['1',2,'3'])
+```

@@ -537,9 +537,7 @@ function createDOM(vdom) {
 
 __DOM-Diff的根本目的是复用老真实dom,减少渲染消耗__
 
-__DOM-Diff算法是针对 新旧子节点数组 的对比算法__
-
-#### 当前节点对比无dom-diff
+#### 当前节点对比
 
 父vdom或者说当前vdom的比较非常简单
 
@@ -600,7 +598,7 @@ function updateElement(oldVdom, newVdom) {
 }
 ```
 
-#### 子节点对比需要用到DOM-Diff
+#### 子节点对比
 
 __Key属性__,每个子节点通过key属性是否相同,判断是否为同一节点,同一节点保留并复用旧真实dom.
 
