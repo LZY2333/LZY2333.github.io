@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    2.6k
                 </div>
                 
 
@@ -447,7 +447,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="TS兼容性"><a href="#TS兼容性" class="headerlink" title="TS兼容性"></a>TS兼容性</h1><p>兼容性的原则是Duck-Check,</p>
-<p>首先要理解什么是TS的兼容性？<br><strong>被赋值的变量的类型中的属性 赋值源的类型 中都存在 类型检查就会通过</strong></p>
+<p>首先要理解什么是TS的兼容性？</p>
+<p><strong>被赋值的变量的类型中的属性 在赋值源的类型 中都存在 类型检查就会通过</strong></p>
 <h2 id="接口的兼容性"><a href="#接口的兼容性" class="headerlink" title="接口的兼容性"></a>接口的兼容性</h2><p>函数传入的 变量类型 与 声明类型 不匹配TS会进行兼容性检查</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Animal &#123;
     name: string;
@@ -568,8 +569,25 @@ sum &#x3D; f4; &#x2F;&#x2F; 报错
 
 &#x2F;&#x2F; 返回值的对象 可以多属性，不能比变量要求的返回值少属性<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>给变量赋值时 赋值的函数 的参数要求 只可比变量要求函数参数 少<br>给变量赋值时 赋值的函数 的返回值要求 可比变量要求函数参数 多</p>
-<h2 id="函数加上-参数类型的父子类的兼容"><a href="#函数加上-参数类型的父子类的兼容" class="headerlink" title="函数加上 参数类型的父子类的兼容"></a>函数加上 参数类型的父子类的兼容</h2><p><strong>在给限定了 函数类型的变量 赋值函数时</strong><br>赋值给 变量的 函数<br>其参数 可以是 比变量类型定义里 要求的属性 更少(逆变)<br>返回值 可以是 比变量类型定义里 要求的属性 更多(协变)</p>
+<h2 id="函数加上-参数类型的父子类的兼容"><a href="#函数加上-参数类型的父子类的兼容" class="headerlink" title="函数加上 参数类型的父子类的兼容"></a>函数加上 参数类型的父子类的兼容</h2><p><strong>注意：逆变与协变是 函数实体 赋值给 具有约束的变量时产生的检查</strong></p>
+<p><strong>在给限定了 函数类型的变量 赋值函数时</strong><br>赋值给 变量的 函数<br>其参数 可以是 比变量类型定义里 要求的属性 更少(逆变)<br>返回值 可以是 比变量类型定义里 要求的属性 更多(协变)</p>
 <p>简化版:<br>__给变量赋值的函数 参数可以属性更少，返回值可以属性更多__。</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Parent &#123;
+    house() &#123; &#125;
+&#125;
+class Child extends Parent &#123;
+    car() &#123; &#125;
+&#125;
+class Grandson extends Child &#123;
+    sleep() &#123; &#125;
+&#125;
+type Arg&lt;T&gt; &#x3D; (arg: T) &#x3D;&gt; void;
+type Return&lt;T&gt; &#x3D; (arg: any) &#x3D;&gt; T;
+
+type isArg &#x3D; Arg&lt;Parent&gt; extends Arg&lt;Child&gt; ? true : false; &#x2F;&#x2F; 逆变
+type isReturn &#x3D; Return&lt;Grandson&gt; extends Return&lt;Child&gt; ? true : false; &#x2F;&#x2F; 协变
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>理解:<br><strong>用于赋值的函数的 参数 的属性 必须 比 被赋值的变量的要求 更少</strong><br><strong>用于赋值的函数的 返回值 的属性 必须 比 被赋值的变量的要求 更多</strong><br>为什么这么要求？</p>
 <p>因为在实际应用中，<br>在类型检查时，只检查 变量的类型，而不是 检查 变量被赋的值的类型(因为值是可变的，关键是值在变量赋值时已被检查过)</p>
 <p>如果不要求 用于赋值的函数的 返回值 的属性 只能等于或更多<br>变量的 后续使用时 会出现，<br>类型检查时，允许 使用返回值的某属性(因为，变量类型约束里写了有啊)，<br>编译执行时，发现返回值的这个属性undefined(因为，变量的真实函数值返回值比变量类约束的值少啊！！)<br>而执行报错。</p>
@@ -1139,7 +1157,7 @@ n &#x3D; Colors.Red;<span aria-hidden="true" class="line-numbers-rows"><span></s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">131.2k</span>&nbsp;字
+                class="white-color">130.6k</span>&nbsp;字
             
             
             

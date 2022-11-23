@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="写给后端的前端故事书, 懒前端">
+    <meta name="keywords" content="TS条件类型, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>写给后端的前端故事书 | 懒前端</title>
+    <title>TS条件类型 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">写给后端的前端故事书</h1>
+                    <h1 class="description center-align post-title">TS条件类型</h1>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/React/">
-                                <span class="chip bg-color">React</span>
+                            <a href="/tags/TypeScript/">
+                                <span class="chip bg-color">TypeScript</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
-                                经验帖
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                技术栈
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-05
+                    2022-11-22
                 </div>
                 
 
@@ -428,7 +428,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    7 分
                 </div>
                 
 
@@ -446,84 +446,167 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>印象中的前端 HTML CSS JS</p>
-<p>现在的前端  </p>
-<p>工程化: NodeJS(+ npm包) Webpack5(+ 插件包) rollup gulp Vite </p>
-<p>语法扩展: Less(CSS超集)，TypeScript(JS超集) ES6 ES7…..</p>
-<p>框架(+ 全家桶): React(+ React-router + Redux + Axios) Vue2 Vue3 Angular</p>
-<p>组件库: Antd AntdPro Element</p>
-<p>小程序…..</p>
-<p>微前端…..</p>
-<h3 id="前端的发展"><a href="#前端的发展" class="headerlink" title="前端的发展"></a>前端的发展</h3><h4 id="1-静态HTML-无JavaScript"><a href="#1-静态HTML-无JavaScript" class="headerlink" title="1. 静态HTML(无JavaScript)"></a>1. 静态HTML(无JavaScript)</h4><p>最早的网页还不能够被称为前端，只是一个个完全静态的HTML页面，浏览器通过URL发起请求，便返回HTML文件，浏览器解析展示HTML文件内容。</p>
-<p>任何一个微小的改变，比如:用户名，都需要服务器返回一个全新的HTML文件，</p>
-<p>为了应对成千上万的用户(意味着显示成千上万的不同用户名)，后端开发了 ASP JSP 等动态修改创建HTML</p>
-<p>此时所有的浏览器交互都由 <strong>后端处理</strong></p>
-<h4 id="2-原生JavaScript"><a href="#2-原生JavaScript" class="headerlink" title="2. 原生JavaScript"></a>2. 原生JavaScript</h4><p>在1995年，那时的每一丝流量都尤为珍贵，浏览器标准的主导者 Netscape 网景公司，提出了浏览器脚本的概念。</p>
-<p>JavaScript因此被开发出来，并引入浏览器。</p>
-<p>JavaScript的第一版诞生只花了十天，其语法是借鉴了多种语言的大杂烩。</p>
-<p>起初只是作为一个简单脚本语言，弱类型，即时编译，总之一切从简。</p>
-<p>甚至为了蹭Java热度，将名字定为了JavaScript。</p>
-<p>但是小小的语言有着大大的能量。</p>
-<p>JS的诞生，让客户端进行DOM操作成为了现实，从而做到在客户端处理交互，节省了大量HTML文件的请求。</p>
-<p>页面也由纯静态转换为了非静态，提供了与用户的大量交互。</p>
-<p><strong>原生JS操作DOM</strong></p>
-<h4 id="3-Jquery"><a href="#3-Jquery" class="headerlink" title="3. Jquery"></a>3. Jquery</h4><p>由于原生API不好用，还要考虑浏览器兼容性，jQuery横空出世，以简洁的API迅速俘获了前端开发者的芳心：</p>
-<p><code>$(&#39;#name&#39;).text(&#39;Homer&#39;).css(&#39;color&#39;, &#39;red&#39;);</code></p>
-<p><strong>JS封装库操作DOM</strong></p>
-<h4 id="4-MVVM"><a href="#4-MVVM" class="headerlink" title="4. MVVM"></a>4. MVVM</h4><p>MVVM最重要的特性是 <strong>响应式更新__，或者说 __双向绑定</strong></p>
-<p>比如一个倒计时效果,用原生JS我们必须先找到dom，然后再修改dom。</p>
-<p>而用了MVVM框架，一切都简单了，修改数据，页面就会展示最新的数据。</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>Hello, <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Bart<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>You are <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>12<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#name'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token string">'Homer'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#age'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token number">51</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                <h2 id="TS条件类型"><a href="#TS条件类型" class="headerlink" title="TS条件类型"></a>TS条件类型</h2><p>类似于各种计算出来的类型，基于extends，也常常带上泛型</p>
+<p>TS也提供了很多很多内置条件类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">
+type ResStatusMessage&lt;T&gt; &#x3D; T extends 200 | 201 | 204 | 206 ? &quot;success&quot; : &quot;fail&quot;;
+type IMessage &#x3D; ResStatusMessage&lt;300&gt;; &#x2F;&#x2F; type IMessage &#x3D; &quot;fail&quot;
 
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>Hello, <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Bart<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>You are <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>12<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#name'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token string">'Homer'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#age'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token number">51</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>网页 和 TXT文本/Word 的最大区别是 <strong>交互</strong></p>
-<p><strong>交互</strong> 即 用户事件 引发的一系列网页变化，</p>
-<p>承担这一至关重要任务的角色的就是 JavaScript</p>
-<p>HTML 和 CSS 在前端工程化的过程中慢慢被淡化，所占用的开发时间占比极低。</p>
-<p>让我们的关注点从如何操作DOM变成了如何更新JavaScript对象的状态，而操作JavaScript对象比DOM简单多了！</p>
-<p>这就是MVVM的设计思想：关注Model的变化，让MVVM框架去自动更新DOM的状态，从而把开发者从操作DOM的繁琐步骤中解脱出来！</p>
-<h3 id="前端框架"><a href="#前端框架" class="headerlink" title="前端框架"></a>前端框架</h3><p>以前前端存在的最大问题：</p>
-<p>当然，组件化的可拆分，使得他 能</p>
-<p>更好的复用，一处修改，处处均改</p>
-<p>更好的分工，</p>
-<p>更好的测试，</p>
-<p>更小的心智负担。</p>
-<p>提升了工程性</p>
-<h3 id="react"><a href="#react" class="headerlink" title="react"></a>react</h3><h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>前端简单吗，真的很简单，入门简单，弱类型语言，无需环境配置，打开浏览器就能运行。</p>
-<p>前端难吗，真的很难，难精，调用接口，拼拼组件，谁都会写。</p>
-<p>但是，这每一个技术背后的原理，理念，都是需要深究，并且值得深究的。</p>
-<p>我在做框架源码分享的时候，有人问过我，有没有实战的意义，我更想听实战的东西。</p>
-<p>很可惜，没有。</p>
-<p>一个框架的所有标准写法都在官方文档里，不在源码里，</p>
-<p>即使源码中出现的操作，也不一定能在开发中安全调用。</p>
-<p>读源码最大的作用是，学习思想，学习设计模式，学习其干练的代码，运用在平常的开发中。</p>
-<p>而往往这些是最容易被忽视的，不计入工作量的。</p>
-<p>如果硬要说在框架的使用上有什么区别的话，那就是更敢写了，更确定该怎么写了，bug更少了。</p>
-<p>就像我在React中每写一行代码，都能想象出这行代码如何运行，什么时候运行，改变了哪些状态。</p>
-<p>当在查找bug时，能一眼看出语法错误，能根据bug现象不看代码直接找到问题所在。</p>
-<p>这些可以称之为基础的东西 在长时间使用该技术的 程序员眼中 也有另一种种存在方式【经验】。</p>
-<h3 id="技术积累-与-业务积累"><a href="#技术积累-与-业务积累" class="headerlink" title="技术积累 与 业务积累"></a>技术积累 与 业务积累</h3><p>当然，这是技术分享会，谈的是技术积累，</p>
-<p>职业的规划还有另一条路，业务积累，熟悉项目，熟悉业务，熟悉客户，能针对业务提出更好的解决方案。</p>
-<p>同时，我觉得这才是公司真正需要的人，毕竟 <strong>技术，是不赚钱的</strong></p>
-<p>就像上一期 特斯拉融合项目，我听到需求第一反应是，这么复杂，需要多少时间，如何实现，旧代码要不要重构。(当然还有，千万别分给我。)</p>
-<p>孙工一语道破其中玄机，人家想要的就是简单方便，何必做这么多校验。</p>
-<p>对于技术来讲，业务就是降维打击。(例如:我写半天代码，事后吹的神乎其神，敏敏姐说，以后代发没有支付了，好的，我回去删代码)</p>
-<p>这就是业务积累。</p>
-<p>当然，技术积累，业务积累，都是不可获取的，需要一个平衡。</p>
-<p>因为总有绕不开的业务，需要技术支持，</p>
-<p>更大的业务体量，总需要更高的系统要求，工程化要求，需要技术支持。</p>
-<p>作为一个程序员，不止是职业发展的矛盾与制衡，还有程序员社区的爱恨情仇，还有对优秀技术的不断探索，对技术大佬的毕恭毕敬，等等。</p>
-<p>什么vite编译比webpack快十倍，什么的vue3语法更友好。</p>
-<p>茫茫码海，谁主沉浮</p>
-<p>30年河东，30年河西。</p>
-<p>这是江湖，是哲学，是浪漫，是艺术。</p>
+type Conditional&lt;T, U&gt; &#x3D; T extends U ? true : false;
+type R1 &#x3D; Conditional&lt;&quot;jiangwen&quot;, string&gt;;
+type R2 &#x3D; Conditional&lt;&quot;jiangwen&quot;, number&gt;; &#x2F;&#x2F; 泛型在条件类型中广泛被应用
+
+
+type FormatReturnValue&lt;T&gt; &#x3D; T extends string ? string : T extends number ? number : never;
+function sum&lt;T extends string | number&gt;(a: T, b: T): FormatReturnValue&lt;T&gt; &#123;
+  return a + (b as any); &#x2F;&#x2F; 泛型之间不能做运算;
+&#125;
+let r &#x3D; sum(1, 2); &#x2F;&#x2F; string &amp; number
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="分发机制引发的问题"><a href="#分发机制引发的问题" class="headerlink" title="分发机制引发的问题"></a>分发机制引发的问题</h3><p><strong>联合类型 通过泛型传入 且 直接作为裸类型使用时,会触发分发机制</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Fish &#123; name: &quot;鱼&quot;; &#125;
+interface Water &#123; type: &quot;水&quot;; &#125;
+interface Bird &#123; name: &quot;鸟&quot;; &#125;
+interface Sky &#123; type: &quot;太空&quot;; &#125;
+
+type SelectType&lt;T&gt; &#x3D; T extends Fish ? Water : Sky;
+
+&#x2F;&#x2F; 两种类型分别传入,并返回结果
+&#x2F;&#x2F; type T7 &#x3D; Water | Sky
+type T7 &#x3D; SelectType&lt;Bird | Fish&gt;;
+
+&#x2F;&#x2F; 非泛型使用,未触发分发
+ &#x2F;&#x2F; type T8 &#x3D;  Sky
+type T8 &#x3D; Bird | Fish extends Fish ? Water : Sky;
+
+&#x2F;&#x2F; 经过了运算,未触发分发
+ &#x2F;&#x2F; type T9 &#x3D; Sky
+type SelectType2&lt;T&gt; &#x3D; T[] extends Fish[] ? Water : Sky;
+type T9 &#x3D; SelectType&lt;Bird | Fish&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>分发机制 会在条件类型内引发 子类判断异常的问题</strong></p>
+<p>由于分发机制，</p>
+<p>T7中的1 2 3 分别和 1 | 2 做了比较，得到了 true | false 的type，也就是boolean</p>
+<p>而理论上，我们希望的是 type 1 | 2 | 3 与 type 1 | 2，做比较，得到 false</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type UnionAssets1&lt;T, U&gt; &#x3D; T extends U ? true : false;
+type T7 &#x3D; UnionAssets1&lt;1 | 2 | 3, 1 | 2&gt;; &#x2F;&#x2F; boolean
+
+&#x2F;&#x2F; 解决方案
+type NoDistribute&lt;T&gt; &#x3D; T &amp; &#123;&#125;; &#x2F;&#x2F; 避免分发机制
+type UnionAssets&lt;T, U&gt; &#x3D; NoDistribute&lt;T&gt; extends U ? true : false;
+type T8 &#x3D; UnionAssets&lt;1 | 2, 1 | 2 | 3&gt;; &#x2F;&#x2F; true
+type T9 &#x3D; UnionAssets&lt;1 | 2 | 3, 1 | 2&gt;; &#x2F;&#x2F; false
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>any也会有分发问题</strong></p>
+<p><strong>never也会有分发问题, 但只在泛型传递的时候会返回never， 不分发就正常</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type T10 &#x3D; any extends &quot;123&quot; ? true : false; &#x2F;&#x2F; boolean
+
+type isNever&lt;T&gt; &#x3D; T extends never ? true : false;
+type T11 &#x3D; isNever&lt;never&gt;; &#x2F;&#x2F; never
+type T12 &#x3D; never extends never ? true : false; &#x2F;&#x2F; true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="判断两个类型完全相等"><a href="#判断两个类型完全相等" class="headerlink" title="判断两个类型完全相等"></a>判断两个类型完全相等</h3><p>T extends U &amp;&amp; U extends T,</p>
+<p>Success 相等时返回的类型</p>
+<p>Fail 不相等时 返回的类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type NoDistribute&lt;T&gt; &#x3D; T &amp; &#123;&#125;; &#x2F;&#x2F; 避免分发机制
+type IsEqual&lt;T, U, Success, Fail&gt; &#x3D; 
+    NoDistribute&lt;T&gt; extends U ? NoDistribute&lt;U&gt; extends T ? Success : Fail : Fail;
+
+type T10 &#x3D; IsEqual&lt;1 | 2, 1 | 2, true, false&gt;;
+&#x2F;&#x2F; type T10 &#x3D; true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="内置条件类型-Extract-Exclude-NonNullable"><a href="#内置条件类型-Extract-Exclude-NonNullable" class="headerlink" title="内置条件类型 Extract Exclude NonNullable |"></a>内置条件类型 Extract Exclude NonNullable |</h3><p>内置条件类型 Extract Exclude NonNullable 本质上 就是分发.</p>
+<h4 id="Extract-交集"><a href="#Extract-交集" class="headerlink" title="Extract 交集"></a>Extract 交集</h4><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; string | number
+type ExtractResult &#x3D; Extract&lt;string | number | boolean, string | number&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>其本质如下,实际上是产生了分发,得到的结果</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Extract&lt;T, U&gt; &#x3D; T extends U ? T : never;
+&#x2F;&#x2F; T中的 成员会依次 与 U比较
+&#x2F;&#x2F; 上例得到的结果如下: string | number | never<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="Exclude-差集"><a href="#Exclude-差集" class="headerlink" title="Exclude 差集"></a>Exclude 差集</h4><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; boolean
+type ExcludeResult &#x3D; Exclude&lt;string | number | boolean, string | number&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>其本质如下,实际上是产生了分发,得到的结果</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Exclude&lt;T, U&gt; &#x3D; T extends U ? never : T;
+&#x2F;&#x2F; T中的 成员会依次 与 U比较
+&#x2F;&#x2F; 上例得到的结果如下: never | never | boolean<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="NonNullable-去掉联合类中的null"><a href="#NonNullable-去掉联合类中的null" class="headerlink" title="NonNullable 去掉联合类中的null"></a>NonNullable 去掉联合类中的null</h4><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">let ele &#x3D; document.getElementById(&quot;root&quot;);
+type EleElement &#x3D; NonNullable&lt;typeof ele&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>其本质如下,实际上是产生了分发,得到的结果</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type NonNullable&lt;T&gt; &#x3D;  T &amp; &#123;&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="infer-获取T中指定位置的派生类型"><a href="#infer-获取T中指定位置的派生类型" class="headerlink" title="infer 获取T中指定位置的派生类型"></a>infer 获取T中指定位置的派生类型</h3><p><strong>infer 用在条件类型中,获取T中指定位置的派生类型</strong></p>
+<p>补充一个知识点,约束一个类型为函数</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Func&lt;T&gt; &#x3D; T extends (...args: any[]) &#x3D;&gt; any ? true : never
+type Func1&lt;T&gt; &#x3D; T extends Function ? true : never
+function a() &#123; &#125;
+type f &#x3D; Func&lt;typeof a&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h4 id="ReturnType-内置类型"><a href="#ReturnType-内置类型" class="headerlink" title="ReturnType 内置类型"></a>ReturnType 内置类型</h4><p>infer 实现原生 内置条件类型 <code>ReturnType</code></p>
+<p>获取函数的返回类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function getUser(a: number, b: number) &#123;
+    return &#123; name: &#39;zf&#39;, age: 10 &#125;
+&#125;
+&#x2F;&#x2F; 首先得约束传入的T是函数类型
+type ReturnType&lt;T extends (...args: any[]) &#x3D;&gt; any&gt; &#x3D; 
+  T extends (...args: any) &#x3D;&gt; infer R ? R : never
+type MyReturn &#x3D; ReturnType&lt;typeof getUser&gt;
+&#x2F;&#x2F; type MyReturn &#x3D; &#123;
+&#x2F;&#x2F;     name: string;
+&#x2F;&#x2F;     age: number;
+&#x2F;&#x2F; &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type TailToHead&lt;T extends any[]&gt; &#x3D;
+    ST extends [...infer C, infer B] ? [B, ...C] : any;
+
+type x &#x3D; TailToHead&lt;[&quot;jw&quot;, 30, 40, 50, &quot;回龙观&quot;]&gt;;
+&#x2F;&#x2F; [&quot;回龙观&quot;,&quot;jw&quot;,30,40,50]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="Parameters-内置类型"><a href="#Parameters-内置类型" class="headerlink" title="Parameters 内置类型"></a>Parameters 内置类型</h4><p>获取函数的参数类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Parameters&lt;T&gt; &#x3D; T extends (...args: infer R) &#x3D;&gt; any ? R : any;
+type MyParams &#x3D; Parameters&lt;typeof getUser&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h4 id="ConstructorParameters-内置类型"><a href="#ConstructorParameters-内置类型" class="headerlink" title="ConstructorParameters 内置类型"></a>ConstructorParameters 内置类型</h4><p>获取类的构造函数的参数类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Person &#123;
+    constructor(name: string, age: number) &#123; &#125;
+&#125;
+type ConstructorParameters&lt;T&gt; &#x3D; T extends &#123; new(...args: infer R): any &#125; ? R : never
+type MyConstructor &#x3D; ConstructorParameters&lt;typeof Person&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="InstanceType-内置类型"><a href="#InstanceType-内置类型" class="headerlink" title="InstanceType 内置类型"></a>InstanceType 内置类型</h4><p>获取类的实例类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Person &#123;
+    constructor(name: string, age: number) &#123; &#125;
+&#125;
+type InstanceType&lt;T&gt; &#x3D; T extends &#123; new(...args: any): infer R &#125; ? R : any
+type MyInstance &#x3D; InstanceType&lt;typeof Person&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>很显然,Person的实例类型就是Person</p>
+<h4 id="将数组类型转化为联合类型"><a href="#将数组类型转化为联合类型" class="headerlink" title="将数组类型转化为联合类型"></a>将数组类型转化为联合类型</h4><p>有点像分发并返回，但不是分发</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type ElementOf&lt;T&gt; &#x3D; T extends Array&lt;infer E&gt; ? E : never;
+type TupleToUnion &#x3D; ElementOf&lt;[string, number, boolean]&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h4 id="infer获取泛型类型"><a href="#infer获取泛型类型" class="headerlink" title="infer获取泛型类型"></a>infer获取泛型类型</h4><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">
+type PromiseV&lt;T&gt; &#x3D; T extends Promise&lt;infer V&gt; ? V : any;
+type PromiseReturnValue &#x3D; PromiseV&lt;Promise&lt;number&gt;&gt;; &#x2F;&#x2F; number
+
+&#x2F;&#x2F; 甚至能递归，拿到不是Promise类型为止
+type PromiseV&lt;T&gt; &#x3D; T extends Promise&lt;infer V&gt; ? PromiseV&lt;V&gt; : T;
+type PromiseReturnValue &#x3D; PromiseV&lt;Promise&lt;Promise&lt;number&gt;&gt;&gt;; &#x2F;&#x2F; number<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="将两个函数的参数转化为交叉类型s"><a href="#将两个函数的参数转化为交叉类型s" class="headerlink" title="将两个函数的参数转化为交叉类型s"></a>将两个函数的参数转化为交叉类型s</h4><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type T1 &#x3D; &#123; name: string &#125;;
+type T2 &#x3D; &#123; age: number &#125;;
+type ToIntersection&lt;T&gt; &#x3D; T extends ([(x: infer U) &#x3D;&gt; any, (x: infer U) &#x3D;&gt; any]) ? U : never;
+type t3 &#x3D; ToIntersection&lt;[(x:T1)&#x3D;&gt;any,(x:T2)&#x3D;&gt;any]&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><strong>any和unknown互为子类型,且不是其他任何类型的子类型</strong></p>
 
                 
             </div>
@@ -550,7 +633,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/11/05/jing-yan-tie/xie-gei-hou-duan-de-qian-duan-gu-shi-shu/">https://github.com/LZY2333/LZY2333.github.io/2022/11/05/jing-yan-tie/xie-gei-hou-duan-de-qian-duan-gu-shi-shu/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/11/22/typescript/7.ts-tiao-jian-lei-xing/">https://github.com/LZY2333/LZY2333.github.io/2022/11/22/typescript/7.ts-tiao-jian-lei-xing/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -588,8 +671,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/React/">
-                                    <span class="chip bg-color">React</span>
+                                <a href="/tags/TypeScript/">
+                                    <span class="chip bg-color">TypeScript</span>
                                 </a>
                             
                         </div>
@@ -759,46 +842,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/11/14/sheng-huo/exist/">
+                <a href="/2022/11/22/typescript/7.ts-tiao-jian-lei-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Exist">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="TS条件类型">
                         
-                        <span class="card-title">Exist</span>
+                        <span class="card-title">TS条件类型</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            终于意识到 渴求之物 皆在吾心 并非无法控制的力量 而是必要的强大 若是向坚信之心奋勇迸发 终能找到答案
+                            
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
-                                    生活区
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                    技术栈
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%AD%8C%E8%AF%8D/">
-                        <span class="chip bg-color">歌词</span>
+                    <a href="/tags/TypeScript/">
+                        <span class="chip bg-color">TypeScript</span>
                     </a>
                     
                 </div>
@@ -812,13 +897,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/01/react/react2022-zui-xin-fu-xi-zheng-li/">
+                <a href="/2022/11/16/react/reacthooks/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="React2022最新复习整理">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="ReactHooks">
                         
-                        <span class="card-title">React2022最新复习整理</span>
+                        <span class="card-title">ReactHooks</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -829,7 +914,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-16
                             </span>
                         <span class="publish-author">
                             
@@ -994,7 +1079,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">131.2k</span>&nbsp;字
+                class="white-color">130.6k</span>&nbsp;字
             
             
             

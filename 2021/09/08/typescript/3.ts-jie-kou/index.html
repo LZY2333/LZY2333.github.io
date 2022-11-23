@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    7 分
                 </div>
                 
 
@@ -446,12 +446,69 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS接口"><a href="#TS接口" class="headerlink" title="TS接口"></a>TS接口</h1><p><strong>接口</strong> 定义一个类型,以 <strong>约束变量</strong> 或 <strong>约束类</strong>,<br>类型检查器会以接口类型为标准对值的结构进行类型检查.<br>“鸭式辨型法”:如果它走起 路来像鸭子,叫起来也是鸭子,那么它就是鸭子</p>
+                <h3 id="TS接口"><a href="#TS接口" class="headerlink" title="TS接口"></a>TS接口</h3><p><strong>接口</strong> 定义一个类型,以 <strong>约束变量</strong> 或 <strong>约束类</strong>,</p>
+<p>类型检查器会以接口类型为标准对值的结构进行类型检查.</p>
+<p><strong>使用场景: 抽象的,描述形状的,extends,implements</strong></p>
+<p><strong>“鸭式辨型法”</strong>:如果它走起 路来像鸭子,叫起来也是鸭子,那么它就是鸭子</p>
 <blockquote>
 <p>一个类可以 继承另一个类 并实现多个接口<br>一个类可以 <strong>实现多个接口</strong> ，一个接口也可以 <strong>被多个类实现</strong><br>一个类可以只能 <strong>继承一个父类</strong> , 可以 <strong>被多个子类继承</strong></p>
 </blockquote>
-<p>变量后面<code>:xxx</code>可能是,<code>type</code>定义的类型,可能是<code>class</code>定义的类,<br>可能是 <code>interface</code> 定义的接口,可能是 字面量,可能是 js原始类型</p>
-<h2 id="接口约束-变量的值-为特定Object"><a href="#接口约束-变量的值-为特定Object" class="headerlink" title="接口约束 变量的值 为特定Object"></a>接口约束 变量的值 为特定Object</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束变量 接收的值 必须为对象
+<p>变量后面<code>:xxx</code>可能是,<code>type</code>定义的类型,可能是<code>class</code>定义的类,</p>
+<p>可能是 <code>interface</code> 定义的接口,可能是 字面量,可能是 js原始类型</p>
+<p><strong>可选属性</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
+  color?: string;
+  width?: number;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>任意属性</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;无法预先知道有哪些新的属性的时候,可以使用 &#96;[propName:string]:any&#96;,propName名字是任意的
+interface SquareConfig &#123;
+    color: string;
+    width: number;
+    &#x2F;&#x2F; 对象的key 可以有三种类型 string number symbol
+    [propName: string]: any;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>只读属性</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 只读属性,只在创建的时候可以赋值
+interface Point &#123;
+    readonly x: number;
+    readonly y: number;
+&#125;
+let p1: Point &#x3D; &#123; x: 10, y: 20 &#125;;
+p1.x &#x3D; 5; &#x2F;&#x2F; error!
+&#x2F;&#x2F; 变量用const，属性用readonly<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p><strong>断言后可继续加属性</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
+    color: string;
+    width: number;
+&#125;
+const a: SquareConfig &#x3D; &#123;
+    color: &#39;red&#39;,
+    width: 1,
+    name: &#39;square&#39; &#x2F;&#x2F; 有了as可以多属性而不报错，无as报错
+&#125; as SquareConfig<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>同名接口会被合并</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
+    color: string;
+    width: number;
+&#125;
+interface SquareConfig &#123;
+    name: string
+&#125;
+const a:SquareConfig &#x3D; &#123;
+    color: &#39;red&#39;,
+    width: 1,
+    name: &#39;square&#39;
+&#125;
+&#x2F;&#x2F; 继承 也是类似的效果， 
+&#x2F;&#x2F; 三个属性都写 SquareConfig 里也是类似的效果<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="约束变量-为-对象"><a href="#约束变量-为-对象" class="headerlink" title="约束变量 为 对象"></a>约束变量 为 对象</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束变量 接收的值 必须为对象
 interface Speakable&#123;
     speak():void;
     name:string;
@@ -462,46 +519,7 @@ let speakMan:Speakable &#x3D; &#123;
     age&#x2F;&#x2F;多属性也会报错
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>可选属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
-  color?: string;
-  width?: number;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>任意属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F;无法预先知道有哪些新的属性的时候,可以使用 &#96;[propName:string]:any&#96;,propName名字是任意的
-interface SquareConfig &#123;
-    color?: string;
-    width?: number;
-    [propName: string]: any;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>只读属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 只读属性,只在创建的时候可以赋值
-interface Point &#123;
-    readonly x: number;
-    readonly y: number;
-&#125;
-let p1: Point &#x3D; &#123; x: 10, y: 20 &#125;;
-p1.x &#x3D; 5; &#x2F;&#x2F; error!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>变量用const，属性用readonly</p>
-</blockquote>
-<p><strong>对象字面量 直接作为参数时 会经历 额外属性检查</strong><br><strong>而改写成 对象 再作为参数 传入函数调用,则不会 检查对象上的额外属性</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
-    height: number;
-    width: number;
-&#125;
-
-function createSquare(config: SquareConfig):void &#123;&#125;
-&#x2F;&#x2F; 报错error: &#39;colour&#39; not expected in type &#39;SquareConfig&#39;
-&#x2F;&#x2F; 因为直接传入了 对象字面量,所以经历了额外属性检查,
-&#x2F;&#x2F; 不允许拥有接口定义外的额外属性
-let mySquare &#x3D; createSquare(&#123;height:100, width: 100,colour: &quot;red&quot;&#125;);
-&#x2F;&#x2F; 解决方案1,不适用 对象字面量,改写成对象 再作为参数传入
-let squareOptions &#x3D; &#123; colour: &quot;red&quot;, width: 100 &#125;;
-let mySquare &#x3D; createSquare(squareOptions);
-&#x2F;&#x2F; 解决方案2,在 interface SquareConfig 中增加 [propName: string]: any;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="接口继承"><a href="#接口继承" class="headerlink" title="接口继承"></a>接口继承</h2><p>类继承接口</p>
+<h3 id="接口继承"><a href="#接口继承" class="headerlink" title="接口继承"></a>接口继承</h3><p>类 实现 接口</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable&#123; &#x2F;&#x2F; 代表具有speak函数的对象
     speak():void;
 &#125;
@@ -516,7 +534,7 @@ class Person implements Speakable,Eatable&#123;
     eat()&#123;&#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>接口继承另一个接口</p>
+<p>接口 继承 另一个接口</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable &#123;
     speak(): void
 &#125;
@@ -532,7 +550,7 @@ class Person implements SpeakChinese &#123;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>接口继承多个接口</p>
+<p>接口 继承 多个接口</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Shape &#123;
     color: string;
 &#125;
@@ -549,9 +567,9 @@ let square &#x3D; &lt;Square&gt;&#123;&#125;; &#x2F;&#x2F; Square类型的对象
 square.color &#x3D; &quot;blue&quot;;
 square.sideLength &#x3D; 10;
 square.penWidth &#x3D; 5.0;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="接口约束-变量的值-为-函数类型"><a href="#接口约束-变量的值-为-函数类型" class="headerlink" title="接口约束 变量的值 为 函数类型"></a>接口约束 变量的值 为 函数类型</h2><p>约束 变量 的值为 特定类型函数</p>
-<p>对于约束 函数变量 的值时,值(函数) 的参数名不需要和接口中一致,<br><strong>只要求 对应位置上的参数类型是兼容的</strong></p>
+<h3 id="约束-变量-为-函数类型"><a href="#约束-变量-为-函数类型" class="headerlink" title="约束 变量 为 函数类型"></a>约束 变量 为 函数类型</h3><p>约束 变量 的值为 特定类型函数</p>
+<p>对于约束 函数变量 的值时,值(函数) 的参数名不需要和接口中一致,</p>
+<p><strong>只要求 对应位置上的参数类型是兼容的</strong></p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SearchFunc &#123;
   (source: string, subString: string): boolean;
 &#125;
@@ -562,11 +580,28 @@ mySearch &#x3D; function(src: string, sub: string): boolean &#123;
   return result &gt; -1;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="接口约束-类的值-的定义"><a href="#接口约束-类的值-的定义" class="headerlink" title="接口约束 类的值 的定义"></a>接口约束 类的值 的定义</h2><p><strong>类 实现(implements) 接口,即完成 接口 对类的约束</strong></p>
+<h3 id="对象字面量会经历额外属性检查"><a href="#对象字面量会经历额外属性检查" class="headerlink" title="对象字面量会经历额外属性检查"></a>对象字面量会经历额外属性检查</h3><p><strong>对象字面量 直接作为函数参数时 会经历 额外属性检查</strong></p>
+<p><strong>将对象赋值给变量 再作为参数 传入函数调用,则不会 检查变量对象上的额外属性</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SquareConfig &#123;
+    height: number;
+    width: number;
+&#125;
+function createSquare(config: SquareConfig):void &#123;&#125;
+&#x2F;&#x2F; 报错error: &#39;color&#39; not expected in type &#39;SquareConfig&#39;
+&#x2F;&#x2F; 因为直接传入了 对象字面量,所以经历了额外属性检查,
+&#x2F;&#x2F; 不允许拥有接口定义外的额外属性
+let mySquare &#x3D; createSquare(&#123;height:100, width: 100,color: &quot;red&quot;&#125;);
+&#x2F;&#x2F; 解决方案1,不适用 对象字面量,改写成对象 再作为参数传入
+let squareOptions &#x3D; &#123; color: &quot;red&quot;, width: 100 &#125;;
+let mySquare &#x3D; createSquare(squareOptions);
+&#x2F;&#x2F; 解决方案2,在 interface SquareConfig 中增加 [propName: string]: any;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="约束-类-的-属性"><a href="#约束-类-的-属性" class="headerlink" title="约束 类 的 属性"></a>约束 类 的 属性</h3><p><strong>类 实现(implements) 接口,即完成 接口 对类的约束</strong></p>
 <p><strong>创建一个类可代表两个类型,静态部分的类型,实例部分的类型</strong></p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable &#123;
     name: string;               &#x2F;&#x2F;约束具有某属性
     speak(words: string): void  &#x2F;&#x2F;约束具有某方法 
+    &#x2F;&#x2F; speak: (words: string) &#x3D;&gt; void &#x2F;&#x2F; 也可以这样写
 &#125;
 class Dog implements Speakable &#123;
     name!: string;
@@ -575,43 +610,38 @@ class Dog implements Speakable &#123;
     &#125;
 &#125;
 let dog &#x3D; new Dog();
-dog.speak(&#39;汪汪汪&#39;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+dog.speak(&#39;汪汪汪&#39;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>但上面的接口Speakable 只约束的是 类的定义(静态类型)</p>
-<h2 id="接口约束-变量的值-为特定-的构造函数-类"><a href="#接口约束-变量的值-为特定-的构造函数-类" class="headerlink" title="接口约束 变量的值 为特定 的构造函数(类)"></a>接口约束 变量的值 为特定 的构造函数(类)</h2><p><strong>不加new是约束变量为函数的,加new是约束变量为 特定(通过约束构造函数)类的</strong></p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface WithNameClass&#123;
-  new(name:string):Animal
+<h3 id="约束-类-的-构造函数"><a href="#约束-类-的-构造函数" class="headerlink" title="约束 类 的 构造函数"></a>约束 类 的 构造函数</h3><p><strong>不加new是约束变量为函数的,加new是 约束 类 的 构造函数的</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; interface SearchFunc &#123;
+&#x2F;&#x2F;   (source: string, subString: string): boolean;
+&#x2F;&#x2F; &#125;
+interface WithNameClass &#123;
+    new(name: string): Animalzhen
 &#125;
-class Animal&#123;
-  constructor(public name:string)&#123;
-  &#125;
+class Animal &#123;
+    constructor(public name: string) &#123;
+    &#125;
 &#125;
 &#x2F;&#x2F; 约束clazz这个对象的构造函数必须带name
-function createAnimal(clazz:WithNameClass,name:string)&#123;
-   return new clazz(name);
+function createAnimal(clazz: WithNameClass, name: string) &#123;
+    return new clazz(name);
 &#125;
-let a &#x3D; createAnimal(Animal,&#39;zhufeng&#39;);
-console.log(a.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+let a &#x3D; createAnimal(Animal, &#39;zhufeng&#39;);
+console.log(a.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="接口约束-变量的值-为特定的-索引"><a href="#接口约束-变量的值-为特定的-索引" class="headerlink" title="接口约束 变量的值 为特定的 索引"></a>接口约束 变量的值 为特定的 索引</h2><p>对数组和对象进行约束</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 表示index必须为number,值必须为string
-interface UserInterface &#123;
-  [index:number]:string
+
+<p>如果这样写会报错，因为此时的Person 描述的是实例,clazz被认为应该是某种对象</p>
+<p>下面改成<code>createInstance(clazz: typeof Person)</code>就可以</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Person&#123;&#125;
+function createInstance(clazz: Person) &#123; &#x2F;&#x2F; clazz被认为应该是对象
+    return new clazz()
+    &#x2F;&#x2F; error: 此表达式不可构造。类型 &quot;Person&quot; 没有构造签名。
 &#125;
-let arr:UserInterface &#x3D; [&#39;lzy1&#39;,&#39;lzy2&#39;];
-console.log(arr);
-&#x2F;&#x2F; 表示键必须是string,值必须是string
-interface UserInterface2 &#123;
-  [index:string]:string
-&#125;
-let obj:UserInterface2 &#x3D; &#123;name:&#39;lzy&#39;&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+let instance &#x3D; createInstance(Person)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface NumberDictionary &#123;
-  [index: string]: number;
-  length: number;    &#x2F;&#x2F; 可以，length是number类型
-  name: string       &#x2F;&#x2F; 错误，&#96;name&#96;的类型与索引类型返回值的类型不匹配
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="接口约束-变量的值-为-混合类型"><a href="#接口约束-变量的值-为-混合类型" class="headerlink" title="接口约束 变量的值 为 混合类型"></a>接口约束 变量的值 为 混合类型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束一个函数,同时这个函数还作为对象加了两个属性
+<h3 id="约束-变量-为-混合类型"><a href="#约束-变量-为-混合类型" class="headerlink" title="约束 变量 为 混合类型"></a>约束 变量 为 混合类型</h3><p>写法为匿名函数的样子，如果写了函数名就变成描述类了</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束一个函数,同时这个函数还作为对象加了两个属性
 interface Counter &#123;
     (start: number): string;
     interval: number;
@@ -625,6 +655,31 @@ function getCounter(): Counter &#123;
 &#125;
 
 let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="约束-变量-的-索引"><a href="#约束-变量-的-索引" class="headerlink" title="约束 变量 的 索引"></a>约束 变量 的 索引</h3><p>对数组和对象进行约束</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 表示index必须为number,值必须为string
+interface UserInterface &#123;
+  [index:number]:string
+&#125;
+let arr:UserInterface &#x3D; [&#39;lzy1&#39;,&#39;lzy2&#39;];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface NumberDictionary &#123;
+  [index: string]: number;
+  length: number;
+  name: string       &#x2F;&#x2F; 错误，必须全为number
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="通过索引访问符来访问接口中的属性类型"><a href="#通过索引访问符来访问接口中的属性类型" class="headerlink" title="通过索引访问符来访问接口中的属性类型(*)"></a>通过索引访问符来访问接口中的属性类型(*)</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">interface</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> string<span class="token punctuation">;</span>
+  <span class="token literal-property property">age</span><span class="token operator">:</span> string<span class="token punctuation">;</span>
+  <span class="token literal-property property">address</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">num</span><span class="token operator">:</span> <span class="token number">316</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+  <span class="token comment">// [key: string]: any;  如果写了任意类型，则去出的val 就是任意类型</span>
+<span class="token punctuation">&#125;</span>
+type PersonName <span class="token operator">=</span> Person<span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+type PersonNum <span class="token operator">=</span> Person<span class="token punctuation">[</span><span class="token string">"address"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"num"</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 316</span>
+type PropTypeUnion <span class="token operator">=</span> keyof Person<span class="token punctuation">;</span> <span class="token comment">// 取key name | age | address</span>
+type PropTypeValueUnion <span class="token operator">=</span> Person<span class="token punctuation">[</span>keyof Person<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 取值 string | &#123;num:316&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -1098,7 +1153,7 @@ let c &#x3D; getCounter();<span aria-hidden="true" class="line-numbers-rows"><sp
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">131.2k</span>&nbsp;字
+                class="white-color">130.6k</span>&nbsp;字
             
             
             

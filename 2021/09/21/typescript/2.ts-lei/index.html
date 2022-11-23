@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    6 分
                 </div>
                 
 
@@ -447,15 +447,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="TS类"><a href="#TS类" class="headerlink" title="TS类"></a>TS类</h1><p>在TS中声明了一个类的时候,实际上声明了两个东西<br>一个是创建了 <strong>类的实例的类型</strong><br>一个是创建了 <strong>一个叫构造函数的值</strong><br>这个 构造函数 会在创建类实例的时候被调用</p>
-<h2 id="如何定义类"><a href="#如何定义类" class="headerlink" title="如何定义类"></a>如何定义类</h2><p>简单定义</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Person&#123;
-    name:string;
-    getName():void&#123;
-        console.log(this.name);
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>存取器 构造函数</p>
+<h2 id="如何定义类"><a href="#如何定义类" class="headerlink" title="如何定义类"></a>如何定义类</h2><p>存取器 构造函数</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class User &#123;
     private myName:string;
     constructor(myName: string) &#123; &#x2F;&#x2F; 构造函数，初始化成员属性
@@ -468,10 +460,44 @@
         this.myName &#x3D; value;
     &#125;
 &#125;
-存取器只有get 没有set 的private属性,会被自动推断为readonly<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#x2F;&#x2F; 存取器只有get 没有set 的private属性,会被自动推断为readonly<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>public: 默认,可以在任何地方使用<br>private: 不可为声明的类的外部访问<br>protected: 在自己和子类中可以访问,其他地方不可以访问</p>
-<p>在 构造函数 参数 前添加修饰符,<br>会自动 声明并初始化 该参数 为类私有成员属性</p>
+<h3 id="类中的-static-和-public-和-get-set"><a href="#类中的-static-和-public-和-get-set" class="headerlink" title="类中的 static 和 public 和 get/set"></a>类中的 static 和 public 和 get/set</h3><p><strong>static挂载在函数对象上</strong></p>
+<p><strong>get/set挂载在原型对象上</strong></p>
+<p><strong>public/private/protected 挂载在实例对象上</strong></p>
+<p>get/set 属性 不可和 public/private/protected 重名，可以和 static 重名</p>
+<p>get/set 属性 编译的target 必须是 ES5及以上</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Animal1</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> type <span class="token operator">=</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> type2 <span class="token operator">=</span> <span class="token string">"1"</span>
+    <span class="token keyword">private</span> type3 <span class="token operator">=</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+    <span class="token keyword">protected</span> type4 <span class="token operator">=</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+    <span class="token keyword">get</span> <span class="token function">type5</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token string">"1"</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Animal1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> Animal1 <span class="token operator">=</span> <span class="token comment">/** @class */</span> <span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">function</span> <span class="token function">Animal1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>type2 <span class="token operator">=</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>type3 <span class="token operator">=</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>type4 <span class="token operator">=</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span><span class="token class-name">Animal1</span><span class="token punctuation">.</span>prototype<span class="token punctuation">,</span> <span class="token string">"type5"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+        <span class="token function-variable function">get</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">enumerable</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">configurable</span><span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Animal1<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> Animal1<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="构造函数-修饰符"><a href="#构造函数-修饰符" class="headerlink" title="构造函数+修饰符"></a>构造函数+修饰符</h3><p>实例上的属性需要先声明在使用</p>
+<p>在 构造函数 参数 前添加修饰符,可省略属性的声明</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class User2 &#123;
     constructor(public myName: string) &#123;&#125;
     get name() &#123;
@@ -484,8 +510,14 @@
 let user &#x3D; new User2(&#39;lzy&#39;);
 console.log(user.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>readonly</strong><br>readonly 修饰的变量 只能在构造函数中初始化<br>readonly 在编译时被检查 const 在运行时被检查</p>
-<p><strong>兼容性</strong><br>在TS中,<br>正常情况 Animal类 的变量 可接收 Employee类型的数据,<br>因为他们类型检查一样(二者都有且仅有name,且假设二者的name是public)<br>但是,比较类型的时候, 如果出现了 private/protected成员,<br>则同时需满足 另一个类也存在这样一个private成员, 且来自于同一处.<br>public修饰的成员则不要求来自同一处</p>
+<h3 id="readonly"><a href="#readonly" class="headerlink" title="readonly"></a>readonly</h3><p>readonly 修饰的变量 只能在构造函数中初始化</p>
+<p>readonly 在编译时被检查 const 在运行时被检查</p>
+<h3 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h3><p>在TS中,</p>
+<p>正常情况 Animal类 的变量 可接收 Employee类型的数据,</p>
+<p>因为他们类型检查一样(二者都有且仅有name,且假设二者的name是public)</p>
+<p>但是,比较类型的时候, 如果出现了 private/protected成员,</p>
+<p>则同时需满足 另一个类也存在这样一个private成员, 且来自于同一处.</p>
+<p>public修饰的成员则不要求来自同一处</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Animal &#123;
     private name: string;
     constructor(theName: string) &#123; this.name &#x3D; theName; &#125;
@@ -1058,7 +1090,7 @@ department.generateReports(); &#x2F;&#x2F; 错误: 方法在声明的抽象类�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">131.2k</span>&nbsp;字
+                class="white-color">130.6k</span>&nbsp;字
             
             
             

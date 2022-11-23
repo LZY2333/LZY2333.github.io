@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    961
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    6 分
                 </div>
                 
 
@@ -447,6 +447,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="TS泛型"><a href="#TS泛型" class="headerlink" title="TS泛型"></a>TS泛型<T></h1><p>泛型（Generics）是指在定义函数、接口或类的时候，不预先指定具体的类型，<br>而在使用的时候再指定类型的一种特性</p>
+<p><strong>使用场景</strong> 入参和返回值的类型有映射关系</p>
+<p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/advance/typescript/7.html#%E4%B8%80-%E6%8C%87%E5%AE%9A%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B">泛型</a></p>
 <h2 id="泛型函数"><a href="#泛型函数" class="headerlink" title="泛型函数"></a>泛型函数</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 泛型简单使用
 function createArray&lt;T&gt;(length: number, value: T): Array&lt;T&gt; &#123;
     let result: T[] &#x3D; [];
@@ -457,6 +459,43 @@ function createArray&lt;T&gt;(length: number, value: T): Array&lt;T&gt; &#123;
   &#125;
 let result &#x3D; createArray2&lt;string&gt;(3,&#39;x&#39;);
 console.log(result);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="泛型type"><a href="#泛型type" class="headerlink" title="泛型type"></a>泛型type</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Cart&lt;T&gt; &#x3D; &#123;list:T[]&#125; | T[];
+let c1:Cart&lt;string&gt; &#x3D; &#123;list:[&#39;1&#39;]&#125;;
+let c2:Cart&lt;number&gt; &#x3D; [1];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>两种使用方法</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 1) 使用接口的时候确定的类型
+type ICallback&lt;T&gt; &#x3D; (item: T, idx: number) &#x3D;&gt; void;
+&#x2F;&#x2F; 2) 在调用函数的时候确定了类型
+type IForEach &#x3D; &lt;T&gt;(arr: T[], callback: ICallback&lt;T&gt;) &#x3D;&gt; void;
+&#x2F;&#x2F; type ICallback1 &#x3D; &lt;T&gt;(item: T, idx: number) &#x3D;&gt; void;
+const forEach: IForEach &#x3D; (arr, callback) &#x3D;&gt; &#123;
+  for (let i &#x3D; 0; i &lt; arr.length; i++) &#123;
+    callback(arr[i], i); &#x2F;&#x2F; callback 没有执行， 所以无法推导arr[i] &#x3D; T
+  &#125;
+&#125;;
+forEach([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, 1], function (item) &#123;
+  console.log(item);
+&#125;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h2><p><strong>约束 变量的值 为 一个泛型函数</strong><br>(须变量使用时赋值T,因为 使用该变量 就相当于 使用 泛型函数)</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Calculate&#123;
+  &lt;T&gt;(a:T,b:T):T
+&#125;
+let add:Calculate &#x3D; function&lt;T&gt;(a:T,b:T)&#123;
+  return a;
+&#125;
+add&lt;number&gt;(1,2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意上下两个例子<code>&lt;T&gt;</code>的位置,以及<code>&lt;T&gt;</code>的赋值时机</p>
+<p><strong>约束 变量的值 为 一个与T相关的函数</strong><br>(须接口使用时赋值T)</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Calculate&lt;T&gt;&#123;
+    (a:T,b:T):T
+&#125;
+let add:Calculate&lt;number&gt; &#x3D; function(a:number,b:number):number&#123;
+    return a;
+&#125;
+add(1,2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class MyArray&lt;T&gt;&#123;
     private list:T[]&#x3D;[];
@@ -482,24 +521,6 @@ class Person &#123;&#125;
 let p &#x3D; factory&lt;Person&gt;(Person)
 console.log(p)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h2><p><strong>约束 变量的值 为 一个泛型函数</strong><br>(须变量使用时赋值T,因为 使用该变量 就相当于 使用 泛型函数)</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Calculate&#123;
-  &lt;T&gt;(a:T,b:T):T
-&#125;
-let add:Calculate &#x3D; function&lt;T&gt;(a:T,b:T)&#123;
-  return a;
-&#125;
-add&lt;number&gt;(1,2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>注意上下两个例子<code>&lt;T&gt;</code>的位置,以及<code>&lt;T&gt;</code>的赋值时机</p>
-<p><strong>约束 变量的值 为 一个与T相关的函数</strong><br>(须接口使用时赋值T)</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Calculate&lt;T&gt;&#123;
-    (a:T,b:T):T
-&#125;
-let add:Calculate&lt;number&gt; &#x3D; function(a:number,b:number):number&#123;
-    return a;
-&#125;
-add(1,2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="传入多个泛型"><a href="#传入多个泛型" class="headerlink" title="传入多个泛型"></a>传入多个泛型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function swap&lt;A,B&gt;(tuple:[A,B]):[B,A]&#123;
   return [tuple[1],tuple[0]];
 &#125;
@@ -508,7 +529,7 @@ console.log(swapped);
 console.log(swapped[0].toFixed(2));
 console.log(swapped[1].length);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="泛型可写默认值"><a href="#泛型可写默认值" class="headerlink" title="泛型可写默认值"></a>泛型可写默认值</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function createArray3&lt;T&#x3D;number&gt;(length: number, value: T): Array&lt;T&gt; &#123;
+<h2 id="泛型默认值"><a href="#泛型默认值" class="headerlink" title="泛型默认值"></a>泛型默认值</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function createArray3&lt;T&#x3D;number&gt;(length: number, value: T): Array&lt;T&gt; &#123;
   let result: T[] &#x3D; [];
   for (let i &#x3D; 0; i &lt; length; i++) &#123;
     result[i] &#x3D; value;
@@ -518,7 +539,8 @@ console.log(swapped[1].length);<span aria-hidden="true" class="line-numbers-rows
 let result2 &#x3D; createArray3(3,&#39;x&#39;);
 console.log(result2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="泛型可被事先约束类型"><a href="#泛型可被事先约束类型" class="headerlink" title="泛型可被事先约束类型"></a>泛型可被事先约束类型</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface LengthWise &#123;
+<h2 id="泛型约束"><a href="#泛型约束" class="headerlink" title="泛型约束"></a>泛型约束</h2><p>只要含有约束的属性就行,可以有额外的属性(或者说范围比约束的还小)</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface LengthWise &#123;
     length: number
 &#125;
 &#x2F;&#x2F;可以让泛型继承一个接口
@@ -536,9 +558,12 @@ function logger2&lt;T extends LengthWise&gt;(val: T) &#123;
     console.log(val.length)
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="带泛型的type"><a href="#带泛型的type" class="headerlink" title="带泛型的type"></a>带泛型的type</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Cart&lt;T&gt; &#x3D; &#123;list:T[]&#125; | T[];
-let c1:Cart&lt;string&gt; &#x3D; &#123;list:[&#39;1&#39;]&#125;;
-let c2:Cart&lt;number&gt; &#x3D; [1];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><strong>extends 联合类型,调用时传入变量的类型,必须小于或等于联合类型(范围更小)</strong></p>
+<p><strong>普通type,调用时传入变量的类型,属性必须多于或等于type(范围更小)</strong></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function getVal&lt;T extends object, U extends keyof T&gt;(obj: T, key: U) &#123;
+  return obj[key];
+&#125;
+getVal(&#123; a: 1, b: 2, c: 3 &#125;, &quot;c&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="compose"><a href="#compose" class="headerlink" title="compose"></a>compose</h2><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Func&lt;T extends any[], R&gt; &#x3D; (...a: T) &#x3D;&gt; R
 
@@ -1066,7 +1091,7 @@ export default function compose(...funcs: Function[]) &#123;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">131.2k</span>&nbsp;字
+                class="white-color">130.6k</span>&nbsp;字
             
             
             
