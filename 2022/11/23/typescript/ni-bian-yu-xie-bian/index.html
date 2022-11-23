@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    1.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
 
@@ -446,23 +446,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="啰嗦但大概率能用-–再次彻底弄懂函数TS检查的逆变与协变"><a href="#啰嗦但大概率能用-–再次彻底弄懂函数TS检查的逆变与协变" class="headerlink" title="啰嗦但大概率能用 –再次彻底弄懂函数TS检查的逆变与协变"></a>啰嗦但大概率能用 –再次彻底弄懂函数TS检查的逆变与协变</h2><p>要理解 __逆变与协变__，</p>
-<ol>
-<li><p>首先要明确，type约束，实际上是约束 <strong>变量</strong> 可以接收哪种类型的 <strong>值</strong></p>
-</li>
-<li><p>其次要理解，对变量来说 函数类型的约束，实际上是 </p>
-</li>
-</ol>
-<p><strong>约束 入参 和 返回值，只要满足这两个要求，赋值什么函数都行</strong></p>
-<p><strong>而兼容性的存在，放宽了对 入参 和 返回值 的要求，做到只要能安全执行就行</strong></p>
-<ol start="3">
-<li>对于函数变量来说，存在 赋值 和 调用，两处类型检查。</li>
-</ol>
-<p><strong>赋值处检查，(函数)变量type 与 (函数)值type 的兼容性</strong></p>
-<p><strong>调用处检查，(函数)变量type 与 (函数)值入参type 的兼容性</strong></p>
-<p><strong>注意! 逆变与协变 这种兼容性 是存在于 赋值处的 兼容性检查，</strong></p>
-<p>而要理解 逆变与协变 的合理性，则要站在 <strong>调用处</strong> 的类型检查角度 来感受。</p>
-<p>这里是总结性发言，第3点没理解不要紧，这次会层层细说。</p>
+                <h2 id="啰嗦但大概率能用-–再次彻底弄懂函数TS检查的逆变与协变"><a href="#啰嗦但大概率能用-–再次彻底弄懂函数TS检查的逆变与协变" class="headerlink" title="啰嗦但大概率能用 –再次彻底弄懂函数TS检查的逆变与协变"></a>啰嗦但大概率能用 –再次彻底弄懂函数TS检查的逆变与协变</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>TypeScript 官网过于简单，对于有后端基础的前端同学来说，可能会看得犯困。</p>
+<p>但兼容性这点，TS官方确实算是另辟蹊径，自开山门，允许你有一些”偷懒”，”不正确”的行为。</p>
+<p>函数类型的变量约束 具有的 逆变特性，更是让人很难想象 规则制定者的精神高度。</p>
+<p>能理解 兼容性， 再学点 内置条件类型，之后，TypeScript 就没有什么坎是过不去的……</p>
+<p>TypeScript函数检查的逆变与协变，属于比较”偏门”的知识点，</p>
+<p>却是TS学习者，不可缺少，却难以逾越的一道天堑。</p>
+<p>当然，TypeScript 同样是 前端学习者，不可缺少，却难以逾越的一道天堑……</p>
 <h3 id="什么是兼容性"><a href="#什么是兼容性" class="headerlink" title="什么是兼容性"></a>什么是兼容性</h3><p>就是说一个被约束了类型的 <strong>变量</strong> ，可以兼容其他类型的 __值__，</p>
 <p>就像 一个被约束类型为父类的 <strong>变量</strong> 依旧可以被 赋值 为子类的实例 <strong>值</strong></p>
 <p>(因为子类必然具有父类的所有属性,这样调用时按父类的标准来调用是安全的)。</p>
@@ -474,14 +464,15 @@
 <h3 id="入参数量上的兼容"><a href="#入参数量上的兼容" class="headerlink" title="入参数量上的兼容"></a>入参数量上的兼容</h3><ol>
 <li><p>变量中 函数类型的约束，为 <strong>入参</strong> 和 <strong>返回值</strong></p>
 </li>
-<li><p>其中， <strong>入参数量的减少可以被兼容(但类型依旧要相同)</strong></p>
+<li><p>其中， <strong>入参数量的减少可以被兼容(但类型依旧要相同,后文省略)</strong></p>
 </li>
 </ol>
-<p><code>sum</code> 被约束为，可以被赋值为 需要两个入参 的函数(而不管这个函数是干啥的)</p>
-<p>而因为兼容性，而实际上 <code>sum</code> 的值 还可以是 只需要一个入参的函数</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type sumFunc &#x3D; (a:number，b:number)&#x3D;&gt;number;
+<p>变量<code>sum</code> 类型被设置为 <code>(a:number, b:number)=&gt;number</code>,</p>
+<p>不考虑兼容性的请客下只有 <code>f1</code> 符合 变量<code>sum</code>的类型,</p>
+<p>而实际应用中,却发现<code>f2</code> <code>f3</code> 也可以被赋值给<code>sum</code></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type sumFunc &#x3D; (a:number, b:number)&#x3D;&gt;number;
 let sum:sumFunc;
-function f1(a:number，b:number):number&#123;
+function f1(a:number, b:number):number&#123;
   return a+b;
 &#125;
 &#x2F;&#x2F;可以省略一个参数
@@ -493,37 +484,52 @@ function f3():number&#123;
     return 0;
 &#125;
  &#x2F;&#x2F;多一个参数可不行
-function f4(a:number，b:number，c:number)&#123;
+function f4(a:number, b:number, c:number)&#123;
     return a+b+c;
 &#125;
 sum &#x3D; f1;
 sum &#x3D; f2;
 sum &#x3D; f3;
-sum &#x3D; f4; &#x2F;&#x2F; 报错<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+sum &#x3D; f4; &#x2F;&#x2F; 报错
 
-<p>由于 <code>sum</code> 被限定了类型 <code>sumFunc</code>，该类型 要两个参数。</p>
-<p>那么在 <code>sum</code> 被调用处，TS就会要求填入两个参数。</p>
-<p>而实际上 <code>sum</code> 代表的函数 代表的值，</p>
-<p>可能是一个只需要一个参数的函数(如:<code>f2</code>，作用就是返回入参)，</p>
+sum(1,2) &#x2F;&#x2F; 被TS要求必须传入两个number入参<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在调用处,TS根据其类型<code>sumFunc</code>要求必须传入两个number入参,<code>sum(1,2)</code></p>
+<p>在调用处,TS不关心,<code>sum</code>的真实值究竟是哪个 f函数,只关心入参.</p>
+<p>在知道调用时只给两个参数的情况下,在赋值处,TS就需要约束好,sum代表的函数,</p>
+<p>那么需要三个参数的<code>f4:(a:number, b:number, c:number) =&gt; number</code>,很显然不能给sum.</p>
+<p><code>f1:(a:number, b:number) =&gt; number</code>, f1完全符合,肯定可以赋值</p>
+<p><code>f2:(a:number) =&gt; number</code> 和 <code>f3:() =&gt; number</code>, 则符合 函数兼容性, 可以赋值.</p>
 <p><code>f2</code>，被传了两个参数，仅仅是用不到第二个参数而已，函数不会因此报错，对吧？</p>
-<p>所以很安全，所以允许 变量<code>sum:sumFunc</code>兼容 值<code>f2</code></p>
+<p>所以很安全，所以允许 变量<code>sum:sumFunc</code>兼容 值<code>f2</code> <code>f1</code></p>
 <p>因为 <strong>兼容性</strong> 的存在，只要是能安全执行，即使不符合 类型<code>sumFunc</code>的定义，</p>
 <p>TS认为 <strong>入参数量减少</strong> 是安全的，是兼容的，所以也给了通过，允许将值<code>f2</code> 赋值给 变量<code>sum</code></p>
-<p>这就是 __兼容性__，存在的合理性。</p>
-<h3 id="缓一缓"><a href="#缓一缓" class="headerlink" title="缓一缓"></a>缓一缓</h3><p>看完第一个例子，应该理解了(再次重复开头的话):</p>
-<p>对变量来说 函数类型的约束，实际上是  <strong>约束 入参 和 返回值，只要满足这两个要求，赋值什么函数都行</strong></p>
-<p>当 <strong>被约束的变量</strong> 与 <strong>其被赋予的值</strong> 存在type差异时，TS将报错， </p>
-<p>但 这种type差异，在一定范围上是被允许而不报错的，这就是 __兼容性__，</p>
-<p>而难以理解的点在于: </p>
-<ol start="0">
-<li><p>允许差异的范围判断标准是什么？ <strong>是否安全</strong></p>
+<p>这就是 为什么允许 <strong>入参数量减少</strong> 被兼容。</p>
+<h3 id="TypeScript函数检查的逆变与协变原理"><a href="#TypeScript函数检查的逆变与协变原理" class="headerlink" title="TypeScript函数检查的逆变与协变原理"></a>TypeScript函数检查的逆变与协变原理</h3><p>要理解 __逆变与协变__，</p>
+<ol>
+<li><p>首先要明确，type约束，实际上是约束 <strong>变量</strong> 可以接收哪种类型的 <strong>值</strong></p>
 </li>
-<li><p>对于函数type来说，这个范围是多大？ <strong>入参数量减少的值 &amp; 符合逆变与协变规则的值</strong></p>
+<li><p>其次要理解，赋值语句，当 <strong>被约束的变量</strong> 与 <strong>其被赋予的值</strong> 存在type差异时，TS将报错， </p>
+<p> 但在满足 <strong>兼容性</strong> 要求的情况下，一定范围内的type差异，是被允许而不报错的。</p>
 </li>
-<li><p>什么是逆变与协变？为什么说这样就安全？</p>
+<li><p>对于函数变量来说，存在 赋值 和 调用，两处类型检查。</p>
 </li>
 </ol>
-<h3 id="入参类型的兼容-逆变-返回值类型的兼容-协变"><a href="#入参类型的兼容-逆变-返回值类型的兼容-协变" class="headerlink" title="入参类型的兼容(逆变) 返回值类型的兼容(协变)"></a>入参类型的兼容(逆变) 返回值类型的兼容(协变)</h3><h3 id="什么是逆变与协变？"><a href="#什么是逆变与协变？" class="headerlink" title="什么是逆变与协变？"></a>什么是逆变与协变？</h3><p><strong>在给限定了 函数类型的变量 赋值函数时</strong></p>
+<p><strong>赋值处检查，变量type 与 值type 的兼容性</strong></p>
+<p><strong>调用处检查，变量type 与 值入参type 的兼容性</strong></p>
+<p><strong>注意! 逆变与协变 是存在于 赋值处的 兼容性检查，</strong></p>
+<p>而要理解 逆变与协变 的合理性，则要站在 <strong>调用处</strong> 的类型检查角度 来感受。</p>
+<p>而难以理解的点在于: </p>
+<ol start="0">
+<li><p>允许差异(兼容性)的范围判断标准是什么？ <strong>是否安全</strong> </p>
+</li>
+<li><p>对于函数type来说，这个兼容性规则是什么？ <strong>入参数量减少的值 &amp; 符合逆变与协变规则的值</strong></p>
+</li>
+<li><p>什么是逆变与协变？入参要求少能理解，为什么说逆变与协变也安全？</p>
+</li>
+</ol>
+<h3 id="什么是逆变与协变？"><a href="#什么是逆变与协变？" class="headerlink" title="什么是逆变与协变？"></a>什么是逆变与协变？</h3><p>入参类型的兼容(逆变) 返回值类型的兼容(协变)</p>
+<p><strong>在给限定了 函数类型的变量 赋值函数时</strong></p>
 <p>赋值给 变量的 函数</p>
 <p>其参数 可以是 比变量类型定义里 要求的属性 更少(逆变)</p>
 <p>返回值 可以是 比变量类型定义里 要求的属性 更多(协变)</p>
@@ -533,17 +539,7 @@ sum &#x3D; f4; &#x2F;&#x2F; 报错<span aria-hidden="true" class="line-numbers-r
 <p><strong>用于赋值的函数的 参数 的属性 必须 比 被赋值的变量的要求 更少</strong></p>
 <p><strong>用于赋值的函数的 返回值 的属性 必须 比 被赋值的变量的要求 更多</strong></p>
 <p>返回值的协变很好理解，这里主要讲逆变</p>
-<h3 id="为什么满足-逆变-会安全"><a href="#为什么满足-逆变-会安全" class="headerlink" title="为什么满足 逆变 会安全"></a>为什么满足 逆变 会安全</h3><p>这里直接复制开头第3点</p>
-<p><strong>赋值处检查，(函数)变量type 与 (函数)值type 的兼容性</strong></p>
-<p><strong>调用处检查，(函数)变量type 与 (函数)值入参type 的兼容性</strong></p>
-<p>调用处TS检查，会要求 入参type，属性数大于等于 变量type的入参约束。</p>
-<p>(传入的属性更多，多余的属性用不到，但是该有的属性都有，很安全!)</p>
-<p>赋值处TS检查，会要求 值type的入参type，<strong>属性数小于等于 变量type的入参约束(逆变)</strong></p>
-<p>变量type 由此有了一个 <strong>承上启下</strong> 的作用,</p>
-<p><strong>真实值的入参type</strong> &lt;= <strong>变量type的入参约束(逆变)</strong> &lt;= <strong>调用时的入参type</strong></p>
-<p>调用处的TS检查已经保证了第二个<code>&lt;=</code>，赋值处存在 <strong>逆变</strong> 则保证了第一个 <code>&lt;=</code>。</p>
-<p>如此则保证了，入参属性是满足函数的调用要求的，那么该次调用就必然是安全的。</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Parent &#123;
+<h3 id="为什么满足-逆变-会安全"><a href="#为什么满足-逆变-会安全" class="headerlink" title="为什么满足 逆变 会安全"></a>为什么满足 逆变 会安全</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Parent &#123;
     house() &#123; &#125;
 &#125;
 class Child extends Parent &#123;
@@ -568,7 +564,18 @@ const fun2: (arg: Child) &#x3D;&gt; Child &#x3D; (arg: Child): Grandson &#x3D;&g
 fun2(new Grandson())
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>逆变确实很难理解，之前写过一篇逆变与协变的文章，现在去看也有点蒙，遂写了一篇新的。</p>
+<p>调用处TS检查，会要求 入参type，属性数大于等于 变量type的入参约束。</p>
+<p>(传入的属性更多，多余的属性用不到，但是该有的属性都有，很安全!)</p>
+<p>赋值处TS检查，会要求 值type的入参type，<strong>属性数小于等于 变量type的入参约束(逆变)</strong></p>
+<p>变量type 由此有了一个 <strong>承上启下</strong> 的作用,</p>
+<p><strong>真实值的入参type</strong> &lt;= <strong>变量type的入参约束(逆变)</strong> &lt;= <strong>调用时的入参type</strong></p>
+<p>调用处的TS检查已经保证了第二个<code>&lt;=</code>，赋值处存在 <strong>逆变</strong> 则保证了第一个 <code>&lt;=</code>。</p>
+<p>如此则保证了，入参属性是满足函数的调用要求的，那么该次调用就必然是安全的。</p>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>本文涉及的知识点:</p>
+<p>1.什么是兼容性.</p>
+<p>2.函数变量兼容性的两种情况.</p>
+<p>3.理解逆变与协变.</p>
+<p>逆变确实很难理解，之前写过一篇逆变与协变的文章，现在去看也有点蒙，遂写了一篇新的。</p>
 <p>看到这里再回去看开头的总结，应该能体会到逆变的逻辑吧？</p>
 <p>本文自己读了很多遍，且基于自己上一篇文章进行改动，已经尽量解释，尽量精简。</p>
 <p>日常熬夜，感谢点赞，欢迎讨论。</p>
@@ -1045,7 +1052,7 @@ fun2(new Grandson())
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">132.4k</span>&nbsp;字
+                class="white-color">132.6k</span>&nbsp;字
             
             
             
