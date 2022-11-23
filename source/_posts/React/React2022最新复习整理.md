@@ -537,6 +537,8 @@ function createDOM(vdom) {
 
 __DOM-Diff的根本目的是复用老真实dom,减少渲染消耗__
 
+`compareTwoVdom`, `updateChildren`
+
 #### 当前节点对比
 
 父vdom或者说当前vdom的比较非常简单
@@ -602,7 +604,7 @@ function updateElement(oldVdom, newVdom) {
 
 __Key属性__,每个子节点通过key属性是否相同,判断是否为同一节点,同一节点保留并复用旧真实dom.
 
-__为什么需要DOM-Diff__
+__为什么子节点对比这么复杂__
 
 因为孩子节点是数组类型,可能存在位置的变换,直接按位对比会有较大误差.
 
@@ -610,9 +612,7 @@ __为什么需要DOM-Diff__
 
 此时新旧节点对比,如果直接按位对比,本可复用的节点,被判定为无法复用,造成性能损耗.
 
-__DOM-Diff只考虑当前层,不考虑跨层移动__
-
-__DOM-Diff算法__
+__子节点对比__
 
 1. 用map储存好oldVChildren, 然后依次一个个检查 newVChildren 数组中的元素, 
 
@@ -852,6 +852,12 @@ function updateContextComponent(oldVdom, newVdom) {
 ### 10. Hooks
 
 见另一文章
+
+__React每次更新都是从根节点开始更新的,全量更新,全量DOM-Diff__
+
+因为React没有依赖收集,也没有watcher对组件数据进行监控,无法精确定位到组件
+
+__类组件 函数组件的触发更新在scheduleUpdate__
 
 ### 11. router原理
 
