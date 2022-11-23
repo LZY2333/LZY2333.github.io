@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
 
@@ -446,7 +446,14 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="啰嗦但大概率有用-–再次彻底弄懂函数TS检查的逆变与协变"><a href="#啰嗦但大概率有用-–再次彻底弄懂函数TS检查的逆变与协变" class="headerlink" title="啰嗦但大概率有用 –再次彻底弄懂函数TS检查的逆变与协变"></a>啰嗦但大概率有用 –再次彻底弄懂函数TS检查的逆变与协变</h2><p>要理解 __逆变与协变__，</p>
+                <h2 id="啰嗦但大概率能用-–再次彻底弄懂函数TS检查的逆变与协变"><a href="#啰嗦但大概率能用-–再次彻底弄懂函数TS检查的逆变与协变" class="headerlink" title="啰嗦但大概率能用 –再次彻底弄懂函数TS检查的逆变与协变"></a>啰嗦但大概率能用 –再次彻底弄懂函数TS检查的逆变与协变</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>TypeScript 官网过于简单，对于有后端基础的前端同学来说，可能会看得犯困。</p>
+<p>但兼容性这点，TS官方确实算是另辟蹊径，自开山门，允许你有一些”偷懒”，”不正确”的行为。</p>
+<p>函数类型的变量约束 具有的 逆变特性，更是让人很难想象 规则制定者的精神高度。</p>
+<p>能理解 兼容性， 再学点 内置条件类型，之后，TypeScript 就没有什么坎是过不去的……</p>
+<p>TypeScript函数检查的逆变与协变，属于比较”偏门”的知识点，</p>
+<p>却是TS学习者，不可缺少，却难以逾越的一道天堑。</p>
+<p>当然，TypeScript 同样是 前端学习者，不可缺少，却难以逾越的一道天堑……</p>
+<h3 id="TypeScript函数检查的逆变与协变原理"><a href="#TypeScript函数检查的逆变与协变原理" class="headerlink" title="TypeScript函数检查的逆变与协变原理"></a>TypeScript函数检查的逆变与协变原理</h3><p>要理解 __逆变与协变__，</p>
 <ol>
 <li><p>首先要明确，type约束，实际上是约束 <strong>变量</strong> 可以接收哪种类型的 <strong>值</strong></p>
 </li>
@@ -464,7 +471,8 @@
 <p>而要理解 逆变与协变 的合理性，则要站在 <strong>调用处</strong> 的类型检查角度 来感受。</p>
 <p>这里是总结性发言，第3点没理解不要紧，这次会层层细说。</p>
 <h3 id="什么是兼容性"><a href="#什么是兼容性" class="headerlink" title="什么是兼容性"></a>什么是兼容性</h3><p>就是说一个被约束了类型的 <strong>变量</strong> ，可以兼容其他类型的 __值__，</p>
-<p>就像 一个被约束类型为父类的 <strong>变量</strong> 依旧可以被 赋值 为子类的实例 <strong>值</strong>(因为子类必然具有父类的所有属性)。</p>
+<p>就像 一个被约束类型为父类的 <strong>变量</strong> 依旧可以被 赋值 为子类的实例 <strong>值</strong></p>
+<p>(因为子类必然具有父类的所有属性,这样调用时按父类的标准来调用是安全的)。</p>
 <p>被 基本类型 接口类型 类类型 函数类型 泛型 约束的 变量，</p>
 <p>均存在不同的兼容性，来放宽值的类型要求。</p>
 <p>这次想要解释的就是 <strong>函数兼容性</strong></p>
@@ -498,9 +506,7 @@ function f4(a:number，b:number，c:number)&#123;
 sum &#x3D; f1;
 sum &#x3D; f2;
 sum &#x3D; f3;
-sum &#x3D; f4; &#x2F;&#x2F; 报错
-
-&#x2F;&#x2F; 返回值的对象 可以多属性，不能比变量要求的返回值少属性<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+sum &#x3D; f4; &#x2F;&#x2F; 报错<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>由于 <code>sum</code> 被限定了类型 <code>sumFunc</code>，该类型 要两个参数。</p>
 <p>那么在 <code>sum</code> 被调用处，TS就会要求填入两个参数。</p>
@@ -568,6 +574,13 @@ const fun2: (arg: Child) &#x3D;&gt; Child &#x3D; (arg: Child): Grandson &#x3D;&g
 &#x2F;&#x2F; 正解，调用处的入参 只能 大于等于 fun2 的type要求
 fun2(new Grandson())
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>逆变确实很难理解，之前写过一篇逆变与协变的文章，现在去看也有点蒙，遂写了一篇新的。</p>
+<p>看到这里再回去看开头的总结，应该能体会到逆变的逻辑吧？</p>
+<p>本文自己读了很多遍，且基于自己上一篇文章进行改动，已经尽量解释，尽量精简。</p>
+<p>日常熬夜，感谢点赞，欢迎讨论。</p>
+<p>寒冬已来，大家应该加紧 “囤货” 啊！</p>
+
                 
             </div>
             <hr/>
@@ -1039,7 +1052,7 @@ fun2(new Grandson())
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">132.3k</span>&nbsp;字
+                class="white-color">132.6k</span>&nbsp;字
             
             
             
