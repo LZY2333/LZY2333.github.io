@@ -23,10 +23,15 @@ React几个重要版本更新, 16 fiber, 16.8 hooks, 18 优先级调度 并发�
 
 ### 1. 代码中所有JSX其实都是函数
 
+总所周知，JSX是一种语法糖，就像`async`函数是`Promise`语法糖一样。
+
+那么，JSX的原型又是什么呢？
+
 __React17以前__
 
 ```js
 const babel = require('@babel/core');
+// 这里先写一段JSX
 const sourceCode = `
 <h1>
   hello<span style={{ color: 'red' }}>world</span>
@@ -82,22 +87,23 @@ console.log(result.code);
 
 React17开始将JSX库单独提出，以便其他库使用JSX语法，而可以不引入React。
 
-> 其实所有框架 组件的 HTML模板部分 都是如此 被打包为 一个函数，当组件被调用时，返回虚拟DOM
+> 其实Vue 组件的 HTML模板部分 也是如此 被编译为 一个函数，当组件被调用时，返回虚拟DOM
 
 ### 2. 函数组件的调用原理
 
+下面是一个非常简单的React项目
 ```js
-function FunctionComponent(props) {
+// 定义一个函数组件,叫XXXXX
+function XXXXX(props) {
     return <h1 className='title' style={{ color: props.color }}>{props.name}:{props.children}</h1>
 }
-let element = <FunctionComponent color="orange" name="luoziyu" age={25} >我是函数组件的儿子</FunctionComponent>
+let element = <XXXXX color="orange" name="luoziyu" age={25} >我是函数组件的儿子</XXXXX>
 console.log(element);
 ReactDOM.render(element, document.getElementById('root'));
 ```
-antd组件库
 
+经过babel编译JSX 打包后 代码为(打包后的代码配上React已可在浏览器中运行)
 ```js
-// 定义一个函数组件,叫XXXXX
 function XXXXX(props) {
     return React.createElement("h1", {
         className: "title",
@@ -135,20 +141,16 @@ ReactDOM.render(element, document.getElementById('root'));
 
 不同的是:
 
-原生节点直接将DOM标签作为 type 传入，函数组件节点则传入 函数本身 作为 type
+原生节点直接将DOM标签('h1')作为 type 传入，函数组件节点则传入 函数本身('XXXXX') 作为 type
 
-(,供后续调用,后面会讲到,注意这个type 就是 函数XXXXX,后续可随时拿出来调用)
+(供后续调用,后面会讲到,注意这个type 就是 函数XXXXX,后续可随时拿出来调用)
 
 这也是为什么函数需要先引入后使用，因为 需要当前执行上下文中存在此函数，才能执行。
 
+组件源码(JSX) --> 打包后的组件代码(createElement()) --> 浏览器运行后的组件返回值(vdom)
 
-
-组件源码(JSX) --> 打包后的组件代码(createElement()) --> 浏览器运行后的组件返回值(描述真实DOM结构的对象)({})
-
-__选择打包为函数，而不是直接打包为虚拟DOM，都返回的是全新的互不影响的虚拟DOM对象__
 
 那么很明显,要理解react, createElement 和 render 这两个函数就是突破口.
-
 ### 3. React.createElement 和 ReactDOM.render 原理
 
 `React.createElement` 很简单,就是根据传入属性返回 虚拟DOM对象，以下称vdom，其中最重要的属性为Type
@@ -156,7 +158,7 @@ __选择打包为函数，而不是直接打包为虚拟DOM，都返回的是全
 ```js
 {
     $$typeof: REACT_ELEMENT,// react元素标识
-    type,//虚拟DOM元素的类型 'div' 'h1' 或 FunctionComponent
+    type,//虚拟DOM元素的类型 'div' 'h1' 或 之前定义的XXXXX函数组件
     ref,
     key,
     props// 这是属性对象 id className style ....
@@ -178,14 +180,10 @@ __选择打包为函数，而不是直接打包为虚拟DOM，都返回的是全
 直到获取到 原生标签产生的真实dom,这层的`createDOM`递归才算结束, 创建真实DOM并返回.
 
 ```js
-/**
- * 需要把虚拟DOM转换成真实DOM并且插入容器中
- * @param {*} vdom 虚拟DOM 
- * @param {*} container 容器
- */
 function render(vdom, container) {
   mount(vdom, container);
 }
+// 把虚拟DOM转换成真实DOM并且插入容器中
 function mount(vdom, container) {
   let newDOM = createDOM(vdom);
   container.appendChild(newDOM);
@@ -238,7 +236,6 @@ function mountFunctionComponent(vdom) {
 
 > 并非每个vdom都有自己对应的真实dom,或者说可能多层vdom对应一个真实dom,因为组件的存在.
 
-
 当前真实DOM完成,__children属性上的子vdom开始渲染真实dom并挂载__
 
 ```js
@@ -279,7 +276,7 @@ function reconcileChildren(children, parentDOM) {
 }
 ```
 
-注意代码: 父真实dom先产生,后完成自己的mount(也就是appendChild)过程,
+注意代码: 父真实dom先产生,却晚于子节点完成自己的mount(也就是appendChild)过程,
 
 子真实dom后产生,却先于父节点完成自己的mount过程,把自己挂在父节点上.
 

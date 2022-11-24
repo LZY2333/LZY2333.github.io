@@ -24,6 +24,10 @@ TS注意:
 2. TS从安全的角度出发，一切为安全考虑
 
 
+[type-challenges](https://github.com/type-challenges/type-challenges)
+
+[TypeScript Puzzles](https://bigfrontend.dev/typescript)
+
 ### typeof keyof 函数this类型约束
 
 TS中:
@@ -373,4 +377,61 @@ typeof 类型查询
 type x = readonly ['1',2,'3']
 function b(a:x) { }
 b(['1',2,'3'])
+```
+
+### 约束变量是一个任意类
+
+```ts
+type clazz = new (...args:any[]): any
+```
+
+### in is 类型保护
+
+in 通过检测实例是否具有某属性，在上下文确定其类型
+```ts
+interface Fish {
+    swimming: string,
+}
+interface Bird {
+    fly: string,
+    leg: number
+}
+function getType(animal: Fish | Bird) {
+    // 此次为js语法，但差异是通过ts来实现的
+    if ('swimming' in animal) {
+        animal // Fish
+    } else {
+        animal // Bird
+    }
+}
+```
+
+通过js无法在上下文确定变量类型，可以使用TS中的 is 返回其确定类型
+
+```ts
+interface Bird {
+  fly: string;
+  kind: "鸟";
+}
+interface Fish {
+  swim: string;
+  kind: "鱼";
+}
+// 纯JS：如果getAnimal中 使用此函数，TS不能能在上下文确定animal类型，并提供类型提示
+function isBird0(animal: Fish | Bird) {
+    return animal.kind === '鸟'
+}
+// JS + TS： 能在上下文确定其类型
+// 工具方法中判断类型的方法 全部需要使用 is 语法
+function isBird(val: Bird | Fish): val is Bird {
+  return val.kind === "鸟"; // 必须是boolean
+}
+
+function getAnimal (animal:Fish | Bird){
+    if(isBird(animal)){
+        animal // 如果用的是 isBird0，此处animal依旧类型为 Fish | Bird
+    }else{
+        animal
+    }
+}
 ```
