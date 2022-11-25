@@ -268,6 +268,7 @@ pet.swim();    // errors:类型“Fish | Bird”上不存在属性“swim”
 
 __二者区别__
 
+&交叉是 属性变多范围变小 联合|是 属性变少范围变大
 ```ts
 interface a1 { j: number, k: number }
 interface a2 { i: number, k: number }
