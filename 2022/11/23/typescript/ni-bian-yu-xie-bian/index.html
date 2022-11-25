@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.9k
+                    2k
                 </div>
                 
 
@@ -467,6 +467,7 @@
 <li><p>其中， <strong>入参数量的减少可以被兼容(但类型依旧要相同,后文省略)</strong></p>
 </li>
 </ol>
+<p>举个很常见的例子 <code>[].forEach()</code> 提供了三个参数，传入的callback函数，可以只用一个。</p>
 <p>变量<code>sum</code> 类型被设置为 <code>(a:number, b:number)=&gt;number</code>,</p>
 <p>不考虑兼容性的请客下只有 <code>f1</code> 符合 变量<code>sum</code>的类型,</p>
 <p>而实际应用中,却发现<code>f2</code> <code>f3</code> 也可以被赋值给<code>sum</code></p>
@@ -505,6 +506,7 @@ sum(1,2) &#x2F;&#x2F; 被TS要求必须传入两个number入参<span aria-hidden
 <p>因为 <strong>兼容性</strong> 的存在，只要是能安全执行，即使不符合 类型<code>sumFunc</code>的定义，</p>
 <p>TS认为 <strong>入参数量减少</strong> 是安全的，是兼容的，所以也给了通过，允许将值<code>f2</code> 赋值给 变量<code>sum</code></p>
 <p>这就是 为什么允许 <strong>入参数量减少</strong> 被兼容。</p>
+<p>逆变也是类似的思维</p>
 <h3 id="TypeScript函数检查的逆变与协变原理"><a href="#TypeScript函数检查的逆变与协变原理" class="headerlink" title="TypeScript函数检查的逆变与协变原理"></a>TypeScript函数检查的逆变与协变原理</h3><p>要理解 __逆变与协变__，</p>
 <ol>
 <li><p>首先要明确，type约束，实际上是约束 <strong>变量</strong> 可以接收哪种类型的 <strong>值</strong></p>
@@ -515,8 +517,8 @@ sum(1,2) &#x2F;&#x2F; 被TS要求必须传入两个number入参<span aria-hidden
 <li><p>对于函数变量来说，存在 赋值 和 调用，两处类型检查。</p>
 </li>
 </ol>
-<p><strong>赋值处检查，变量type 与 值type 的兼容性</strong></p>
-<p><strong>调用处检查，变量type 与 值入参type 的兼容性</strong></p>
+<p><strong>赋值处检查，变量type 与 形参type 的兼容性</strong></p>
+<p><strong>调用处检查，变量type 与 实参type 的兼容性</strong></p>
 <p><strong>注意! 逆变与协变 是存在于 赋值处的 兼容性检查，</strong></p>
 <p>而要理解 逆变与协变 的合理性，则要站在 <strong>调用处</strong> 的类型检查角度 来感受。</p>
 <p>而难以理解的点在于: </p>
@@ -568,7 +570,7 @@ fun2(new Grandson())
 <p>(传入的属性更多，多余的属性用不到，但是该有的属性都有，很安全!)</p>
 <p>赋值处TS检查，会要求 值type的入参type，<strong>属性数小于等于 变量type的入参约束(逆变)</strong></p>
 <p>变量type 由此有了一个 <strong>承上启下</strong> 的作用,</p>
-<p><strong>真实值的入参type</strong> &lt;= <strong>变量type的入参约束(逆变)</strong> &lt;= <strong>调用时的入参type</strong></p>
+<p><strong>形参type</strong> &lt;= <strong>变量type的入参约束(逆变)</strong> &lt;= <strong>实参type</strong></p>
 <p>调用处的TS检查已经保证了第二个<code>&lt;=</code>，赋值处存在 <strong>逆变</strong> 则保证了第一个 <code>&lt;=</code>。</p>
 <p>如此则保证了，入参属性是满足函数的调用要求的，那么该次调用就必然是安全的。</p>
 <h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>本文涉及的知识点:</p>
@@ -815,18 +817,17 @@ fun2(new Grandson())
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/11/23/typescript/ni-bian-yu-xie-bian/">
+                <a href="/2022/11/25/typescript/tc-chang-jian-gong-ju-lei-xing-shou-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="逆变与协变">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="TS碰见的特殊类型收集">
                         
-                        <span class="card-title">逆变与协变</span>
+                        <span class="card-title">TS碰见的特殊类型收集</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -836,9 +837,9 @@ fun2(new Grandson())
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-23
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-25
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -851,7 +852,6 @@ fun2(new Grandson())
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1052,7 +1052,7 @@ fun2(new Grandson())
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">132.6k</span>&nbsp;字
+                class="white-color">133.1k</span>&nbsp;字
             
             
             
