@@ -194,6 +194,17 @@ interface A {
 
 ### 交叉类型& 联合类型|
 
+__根本原理__
+
+&交叉是 属性变多范围变小 联合|是 属性变少范围变大
+```ts
+interface a1 { j: number, k: number }
+interface a2 { i: number, k: number }
+
+type x = keyof (a1 & a2) // j i k
+type x = keyof (a1 | a2) // k
+```
+
 __交叉类型& 是综合了其成员的所有属性的类型,是 其任意 交叉成员的子类__
 
 交叉类型& 属性更多了,约束更多了,所以是子集
@@ -225,6 +236,7 @@ let p1: Person1 = p // OK
 let p2: Person2 = p // OK
 ```
 
+`T & U` 就是 两者属性的集合
 ```ts
 function mixin<T, U>(a: T, b: U): T & U {
     return { ...a, ...b };
@@ -264,29 +276,6 @@ function getSmallPet(): Fish | Bird {
 let pet = getSmallPet();
 pet.layEggs(); // okay
 pet.swim();    // errors:类型“Fish | Bird”上不存在属性“swim”
-```
-
-__二者区别__
-
-&交叉是 属性变多范围变小 联合|是 属性变少范围变大
-```ts
-interface a1 { j: number, k: number }
-interface a2 { i: number, k: number }
-
-// 交叉类型: i j k,一个不能多一个不能少
-let a: a1 & a2 = {
-    j: 1,
-    i: 2,
-    k: 3,
-    // xxx: 4 // error
-}
-// 联合类型: 必须至少具有成员类型之一全部属性,可额外具有其他成员类型属性,不可增加未知属性
-let b: a1 | a2 = {
-    j: 1,
-    i: 2, // j 和 i 可以没有其中之一
-    k: 3,
-    // xxx: 4 // error:只能存在已知类型
-}
 ```
 
 ### 写一个type具有给定type的所有属性 或 部分属性
