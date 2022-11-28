@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.5k
                 </div>
                 
 
@@ -570,7 +570,15 @@ interface A &#123;
   a: () &#x3D;&gt; void &#x2F;&#x2F; 约束类中的实例方法
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>// 对于对象来说有什么区别? 逆变和协变的时候会讲</p>
-<h3 id="交叉类型-amp-联合类型"><a href="#交叉类型-amp-联合类型" class="headerlink" title="交叉类型&amp; 联合类型|"></a>交叉类型&amp; 联合类型|</h3><p><strong>交叉类型&amp; 是综合了其成员的所有属性的类型,是 其任意 交叉成员的子类</strong></p>
+<h3 id="交叉类型-amp-联合类型"><a href="#交叉类型-amp-联合类型" class="headerlink" title="交叉类型&amp; 联合类型|"></a>交叉类型&amp; 联合类型|</h3><p><strong>根本原理</strong></p>
+<p>&amp;交叉是 属性变多范围变小 联合|是 属性变少范围变大</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface a1 &#123; j: number, k: number &#125;
+interface a2 &#123; i: number, k: number &#125;
+
+type x &#x3D; keyof (a1 &amp; a2) &#x2F;&#x2F; j i k
+type x &#x3D; keyof (a1 | a2) &#x2F;&#x2F; k<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>交叉类型&amp; 是综合了其成员的所有属性的类型,是 其任意 交叉成员的子类</strong></p>
 <p>交叉类型&amp; 属性更多了,约束更多了,所以是子集</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Person1 &#123;
     handsome: string;
@@ -598,6 +606,7 @@ let p: Person &#x3D; &#123;
 let p1: Person1 &#x3D; p &#x2F;&#x2F; OK
 let p2: Person2 &#x3D; p &#x2F;&#x2F; OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p><code>T &amp; U</code> 就是 两者属性的集合</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function mixin&lt;T, U&gt;(a: T, b: U): T &amp; U &#123;
     return &#123; ...a, ...b &#125;;
 &#125;
@@ -632,26 +641,6 @@ function getSmallPet(): Fish | Bird &#123;
 let pet &#x3D; getSmallPet();
 pet.layEggs(); &#x2F;&#x2F; okay
 pet.swim();    &#x2F;&#x2F; errors:类型“Fish | Bird”上不存在属性“swim”<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><strong>二者区别</strong></p>
-<p>&amp;交叉是 属性变多范围变小 联合|是 属性变少范围变大</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface a1 &#123; j: number, k: number &#125;
-interface a2 &#123; i: number, k: number &#125;
-
-&#x2F;&#x2F; 交叉类型: i j k,一个不能多一个不能少
-let a: a1 &amp; a2 &#x3D; &#123;
-    j: 1,
-    i: 2,
-    k: 3,
-    &#x2F;&#x2F; xxx: 4 &#x2F;&#x2F; error
-&#125;
-&#x2F;&#x2F; 联合类型: 必须至少具有成员类型之一全部属性,可额外具有其他成员类型属性,不可增加未知属性
-let b: a1 | a2 &#x3D; &#123;
-    j: 1,
-    i: 2, &#x2F;&#x2F; j 和 i 可以没有其中之一
-    k: 3,
-    &#x2F;&#x2F; xxx: 4 &#x2F;&#x2F; error:只能存在已知类型
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="写一个type具有给定type的所有属性-或-部分属性"><a href="#写一个type具有给定type的所有属性-或-部分属性" class="headerlink" title="写一个type具有给定type的所有属性 或 部分属性"></a>写一个type具有给定type的所有属性 或 部分属性</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type LengthWise &#x3D; &#123; a: string, b: number &#125;
 &#x2F;&#x2F; 条件约束
@@ -1233,7 +1222,7 @@ function getAnimal (animal:Fish | Bird)&#123;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">133.1k</span>&nbsp;字
+                class="white-color">133.6k</span>&nbsp;字
             
             
             

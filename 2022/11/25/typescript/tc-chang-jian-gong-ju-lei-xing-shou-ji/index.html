@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    165
+                    765
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -461,11 +461,79 @@
     [P in keyof T]?: T[P];
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="Exclude"><a href="#Exclude" class="headerlink" title="Exclude"></a>Exclude</h3><p><strong>内置</strong></p>
-<p>type中所有属性转换为可选</p>
+<h3 id="Exclude排除"><a href="#Exclude排除" class="headerlink" title="Exclude排除"></a>Exclude排除</h3><p><strong>内置</strong></p>
+<p>T不继承自U就返回T</p>
+<p>一般用于联合类型,去除T中U包含的部分(T和U的差集)</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Exclude&lt;T, U&gt; &#x3D; T extends U ? never : T;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="自定义条件类型——"><a href="#自定义条件类型——" class="headerlink" title="自定义条件类型——-"></a>自定义条件类型——-</h2><h2 id="业务碰见的需求类型—"><a href="#业务碰见的需求类型—" class="headerlink" title="业务碰见的需求类型—-"></a>业务碰见的需求类型—-</h2><h3 id="type中改指定属性为可选"><a href="#type中改指定属性为可选" class="headerlink" title="type中改指定属性为可选"></a>type中改指定属性为可选</h3>
+<h3 id="Extract提取"><a href="#Extract提取" class="headerlink" title="Extract提取"></a>Extract提取</h3><p><strong>内置</strong></p>
+<p>T继承自U就返回T</p>
+<p>一般用于联合类型,提取T中U包含的部分(T和U的交集)</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Extract&lt;T, U&gt; &#x3D; T extends U ? T : never;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="Omit"><a href="#Omit" class="headerlink" title="Omit"></a>Omit</h3><p>type中移除K属性</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Omit&lt;T, K extends keyof any&gt; &#x3D; Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="自定义条件类型——"><a href="#自定义条件类型——" class="headerlink" title="自定义条件类型——-"></a>自定义条件类型——-</h2><h3 id="类型是否相同-并返回指定类型"><a href="#类型是否相同-并返回指定类型" class="headerlink" title="类型是否相同,并返回指定类型"></a>类型是否相同,并返回指定类型</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type isEqual&lt;T, U, Success, Fail&gt; &#x3D; [T] extends [U] ? [U] extends [T] ? Success : Fail : Fail;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="除去T中的string类型以外的属性"><a href="#除去T中的string类型以外的属性" class="headerlink" title="除去T中的string类型以外的属性"></a>除去T中的string类型以外的属性</h3><p>拿到T中,string类型的key的联合类型</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Person &#x3D; &#123;
+    name: string;
+    age: number;
+    address: string;
+&#125;
+type ExtractKeysByValueType0&lt;T, U&gt; &#x3D; &#123;
+    [K in keyof T]: isEqual&lt; T[K], U, K, never &gt;; &#x2F;&#x2F; equal就要这个key,不equal就设定为never
+&#125;
+&#x2F;&#x2F; 建立映射 &#123; name: &quot;name&quot;; age: never; address: &quot;address&quot;; &#125;
+
+type ExtractKeysByValueType1&lt;T, U&gt; &#x3D; &#123;
+    [K in keyof T]: isEqual&lt; T[K], U, K, never&gt;
+&#125;[keyof T] &#x2F;&#x2F; &#123;&#125;拿到了新的类,然后&#123;&#125;[]通过key拿到了值,type取属性.同时具有去掉never的作用
+&#x2F;&#x2F; &quot;name&quot; | &quot;address&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>除去T中的string类型以外的属性</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type ExtractKeysByValueType&lt;T, U&gt; &#x3D; Pick&lt;T, ExtractKeysByValueType1&lt;T, U&gt;&gt;
+&#x2F;&#x2F; &#123; name: string;address: string; &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>除去T中的string类型的属性</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type OmitKeysByValueType1&lt;T, U&gt; &#x3D; &#123;
+    [K in keyof T]: isEqual&lt; T[K], U, never, K&gt; &#x2F;&#x2F; 反一下
+&#125;[keyof T] 
+type OmitKeysByValueType&lt;T, U&gt; &#x3D; Pick&lt;T, OmitKeysByValueType1&lt;T, U&gt;&gt;
+&#x2F;&#x2F; &#123; age: number; &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>除去T中的string类型以外的属性</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type PickKeysByValue&lt;T extends object, U&gt; &#x3D; &#123;
+  &#x2F;&#x2F; as 语法 映射成一个新的变量
+  [K in keyof T as T[K] extends U ? K : never]: T[K];
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看复杂类型的属性"><a href="#查看复杂类型的属性" class="headerlink" title="查看复杂类型的属性"></a>查看复杂类型的属性</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type Compute&lt;T extends object&gt; &#x3D; &#123;
+    [key in keyof T]: T[key];
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="T中指定K改为可选类型"><a href="#T中指定K改为可选类型" class="headerlink" title="T中指定K改为可选类型"></a>T中指定K改为可选类型</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type PartialPropsOptional&lt;T, K extends keyof T&gt; &#x3D; Partial&lt;Pick&lt;T, K&gt;&gt; &amp; Omit&lt;T, K&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="T和U类的交集"><a href="#T和U类的交集" class="headerlink" title="T和U类的交集"></a>T和U类的交集</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type ObjectInter&lt;T extends object, U extends object&gt; &#x3D; Pick&lt;
+  U,
+  Extract&lt;keyof T, keyof U&gt; &#x2F;&#x2F; name,address
+&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="T和U类的差集"><a href="#T和U类的差集" class="headerlink" title="T和U类的差集"></a>T和U类的差集</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 求对象的差集  B - A . Omit+Extract &#x3D;&#x3D; Pick + Exclude
+type ObjectDiff&lt;T extends object, U extends object&gt; &#x3D; Pick&lt;
+  U,
+  Exclude&lt;keyof T, keyof U&gt; &#x2F;&#x2F; name,address
+&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>删除U中与T的交集(T的补集:T+属性成为U)</p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type ObjectComp&lt;T extends object, U extends T&gt; &#x3D; Omit&lt;
+  U,
+  Extract&lt;keyof T, keyof U&gt;
+&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="业务碰见的需求类型—"><a href="#业务碰见的需求类型—" class="headerlink" title="业务碰见的需求类型—-"></a>业务碰见的需求类型—-</h2><h3 id="type中改指定属性为可选"><a href="#type中改指定属性为可选" class="headerlink" title="type中改指定属性为可选"></a>type中改指定属性为可选</h3>
                 
             </div>
             <hr/>
@@ -937,7 +1005,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">133.1k</span>&nbsp;字
+                class="white-color">133.6k</span>&nbsp;字
             
             
             
