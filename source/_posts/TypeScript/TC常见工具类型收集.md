@@ -45,7 +45,7 @@ __内置__
 
 T不继承自U就返回T
 
-一般用于联合类型,去除T中U包含的部分(T和U的差集)
+一般用于联合类型,去除T中U包含的部分(T-U,T和U的差集)
 ```ts
 type Exclude<T, U> = T extends U ? never : T;
 ```
@@ -140,7 +140,7 @@ type ObjectInter<T extends object, U extends object> = Pick<
 
 ### T和U类的差集
 ```ts
-// 求对象的差集  B - A . Omit+Extract == Pick + Exclude
+// 求对象的差集  T - U . Omit+Extract == Pick + Exclude
 type ObjectDiff<T extends object, U extends object> = Pick<
   U,
   Exclude<keyof T, keyof U> // name,address
@@ -155,9 +155,65 @@ type ObjectComp<T extends object, U extends T> = Omit<
 >;
 ```
 
+### U中和T重合的部分覆写T
+```ts
+type A = {
+  name: string;
+  age: number;
+  address: string;
+};
+
+type B = {
+  name: string;
+  address: number;
+  male: boolean;
+};
+
+// A=> {name:string,age:number,address:number}
+
+type Overwrite<T extends object, U extends object> = ObjectInter<T, U> &
+  ObjectDiff<U, T>;
+
+type X4 = Compute<Overwrite<A, B>>;
+// { name: string; address: number; age: number; }
+``` 
+
+### 约束类型为几种类型之一
+
+`type x = Man1 | Man2 | Man3`是不行的，因为这样会允许Man1中出现Man2的属性。
+
+要完成`OrType`需要将其他类型的属性置为 `?:never`,不存在该属性或为never。
+
+```ts
+interface Man1 {
+  fortune: string; // 有钱的男人
+  // funny?: never; // 要完成的效果
+}
+interface Man2 {
+  funny: string; // 风趣的
+}
+interface Man3 {
+  foreign: string;
+}
+
+// U中除去T中的属性，并改为?:never
+type Discard<T, U> = {
+  [K in Exclude<keyof U, keyof T>]?: never;
+};
+
+// U中属性为never并上T，或 T中属性为never并上U
+type OrType<T, U> = (Discard<T, U> & T) | (Discard<U, T> & U);
+
+type ManType = OrType<Man1, OrType<Man2, Man3>>;
+
+let type: ManType = {
+  foreign: "",
+  // funny: undefined,
+  // ss:"" // error：不能有多余属性
+};
+```
 
 ## 业务碰见的需求类型----
 
 
-### type中改指定属性为可选
 
