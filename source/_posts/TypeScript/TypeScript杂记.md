@@ -67,19 +67,30 @@ Ignoring tsconfig.json, compiles the specified files with default compiler optio
 找了半天为啥一直说我target不是es5，明明是在config里配置好了...
 
 
-### 类
+### 类的使用注意事项
 
-所有实例上的属性(constructor中this.挂载的属性)都需先声明后使用
+原型属性 (get xxx 属性访问器来实现) 、原型方法 (`类名.prototype`实现)
 
-正常类中： 原型属性 (get xxx 属性访问器来实现) 、原型方法 Animal.prototype
+实例属性:
 
-实例属性 实例方法  声明在实例上的
+1.指constructor中this.挂载的属性
 
-静态属性 静态方法  类上的
+2.须先声明后使用,或在constructor()内加public等关键字
 
-super 在构造函数中、静态方法中super指向的是父类
+3.实例属性将挂载在实例上
 
-在原型方法中super指向的是父类的原型
+静态属性:
+
+1.static修饰
+
+2.静态属性将挂载在类(函数对象)上
+
+
+super:
+
+1.在构造函数中、静态方法中super指向的是父类
+
+2.在原型方法中super指向的是父类的原型
 
 #### static 和 public 和 get/set 的挂载
 
@@ -150,7 +161,7 @@ const counter: ICount = () => {
 counter.count = 0;
 ```
 
-### 通过索引访问符来访问接口中的属性类型
+### 如何访问type中的属性类型
 
 ```js
 interface Person {
@@ -201,13 +212,19 @@ __根本原理__
 interface a1 { j: number, k: number }
 interface a2 { i: number, k: number }
 
-type x = keyof (a1 & a2) // j i k
-type x = keyof (a1 | a2) // k
+type x1 = keyof (a1 & a2) // j i k
+type x2 = keyof (a1 | a2) // k
+
 ```
 
-__交叉类型& 是综合了其成员的所有属性的类型,是 其任意 交叉成员的子类__
+`let k:a1 = x1`交叉类型& 是其成员类型的子类
 
-交叉类型& 属性更多了,约束更多了,所以是子集
+`let k:x2 = a1`联合类型| 是其成员类型的父类
+
+
+交叉类型& 综合了其成员的所有属性的类型
+
+交叉类型& 属性更多了,约束更多了,范围更小了,所以是子集
 ```ts
 interface Person1 {
     handsome: string;
@@ -236,25 +253,7 @@ let p1: Person1 = p // OK
 let p2: Person2 = p // OK
 ```
 
-`T & U` 就是 两者属性的集合
-```ts
-function mixin<T, U>(a: T, b: U): T & U {
-    return { ...a, ...b };
-}
-type Compute<T> = { [P in keyof T]: T[P] }; // 是个循环
-
-let r = mixin({ a: 1, b: 2 }, { c: 3, b: "2" });
-// 交叉后的结果 涵盖所有的内容
-
-type x = Compute<typeof r>
-//   type x = {
-//     a: number;
-//     b: never;
-//     c: number;
-// }
-```
-
-__联合类型| 表示一个值可以是其成员类型之一,只能调用其成员类型的共有属性__
+联合类型| 表示一个值可以是其成员类型之一,未确定具体类型之前,只能调用其成员类型的共有属性
 
 必须至少具有成员类型之一全部属性,可额外具有其他成员类型属性,不可增加未知属性(似乎有兼容性原理在里面????)
 
@@ -278,34 +277,13 @@ pet.layEggs(); // okay
 pet.swim();    // errors:类型“Fish | Bird”上不存在属性“swim”
 ```
 
-### 写一个type具有给定type的所有属性 或 部分属性
-
-```ts
-type LengthWise = { a: string, b: number }
-// 条件约束
-// extends 属性多于等于LengthWise
-function logger2<T extends LengthWise>(val: T) {
-    console.log(val.a)
-}
-logger2({ a: '1', b: 2, c: '3' })
-// 属性少于等于LengthWise
-// 相当于每个属性都有?的LengthWise
-type key2 = {
-    [key in keyof LengthWise]?: LengthWise[key]
-}
-function logger3(val: key2) {
-    console.log(val.a)
-}
-logger3({ a: '1' })
-```
-
 ### 分发机制引发的问题
 
 __联合类型 通过泛型传入 且 直接作为裸类型使用时,会触发分发机制__
 ```ts
 interface Fish { name: "鱼"; }
 interface Water { type: "水"; }
-interface Bird { name: "鸟"; }
+interface Bird { name: "鸟"; } 
 interface Sky { type: "太空"; }
 
 type SelectType<T> = T extends Fish ? Water : Sky;
@@ -425,3 +403,37 @@ function getAnimal (animal:Fish | Bird){
     }
 }
 ```
+
+### infer 推断
+
+infer表示在 extends 条件语句中待推断的类型变量。
+
+内置条件类型`ReturnType`
+
+意为:如果 T 满足 `(...args: any[]) => infer P` 则返回类型`P`,反正返回类型`any`
+```ts
+type ReturnType<T> = T extends (...args: any[]) => infer P ? P : any;
+```
+
+顺便举个离谱的例子, __反转元组类型__.
+
+如果T满足`[infer L, ...infer R]`,将 L 放入 F 数组,
+
+递归,依次将 L 放入 F 数组,当T中再也拿不出L,返回F数组,完成递归反转.
+```js
+// 第一轮,取到L1放入F.
+// 第二轮,[L2, ...F]中的F就是[L1],L1被放在L2后.
+// ...
+// 最后, T为空,拿不出L,不满足extends,返回已经放满的F.
+export type ReverseTuple<T extends any[], F extends any[] = []> = T extends [
+    infer L,
+    ...infer R
+]
+    ? ReverseTuple<R, [L, ...F]>
+    : F;
+
+type A = ReverseTuple<[string, number, boolean]>; // [boolean, number, string]
+type B = ReverseTuple<[1, 2, 3]>; // [3,2,1]
+type C = ReverseTuple<[]>; // []
+```
+Type中的遍历操作，就是递归完成
