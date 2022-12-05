@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    90
+                    289
                 </div>
                 
 
@@ -447,8 +447,23 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="Vue3核心"><a href="#Vue3核心" class="headerlink" title="Vue3核心"></a>Vue3核心</h2><h3 id="Vue3变化"><a href="#Vue3变化" class="headerlink" title="Vue3变化"></a>Vue3变化</h3><p><strong>模块拆分</strong> 可单独使用Vue的某个模块，如Reactive响应式模块，而不引入整个Vue</p>
-<p><strong>组合式API</strong> 通过TreeShaking实现按需引入，减少打包体积，同时使用更简洁，抽取公共逻辑方便</p>
+<p><strong>组合式API</strong> 通过TreeShaking实现按需引入，使用简洁，减少打包体积，抽取公共逻辑方便，无this指向疑惑</p>
 <p><strong>自定义渲染器</strong> 针对不同平台基于Vue进行对接，更方便</p>
+<h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><h4 id="1-Proxy-解决了defineProperty-多个痛点"><a href="#1-Proxy-解决了defineProperty-多个痛点" class="headerlink" title="1. Proxy 解决了defineProperty 多个痛点"></a>1. Proxy 解决了defineProperty 多个痛点</h4><h4 id="2-Proxy-需要-receiver-和-reflect"><a href="#2-Proxy-需要-receiver-和-reflect" class="headerlink" title="2. Proxy 需要 receiver 和 reflect"></a>2. Proxy 需要 receiver 和 reflect</h4><blockquote>
+<p>Reflect 用于属性绑定this，call用于函数绑定this</p>
+</blockquote>
+<h4 id="3-WeakMap-与-多次代理-与-多层代理"><a href="#3-WeakMap-与-多次代理-与-多层代理" class="headerlink" title="3. WeakMap 与 多次代理 与 多层代理"></a>3. WeakMap 与 多次代理 与 多层代理</h4><p>多次代理: 对 同一对象 进行 多次proxy代理</p>
+<p>多层代理: 对 对象代理返回的proxy对象，进行代理</p>
+<p>这两种情况都需要提前判断，直接返回第一次代理的结果</p>
+<p><strong>多层代理</strong></p>
+<p>Vue3.0的方案, 创建一个反向映射表,Proxy =&gt; 原对象,浪费性能</p>
+<p>现在的方案是, </p>
+<p>在 Proxy 的 get 上增加了一个Proxy标记,</p>
+<p>进行代理前先检查 对象 是否存在该标记 表示已经是个 Proxy 直接返回该 对象</p>
+<blockquote>
+<p>WeakMap 的 key 只能是对象</p>
+</blockquote>
+<h2 id="effect"><a href="#effect" class="headerlink" title="effect"></a>effect</h2><p>顾名思义副作用</p>
 
                 
             </div>
@@ -921,7 +936,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">133.7k</span>&nbsp;字
+                class="white-color">133.9k</span>&nbsp;字
             
             
             
