@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-16
+                    2022-02-24
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    2.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    12 分
+                    11 分
                 </div>
                 
 
@@ -473,23 +473,20 @@
     <span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h3><p>函数调用栈在函数执行结束时就会被销毁，想保存函数组件状态必须在函数之外进行。</p>
-<p>(实际上是用了fiber,本质上是链表,非数组储存,且更复杂)</p>
-<p>每个组件都具有 一个 <strong>数组hookStates</strong> 一个 <strong>下标hookIndex</strong> 初始为0.</p>
+<h3 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h3><p>(实际上是用了fiber,本质上是链表,非数组储存,且更复杂)</p>
+<p>一个 <strong>全局数组hookStates</strong> 一个 <strong>全局下标hookIndex</strong> 初始为0.</p>
 <p>初始化时,</p>
-<p>组件内的 <code>useState</code>(或其他hooks) 随着组件初始化被依次调用,</p>
+<p>整个应用的 <code>useState</code> 随着组件初始化被依次调用,</p>
 <p>每个<code>useState</code> 将数据都放在 <code>hookIndex</code> 对应的 <code>hookStates[hookIndex]</code>中, 最后 <code>hookIndex++</code>.</p>
 <p>也就是说 <code>hookStates[0]</code> 对应第一个 <code>useState</code>, <code>hookStates[1]</code> 对应第二个 <code>useState</code>,以此类推.</p>
 <p>并且，每个 <code>useState</code> 记录下 <code>currentIndex = hookIndex</code>, 也就是自己数据存放的位置，</p>
 <p>当，某个 <code>useState</code> 的 <code>setState</code> 被调用时就修改 <code>hookStates[currentIndex]</code> 的数据，并触发更新.</p>
 <p>更新时，</p>
-<p><strong>React每次更新都是从根节点开始更新的,全量更新,全量DOM-Diff</strong></p>
-<p>再次将 组件内变量 <code>hookIndex</code> 置为 0, </p>
+<p>再次将 全局变量 <code>hookIndex</code> 置为 0, </p>
 <p>这样 第一个 useState 返回 <code>hookStates[hookIndex]</code>，并最后 <code>hookIndex++</code>.</p>
 <p>而 第二个 useState 执行时,又能再次读到 1 位置的数据，并返回.</p>
 <p><strong>这也是为什么react 不允许 条件调用useState,必须保证每次useState顺序相同</strong></p>
 <p><strong>useState只会覆盖原值,不会合并原值</strong></p>
-<p><strong>类组件 函数组件的触发更新在scheduleUpdate</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> hookStates <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 一个全局对象存放了所有函数组件的 useState</span>
 <span class="token keyword">let</span> hookIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token keyword">let</span> scheduleUpdate<span class="token punctuation">;</span>
@@ -503,8 +500,8 @@
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token parameter">initialState</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token comment">// 初次渲染的时候,返回初始值,和 setState。再次渲染函数组件时 还会调用useState,返回的就是 最新state</span>
     hookStates<span class="token punctuation">[</span>hookIndex<span class="token punctuation">]</span> <span class="token operator">=</span> hookStates<span class="token punctuation">[</span>hookIndex<span class="token punctuation">]</span><span class="token operator">||</span>initialState<span class="token punctuation">;</span>
-    <span class="token keyword">const</span> currentIndex <span class="token operator">=</span> hookIndex<span class="token punctuation">;</span>
-    <span class="token keyword">function</span> <span class="token function">setState</span><span class="token punctuation">(</span><span class="token parameter">newState</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token comment">// 产生了闭包，currentIndex初始化之后就不会改变 </span>
+    <span class="token keyword">let</span> currentIndex <span class="token operator">=</span> hookIndex<span class="token punctuation">;</span>
+    <span class="token keyword">function</span> <span class="token function">setState</span><span class="token punctuation">(</span><span class="token parameter">newState</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token keyword">let</span> newState <span class="token operator">=</span> <span class="token keyword">typeof</span> action <span class="token operator">===</span> <span class="token string">'function'</span> <span class="token operator">?</span> <span class="token function">action</span><span class="token punctuation">(</span>oldState<span class="token punctuation">)</span> <span class="token operator">:</span> action<span class="token punctuation">;</span>
         hookStates<span class="token punctuation">[</span>currentIndex<span class="token punctuation">]</span> <span class="token operator">=</span> newState<span class="token punctuation">;</span>
         <span class="token function">scheduleUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -512,7 +509,7 @@
     <span class="token keyword">return</span> <span class="token punctuation">[</span>hookStates<span class="token punctuation">[</span>hookIndex<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span>setState<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token comment">// 每存放完一个state,hookIndex+1,按渲染顺序放好 每个函数组件的state</span>
     <span class="token comment">// 更新渲染的时候每个函数组件都会 再次依次按顺序调用 useState,hookIndex按老顺序++</span>
-    <span class="token comment">// 函数组件的useState都会拿到自己那份 最新的hookStates[hookIndex]值 并返回</span>
+    <span class="token comment">// 每个函数组件都会拿到自己那份 最新的hookStates[hookIndex]值 并返回</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>useState返回的函数setState调用更新 compareTwoVdom,然后 updateChildren,会比较每个child的props是否有变更</p>
@@ -528,31 +525,31 @@
 <h2 id="useCallback-useMemo"><a href="#useCallback-useMemo" class="headerlink" title="useCallback + useMemo"></a>useCallback + useMemo</h2><p>把内联回调函数及依赖项数组作为参数传入 useCallback,它将返回该回调函数的 memoized 版本,依赖项改变时返回新对象。<br>把创建函数和依赖项数组作为参数传入 useMemo,它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
 
-<span class="token keyword">let</span> <span class="token function-variable function">Child</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">&#123;</span> data<span class="token punctuation">,</span> handleClick <span class="token punctuation">&#125;</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">let</span>  <span class="token function-variable function">Child</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">&#123;</span>data<span class="token punctuation">,</span>handleClick<span class="token punctuation">&#125;</span></span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Child render'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">return</span> <span class="token punctuation">(</span>
-    <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">&#123;</span>handleClick<span class="token punctuation">&#125;</span><span class="token operator">></span><span class="token punctuation">&#123;</span>data<span class="token punctuation">.</span>number<span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+     <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">&#123;</span>handleClick<span class="token punctuation">&#125;</span><span class="token operator">></span><span class="token punctuation">&#123;</span>data<span class="token punctuation">.</span>number<span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
   <span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span>
 Child <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span>Child<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>name<span class="token punctuation">,</span> setName<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">'lzy'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>number<span class="token punctuation">,</span> setNumber<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span><span class="token punctuation">[</span>name<span class="token punctuation">,</span>setName<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">'lzy'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span><span class="token punctuation">[</span>number<span class="token punctuation">,</span>setNumber<span class="token punctuation">]</span><span class="token operator">=</span>React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <span class="token keyword">let</span> data <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useMemo</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span> number <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// []数组内的数据变动时,才重新调用函数,返回 新对象</span>
-  <span class="token keyword">let</span> handleClick <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useCallback</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">setNumber</span><span class="token punctuation">(</span>number <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// []数组内的数据变动时,返回 新函数</span>
-  <span class="token comment">//   let data = &#123; data &#125;</span>
-  <span class="token comment">//   let handleClick = () => setNumber(number + 1)</span>
-  <span class="token comment">// 如果按照注释里的写法,输入框的值,修改时,再次渲染函数组件,又会生成新的data,新的handleClick</span>
-  <span class="token comment">// react 在 updateChildren 的时候,就判定Child的组件的props发生了修改,这样就会重新渲染Child组件</span>
-  <span class="token comment">// 而事实上,name属性的修改,并没有涉及Child组件的props</span>
+  <span class="token keyword">let</span> data <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useMemo</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>number<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// []数组内的数据变动时,才重新调用函数,返回 新对象</span>
+  <span class="token keyword">let</span> handleClick <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useCallback</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span> <span class="token function">setNumber</span><span class="token punctuation">(</span>number<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// []数组内的数据变动时,返回 新函数</span>
+    <span class="token comment">//   let data = &#123; data &#125;</span>
+    <span class="token comment">//   let handleClick = () => setNumber(number + 1)</span>
+    <span class="token comment">// 如果按照注释里的写法,输入框的值,修改时,再次渲染函数组件,又会生成新的data,新的handleClick</span>
+    <span class="token comment">// react 在 updateChildren 的时候,就判定Child的组件的props发生了修改,这样就会重新渲染Child组件</span>
+    <span class="token comment">// 而事实上,name属性的修改,并没有涉及Child组件的props</span>
 
-  <span class="token comment">// 而 用上了 useMemo,useCallback 就可以保证 设定的依赖值没变时,返回的还是 第一次创建的对象.</span>
+    <span class="token comment">// 而 用上了 useMemo,useCallback 就可以保证 设定的依赖值没变时,返回的还是 第一次创建的对象.</span>
   <span class="token keyword">return</span> <span class="token punctuation">(</span>
     <span class="token operator">&lt;</span>div<span class="token operator">></span>
-      <span class="token operator">&lt;</span>input type<span class="token operator">=</span><span class="token string">"text"</span> value<span class="token operator">=</span><span class="token punctuation">&#123;</span>name<span class="token punctuation">&#125;</span> onChange<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token parameter">event</span> <span class="token operator">=></span> <span class="token function">setName</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">&#125;</span> <span class="token operator">/</span><span class="token operator">></span>
-      <span class="token operator">&lt;</span>Child data<span class="token operator">=</span><span class="token punctuation">&#123;</span>data<span class="token punctuation">&#125;</span> handleClick<span class="token operator">=</span><span class="token punctuation">&#123;</span>handleClick<span class="token punctuation">&#125;</span> <span class="token operator">/</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span>input type<span class="token operator">=</span><span class="token string">"text"</span> value<span class="token operator">=</span><span class="token punctuation">&#123;</span>name<span class="token punctuation">&#125;</span> onChange<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token parameter">event</span><span class="token operator">=></span><span class="token function">setName</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token operator">/</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span>Child data<span class="token operator">=</span><span class="token punctuation">&#123;</span>data<span class="token punctuation">&#125;</span> handleClick<span class="token operator">=</span><span class="token punctuation">&#123;</span>handleClick<span class="token punctuation">&#125;</span><span class="token operator">/</span><span class="token operator">></span>
     <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
   <span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -577,8 +574,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a>useReducer</h2><p><code>useReducer</code> 相当于 <code>useState</code> 在获取到数据后,再多经过一遍<code>reducer</code>执行一遍,再返回结果.</p>
-<p><code>useState</code>继承自<code>useReducer</code>,</p>
+<h2 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a>useReducer</h2><p><code>useState</code>继承自<code>useReducer</code>,</p>
 <p>接收一个 <code>reducer:(state, action) =&gt; newState</code>,返回<code>[state, dispatch]</code></p>
 <p>在调用<code>dispatch(action)</code>传入<code>action</code>,会传给 <code>reducer</code>,<code>reducer</code> 根据<code>action</code> 处理 <code>oldState</code></p>
 <p>与<code>useState</code>不同,非直接覆盖<code>oldState</code>,</p>
@@ -821,7 +817,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/11/16/react/reacthooks/">https://github.com/LZY2333/LZY2333.github.io/2022/11/16/react/reacthooks/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/02/24/react/reacthooks/">https://github.com/LZY2333/LZY2333.github.io/2022/02/24/react/reacthooks/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1034,13 +1030,13 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/11/22/typescript/7.ts-tiao-jian-lei-xing/">
+                <a href="/2022/03/04/react/reactrouter/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="TS条件类型">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="ReactRouter">
                         
-                        <span class="card-title">TS条件类型</span>
+                        <span class="card-title">ReactRouter</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1051,7 +1047,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-22
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-04
                         </span>
                         <span class="publish-author">
                             
@@ -1068,8 +1064,8 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/TypeScript/">
-                        <span class="chip bg-color">TypeScript</span>
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
                     </a>
                     
                 </div>
@@ -1083,13 +1079,13 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/14/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">
+                <a href="/2022/02/24/react/react-gao-jie-zu-jian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="1.TS基础类型和函数">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="React高阶组件">
                         
-                        <span class="card-title">1.TS基础类型和函数</span>
+                        <span class="card-title">React高阶组件</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1100,7 +1096,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
                             </span>
                         <span class="publish-author">
                             
@@ -1117,8 +1113,8 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/TypeScript/">
-                        <span class="chip bg-color">TypeScript</span>
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
                     </a>
                     
                 </div>
@@ -1265,7 +1261,7 @@ Child <span class="token operator">=</span> React<span class="token punctuation"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">133.8k</span>&nbsp;字
+                class="white-color">133.7k</span>&nbsp;字
             
             
             
