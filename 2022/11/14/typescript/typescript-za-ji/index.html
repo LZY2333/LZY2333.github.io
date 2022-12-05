@@ -486,12 +486,17 @@ let a &#x3D; typeof person
 <p>直接 tsc 运行某文件时会忽略目录下的tsconfig.json文件….</p>
 <p>使用 tsc –help 看可用命令时发现的….</p>
 <p>找了半天为啥一直说我target不是es5，明明是在config里配置好了…</p>
-<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>所有实例上的属性(constructor中this.挂载的属性)都需先声明后使用</p>
-<p>正常类中： 原型属性 (get xxx 属性访问器来实现) 、原型方法 Animal.prototype</p>
-<p>实例属性 实例方法  声明在实例上的</p>
-<p>静态属性 静态方法  类上的</p>
-<p>super 在构造函数中、静态方法中super指向的是父类</p>
-<p>在原型方法中super指向的是父类的原型</p>
+<h3 id="类的使用注意事项"><a href="#类的使用注意事项" class="headerlink" title="类的使用注意事项"></a>类的使用注意事项</h3><p>原型属性 (get xxx 属性访问器来实现) 、原型方法 (<code>类名.prototype</code>实现)</p>
+<p>实例属性:</p>
+<p>1.指constructor中this.挂载的属性</p>
+<p>2.须先声明后使用,或在constructor()内加public等关键字</p>
+<p>3.实例属性将挂载在实例上</p>
+<p>静态属性:</p>
+<p>1.static修饰</p>
+<p>2.静态属性将挂载在类(函数对象)上</p>
+<p>super:</p>
+<p>1.在构造函数中、静态方法中super指向的是父类</p>
+<p>2.在原型方法中super指向的是父类的原型</p>
 <h4 id="static-和-public-和-get-set-的挂载"><a href="#static-和-public-和-get-set-的挂载" class="headerlink" title="static 和 public 和 get/set 的挂载"></a>static 和 public 和 get/set 的挂载</h4><p><strong>static挂载在函数对象上</strong></p>
 <p><strong>get/set挂载在原型对象上</strong></p>
 <p><strong>public/private/protected 挂载在实例对象上</strong></p>
@@ -543,7 +548,7 @@ let a &#x3D; typeof person
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 counter<span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="通过索引访问符来访问接口中的属性类型"><a href="#通过索引访问符来访问接口中的属性类型" class="headerlink" title="通过索引访问符来访问接口中的属性类型"></a>通过索引访问符来访问接口中的属性类型</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">interface</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
+<h3 id="如何访问type中的属性类型"><a href="#如何访问type中的属性类型" class="headerlink" title="如何访问type中的属性类型"></a>如何访问type中的属性类型</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">interface</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
   <span class="token literal-property property">name</span><span class="token operator">:</span> string<span class="token punctuation">;</span>
   <span class="token literal-property property">age</span><span class="token operator">:</span> string<span class="token punctuation">;</span>
   <span class="token literal-property property">address</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
@@ -575,11 +580,14 @@ interface A &#123;
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface a1 &#123; j: number, k: number &#125;
 interface a2 &#123; i: number, k: number &#125;
 
-type x &#x3D; keyof (a1 &amp; a2) &#x2F;&#x2F; j i k
-type x &#x3D; keyof (a1 | a2) &#x2F;&#x2F; k<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+type x1 &#x3D; keyof (a1 &amp; a2) &#x2F;&#x2F; j i k
+type x2 &#x3D; keyof (a1 | a2) &#x2F;&#x2F; k
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>交叉类型&amp; 是综合了其成员的所有属性的类型,是 其任意 交叉成员的子类</strong></p>
-<p>交叉类型&amp; 属性更多了,约束更多了,所以是子集</p>
+<p><code>let k:a1 = x1</code>交叉类型&amp; 是其成员类型的子类</p>
+<p><code>let k:x2 = a1</code>联合类型| 是其成员类型的父类</p>
+<p>交叉类型&amp; 综合了其成员的所有属性的类型</p>
+<p>交叉类型&amp; 属性更多了,约束更多了,范围更小了,所以是子集</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Person1 &#123;
     handsome: string;
     address: &#123;
@@ -606,23 +614,7 @@ let p: Person &#x3D; &#123;
 let p1: Person1 &#x3D; p &#x2F;&#x2F; OK
 let p2: Person2 &#x3D; p &#x2F;&#x2F; OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><code>T &amp; U</code> 就是 两者属性的集合</p>
-<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">function mixin&lt;T, U&gt;(a: T, b: U): T &amp; U &#123;
-    return &#123; ...a, ...b &#125;;
-&#125;
-type Compute&lt;T&gt; &#x3D; &#123; [P in keyof T]: T[P] &#125;; &#x2F;&#x2F; 是个循环
-
-let r &#x3D; mixin(&#123; a: 1, b: 2 &#125;, &#123; c: 3, b: &quot;2&quot; &#125;);
-&#x2F;&#x2F; 交叉后的结果 涵盖所有的内容
-
-type x &#x3D; Compute&lt;typeof r&gt;
-&#x2F;&#x2F;   type x &#x3D; &#123;
-&#x2F;&#x2F;     a: number;
-&#x2F;&#x2F;     b: never;
-&#x2F;&#x2F;     c: number;
-&#x2F;&#x2F; &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><strong>联合类型| 表示一个值可以是其成员类型之一,只能调用其成员类型的共有属性</strong></p>
+<p>联合类型| 表示一个值可以是其成员类型之一,未确定具体类型之前,只能调用其成员类型的共有属性</p>
 <p>必须至少具有成员类型之一全部属性,可额外具有其他成员类型属性,不可增加未知属性(似乎有兼容性原理在里面????)</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Bird &#123;
     fly();
@@ -642,27 +634,10 @@ let pet &#x3D; getSmallPet();
 pet.layEggs(); &#x2F;&#x2F; okay
 pet.swim();    &#x2F;&#x2F; errors:类型“Fish | Bird”上不存在属性“swim”<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="写一个type具有给定type的所有属性-或-部分属性"><a href="#写一个type具有给定type的所有属性-或-部分属性" class="headerlink" title="写一个type具有给定type的所有属性 或 部分属性"></a>写一个type具有给定type的所有属性 或 部分属性</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type LengthWise &#x3D; &#123; a: string, b: number &#125;
-&#x2F;&#x2F; 条件约束
-&#x2F;&#x2F; extends 属性多于等于LengthWise
-function logger2&lt;T extends LengthWise&gt;(val: T) &#123;
-    console.log(val.a)
-&#125;
-logger2(&#123; a: &#39;1&#39;, b: 2, c: &#39;3&#39; &#125;)
-&#x2F;&#x2F; 属性少于等于LengthWise
-&#x2F;&#x2F; 相当于每个属性都有?的LengthWise
-type key2 &#x3D; &#123;
-    [key in keyof LengthWise]?: LengthWise[key]
-&#125;
-function logger3(val: key2) &#123;
-    console.log(val.a)
-&#125;
-logger3(&#123; a: &#39;1&#39; &#125;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="分发机制引发的问题"><a href="#分发机制引发的问题" class="headerlink" title="分发机制引发的问题"></a>分发机制引发的问题</h3><p><strong>联合类型 通过泛型传入 且 直接作为裸类型使用时,会触发分发机制</strong></p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Fish &#123; name: &quot;鱼&quot;; &#125;
 interface Water &#123; type: &quot;水&quot;; &#125;
-interface Bird &#123; name: &quot;鸟&quot;; &#125;
+interface Bird &#123; name: &quot;鸟&quot;; &#125; 
 interface Sky &#123; type: &quot;太空&quot;; &#125;
 
 type SelectType&lt;T&gt; &#x3D; T extends Fish ? Water : Sky;
@@ -753,6 +728,31 @@ function getAnimal (animal:Fish | Bird)&#123;
         animal
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="infer-推断"><a href="#infer-推断" class="headerlink" title="infer 推断"></a>infer 推断</h3><p>infer表示在 extends 条件语句中待推断的类型变量。</p>
+<p>内置条件类型<code>ReturnType</code></p>
+<p>意为:如果 T 满足 <code>(...args: any[]) =&gt; infer P</code> 则返回类型<code>P</code>,反正返回类型<code>any</code></p>
+<pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">type ReturnType&lt;T&gt; &#x3D; T extends (...args: any[]) &#x3D;&gt; infer P ? P : any;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>顺便举个离谱的例子, <strong>反转元组类型</strong>.</p>
+<p>如果T满足<code>[infer L, ...infer R]</code>,将 L 放入 F 数组,</p>
+<p>递归,依次将 L 放入 F 数组,当T中再也拿不出L,返回F数组,完成递归反转.</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 第一轮,取到L1放入F.</span>
+<span class="token comment">// 第二轮,[L2, ...F]中的F就是[L1],L1被放在L2后.</span>
+<span class="token comment">// ...</span>
+<span class="token comment">// 最后, T为空,拿不出L,不满足extends,返回已经放满的F.</span>
+<span class="token keyword">export</span> type ReverseTuple<span class="token operator">&lt;</span><span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token class-name">any</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">F</span> <span class="token keyword">extends</span> <span class="token class-name">any</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token operator">=</span> <span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token punctuation">[</span>
+    infer <span class="token constant">L</span><span class="token punctuation">,</span>
+    <span class="token operator">...</span>infer <span class="token constant">R</span>
+<span class="token punctuation">]</span>
+    <span class="token operator">?</span> ReverseTuple<span class="token operator">&lt;</span><span class="token constant">R</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token constant">L</span><span class="token punctuation">,</span> <span class="token operator">...</span><span class="token constant">F</span><span class="token punctuation">]</span><span class="token operator">></span>
+    <span class="token operator">:</span> <span class="token constant">F</span><span class="token punctuation">;</span>
+
+type <span class="token constant">A</span> <span class="token operator">=</span> ReverseTuple<span class="token operator">&lt;</span><span class="token punctuation">[</span>string<span class="token punctuation">,</span> number<span class="token punctuation">,</span> boolean<span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">;</span> <span class="token comment">// [boolean, number, string]</span>
+type <span class="token constant">B</span> <span class="token operator">=</span> ReverseTuple<span class="token operator">&lt;</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">;</span> <span class="token comment">// [3,2,1]</span>
+type <span class="token constant">C</span> <span class="token operator">=</span> ReverseTuple<span class="token operator">&lt;</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">;</span> <span class="token comment">// []</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Type中的遍历操作，就是递归完成</p>
+
                 
             </div>
             <hr/>
@@ -1222,7 +1222,7 @@ function getAnimal (animal:Fish | Bird)&#123;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">133.9k</span>&nbsp;字
+                class="white-color">133.8k</span>&nbsp;字
             
             
             

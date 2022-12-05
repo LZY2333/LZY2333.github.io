@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    2.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    9 分
                 </div>
                 
 
@@ -692,6 +692,7 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>更优的解法,头插法</p>
+<p>把下一个标记出来，再插入头部之后。</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">reverseBetween</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 设置 dummyNode 是这一类问题的一般做法</span>
     <span class="token keyword">const</span> dummy_node <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -711,84 +712,25 @@
     <span class="token keyword">return</span> dummy_node<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="8、复制带随机指针的链表（-LeetCode-138-）"><a href="#8、复制带随机指针的链表（-LeetCode-138-）" class="headerlink" title="8、复制带随机指针的链表（ LeetCode 138 ）"></a>8、复制带随机指针的链表（ LeetCode 138 ）</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">copyRandomList</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>head <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token keyword">null</span> <span class="token punctuation">&#125;</span>
-        <span class="token keyword">let</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// map记录结点</span>
-        <span class="token keyword">let</span> cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            map<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>cur<span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 先创建一个个新节点，并储存</span>
-            cur <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">const</span> curNode <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span>
-            curNode<span class="token punctuation">.</span>next <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token operator">?</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token operator">:</span><span class="token keyword">null</span> <span class="token comment">// 根据旧节点，从hashMap拿到新节点</span>
-            curNode<span class="token punctuation">.</span>random <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>random<span class="token punctuation">)</span>
-            cur <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="自己的解法"><a href="#自己的解法" class="headerlink" title="自己的解法"></a>自己的解法</h2><h3 id="4-合并两个有序链表"><a href="#4-合并两个有序链表" class="headerlink" title="4. 合并两个有序链表"></a>4. 合并两个有序链表</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">mergeTwoLists</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">l1<span class="token punctuation">,</span> l2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token keyword">let</span> h1 <span class="token operator">=</span> l1
-    <span class="token keyword">let</span> h2 <span class="token operator">=</span> l2
-    <span class="token keyword">let</span> r <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">let</span> rHEAD <span class="token operator">=</span> r
-
-    <span class="token keyword">while</span><span class="token punctuation">(</span>h1 <span class="token operator">&amp;&amp;</span> h2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>h1<span class="token punctuation">.</span>val <span class="token operator">&lt;=</span> h2<span class="token punctuation">.</span>val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            r<span class="token punctuation">.</span>next <span class="token operator">=</span> h1
-            h1 <span class="token operator">=</span> h1<span class="token punctuation">.</span>next
-        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            r<span class="token punctuation">.</span>next <span class="token operator">=</span> h2
-            h2 <span class="token operator">=</span> h2<span class="token punctuation">.</span>next
-        <span class="token punctuation">&#125;</span>
-        r <span class="token operator">=</span> r<span class="token punctuation">.</span>next
+<h2 id="8、复制带随机指针的链表（-LeetCode-138-）"><a href="#8、复制带随机指针的链表（-LeetCode-138-）" class="headerlink" title="8、复制带随机指针的链表（ LeetCode 138 ）"></a>8、复制带随机指针的链表（ LeetCode 138 ）</h2><p>先创建一批具有val的新节点，制作新旧node的映射，再循环原链表，通过原node，拿到新node，并赋值next，random等。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">copyRandomList</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>head <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token keyword">null</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">let</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// map记录结点</span>
+    <span class="token keyword">let</span> cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        map<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>cur<span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 先创建一个个新节点，并储存</span>
+        cur <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    r<span class="token punctuation">.</span>next <span class="token operator">=</span> h1 <span class="token operator">?</span> h1 <span class="token operator">:</span> h2
-
-    <span class="token keyword">return</span> rHEAD<span class="token punctuation">.</span>next
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="5-分隔链表"><a href="#5-分隔链表" class="headerlink" title="5.分隔链表"></a>5.分隔链表</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 用的是插入排序的思路，在链表里无法体现</span>
-<span class="token comment">// 但是如果是数组，则相当于原地排序，空间占用更优</span>
-<span class="token keyword">var</span> <span class="token function-variable function">partition</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> x</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> p1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// p1称为 小末尾指针，左侧是 小数组，右侧是 大数组</span>
-    <span class="token keyword">let</span> p2 <span class="token operator">=</span> <span class="token keyword">null</span> <span class="token comment">// 巡游指针</span>
-    p1<span class="token punctuation">.</span>next <span class="token operator">=</span> head
-    <span class="token comment">// 需要有个指针记录头部，因为原始的head前可能被插值，如:[2,1] 2</span>
-    <span class="token keyword">let</span> result <span class="token operator">=</span> p1
-    
-    <span class="token comment">// 找到最后一个连续的小于x的节点 </span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>p1<span class="token punctuation">.</span>next <span class="token operator">&amp;&amp;</span> p1<span class="token punctuation">.</span>next<span class="token punctuation">.</span>val <span class="token operator">&lt;</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        p1 <span class="token operator">=</span> p1<span class="token punctuation">.</span>next
+    cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> curNode <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span>
+        curNode<span class="token punctuation">.</span>next <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token operator">?</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token operator">:</span><span class="token keyword">null</span> <span class="token comment">// 根据旧节点，从hashMap拿到新节点</span>
+        curNode<span class="token punctuation">.</span>random <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>random<span class="token punctuation">)</span>
+        cur <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    p2 <span class="token operator">=</span> p1<span class="token punctuation">.</span>next
-    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>p2<span class="token punctuation">)</span> <span class="token keyword">return</span> head
-    <span class="token keyword">while</span><span class="token punctuation">(</span>p2<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 循环判断下一个节点 是否需要插入到 小数组内</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>p2<span class="token punctuation">.</span>next<span class="token punctuation">.</span>val <span class="token operator">&lt;</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">// 记录 小节点，并删除</span>
-            <span class="token keyword">const</span> temp1 <span class="token operator">=</span> p2<span class="token punctuation">.</span>next
-            p2<span class="token punctuation">.</span>next <span class="token operator">=</span> temp1<span class="token punctuation">.</span>next
-            <span class="token comment">// 插入 小节点 到 小数组末尾</span>
-            temp1<span class="token punctuation">.</span>next <span class="token operator">=</span> p1<span class="token punctuation">.</span>next
-            p1<span class="token punctuation">.</span>next <span class="token operator">=</span> temp1
-            <span class="token comment">// 小末尾指针 后移</span>
-            p1 <span class="token operator">=</span> p1<span class="token punctuation">.</span>next
-        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 如果大于等于，就指针后移，小于则不需要，因为下一个节点已经被删了，相当于后移了</span>
-            p2 <span class="token operator">=</span> p2<span class="token punctuation">.</span>next
-        <span class="token punctuation">&#125;</span>
-        
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> result<span class="token punctuation">.</span>next
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="移除链表元素（-LeetCode-203-）"><a href="#移除链表元素（-LeetCode-203-）" class="headerlink" title="移除链表元素（ LeetCode 203 ）"></a>移除链表元素（ LeetCode 203 ）</h2><p>简单题</p>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-linked-list-elements/submissions/">leetcode</a></p>
+    <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="移除链表元素（-LeetCode-203-）"><a href="#移除链表元素（-LeetCode-203-）" class="headerlink" title="移除链表元素（ LeetCode 203 ）"></a>移除链表元素（ LeetCode 203 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-linked-list-elements/submissions/">leetcode</a></p>
 <p>```js<br>var removeElements = function(head, val) {<br>    if(head === null) return null<br>    let tmpHead = new ListNode(-1) // 可能删除头节点的都得先设置伪头部<br>    tmpHead.next = head</p>
 <pre><code>let cur = tmpHead
 while(cur.next) &#123;
@@ -1272,7 +1214,7 @@ return tmpHead.next
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">133.9k</span>&nbsp;字
+                class="white-color">133.8k</span>&nbsp;字
             
             
             
