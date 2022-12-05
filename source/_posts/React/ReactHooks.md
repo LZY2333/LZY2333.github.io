@@ -1,6 +1,6 @@
 ---
 title: ReactHooks
-date: 2022-11-16 23:51:23
+date: 2022-02-24 21:28:09
 categories: 技术栈
 tags: 
     - React
@@ -54,15 +54,13 @@ function App(){
 
 ### 简单实现
 
-函数调用栈在函数执行结束时就会被销毁，想保存函数组件状态必须在函数之外进行。
-
 (实际上是用了fiber,本质上是链表,非数组储存,且更复杂)
 
-每个组件都具有 一个 __数组hookStates__ 一个 __下标hookIndex__ 初始为0.
+一个 __全局数组hookStates__ 一个 __全局下标hookIndex__ 初始为0.
 
 初始化时,
  
-组件内的 `useState`(或其他hooks) 随着组件初始化被依次调用,
+整个应用的 `useState` 随着组件初始化被依次调用,
 
 每个`useState` 将数据都放在 `hookIndex` 对应的 `hookStates[hookIndex]`中, 最后 `hookIndex++`.
 
@@ -74,9 +72,7 @@ function App(){
 
 更新时，
 
-__React每次更新都是从根节点开始更新的,全量更新,全量DOM-Diff__
-
-再次将 组件内变量 `hookIndex` 置为 0, 
+再次将 全局变量 `hookIndex` 置为 0, 
 
 这样 第一个 useState 返回 `hookStates[hookIndex]`，并最后 `hookIndex++`.
 
@@ -85,8 +81,6 @@ __React每次更新都是从根节点开始更新的,全量更新,全量DOM-Diff
 __这也是为什么react 不允许 条件调用useState,必须保证每次useState顺序相同__
 
 __useState只会覆盖原值,不会合并原值__
-
-__类组件 函数组件的触发更新在scheduleUpdate__
 
 ```js
 let hookStates = []; // 一个全局对象存放了所有函数组件的 useState
@@ -102,8 +96,8 @@ function render(vdom, container) {
 export function useState(initialState){
     // 初次渲染的时候,返回初始值,和 setState。再次渲染函数组件时 还会调用useState,返回的就是 最新state
     hookStates[hookIndex] = hookStates[hookIndex]||initialState;
-    const currentIndex = hookIndex;
-    function setState(newState){ // 产生了闭包，currentIndex初始化之后就不会改变 
+    let currentIndex = hookIndex;
+    function setState(newState){
         let newState = typeof action === 'function' ? action(oldState) : action;
         hookStates[currentIndex] = newState;
         scheduleUpdate();
@@ -111,7 +105,7 @@ export function useState(initialState){
     return [hookStates[hookIndex++],setState];
     // 每存放完一个state,hookIndex+1,按渲染顺序放好 每个函数组件的state
     // 更新渲染的时候每个函数组件都会 再次依次按顺序调用 useState,hookIndex按老顺序++
-    // 函数组件的useState都会拿到自己那份 最新的hookStates[hookIndex]值 并返回
+    // 每个函数组件都会拿到自己那份 最新的hookStates[hookIndex]值 并返回
 }
 ```
 
@@ -139,31 +133,31 @@ const onClick = ()=>{
 ```js
 import React from 'react';
 
-let Child = ({ data, handleClick }) => {
+let  Child = ({data,handleClick})=>{
   console.log('Child render');
   return (
-    <button onClick={handleClick}>{data.number}</button>
+     <button onClick={handleClick}>{data.number}</button>
   )
 }
 Child = React.memo(Child);
 
-function App() {
-  const [name, setName] = React.useState('lzy');
-  const [number, setNumber] = React.useState(0);
+function App(){
+  const[name,setName] = React.useState('lzy');
+  const[number,setNumber]=React.useState(0);
 
-  let data = React.useMemo(() => ({ number }), [number]); // []数组内的数据变动时,才重新调用函数,返回 新对象
-  let handleClick = React.useCallback(() => setNumber(number + 1), [number]);// []数组内的数据变动时,返回 新函数
-  //   let data = { data }
-  //   let handleClick = () => setNumber(number + 1)
-  // 如果按照注释里的写法,输入框的值,修改时,再次渲染函数组件,又会生成新的data,新的handleClick
-  // react 在 updateChildren 的时候,就判定Child的组件的props发生了修改,这样就会重新渲染Child组件
-  // 而事实上,name属性的修改,并没有涉及Child组件的props
+  let data = React.useMemo(()=>({number}),[number]); // []数组内的数据变动时,才重新调用函数,返回 新对象
+  let handleClick = React.useCallback(()=> setNumber(number+1),[number]);// []数组内的数据变动时,返回 新函数
+    //   let data = { data }
+    //   let handleClick = () => setNumber(number + 1)
+    // 如果按照注释里的写法,输入框的值,修改时,再次渲染函数组件,又会生成新的data,新的handleClick
+    // react 在 updateChildren 的时候,就判定Child的组件的props发生了修改,这样就会重新渲染Child组件
+    // 而事实上,name属性的修改,并没有涉及Child组件的props
 
-  // 而 用上了 useMemo,useCallback 就可以保证 设定的依赖值没变时,返回的还是 第一次创建的对象.
+    // 而 用上了 useMemo,useCallback 就可以保证 设定的依赖值没变时,返回的还是 第一次创建的对象.
   return (
     <div>
-      <input type="text" value={name} onChange={event => setName(event.target.value)} />
-      <Child data={data} handleClick={handleClick} />
+      <input type="text" value={name} onChange={event=>setName(event.target.value)}/>
+      <Child data={data} handleClick={handleClick}/>
     </div>
   )
 }
@@ -193,8 +187,6 @@ export  function useMemo(factory,dependencies){
 ```
 
 ## useReducer
-
-`useReducer` 相当于 `useState` 在获取到数据后,再多经过一遍`reducer`执行一遍,再返回结果.
 
 `useState`继承自`useReducer`,
 
