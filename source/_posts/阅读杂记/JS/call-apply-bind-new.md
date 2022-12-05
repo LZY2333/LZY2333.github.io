@@ -281,4 +281,3 @@ function myNew(constructor, ...args) {
 [JavaScript深入之new的模拟实现](https://github.com/mqyqingfeng/Blog/issues/13)
 
 [面试官问：能否模拟实现JS的new操作符](https://juejin.cn/post/6844903704663949325#heading-7)
-## 手写Promise

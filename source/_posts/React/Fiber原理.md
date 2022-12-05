@@ -14,6 +14,9 @@ React Fiber 是 React 核心算法的重新实现。
 
 它的主要特点是渐进式渲染: 能够将渲染工作分割成块，并将其分散到多个帧。
 
+fiber 结构就是为实现并发而准备的。
+
+[神光大佬的彻底搞懂 React 18 并发机制的原理](https://mp.weixin.qq.com/s/mQ2xQi9K1d6idAAsQSw0Mw)
 #### Fiber解决卡顿
 
 React15更新时 采用深度优先遍历 递归比对vdom树 同步更新变动的节点 的策略 (__Reconciliation协调__ 阶段)
