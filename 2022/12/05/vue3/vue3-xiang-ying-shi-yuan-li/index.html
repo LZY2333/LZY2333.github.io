@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Vue3核心, 懒前端">
+    <meta name="keywords" content="Vue3响应式原理, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Vue3核心 | 懒前端</title>
+    <title>Vue3响应式原理 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Vue3核心</h1>
+                    <h1 class="description center-align post-title">Vue3响应式原理</h1>
                 </div>
             </div>
         </div>
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    289
+                    829
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -446,24 +446,91 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Vue3核心"><a href="#Vue3核心" class="headerlink" title="Vue3核心"></a>Vue3核心</h2><h3 id="Vue3变化"><a href="#Vue3变化" class="headerlink" title="Vue3变化"></a>Vue3变化</h3><p><strong>模块拆分</strong> 可单独使用Vue的某个模块，如Reactive响应式模块，而不引入整个Vue</p>
+                <h2 id="1-Vue3响应式原理"><a href="#1-Vue3响应式原理" class="headerlink" title="1. Vue3响应式原理"></a>1. Vue3响应式原理</h2><p>Vue 借鉴了 angular 的模板和数据绑定技术，又借鉴了 react 的组件化和虚拟 DOM 技术。</p>
+<h3 id="Vue三要素"><a href="#Vue三要素" class="headerlink" title="Vue三要素"></a>Vue三要素</h3><p><strong>响应式</strong>: 例如如何监听数据变化,其中的实现方法就是我们提到的双向绑定</p>
+<p><strong>模板引擎</strong>: 如何解析模板</p>
+<p><strong>渲染</strong>: Vue如何将监听到的数据变化和解析后的HTML进行渲染</p>
+<h3 id="Vue3变化"><a href="#Vue3变化" class="headerlink" title="Vue3变化"></a>Vue3变化</h3><p><strong>模块拆分</strong> 可单独使用Vue的某个模块，如Reactive响应式模块，而不引入整个Vue</p>
 <p><strong>组合式API</strong> 通过TreeShaking实现按需引入，使用简洁，减少打包体积，抽取公共逻辑方便，无this指向疑惑</p>
 <p><strong>自定义渲染器</strong> 针对不同平台基于Vue进行对接，更方便</p>
-<h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><h4 id="1-Proxy-解决了defineProperty-多个痛点"><a href="#1-Proxy-解决了defineProperty-多个痛点" class="headerlink" title="1. Proxy 解决了defineProperty 多个痛点"></a>1. Proxy 解决了defineProperty 多个痛点</h4><h4 id="2-Proxy-需要-receiver-和-reflect"><a href="#2-Proxy-需要-receiver-和-reflect" class="headerlink" title="2. Proxy 需要 receiver 和 reflect"></a>2. Proxy 需要 receiver 和 reflect</h4><blockquote>
+<h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><h4 id="1-Proxy-解决了defineProperty-多个痛点"><a href="#1-Proxy-解决了defineProperty-多个痛点" class="headerlink" title="1. Proxy 解决了defineProperty 多个痛点"></a>1. Proxy 解决了defineProperty 多个痛点</h4><p>Vue2 通过 <code>Object.defineProperty</code> 进行数据劫持</p>
+<ol>
+<li><p>需要重写对象的每个属性的get set方法</p>
+</li>
+<li><p>无法监控 新增和删除的属性(需使用<code>$set</code>、<code>$delete</code>)</p>
+</li>
+<li><p>无法监控 数组的索引读取(浪费性能)</p>
+</li>
+</ol>
+<p>Proxy直接代理整个对象, 后续须使用Proxy返回的ProxyObj进行操作.</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> mutableHandlers <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token operator">===</span> ReactiveFlags<span class="token punctuation">.</span><span class="token constant">IS_REACTIVE</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment">// 标记解决Proxy多重代理</span>
+    <span class="token keyword">const</span> res <span class="token operator">=</span> Reflect<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Reflect解决this绑定</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token function">set</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> oldValue <span class="token operator">=</span> target<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> r <span class="token operator">=</span> Reflect<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> r<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">const</span> reactiveMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WeakMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 缓存解决Proxy多次代理</span>
+
+<span class="token keyword">function</span> <span class="token function">reactive</span><span class="token punctuation">(</span><span class="token parameter">target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isObject</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> target<span class="token punctuation">;</span>
+
+  <span class="token keyword">let</span> existingProxy <span class="token operator">=</span> reactiveMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 缓存解决Proxy多次代理</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>existingProxy<span class="token punctuation">)</span> <span class="token keyword">return</span> existingProxy<span class="token punctuation">;</span> <span class="token comment">// 代理过直接返回之前的代理结果</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>target<span class="token punctuation">[</span>ReactiveFlags<span class="token punctuation">.</span><span class="token constant">IS_REACTIVE</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">return</span> target<span class="token punctuation">;</span> <span class="token comment">// 标记解决Proxy多重代理，已经是proxy无需代理</span>
+  <span class="token keyword">const</span> proxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Proxy</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> mutableHandlers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  reactiveMap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> proxy<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+  <span class="token keyword">return</span> proxy<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="2-Proxy-需要-receiver-和-reflect"><a href="#2-Proxy-需要-receiver-和-reflect" class="headerlink" title="2. Proxy 需要 receiver 和 reflect"></a>2. Proxy 需要 receiver 和 reflect</h4><p><code>new Proxy(target, mutableHandlers)</code>,第二个参数为重写的get/set方法为属性的对象</p>
+<p>get/set方法 的最后一个参数为 receiver</p>
+<p>receiver 代表 Proxy 创建 Proxy对象本身,用于通过 Reflect绑定this</p>
+<p>保证this指向 Proxy对象,这样保证target存在this获取数据时,也能从proxy中进行一遍代理</p>
+<p>从而收集到正确的属性依赖</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">i</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token keyword">get</span> <span class="token function">j</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>i
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">const</span> ProxyObj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Proxy</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> target<span class="token punctuation">.</span>key<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">set</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        target<span class="token punctuation">.</span>key <span class="token operator">=</span> value
+        <span class="token keyword">return</span> value<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+ProxyObj<span class="token punctuation">.</span>j <span class="token comment">// j的get调用的是a.i,i未经过proxyObj,未被记录依赖，。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
 <p>Reflect 用于属性绑定this，call用于函数绑定this</p>
 </blockquote>
 <h4 id="3-WeakMap-与-多次代理-与-多层代理"><a href="#3-WeakMap-与-多次代理-与-多层代理" class="headerlink" title="3. WeakMap 与 多次代理 与 多层代理"></a>3. WeakMap 与 多次代理 与 多层代理</h4><p>多次代理: 对 同一对象 进行 多次proxy代理</p>
 <p>多层代理: 对 对象代理返回的proxy对象，进行代理</p>
 <p>这两种情况都需要提前判断，直接返回第一次代理的结果</p>
-<p><strong>多层代理</strong></p>
-<p>Vue3.0的方案, 创建一个反向映射表,Proxy =&gt; 原对象,浪费性能</p>
-<p>现在的方案是, </p>
+<p>处理 <strong>多次代理</strong></p>
+<p>使用<code>WeakMap</code> 缓存代理过的对象，建立target 与 proxyObj的映射</p>
+<p>发现 <code>WeakMap</code> 中存在该target的代理时，代表已经代理过，直接返回</p>
+<p>处理 <strong>多层代理</strong></p>
 <p>在 Proxy 的 get 上增加了一个Proxy标记,</p>
-<p>进行代理前先检查 对象 是否存在该标记 表示已经是个 Proxy 直接返回该 对象</p>
+<p>进行代理前先检查 target 是否存在该标记 表示target是个 Proxy 直接返回target</p>
 <blockquote>
-<p>WeakMap 的 key 只能是对象</p>
+<p>WeakMap 的 key 只能是对象<br>解决多层代理，Vue3.0的方案是, 创建一个反向映射表,Proxy =&gt; 原对象,浪费性能</p>
 </blockquote>
-<h2 id="effect"><a href="#effect" class="headerlink" title="effect"></a>effect</h2><p>顾名思义副作用</p>
+<h2 id="effect"><a href="#effect" class="headerlink" title="effect"></a>effect</h2><h4 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h4><p>顾名思义副作用</p>
 
                 
             </div>
@@ -490,7 +557,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/12/05/vue3/vue3-he-xin/">https://github.com/LZY2333/LZY2333.github.io/2022/12/05/vue3/vue3-he-xin/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/12/05/vue3/vue3-xiang-ying-shi-yuan-li/">https://github.com/LZY2333/LZY2333.github.io/2022/12/05/vue3/vue3-xiang-ying-shi-yuan-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -704,13 +771,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/12/05/vue3/vue3-he-xin/">
+                <a href="/2022/12/05/vue3/vue3-xiang-ying-shi-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Vue3核心">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Vue3响应式原理">
                         
-                        <span class="card-title">Vue3核心</span>
+                        <span class="card-title">Vue3响应式原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -936,7 +1003,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">133.9k</span>&nbsp;字
+                class="white-color">134.4k</span>&nbsp;字
             
             
             
