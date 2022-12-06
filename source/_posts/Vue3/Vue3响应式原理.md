@@ -126,7 +126,114 @@ ProxyObj.j // j的get调用的是a.i,i未经过proxyObj,未被记录依赖，。
 > WeakMap 的 key 只能是对象
 > 解决多层代理，Vue3.0的方案是, 创建一个反向映射表,Proxy => 原对象,浪费性能
 
-## effect
+## Effect
 
+`Effect(fn)`
+
+顾名思义副作用，接收并执行一个产生副作用的函数
 #### 依赖收集
-顾名思义副作用
+
+Effect执行时, fn 内部的 Reactive变量 ,会进行 双向收集依赖
+
+__首先是,属性收集依赖于其的effect__
+
+proxy对象 当属性的get被调用时,会收集当前effect,
+
+在一个全局对象内,key为当前属性名,值为依赖该属性的 effects集合,
+
+当属性的set被调用时,拿到该属性记录的所有effect触发其重新执行.
+
+```js
+get(target, key, receiver) {
+    if (key === ReactiveFlags.IS_REACTIVE) {
+        return true;
+    }
+    const res = Reflect.get(target, key, receiver);
+    track(target, 'get', key);  // 依赖收集
+    return res;
+}
+
+const targetMap = new WeakMap(); // 记录依赖关系
+export function track(target, type, key) {
+    if (activeEffect) {
+        let depsMap = targetMap.get(target); // {对象：map}
+        if (!depsMap) {
+            targetMap.set(target, (depsMap = new Map()))
+        }
+        let dep = depsMap.get(key);
+        if (!dep) {
+            depsMap.set(key, (dep = new Set())) // {对象：{ 属性 :[ dep, dep ]}}
+        }
+        let shouldTrack = !dep.has(activeEffect)
+        if (shouldTrack) {
+            dep.add(activeEffect);
+            activeEffect.deps.push(dep); // 让effect记住dep，这样后续可以用于清理
+        }
+    }
+}
+```
+
+```js
+set(target, key, value, receiver) {
+    // 等会赋值的时候可以重新触发effect执行
+    let oldValue = target[key]
+    const result = Reflect.set(target, key, value, receiver);
+    if (oldValue !== value) {
+        trigger(target, 'set', key, value, oldValue)
+    }
+    return result;
+}
+
+export function trigger(target, type, key?, newValue?, oldValue?) {
+    const depsMap = targetMap.get(target); // 获取对应的映射表
+    if (!depsMap) {
+        return
+    }
+    const effects = depsMap.get(key);
+    effects && effects.forEach(effect => {
+        if (effect !== activeEffect) effect.run(); // 防止循环
+    })
+}
+```
+
+__同时,effect收集其依赖的属性涉及的effects集合deps__
+
+因为effect依赖的属性不是一直不变的,
+
+当effect不再依赖某个属性时,应从该属性的effects集合中删去该effect
+
+effect每次执行时会先删除,所有属性记录的该effect的依赖
+
+然后调用fn,在这时会重新进行依赖收集,
+
+fn中的属性的get方法又被调用,又将该effect加入到新属性的依赖中.
+
+```js
+function cleanupEffect(effect) {
+    const { deps } = effect; // 清理effect
+    for (let i = 0; i < deps.length; i++) {
+        deps[i].delete(effect);
+    }
+    effect.deps.length = 0;
+}
+class ReactiveEffect {
+    active = true;
+    deps = []; // 收集effect中使用到的属性
+    parent = undefined;
+    constructor(public fn) { }
+    run() {
+        try {
+            this.parent = activeEffect; // 当前的effect就是他的父亲
+            activeEffect = this; // 设置成正在激活的是当前effect
++           cleanupEffect(this);
+            return this.fn(); // 先清理在运行
+        }
+    }
+}
+```
+## Computed
+
+## Watch
+
+
+## Ref
