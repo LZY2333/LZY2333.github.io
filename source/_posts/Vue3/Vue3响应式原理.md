@@ -43,6 +43,9 @@ Proxy直接代理整个对象, 后续须使用Proxy返回的ProxyObj进行操作
 const mutableHandlers = {
   get(target, key, receiver) {
     if (key === ReactiveFlags.IS_REACTIVE) return true; // 标记解决Proxy多重代理
+    if (isObject(target[key])) { // 属性调用时才递归代理
+        return reactive(target[key])
+    } 
     const res = Reflect.get(target, key, receiver); // Reflect解决this绑定
     return res;
   },
@@ -126,6 +129,19 @@ ProxyObj.j // j的get调用的是a.i,i未经过proxyObj,未被记录依赖，。
 > WeakMap 的 key 只能是对象
 > 解决多层代理，Vue3.0的方案是, 创建一个反向映射表,Proxy => 原对象,浪费性能
 
+#### 4. 属性调用时才递归代理
+
+```js
+get(target, key, receiver) {
+    if (key === ReactiveFlags.IS_REACTIVE) return true; // 标记解决Proxy多重代理
++   if (isObject(target[key])) {
++       return reactive(target[key])
++   } 
+    const res = Reflect.get(target, key, receiver); // Reflect解决this绑定
+    return res;
+}
+```
+
 ## Effect
 
 `Effect(fn)`
@@ -137,9 +153,9 @@ Effect执行时, fn 内部的 Reactive变量 ,会进行 双向收集依赖
 
 __首先是,属性收集依赖于其的effect__
 
-proxy对象 当属性的get被调用时,会收集当前effect,
+proxy对象 当属性的get被调用时,会收集当前 属性 和 effect,
 
-在一个全局对象内,key为当前属性名,值为依赖该属性的 effects集合,
+记录在一个全局weakMap对象内,key为当前属性名,值为依赖该属性的 effects集合,的映射
 
 当属性的set被调用时,拿到该属性记录的所有effect触发其重新执行.
 
@@ -231,9 +247,10 @@ class ReactiveEffect {
     }
 }
 ```
-## Computed
 
 ## Watch
+## Computed
+
 
 
 ## Ref
