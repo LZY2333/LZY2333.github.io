@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    3.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    13 分
                 </div>
                 
 
@@ -448,10 +448,11 @@
             <div id="articleContent">
                 <h1 id="链表算法题"><a href="#链表算法题" class="headerlink" title="链表算法题"></a>链表算法题</h1><p>链表题常见解法</p>
 <ol>
-<li><p>创建一个新链表。<code>let newHead = new ListNode()</code></p>
-</li>
-<li><p>记录 <strong>被循环的节点</strong> 的next。<code>const next = currentNode.next</code></p>
-</li>
+<li>创建一个新链表。<code>let newHead = new ListNode()</code></li>
+</ol>
+<p>需要使用到记录【前一个节点】这种概念时，要用到 newHead 这种虚拟头节点</p>
+<ol start="2">
+<li>记录 <strong>被循环的节点</strong> 的next。<code>const next = currentNode.next</code></li>
 </ol>
 <p>链表考什么？就是哨兵节点+虚拟节点+链表指针的移动</p>
 <p>双指针</p>
@@ -629,29 +630,22 @@
 <span class="token comment">// 如果 假设两个慢指针,都不走重合部分,一个从头开始走,一个跳过重合部分从相遇处开始走</span>
 <span class="token comment">// 相同速度,走过相同路径时,便会相遇在入口</span>
 
-<span class="token keyword">var</span> <span class="token function-variable function">detectCycle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>head <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">let</span> slow <span class="token operator">=</span> head<span class="token punctuation">,</span> fast <span class="token operator">=</span> head<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>fast<span class="token punctuation">.</span>next <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            fast <span class="token operator">=</span> fast<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
+<span class="token keyword">var</span> <span class="token function-variable function">detectCycle</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> fast <span class="token operator">=</span> slow <span class="token operator">=</span> head
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">&amp;&amp;</span> fast<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next
+        fast <span class="token operator">=</span> fast<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next
         <span class="token keyword">if</span> <span class="token punctuation">(</span>fast <span class="token operator">===</span> slow<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">let</span> ptr <span class="token operator">=</span> head<span class="token punctuation">;</span>
-            <span class="token keyword">while</span> <span class="token punctuation">(</span>ptr <span class="token operator">!==</span> slow<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                ptr <span class="token operator">=</span> ptr<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-                slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            <span class="token keyword">let</span> p <span class="token operator">=</span> head
+            <span class="token keyword">while</span><span class="token punctuation">(</span>p <span class="token operator">!==</span> slow<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                p <span class="token operator">=</span> p<span class="token punctuation">.</span>next
+                slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next
             <span class="token punctuation">&#125;</span>
-            <span class="token keyword">return</span> ptr<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> p
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token keyword">null</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="7、反转链表-II-（-LeetCode-92-）"><a href="#7、反转链表-II-（-LeetCode-92-）" class="headerlink" title="7、反转链表 II （ LeetCode 92 ）"></a>7、反转链表 II （ LeetCode 92 ）</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 要点，拆分子列，标记 左前与右 结点，左与右后 结点</span>
 <span class="token keyword">var</span> <span class="token function-variable function">reverseBetween</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -730,21 +724,157 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="移除链表元素（-LeetCode-203-）"><a href="#移除链表元素（-LeetCode-203-）" class="headerlink" title="移除链表元素（ LeetCode 203 ）"></a>移除链表元素（ LeetCode 203 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-linked-list-elements/submissions/">leetcode</a></p>
-<p>```js<br>var removeElements = function(head, val) {<br>    if(head === null) return null<br>    let tmpHead = new ListNode(-1) // 可能删除头节点的都得先设置伪头部<br>    tmpHead.next = head</p>
-<pre><code>let cur = tmpHead
-while(cur.next) &#123;
-    if(cur.next.val === val) &#123; // 删除了下一个就不用跳
-        cur.next = cur.next.next || null
-    &#125; else &#123;
-        cur = cur.next
-    &#125;
-&#125;
+<h2 id="9、移除链表元素（-LeetCode-203-）"><a href="#9、移除链表元素（-LeetCode-203-）" class="headerlink" title="9、移除链表元素（ LeetCode 203 ）"></a>9、移除链表元素（ LeetCode 203 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-linked-list-elements/submissions/">leetcode</a></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">removeElements</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> val</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>head <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span>
+    <span class="token keyword">let</span> tmpHead <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">// 可能删除头节点的都得先设置伪头部</span>
+    tmpHead<span class="token punctuation">.</span>next <span class="token operator">=</span> head
 
-return tmpHead.next
-</code></pre>
-<p>};</p>
+    <span class="token keyword">let</span> cur <span class="token operator">=</span> tmpHead
+    <span class="token keyword">while</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>next<span class="token punctuation">.</span>val <span class="token operator">===</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 删除了下一个就不用跳</span>
+            cur<span class="token punctuation">.</span>next <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">||</span> <span class="token keyword">null</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            cur <span class="token operator">=</span> cur<span class="token punctuation">.</span>next
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
 
+    <span class="token keyword">return</span> tmpHead<span class="token punctuation">.</span>next
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="10、删除有序数组中的重复项（-LeetCode-26-）"><a href="#10、删除有序数组中的重复项（-LeetCode-26-）" class="headerlink" title="10、删除有序数组中的重复项（ LeetCode 26 ）"></a>10、删除有序数组中的重复项（ LeetCode 26 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-duplicates-from-sorted-array/">leetcode</a></p>
+<p>慢指针 左侧为已经去重的数组，右侧为待去重的数组</p>
+<p>循环快指针，如果 当前节点 与上一节点不同，</p>
+<p>代表当前节点是新节点(非重复节点)，放入慢指针位置，慢指针+1，快指针+1</p>
+<p>如果 当前节点 与上一节点相同，代表为重复节点，不做操作，快指针+1并再次判断。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">removeDuplicates</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> length <span class="token operator">=</span> nums<span class="token punctuation">.</span>length
+    <span class="token keyword">if</span><span class="token punctuation">(</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> f <span class="token operator">=</span> s <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>f <span class="token operator">&lt;</span> length<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>f<span class="token punctuation">]</span> <span class="token operator">!==</span> nums<span class="token punctuation">[</span>f<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            nums<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>f<span class="token punctuation">]</span>
+            s<span class="token operator">++</span>
+        <span class="token punctuation">&#125;</span>
+        f<span class="token operator">++</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> s
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="11、移动零（-LeetCode-283-）"><a href="#11、移动零（-LeetCode-283-）" class="headerlink" title="11、移动零（ LeetCode 283 ）"></a>11、移动零（ LeetCode 283 ）</h2><p>将数组内所有0移动到数组末尾</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/move-zeroes/">leetcode</a></p>
+<p>慢指针 左侧为已经去0的数组，右侧为待去0的数组</p>
+<p>循环快指针，如果 当前节点 不是0，</p>
+<p>放入慢指针位置，慢指针+1，快指针+1，保持慢指针左侧去0</p>
+<p>如果 当前节点 是0，不做操作，快指针+1并再次判断。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">moveZeroes</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> length <span class="token operator">=</span> nums<span class="token punctuation">.</span>length
+    <span class="token keyword">let</span> f <span class="token operator">=</span> s <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>f <span class="token operator">&lt;</span> length<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>f<span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            nums<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>f<span class="token punctuation">]</span>
+            s<span class="token operator">++</span>
+        <span class="token punctuation">&#125;</span>
+        f<span class="token operator">++</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>s <span class="token operator">&lt;</span> length<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        nums<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+        s<span class="token operator">++</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> nums
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="12、合并两个有序数组（-LeetCode-88-）"><a href="#12、合并两个有序数组（-LeetCode-88-）" class="headerlink" title="12、合并两个有序数组（ LeetCode 88 ）"></a>12、合并两个有序数组（ LeetCode 88 ）</h2><p>nums1 的长度为 m + n<br>nums1 的元素个数为 m<br>nums2 的元素个数为 n<br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-sorted-array/">leetcode</a></p>
+<p>为避免消除了nums1中的待比对元素，采取从后向前 比对 和 放置的方式</p>
+<p>cur指针右侧为 已比对元素， 左侧为待比对元素</p>
+<p>循环i2，当i2小于0，代表nums2中的所有元素已放入nums1中，代表合并结束</p>
+<p>i1 i2 &gt;= 0,代表其数组还有未对比的数。</p>
+<p>如果 i1&gt;=0，并且i1数更大，cur处放i1，i1–，左移进行下一轮判断</p>
+<p>如果 i2 数更大或相等，cur处放i2，保持从左往右从小到大。</p>
+<p>（注意,为什么要加上 i1&gt;=0 这个条件，因为</p>
+<p>如果 i1&lt;0,代表nums1数组所有数已排完,剩下cur左侧位置全放剩下的nums2就行，无需比较i1，i2大小）</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">merge</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums1<span class="token punctuation">,</span> m<span class="token punctuation">,</span> nums2<span class="token punctuation">,</span> n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> cur <span class="token operator">=</span> n <span class="token operator">+</span> m <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">let</span> i1 <span class="token operator">=</span> m <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">let</span> i2 <span class="token operator">=</span> n <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>i2 <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>i1 <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> nums2<span class="token punctuation">[</span>i2<span class="token punctuation">]</span> <span class="token operator">&lt;</span> nums1<span class="token punctuation">[</span>i1<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            nums1<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> nums1<span class="token punctuation">[</span>i1<span class="token punctuation">]</span>
+            i1<span class="token operator">--</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            nums1<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> nums2<span class="token punctuation">[</span>i2<span class="token punctuation">]</span>
+            i2<span class="token operator">--</span>
+        <span class="token punctuation">&#125;</span>
+        cur<span class="token operator">--</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> nums1
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="13、K-个一组翻转链表（-LeetCode-25-）"><a href="#13、K-个一组翻转链表（-LeetCode-25-）" class="headerlink" title="13、K 个一组翻转链表（ LeetCode 25 ）"></a>13、K 个一组翻转链表（ LeetCode 25 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-nodes-in-k-group/">leetcode</a></p>
+<p>需要使用到记录【前一个节点】这种概念时，要用到 newHead 这种虚拟头节点</p>
+<p>标记好 要翻转的链表 头(start) 尾(fast)，断开处的 头的前一(slow) 尾的后一(next) 四个节点</p>
+<p>并将 要翻转的链表 与主体断开，准备进行反转。</p>
+<p>然后 反转链表，反转后，(start)成为了 新尾，(reverse)返回的是 新头</p>
+<p>最后 旧头的前一(slow) 拼接 (reverse)返回值， 新尾(start) 拼接 尾的后一(next)</p>
+<p>(fast)(slow)均指向 新尾(start)，继续进行后续翻转。</p>
+<p>直到fast无结果</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">reverseKGroup</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">head<span class="token punctuation">,</span> k</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> newHead <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> head<span class="token punctuation">)</span>
+    <span class="token keyword">let</span> slow <span class="token operator">=</span> fast <span class="token operator">=</span> newHead
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> k <span class="token operator">&amp;&amp;</span> fast<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            fast <span class="token operator">=</span> fast<span class="token punctuation">.</span>next
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>fast<span class="token punctuation">)</span> <span class="token keyword">break</span>
+
+        <span class="token keyword">const</span> next <span class="token operator">=</span> fast<span class="token punctuation">.</span>next
+        fast<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">const</span> start <span class="token operator">=</span> slow<span class="token punctuation">.</span>next
+        slow<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span>
+        
+
+        slow<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token function">reverse</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span>
+
+        start<span class="token punctuation">.</span>next <span class="token operator">=</span> next
+        slow <span class="token operator">=</span> start
+        fast <span class="token operator">=</span> start
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> newHead<span class="token punctuation">.</span>next
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> <span class="token function-variable function">reverse</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">head</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> newHead <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> next <span class="token operator">=</span> newHead<span class="token punctuation">.</span>next
+        newHead<span class="token punctuation">.</span>next <span class="token operator">=</span> head
+        head <span class="token operator">=</span> head<span class="token punctuation">.</span>next
+        newHead<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">=</span> next
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> newHead<span class="token punctuation">.</span>next
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="14、加一（-LeetCode-66-）"><a href="#14、加一（-LeetCode-66-）" class="headerlink" title="14、加一（ LeetCode 66 ）"></a>14、加一（ LeetCode 66 ）</h2><p>用一个数组模拟一个非负整数，如 [1,2,3] 代表 123，</p>
+<p>给这个数+1，并返回，如 [1,2,4]</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/plus-one/">leetcode</a></p>
+<p>先将末位数 +1，然后循环从后往前判断进位</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">plusOne</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">digits</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> index <span class="token operator">=</span> digits<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span>
+
+    digits<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> digits<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> index<span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>digits<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+        digits<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            digits<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> digits<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            digits<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> digits
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -770,7 +900,7 @@ return tmpHead.next
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/13/suan-fa-ti/lian-biao-suan-fa-ti/">https://github.com/LZY2333/LZY2333.github.io/2021/10/13/suan-fa-ti/lian-biao-suan-fa-ti/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2021/10/13/suan-fa-ti/lian-biao-shu-zu-suan-fa-ti/">https://github.com/LZY2333/LZY2333.github.io/2021/10/13/suan-fa-ti/lian-biao-shu-zu-suan-fa-ti/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1205,7 +1335,7 @@ return tmpHead.next
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021-2022</span>
+                <span id="year">2021-2023</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1214,7 +1344,7 @@ return tmpHead.next
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">134.9k</span>&nbsp;字
+                class="white-color">137.3k</span>&nbsp;字
             
             
             

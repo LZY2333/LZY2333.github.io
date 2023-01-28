@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    1.5k
                 </div>
                 
 
@@ -466,6 +466,9 @@
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> mutableHandlers <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
   <span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token operator">===</span> ReactiveFlags<span class="token punctuation">.</span><span class="token constant">IS_REACTIVE</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment">// 标记解决Proxy多重代理</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isObject</span><span class="token punctuation">(</span>target<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 属性调用时才递归代理</span>
+        <span class="token keyword">return</span> <span class="token function">reactive</span><span class="token punctuation">(</span>target<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span> 
     <span class="token keyword">const</span> res <span class="token operator">=</span> Reflect<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Reflect解决this绑定</span>
     <span class="token keyword">return</span> res<span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
@@ -491,7 +494,7 @@
   reactiveMap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> proxy<span class="token punctuation">)</span><span class="token punctuation">;</span> 
   <span class="token keyword">return</span> proxy<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="2-Proxy-需要-receiver-和-reflect"><a href="#2-Proxy-需要-receiver-和-reflect" class="headerlink" title="2. Proxy 需要 receiver 和 reflect"></a>2. Proxy 需要 receiver 和 reflect</h4><p><code>new Proxy(target, mutableHandlers)</code>,第二个参数为重写的get/set方法为属性的对象</p>
 <p>get/set方法 的最后一个参数为 receiver</p>
@@ -530,12 +533,21 @@ ProxyObj<span class="token punctuation">.</span>j <span class="token comment">//
 <blockquote>
 <p>WeakMap 的 key 只能是对象<br>解决多层代理，Vue3.0的方案是, 创建一个反向映射表,Proxy =&gt; 原对象,浪费性能</p>
 </blockquote>
+<h4 id="4-属性调用时才递归代理"><a href="#4-属性调用时才递归代理" class="headerlink" title="4. 属性调用时才递归代理"></a>4. 属性调用时才递归代理</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token operator">===</span> ReactiveFlags<span class="token punctuation">.</span><span class="token constant">IS_REACTIVE</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment">// 标记解决Proxy多重代理</span>
+<span class="token operator">+</span>   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isObject</span><span class="token punctuation">(</span>target<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token operator">+</span>       <span class="token keyword">return</span> <span class="token function">reactive</span><span class="token punctuation">(</span>target<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token operator">+</span>   <span class="token punctuation">&#125;</span> 
+    <span class="token keyword">const</span> res <span class="token operator">=</span> Reflect<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Reflect解决this绑定</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="Effect"><a href="#Effect" class="headerlink" title="Effect"></a>Effect</h2><p><code>Effect(fn)</code></p>
 <p>顾名思义副作用，接收并执行一个产生副作用的函数</p>
 <h4 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h4><p>Effect执行时, fn 内部的 Reactive变量 ,会进行 双向收集依赖</p>
 <p><strong>首先是,属性收集依赖于其的effect</strong></p>
-<p>proxy对象 当属性的get被调用时,会收集当前effect,</p>
-<p>在一个全局对象内,key为当前属性名,值为依赖该属性的 effects集合,</p>
+<p>proxy对象 当属性的get被调用时,会收集当前 属性 和 effect,</p>
+<p>记录在一个全局weakMap对象内,key为当前属性名,值为依赖该属性的 effects集合,的映射</p>
 <p>当属性的set被调用时,拿到该属性记录的所有effect触发其重新执行.</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> receiver<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token operator">===</span> ReactiveFlags<span class="token punctuation">.</span><span class="token constant">IS_REACTIVE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -613,7 +625,8 @@ ProxyObj<span class="token punctuation">.</span>j <span class="token comment">//
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="Computed"><a href="#Computed" class="headerlink" title="Computed"></a>Computed</h2><h2 id="Watch"><a href="#Watch" class="headerlink" title="Watch"></a>Watch</h2><h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2>
+
+<h2 id="Watch"><a href="#Watch" class="headerlink" title="Watch"></a>Watch</h2><h2 id="Computed"><a href="#Computed" class="headerlink" title="Computed"></a>Computed</h2><h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2>
                 
             </div>
             <hr/>
@@ -1078,7 +1091,7 @@ ProxyObj<span class="token punctuation">.</span>j <span class="token comment">//
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021-2022</span>
+                <span id="year">2021-2023</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -1087,7 +1100,7 @@ ProxyObj<span class="token punctuation">.</span>j <span class="token comment">//
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">134.9k</span>&nbsp;字
+                class="white-color">137.3k</span>&nbsp;字
             
             
             
