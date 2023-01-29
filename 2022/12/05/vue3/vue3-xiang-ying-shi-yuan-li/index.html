@@ -451,9 +451,13 @@
 <p><strong>模板引擎</strong>: 如何解析模板</p>
 <p><strong>渲染</strong>: Vue如何将监听到的数据变化和解析后的HTML进行渲染</p>
 <h3 id="Vue3变化"><a href="#Vue3变化" class="headerlink" title="Vue3变化"></a>Vue3变化</h3><p><strong>模块拆分</strong> 可单独使用Vue的某个模块，如Reactive响应式模块，而不引入整个Vue</p>
-<p><strong>组合式API</strong> 通过TreeShaking实现按需引入，使用简洁，减少打包体积，抽取公共逻辑方便，无this指向疑惑</p>
+<p><strong>组合式API</strong> Vue3核心特点</p>
+<p>Vue3采用组合式API，抽取公共逻辑非常方便。</p>
+<p>解决了组件逻辑共享问题，Vue2采用了mixin，存在数据来源不明确，命名冲突等问题，</p>
+<p>通过TreeShaking实现按需引入，使用简洁，减少打包体积，抽取公共逻辑方便，无this指向疑惑</p>
 <p><strong>自定义渲染器</strong> 针对不同平台基于Vue进行对接，更方便</p>
-<h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><h4 id="1-Proxy-解决了defineProperty-多个痛点"><a href="#1-Proxy-解决了defineProperty-多个痛点" class="headerlink" title="1. Proxy 解决了defineProperty 多个痛点"></a>1. Proxy 解决了defineProperty 多个痛点</h4><p>Vue2 通过 <code>Object.defineProperty</code> 进行数据劫持</p>
+<h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><p>Vue3最大的提升</p>
+<h4 id="1-Proxy-解决了defineProperty-多个痛点"><a href="#1-Proxy-解决了defineProperty-多个痛点" class="headerlink" title="1. Proxy 解决了defineProperty 多个痛点"></a>1. Proxy 解决了defineProperty 多个痛点</h4><p>Vue2 通过 <code>Object.defineProperty</code> 进行数据劫持</p>
 <ol>
 <li><p>需要重写对象的每个属性的get set方法</p>
 </li>
@@ -1100,7 +1104,7 @@ ProxyObj<span class="token punctuation">.</span>j <span class="token comment">//
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">137.8k</span>&nbsp;字
+                class="white-color">137.9k</span>&nbsp;字
             
             
             
