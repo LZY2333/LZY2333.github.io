@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    269
+                    586
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -474,8 +474,7 @@
     <span class="token punctuation">&#125;</span>
 
     <span class="token keyword">const</span> l <span class="token operator">=</span> commands<span class="token punctuation">.</span>length
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">let</span> command <span class="token operator">=</span> commands<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> command <span class="token keyword">of</span> commands<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>commands<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             direction <span class="token operator">=</span> direction <span class="token operator">===</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token number">3</span> <span class="token operator">:</span> direction <span class="token operator">-</span> <span class="token number">1</span>
         <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>commands<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -484,15 +483,73 @@
             <span class="token keyword">const</span> addX <span class="token operator">=</span> arrow<span class="token punctuation">[</span>direction<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
             <span class="token keyword">const</span> addY <span class="token operator">=</span> arrow<span class="token punctuation">[</span>direction<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
             <span class="token keyword">while</span> <span class="token punctuation">(</span>command<span class="token operator">--</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>obstaclesMap<span class="token punctuation">[</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>x <span class="token operator">+</span> addX<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">,</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>y <span class="token operator">+</span> addY<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                x <span class="token operator">+=</span> arrow<span class="token punctuation">[</span>direction<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-                y <span class="token operator">+=</span> arrow<span class="token punctuation">[</span>direction<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                x <span class="token operator">+=</span> addX<span class="token punctuation">;</span>
+                y <span class="token operator">+=</span> addY<span class="token punctuation">;</span>
             <span class="token punctuation">&#125;</span>
             result <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> x <span class="token operator">*</span> x <span class="token operator">+</span> y <span class="token operator">*</span> y<span class="token punctuation">)</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> result
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="3-字母异位词分组（-LeetCode-49-）"><a href="#3-字母异位词分组（-LeetCode-49-）" class="headerlink" title="3. 字母异位词分组（ LeetCode 49 ）"></a>3. 字母异位词分组（ LeetCode 49 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/group-anagrams/">leetcode</a></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">groupAnagrams</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">strs</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">const</span> s <span class="token keyword">of</span> strs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> count <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">(</span><span class="token number">26</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">const</span> c <span class="token keyword">of</span> s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            count<span class="token punctuation">[</span>c<span class="token punctuation">.</span><span class="token function">charCodeAt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">.</span><span class="token function">charCodeAt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">++</span>
+        <span class="token punctuation">&#125;</span>
+        map<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">?</span> map<span class="token punctuation">[</span>count<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">:</span> map<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span>s<span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="4-串联所有单词的子串（-LeetCode-30-）"><a href="#4-串联所有单词的子串（-LeetCode-30-）" class="headerlink" title="4. 串联所有单词的子串（ LeetCode 30 ）"></a>4. 串联所有单词的子串（ LeetCode 30 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/group-anagrams/">leetcode</a></p>
+<p>此题属于<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-all-anagrams-in-a-string/solutions/">leetcode 438</a>的进阶版</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">findSubstring</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">s<span class="token punctuation">,</span> words</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">const</span> len <span class="token operator">=</span> s<span class="token punctuation">.</span>length
+    <span class="token keyword">const</span> wordNum <span class="token operator">=</span> words<span class="token punctuation">.</span>length <span class="token comment">// 有效单词数count === wordNum时,代表可以放进result</span>
+    <span class="token keyword">const</span> wordLen <span class="token operator">=</span> words<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length
+    <span class="token keyword">const</span> wordMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> word <span class="token keyword">of</span> words<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        wordMap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> <span class="token punctuation">(</span>wordMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 只需要找一个单词的身位就行，大于一个单词的身位都在while里循环了,小于单词身位的都无意义</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> wordLen<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> left <span class="token operator">=</span> right <span class="token operator">=</span> i
+        <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment">// 符合要求的单词个数</span>
+        <span class="token keyword">const</span> validMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>right <span class="token operator">+</span> wordLen <span class="token operator">&lt;=</span> len<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">const</span> add <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>right<span class="token punctuation">,</span> right <span class="token operator">+</span> wordLen<span class="token punctuation">)</span>
+            right <span class="token operator">+=</span> wordLen
+            
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>wordMap<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>add<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                validMap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>add<span class="token punctuation">,</span> <span class="token punctuation">(</span>validMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>add<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+                count<span class="token operator">++</span>
+                <span class="token comment">// 滑动窗口容量超标 不应以 长度> totalLen为标准。而应以某单词数是否超标为标准，如下。</span>
+                <span class="token keyword">while</span> <span class="token punctuation">(</span>validMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>add<span class="token punctuation">)</span> <span class="token operator">></span> wordMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>add<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token comment">// 一直弃置左侧单词，直到符合。</span>
+                    <span class="token keyword">const</span> del <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span> left <span class="token operator">+</span> wordLen<span class="token punctuation">)</span>
+                    validMap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>del<span class="token punctuation">,</span> validMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>del<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+                    left <span class="token operator">+=</span> wordLen
+                    count<span class="token operator">--</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                left <span class="token operator">=</span> right
+                validMap<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                count <span class="token operator">=</span> <span class="token number">0</span>
+            <span class="token punctuation">&#125;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">===</span> wordNum<span class="token punctuation">)</span> result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>left<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> res
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -970,7 +1027,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">137.5k</span>&nbsp;字
+                class="white-color">137.8k</span>&nbsp;字
             
             
             
