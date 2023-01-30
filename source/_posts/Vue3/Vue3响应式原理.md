@@ -49,39 +49,37 @@ Vue2 通过 `Object.defineProperty` 进行数据劫持
 Proxy直接代理整个对象, 后续须使用Proxy返回的ProxyObj进行操作.
 ```js
 const mutableHandlers = {
-  get(target, key, receiver) {
-    if (key === ReactiveFlags.IS_REACTIVE) return true; // 标记解决Proxy多重代理
-    if (isObject(target[key])) { // 属性调用时才递归代理
-        return reactive(target[key])
-    } 
-    const res = Reflect.get(target, key, receiver); // Reflect解决this绑定
-    return res;
-  },
-  set(target, key, value, receiver) {
-    let oldValue = target[key];
-    const r = Reflect.set(target, key, value, receiver);
-    return r;
-  },
+    get(target, key, receiver) {
+        if (key === ReactiveFlags.IS_REACTIVE) return true; // 标记解决Proxy多重代理
+        if (isObject(target[key])) { // 属性调用时才递归代理
+            return reactive(target[key])
+        }
+        const res = Reflect.get(target, key, receiver); // Reflect解决this绑定
+        return res;
+    },
+    set(target, key, value, receiver) {
+        let oldValue = target[key];
+        const r = Reflect.set(target, key, value, receiver);
+        return r;
+    },
 };
 
 
 const reactiveMap = new WeakMap(); // 缓存解决Proxy多次代理
 
 function reactive(target) {
-  if (!isObject(target)) return target;
+    if (!isObject(target)) return target;
 
-  let existingProxy = reactiveMap.get(target); // 缓存解决Proxy多次代理
-  if (existingProxy) return existingProxy; // 代理过直接返回之前的代理结果
+    let existingProxy = reactiveMap.get(target); // 缓存解决Proxy多次代理
+    if (existingProxy) return existingProxy; // 代理过直接返回之前的代理结果
 
-  if (target[ReactiveFlags.IS_REACTIVE]) return target; // 标记解决Proxy多重代理，已经是proxy无需代理
-  const proxy = new Proxy(target, mutableHandlers);
+    if (target[ReactiveFlags.IS_REACTIVE]) return target; // 标记解决Proxy多重代理，已经是proxy无需代理
+    const proxy = new Proxy(target, mutableHandlers);
 
-  reactiveMap.set(target, proxy); 
-  return proxy;
+    reactiveMap.set(target, proxy);
+    return proxy;
 }
-
 ```
-
 #### 2. Proxy 需要 receiver 和 reflect
 
 `new Proxy(target, mutableHandlers)`,第二个参数为重写的get/set方法为属性的对象
@@ -161,6 +159,54 @@ get(target, key, receiver) {
 某属性被调用过，触发了get方法，那说明该effect是依赖于该属性，进行记录。
 
 当该属性被修改时，触发了set方法，依赖于该属性的effect也需要重新执行，以便更新数据或视图。
+
+```js
+export let activeEffect = undefined;
+
+function cleanupEffect(effect) {
+    const { deps } = effect;
+    for (let i = 0; i < deps.length; i++) { // 3.清空属性对自己的记录
+        deps[i].delete(effect);
+    }
+    effect.deps.length = 0; // 3.清空依赖的列表
+}
+
+export class ReactiveEffect {
+    constructor(private fn, public scheduler?) { }
+    parent = undefined; // 4. 外层effect标记
+    active = true; // 5.失活标记
+    deps = []; // 2.我存在于哪些属性的影响队列内。
+    run() {
+        if (!this.active) { // 5.失活状态，被强制调用更新，不进行依赖收集，仅根据最新数据进行更新
+            return this.fn(); // 5.如果这里做了依赖收集，则失活状态就取消了。
+        }
+        try {
+            this.parent = activeEffect; // 4. 防止effect嵌套调用
+            activeEffect = this; // 4. 执行前先放好当前activeEffect
+            cleanupEffect(this); // 3. 清理上一次的依赖收集
+            return this.fn(); // 3. fn()执行，又自动触发新依赖的收集
+        } finally {
+            activeEffect = this.parent; // 4. 执行结束，返回上层effect
+            this.parent = undefined;
+        }
+    }
+    stop() {
+        if (this.active) {
+            cleanupEffect(this); // 5.失活就是删除当前的依赖收集，
+            this.active = false; // 5.并标记之后的执行也不再依赖收集
+        }
+    }
+}
+
+export function effect(fn, options: any = {}) {
+    const _effect = new ReactiveEffect(fn, options.scheduler);
+    _effect.run(); // 本质就是创建一个effect，并立即执行。
+
+    const runner = _effect.run.bind(_effect); // run方法内部用到了this,bind一下防止this链改变
+    runner.effect = _effect; // 5.将effect挂载并抛出供外部使用(如调用stop方法)
+    return runner; // 5.返回强制执行函数
+}
+```
 
 #### 双向依赖收集
 
@@ -261,16 +307,12 @@ function cleanupEffect(effect) {
     effect.deps.length = 0;
 }
 class ReactiveEffect {
-    active = true;
-    deps = []; // 收集effect中使用到的属性
-    parent = undefined;
+    deps = [];
     constructor(public fn) { }
     run() {
         try {
-            this.parent = activeEffect; // 当前的effect就是他的父亲
-            activeEffect = this; // 设置成正在激活的是当前effect
-+           cleanupEffect(this);
-            return this.fn(); // 先清理在运行
++           cleanupEffect(this); // 先清理老依赖，再运行，同时顺便收集新依赖
+            return this.fn();
         }
     }
 }
@@ -286,25 +328,116 @@ fn执行前会将当前effect挂载在全局对象activeEffect中，以便属性
 
 ```js
 export class ReactiveEffect {
-
+    constructor(private fn, public scheduler?) { }
+    parent = undefined; // 4. 外层effect标记
+    run() {
+        try {
+            this.parent = activeEffect; // 4. 防止effect嵌套调用
+            activeEffect = this; // 4. 执行前，先放好当前activeEffect，防止多次调用
+            return this.fn();
+        } finally {
+            activeEffect = this.parent; // 4. 执行后，交回当前activeEffect
+            this.parent = undefined;
+        }
+    }
 }
 export function effect(fn) {
-
     const _effect = new ReactiveEffect(fn)
     _effect.run()
 }
 ```
 
-#### effect.stop失活run执行
-effect返回一个强制更新方法。
+__5. effect.stop失活/.run执行__
 
 需求: 失活以后所有属性修改不再触发此effect。
-方案:
+
+方案: 清除所有属性对此effect的影响记录，并设定后续调用也不进行依赖收集
+
 注意，后续强制调用runner依旧根据最新数据执行，但不能再依赖收集，否则stop会失效了。
 
 // 用于watch：数据变了，调用回调函数，而不是直接触发effect
 
+```js
+export class ReactiveEffect {
+    active = true; // 5.失活标记
+    run() {
+        if (!this.active) {
+            return this.fn(); // 5.如果这里做了依赖收集，则失活状态就取消了。
+        }
+    }
+    stop(){
+        if(this.active){ 
+            cleanupEffect(this);
+            this.active = false
+        }
+    }
+}
+export function effect(fn, options?) {
+    const _effect = new ReactiveEffect(fn); 
+    _effect.run();
+
+    const runner = _effect.run.bind(_effect);
+    runner.effect = _effect; // 内含stop方法
+    return runner; // 返回runner
+}
+```
 ## Watch
+
+监控 函数的返回值 响应式对象(Vue3)，数据变化时，触发回调
+
+```js
+const state = reactive({ name: '123' })
+
+watch(state, (newVal, oldVal) => {}); // 这样写性能差，默认监控其下所有属性
+watch(() => state.name, () => {}); // 标准写法
+watch(state.name, () => {}); // 错误写法,.name非响应式对象 无法记录依赖。
+
+// watch回调为异步触发，加入第三个参数{flush:'sync'} 可以同步
+```
+
+```js
+// 遍历属性，从而收集依赖，seen防止死循环，深拷贝也是完全一样的写法
+function traverse(value, seen = new Set()) {
+    if (!isObject(value) || seen.has(value)) return value;
+    seen.add(value);
+
+    for (const key in value) traverse(value[key], seen);
+    return value;
+}
+
+export function watch(source, cb, options) { // source 更新 重新调用cb
+    return doWatch(source, cb, options);
+}
+export function watchEffect(source, options) { // source内数据 更新 重新调用source
+    return doWatch(source, null, options);
+}
+
+export function doWatch(source, cb, options) {
+    let getter;
+    if (isReactive(source)) {
+        getter = () => traverse(source);
+    } else if (isFunction(source)) {
+        getter = source;
+    }
+
+    let oldVal;
+    const job = () => { // scheduler
+        if (!cb) {
+            effect.run(); // watchEffect 直接重新执行source，完全等同于effect\
+            return
+        }
+        const newVal = effect.run(); // watch，重新执行source拿到新值，
+        cb(newVal, oldVal, onCleanup); // 然后才是重点，执行cb
+        oldVal = newVal;
+    };
+    const effect = new ReactiveEffect(getter, job);
+    oldVal = effect.run(); // 调用时立即执行一遍，收集依赖，同时拿到oldVal
+}
+```
+
+> watch = effect + 包装   watchEffect = effect
+
+
 ## Computed
 
 
