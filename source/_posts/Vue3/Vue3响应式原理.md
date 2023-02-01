@@ -385,6 +385,7 @@ export function effect(fn, options?) {
 
 监控 函数的返回值 响应式对象(Vue3)，数据变化时，触发回调
 
+__使用方式__
 ```js
 const state = reactive({ name: '123' })
 
@@ -395,6 +396,7 @@ watch(state.name, () => {}); // 错误写法,.name非响应式对象 无法记�
 // watch回调为异步触发，加入第三个参数{flush:'sync'} 可以同步
 ```
 
+__实现代码__
 ```js
 // 遍历属性，从而收集依赖，seen防止死循环，深拷贝也是完全一样的写法
 function traverse(value, seen = new Set()) {
@@ -438,8 +440,206 @@ export function doWatch(source, cb, options) {
 > watch = effect + 包装   watchEffect = effect
 
 
+## Proxy Handler全部实现代码
+
+贴一下Handler全部代码，方便后续与computed进行对比。
+
+Reactive 响应式对象负责，依赖收集，触发更新
+
+Effect 副作用负责，标记当前运行中的effectReactive 响应式对象
+```js
+export const mutableHandlers = {
+    get(target, key, receiver) {
+        if (key === ReactiveFlags.IS_REACTIVE) return true;
+        if (isRef(target[key])) return target[key].value; // 拆包，Ref对象调用时省略.value
+        if (isObject(target[key])) return reactive(target[key]); // 递归调用(用到了才递归，)
+
+        const res = Reflect.get(target, key, receiver);
+        track(target, key); // 依赖收集--------------------！！！
+        return res;
+    },
+    set(target, key, value, receiver) {
+        let oldValue = target[key];
+        const r = Reflect.set(target, key, value, receiver);
+        // 触发effect--------------------！！！
+        if (oldValue !== value) trigger(target, key, value, oldValue);
+        return r;
+    },
+};
+```
+
+__track__ 和 __trigger__
+```js
+// map中找到该属性的影响effects队列deps，给trackEffects去添加当前effect
+const targetMap = new WeakMap();
+export function track(target, key) {
+    if (activeEffect) {
+        let depsMap = targetMap.get(target);
+        if (!depsMap) targetMap.set(target, (depsMap = new Map()));
+        let dep = depsMap.get(key);
+        if (!dep) depsMap.set(key, (dep = new Set()));
+        trackEffects(dep);
+    }
+}
+export function trackEffects(dep) {
+    let shouldTrack = !dep.has(activeEffect);
+    if (shouldTrack) {
+        dep.add(activeEffect); // 属性记录effect
+        activeEffect.deps.push(dep); // effect记住属性的影响effect列表(方便后续从列表里删除自己)
+    }
+}
+
+// map中找到该属性的影响effects队列deps，给triggerEffects去触发影响的effect
+export function trigger(target, key, newValue, oldValue) {
+    const depsMap = targetMap.get(target);
+    if (!depsMap) return
+    const dep = depsMap.get(key);
+    triggerEffects(dep);
+}
+export function triggerEffects(dep) {
+    const effects = [...dep];
+    effects && effects.forEach((effect) => {
+        if (effect === activeEffect) return // 跳过当前正在执行的effect
+        if (effect.scheduler) {effect.scheduler();return;}
+        effect.run(); // 有用户自定义scheduler，用用户的，没有就默认run
+    });
+}
+```
+
 ## Computed
 
+Computed 和 Ref 都是构造一个响应式对象，和 Reactive 类似。
 
+Computed 和 Ref 是在外层包一层响应式对象，并储存更多额外信息，而 Reactive 是将一个对象改造成响应式。
+
+Computed 和 Ref 的 deps 直接存在自己的对象中，直接调用`trackEffects(dep)`添加当前effects
+
+Reactive Handler 的 track 就是从全局map对象中找到 受影响effect数组deps，再调用`trackEffects(dep)`
+
+(因为其封装只是通过proxy，进行代理，本身没有挂载deps)
+
+__computed使用__
+
+根据其他数据生成衍生数据，默认懒执行，依赖不发生变化时使用缓存数据，减少计算。
+
+不能直接修改计算属性自己的值(.value)
+```js
+const state = reactive({ firstName: 'a', lastName: 'b' })
+const fullName = computed({
+    get() {
+        return state.firstName + state.lastName
+    },
+    set(val) {
+        state.firstName = val
+    }
+})
+effect(() => {
+    app.innerHTML = fullName
+})
+```
+
+__实现代码__
+
+存两处依赖收集， 
+1. computed属性 和 其依赖的getter中的属性，
+2. computed属性 和 使用了computed属性的effect。
+
+所以依赖发生变化时有两处更新，
+1. `this._dirty = true`。下一次get时，computed属性更新
+2. `triggerEffects(this.dep)`。依赖于该computed属性的effect渲染更新
+
+```js
+class ComputedRefImpl {
+    public effect;
+    public _value;
+    public _dirty = true;
++   public dep = new Set();
+    // Handler.get中使用到了，读取如果该对象是ref就读取其value值，这样调用少写一个.value
+    public __v_isRef = true;
+    constructor(getter, public setter) {
+        this.effect = new ReactiveEffect(getter, () => {
+            if (!this._dirty) {
+                this._dirty = true; // 依赖的值发生变化了 会将dirty变为true
++               triggerEffects(this.dep); // 当依赖的值发生变化了 也应该触发更新
+            }
+        });
+    }
+    get value() {
+        // 和handler一样，就是依赖收集+然后返回数据
++       trackEffects(this.dep);
+
+        if (this._dirty) {
+            this._dirty = false;
+            this._value = this.effect.run(); // 缓存数据
+        }
+        return this._value;
+    }
+    set value(newVal) {
+        this.setter(newVal);
+    }
+}
+export function computed(getterOrOptions) {
+    // 拿到getter，setter 返回一个computed对象
+    let getter;
+    let setter;
+    const isGetter = isFunction(getterOrOptions);
+    if (isGetter) {
+        getter = getterOrOptions;
+        setter = () => {
+            console.log("warn");
+        };
+    } else {
+        getter = getterOrOptions.get;
+        setter = getterOrOptions.set;
+    }
+    return new ComputedRefImpl(getter, setter);
+}
+```
 
 ## Ref
+
+Ref 处理基本类型，让基本类型变成响应式，而不需要人工包装成对象，再包装成响应式对象。
+
+__实现代码__
+
+在基本类型外包装一层响应式对象，并用.value接取值。
+
+并在读取值时，如果判断如果一个对象是ref对象就读取其value值，自动拆包，减少.value得书写。
+
+```js
+export function isRef(value) {
+    return !!(value && value.__v_isRef);
+}
+
+export function toReactive(value) {
+    // 如果是一个普通对象，将其包装为响应式对象(因为对象的属性也需要被监控)
+    return isObject(value) ? reactive(value) : value;
+}
+class RefImpl {
+    public _value;
+    public dep = new Set();
+    public __v_isRef = true;
+    constructor(public rawValue) {
+        this._value = toReactive(rawValue);
+    }
+    // 和handler一样，get收集依赖，set更新渲染
+    // 不一样在于这里直接监控传入的整个值，不论是object 还是 基本类型，直接收集依赖。
+    get value() {
+        trackEffects(this.dep);
+        return this._value;
+    }
+    set value(newVal) {
+        if (newVal !== this.rawValue) { // 和handler.set一样,新旧值有变更才触发更新
+            this.rawValue = newVal;
+            this._value = toReactive(newVal);
+            triggerEffects(this.dep);
+        }
+    }
+}
+export function ref(value) {
+    return new RefImpl(value);
+}
+```
+## 总结
+
+React 的 `useRef` 目的是保存数据， 而Vue3 的 `Ref` 目的是监听数据变化
