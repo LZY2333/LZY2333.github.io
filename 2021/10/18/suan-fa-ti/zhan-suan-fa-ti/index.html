@@ -564,7 +564,7 @@
 
     push(val: number): void &#123;
         this.Stack.push(val);
-        this.MinStack.push(Math.min(val, this.getMin() ?? Infinity));
+        this.MinStack.push(Math.min(val, this.getMin() ?? Number.NEGATIVE_INFINITY ));
     &#125;
     &#x2F;&#x2F; ?? 前面的值为 null undefined 则取后面的值
 
@@ -1254,7 +1254,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">140.7k</span>&nbsp;字
+                class="white-color">142.8k</span>&nbsp;字
             
             
             

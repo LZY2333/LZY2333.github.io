@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    82
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -446,19 +446,168 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="前缀和双指针"><a href="#前缀和双指针" class="headerlink" title="前缀和双指针"></a>前缀和双指针</h1><p>题目要求按照顺序，而非随机顺序</p>
-<p>求最大子序列，滑动窗口</p>
-<h2 id="1-两数之和（-LeetCode-1-）"><a href="#1-两数之和（-LeetCode-1-）" class="headerlink" title="1. 两数之和（ LeetCode 1 ）"></a>1. 两数之和（ LeetCode 1 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/description/">leetcode</a></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">twoSum</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">nums<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <h1 id="前缀和双指针"><a href="#前缀和双指针" class="headerlink" title="前缀和双指针"></a>前缀和双指针</h1><p>题目要求 连续有序子序列，求最大子序列，存在进出条件，滑动窗口</p>
+<p>题目要求 连续无序子序列，无法预测数组趋势，找子区间和，前缀和</p>
+<p>滑动窗口要求新加数据A之后，后续再加数据B不会使得A符合条件(可预测趋势，如递增)</p>
+<p>前缀和不需要</p>
+<p>注意 <code>Array.sort()</code> 默认排序结果为根据Unicode码。<br>会出现<code>[-1, -1, -4, 0, 1, 2]</code>这种奇怪的结果<br>传入的函数返回 小于0 的数则不交换，<code>(a,b)=&gt;a-b</code> 代表从小到大排序</p>
+<h2 id="1-删除子数组的最大得分（-LeetCode-1695-）"><a href="#1-删除子数组的最大得分（-LeetCode-1695-）" class="headerlink" title="1. 删除子数组的最大得分（ LeetCode 1695 ）"></a>1. 删除子数组的最大得分（ LeetCode 1695 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-erasure-value/">leetcode</a></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">maximumUniqueSubarray</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> start <span class="token operator">=</span> end <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> max <span class="token operator">=</span> sum <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> map <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
     <span class="token keyword">const</span> l <span class="token operator">=</span> nums<span class="token punctuation">.</span>length
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-           <span class="token keyword">return</span> <span class="token punctuation">[</span>map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> i<span class="token punctuation">]</span> 
+    <span class="token comment">// 滑动窗口，每次要放入元素前，先判断前端是否要弹出元素</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> end <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> end <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> end<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>map<span class="token punctuation">[</span>nums<span class="token punctuation">[</span>end<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            sum <span class="token operator">-=</span> nums<span class="token punctuation">[</span>start<span class="token punctuation">]</span>
+            <span class="token keyword">delete</span> map<span class="token punctuation">[</span>nums<span class="token punctuation">[</span>start<span class="token punctuation">]</span><span class="token punctuation">]</span>
+            start<span class="token operator">++</span>
         <span class="token punctuation">&#125;</span>
-        map<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>target <span class="token operator">-</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+        sum <span class="token operator">+=</span> nums<span class="token punctuation">[</span>end<span class="token punctuation">]</span>
+        map<span class="token punctuation">[</span>nums<span class="token punctuation">[</span>end<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span>
+        max <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>max<span class="token punctuation">,</span>sum<span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> max
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="2-最大子数组和（-LeetCode-53-）"><a href="#2-最大子数组和（-LeetCode-53-）" class="headerlink" title="2. 最大子数组和（ LeetCode 53 ）"></a>2. 最大子数组和（ LeetCode 53 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-subarray/description/">leetcode</a></p>
+<p>前缀和</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">maxSubArray</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> pre <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> maxAns <span class="token operator">=</span> nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    nums<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">x</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// pre 表示以第 i 个元素结尾的最大子数组的和</span>
+        <span class="token comment">// 此处循环是模拟向数组中一个个添加元素</span>
+        <span class="token comment">// 每添加一次求出其maxAns，直到加到和nums一样。</span>
+        <span class="token comment">// [a] 中加入b，若pre小于0，则b自己就是最大子数组</span>
+        <span class="token comment">// [a, b] 中加入c，若pre大于0，则pre+c为最大子数组</span>
+        <span class="token comment">// 一个个添入</span>
+        pre <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>pre <span class="token operator">+</span> x<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 顺便算一下每添加一个元素时，数组的maxAns</span>
+        maxAns <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>maxAns<span class="token punctuation">,</span> pre<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> maxAns<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="3-三数之和（-LeetCode-15-）"><a href="#3-三数之和（-LeetCode-15-）" class="headerlink" title="3. 三数之和（ LeetCode 15 ）"></a>3. 三数之和（ LeetCode 15 ）</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/3sum/description/">leetcode</a></p>
+<p>双指针</p>
+<p>方法一，两次去重思路一致，心智负担更小</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 本质是三重循环的优化版，关键点是排序，先确定第一个数i，内部两层循环改为双指针</span>
+<span class="token comment">// 2次去重:i元素相同，跳过去重；left元素相同，跳过去重</span>
+<span class="token comment">// 2次提前结束:i元素>0，结束i循环；没找到right使三者合&lt;=0，结束left循环</span>
+<span class="token keyword">var</span> <span class="token function-variable function">threeSum</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">const</span> l <span class="token operator">=</span> nums<span class="token punctuation">.</span>length
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token keyword">return</span> result
+
+    nums<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">-</span> b<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span> <span class="token comment">// nums[i] > 0 则三个数必然都大于0</span>
+        <span class="token comment">// i 去重，和上一次循环的数相同的话，其情况必然是遍历过的</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">===</span> nums<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">continue</span>
+
+        <span class="token keyword">let</span> right <span class="token operator">=</span> l <span class="token operator">-</span> <span class="token number">1</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> left <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> left <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> left<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// left 去重，和上一次循环的数相同的话，其情况必然是遍历过的</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">></span> i <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span> <span class="token operator">==</span> nums<span class="token punctuation">[</span>left <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            <span class="token comment">// 确定了i left,及其去重，后续只考虑找 right，三者之和大于0，说明需要找更小的数</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;</span> right <span class="token operator">&amp;&amp;</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>right<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> right<span class="token operator">--</span>
+            <span class="token comment">// 指针重合代表 i left 没找到right 三者合 &lt;= 0的，left再大也没用，直接退出循环</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">===</span> right<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>right<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>right<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> result
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>方法二</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 本质是三重循环的优化版，关键点是排序，先确定第一个数i，内部两层循环改为双指针</span>
+<span class="token comment">// 两层去重:i元素相同，跳过去重；left/right元素相同，跳过去重</span>
+<span class="token keyword">var</span> <span class="token function-variable function">threeSum</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">nums</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">const</span> l <span class="token operator">=</span> nums<span class="token punctuation">.</span>length
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token keyword">return</span> result
+
+    nums<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">-</span> b<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 如果nums[i] > 0 则三个数必然都大于0,合不可能===0</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span>
+        <span class="token comment">// if(nums[i] === nums[i+1]) i++,这里不可以采取跳过的形式，直接跳过相当于少了一个元素</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">===</span> nums<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">continue</span>
+
+        <span class="token keyword">let</span> left <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span>
+        <span class="token keyword">let</span> right <span class="token operator">=</span> l <span class="token operator">-</span> <span class="token number">1</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">let</span> sum <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>right<span class="token punctuation">]</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>sum <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>right<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token comment">// 1.去重，如[-2,0,0,2,2]，i指向的元素为2时用两种解。</span>
+                <span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;</span> right <span class="token operator">&amp;&amp;</span> nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span> <span class="token operator">==</span> nums<span class="token punctuation">[</span>left <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> left<span class="token operator">++</span>
+                <span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;</span> right <span class="token operator">&amp;&amp;</span> nums<span class="token punctuation">[</span>right<span class="token punctuation">]</span> <span class="token operator">==</span> nums<span class="token punctuation">[</span>right <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> right<span class="token operator">--</span>
+                <span class="token comment">// 2.left right都需要变动，因为[a,b,c]中确定了ab，c也就确定了，再次找出的C会重复</span>
+                <span class="token comment">// 2.另外同时，由于1情况的存在，所以还是需要1这步去重</span>
+                left<span class="token operator">++</span>
+                right<span class="token operator">--</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>sum <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                left<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token comment">// 三者之和小于 0，说明需要找更大的数</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>sum <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                right<span class="token operator">--</span><span class="token punctuation">;</span> <span class="token comment">// 三者之和大于0，说明需要找更小的数</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> result
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="4-盛最多水的容器-LeetCode-11"><a href="#4-盛最多水的容器-LeetCode-11" class="headerlink" title="4.盛最多水的容器(LeetCode 11)"></a>4.盛最多水的容器(LeetCode 11)</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/container-with-most-water/">leetcode</a></p>
+<p>双指针</p>
+<p><strong>双99%击败</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">maxArea</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">height</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> start <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>end <span class="token operator">=</span> height<span class="token punctuation">.</span>length <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>result <span class="token operator">=</span> <span class="token operator">-</span> Number<span class="token punctuation">.</span><span class="token constant">MAX_VALUE</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>start <span class="token operator">&lt;</span> end<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>height<span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token operator">&lt;</span> height<span class="token punctuation">[</span>end<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 谁小谁就是height</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>height<span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span>end <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">></span> result<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                result <span class="token operator">=</span> height<span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span>end <span class="token operator">-</span> start<span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token comment">// 小的往区间内部走，找比start更高的柱子，更矮的必然面积更小，直接略过</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span>start <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&lt;</span> end <span class="token operator">&amp;&amp;</span> height<span class="token punctuation">[</span>start <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> height<span class="token punctuation">[</span>start<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                start <span class="token operator">++</span>
+            <span class="token punctuation">&#125;</span>
+            start <span class="token operator">++</span> 
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>height<span class="token punctuation">[</span>end<span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span>end <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">></span> result<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                result <span class="token operator">=</span> height<span class="token punctuation">[</span>end<span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span>end <span class="token operator">-</span> start<span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token comment">// 小的往区间内部走，找比end更高的柱子，更矮的必然面积更小，直接略过</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span>start <span class="token operator">&lt;</span> end <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> height<span class="token punctuation">[</span>end <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> height<span class="token punctuation">[</span>end<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                end <span class="token operator">--</span>
+            <span class="token punctuation">&#125;</span>
+            end <span class="token operator">--</span> 
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> result
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="5-和为-K-的子数组-LeetCode-560"><a href="#5-和为-K-的子数组-LeetCode-560" class="headerlink" title="5.和为 K 的子数组(LeetCode 560)"></a>5.和为 K 的子数组(LeetCode 560)</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subarray-sum-equals-k/">leetcode</a></p>
+<p>前缀和,找区间和</p>
+<p>由于不关心i，所以没必要用数组储存前缀和，不储存i，只需要计数</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">subarraySum</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">nums<span class="token punctuation">,</span> k</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> pre <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+
+    <span class="token keyword">const</span> l <span class="token operator">=</span> nums<span class="token punctuation">.</span>length
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -693,18 +842,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/01/31/suan-fa-ti/qian-zhui-he-shuang-zhi-zhen/">
+                <a href="/2023/02/14/yue-du-za-ji/js/yuan-xing-zuo-yong-yu-this/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="前缀和双指针">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="原型-作用域-this">
                         
-                        <span class="card-title">前缀和双指针</span>
+                        <span class="card-title">原型-作用域-this</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -714,27 +862,30 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-31
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-02-14
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">JS基础</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
                 </div>
@@ -930,7 +1081,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">140.7k</span>&nbsp;字
+                class="white-color">142.8k</span>&nbsp;字
             
             
             

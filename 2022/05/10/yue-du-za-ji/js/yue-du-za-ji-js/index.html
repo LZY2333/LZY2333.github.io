@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.9k
+                    986
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    4 分
                 </div>
                 
 
@@ -464,99 +464,27 @@
 <p><code>Object.getOwnPropertySymbols</code>可以返回对象所有<code>Symbol</code>属性</p>
 <h3 id="BigInt-用来表示大于-2-53-1-的整数"><a href="#BigInt-用来表示大于-2-53-1-的整数" class="headerlink" title="BigInt 用来表示大于 2^53-1 的整数"></a>BigInt 用来表示大于 2^53-1 的整数</h3><p><code>BigInt</code> 真没怎么用过，只知道是用来表示 大于 2^53-1 的数的，末尾加n就行</p>
 <p>JS所有数字均以 <strong>双精度64位浮点格式</strong> 表示.</p>
-<h2 id="如何判断数据类型"><a href="#如何判断数据类型" class="headerlink" title="如何判断数据类型"></a>如何判断数据类型</h2><h3 id="typeof-能判断8种基本类型-function"><a href="#typeof-能判断8种基本类型-function" class="headerlink" title="typeof 能判断8种基本类型 function"></a>typeof 能判断8种基本类型 function</h3><p><code>typeof</code> 能判断8种基本类型，及<code>function</code>类型，<code>Object</code>的衍生类型都只能返回<code>object</code>(全部小写)</p>
+<h3 id="null-和-undefined区别"><a href="#null-和-undefined区别" class="headerlink" title="null 和 undefined区别"></a>null 和 undefined区别</h3><p>null 表示值就是空，如原型链的终点</p>
+<p>undefined 表示尚未被赋值，却尝试读取，如变量声明，函数无返回值</p>
+<h2 id="如何判断数据类型"><a href="#如何判断数据类型" class="headerlink" title="如何判断数据类型"></a>如何判断数据类型</h2><h3 id="typeof-能判断8种基本类型-function"><a href="#typeof-能判断8种基本类型-function" class="headerlink" title="typeof 能判断8种基本类型 function"></a>typeof 能判断8种基本类型 function</h3><p><code>typeof</code> 能判断8种基本类型，及<code>function</code>类型，<code>Object</code>的衍生类型都只能返回<code>object</code>(全部小写字符串)</p>
 <h3 id="instanceof-能判断-实例-的-对象类型"><a href="#instanceof-能判断-实例-的-对象类型" class="headerlink" title="instanceof 能判断 实例 的 对象类型"></a>instanceof 能判断 实例 的 对象类型</h3><p><code>instanceof</code> 能判断实例的对象类型，不能判断8种基本数据类型，原理是顺着原型链找，也就是prototype</p>
 <p><code>console.log(people1 instanceof People); // true</code></p>
 <h3 id="Object-prototype-toString-call-能判断所有内置类型"><a href="#Object-prototype-toString-call-能判断所有内置类型" class="headerlink" title="Object.prototype.toString.call() 能判断所有内置类型"></a>Object.prototype.toString.call() 能判断所有内置类型</h3><p><code>Object.prototype.toString.call([]); // &quot;[object Array]&quot;</code>(类型首字母大写)</p>
-<h3 id="如何判断变量为数组"><a href="#如何判断变量为数组" class="headerlink" title="如何判断变量为数组"></a>如何判断变量为数组</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js">Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
+<h3 id="如何判断变量为数组"><a href="#如何判断变量为数组" class="headerlink" title="如何判断变量为数组"></a>如何判断变量为数组</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
 arr<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">;</span> <span class="token comment">// true</span>
 arr <span class="token keyword">instanceof</span> <span class="token class-name">Array</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
-<span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// "[object Array]"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'Array'</span> <span class="token comment">// true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="原型和原型链-对象属性的查找"><a href="#原型和原型链-对象属性的查找" class="headerlink" title="原型和原型链(对象属性的查找)"></a>原型和原型链(对象属性的查找)</h2><p><strong>prototype</strong>:每个函数都具有的属性，且只有函数才有的属性。函数的prototype所指向的对象，就是该函数作为构造函数创建的<em>实例的原型对象</em>。</p>
-<p><strong><strong>proto</strong></strong>:每一个JavaScript对象（除nul）都具有的属性，这个属性会指向该<em>对象的原型</em>。</p>
-<p><strong>constructor</strong>:每一个原型都具有的属性，该属性指向关联这个<em>原型的构造函数</em>。</p>
-<p>每一个JS对象在创建时都会与之关联一个对象，这个对象就是原型，</p>
-<p>每一个对象都会从原型”继承”属性,查找对象的属性时，会沿着原型链依次向上查找该属性.</p>
-<h2 id="执行上下文-变量的查找"><a href="#执行上下文-变量的查找" class="headerlink" title="执行上下文(变量的查找)"></a>执行上下文(变量的查找)</h2><h3 id="什么是执行上下文栈，调用栈"><a href="#什么是执行上下文栈，调用栈" class="headerlink" title="什么是执行上下文栈，调用栈"></a>什么是执行上下文栈，调用栈</h3><p><strong>JS执行机制</strong>: 以代码块为单位 先编译后执行，分为 <strong>创建阶段</strong> 和 <strong>执行阶段</strong>.</p>
-<p>（”代码块”有三种:全局代码、函数代码、eval代码。）</p>
-<p><strong>创建阶段</strong>: 会生成两部分 <strong>执行上下文</strong> 和 <strong>可执行代码</strong></p>
-<p><strong>执行上下文</strong>: 是一段代码时的运行环境，包括执行期间要用到的 <strong>变量对象</strong> / <strong>作用域链</strong> / <strong>This</strong></p>
-<p><strong>执行上下文栈</strong>: 用来管理这些执行上下文，是一个 先进后出的 栈结构.</p>
-<p><strong>执行上下文栈</strong> 其实就是 JavaScript 引擎追踪函数执行的一个机制，和函数执行时的变量查找没什么关系</p>
-<p>当一次有多个函数被调用时，通过调用栈就能够追踪到哪个函数正在被执行以及各函数之间的调用关系。</p>
-<p>JS执行时首先会遇到全局代码，栈内压入 全局执行上下文.</p>
-<p>然后执行到一个函数时，会 从 全局执行上下文 中取出这段函数的代码进行编译</p>
-<p>创建该函数的执行上下文，又压入栈内.函数执行完毕，又弹出该执行上下文.</p>
-<h3 id="什么是变量提升"><a href="#什么是变量提升" class="headerlink" title="什么是变量提升"></a>什么是变量提升</h3><p>JS的执行机制是 以代码块为单位，先编译后执行，分为编译阶段和执行阶段</p>
-<p>编译阶段会生成两部分 执行上下文 和 可执行代码</p>
-<p>在执行代码之前，其实已经将所有的变量 在 执行上下文 准备好了</p>
-<p>使得代码看起来，可以在变量定义之前就访问到该变量</p>
-<p>变量提升是JS的一个重要设计缺陷， 在ES6中 用 块级作用域 配合 const let 避免这种缺陷。</p>
-<p><strong>作用域</strong>: 函数和变量的可被访问的范围，生效范围 (全局作用域 函数作用域 块级作用域)</p>
-<p>JS的设计者一开始也没想到JS会这么火，没有设计的那么复杂。<br>没想到简单恰恰导致了JS火起来，而火起来后又需要更多的规范<br>这就像开发一个项目一样，功能简单 意味着 领域专注 快速开发 成本降低</p>
-<p><strong>缺陷</strong>: 变量污染 变量覆盖</p>
-<h3 id="const-let解决变量提升-执行上下文的变量环境-和-词法环境"><a href="#const-let解决变量提升-执行上下文的变量环境-和-词法环境" class="headerlink" title="const/let解决变量提升(执行上下文的变量环境 和 词法环境)"></a>const/let解决变量提升(执行上下文的变量环境 和 词法环境)</h3><p>执行上下文中 分为 <strong>变量环境</strong> 和 <strong>词法环境</strong></p>
-<p><strong>变量环境</strong> 储存<code>var</code>声明的变量</p>
-<p><strong>词法环境</strong> 是一个栈，以块级作用域为 单位储存<code>const</code>/<code>let</code>声明的变量.类似 <strong>执行上下文栈</strong> 的使用机制</p>
-<p>编译阶段:<br>函数作用域内所有 var声明的变量 创建并初始化 在 <strong>变量环境__，<br>函数作用域内<code>const</code>/<code>let</code> 创建不初始化 在 __词法环境</strong> 栈底，</p>
-<blockquote>
-<p>这里其实是 块级作用域(这里相当于函数作用域内所有，且剔除内部其他块级作用域内的变量)</p>
-</blockquote>
-<p>执行阶段:<br>执行到块级作用域，块级作用域中的 所有 <code>const</code>/<code>let</code> 变量立即 创建，并压入 <strong>词法环境</strong> 栈底，<br>此时变量已被创建，但如果在声明之前调用 <code>const</code>/<code>let</code> 变量，由于未 初始化，JS引擎报错 <strong>暂时性死区</strong><br>此时变量的查找顺序为，先从 <strong>词法环境</strong> 栈顶找到栈底，再找 <strong>变量环境</strong> </p>
-<p><code>var</code>的创建和初始化被提升，赋值不会被提升。<br><code>let</code>的创建被提升，初始化和赋值不会被提升。<br><code>function</code>的创建、初始化和赋值均会被提升</p>
-<h3 id="作用域和作用域链-变量的查找"><a href="#作用域和作用域链-变量的查找" class="headerlink" title="作用域和作用域链(变量的查找)"></a>作用域和作用域链(变量的查找)</h3><p>和直觉不同，<strong>变量的查找 并非 沿着执行上下文栈进行</strong></p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myName<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">var</span> myName <span class="token operator">=</span> <span class="token string">"lzy内"</span>
-    <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">var</span> myName <span class="token operator">=</span> <span class="token string">"lzy外"</span>
-<span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// "lzy 外"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><strong>作用域</strong></p>
-<p>其实就是 变量对象， 代表 函数和变量的可被访问的范围，生效范围.</p>
-<p>变量存在于哪个 作用域 或 属于哪个变量对象，就可以在这个变量对象内被访问.</p>
-<p><strong>作用域链</strong></p>
-<p>是JS查找变量的一套规则，本质上是由多个执行上下文的变量对象构成的链表，</p>
-<p>链表的层级由 词法作用域 决定，查找变量时，会沿着作用域链查找.</p>
-<p><strong>作用域链1</strong> （函数创建时产生）</p>
-<p>外层代码段编译时， 作为一个对象， 会产生一个内部属性 [[scope]]，</p>
-<p>并根据 词法作用域，从内到外层层将父代码段的 变量对象 保存其中.</p>
-<p><strong>词法作用域</strong></p>
-<p>也是 __静态作用域__，JS的 作用域 由函数定义的位置决定，而不是执行时的 调用栈决定.</p>
-<p>因为函数他所能引用的外部变量[[scope]]，在函数创建的时候就已经决定了，而不是函数执行的时候</p>
-<p><strong>作用域链2</strong> （函数调用时产生）</p>
-<p>（进入自己的创建阶段，创建自己的执行上下文，压入执行上下文栈）</p>
-<p>复制自己 [[scope]]属性 创建作用域链2， 创建自己的AO并初始化， 压入作用域链顶端.</p>
-<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>理解闭包的产生比理解闭包的概念更重要，</p>
-<p><strong>闭包的产生</strong></p>
-<p>根据词法作用域规则，函数的作用域链由函数声明位置决定，声明位置在内部的函数总是可以访问外部函数的变量，</p>
-<p>即使内部函数的调用位置，不在其声明的外层函数内，甚至外部函数已经执行结束，</p>
-<p>但内部函数 引用的外部函数变量依旧保存在内存中，这些变量的集合称为闭包.</p>
-<p><strong>闭包</strong></p>
-<p>函数与其引用的外部函数词法环境的集合.（函数，自己内部的变量，外部词法环境，可访问的外部变量）</p>
-<p>闭包存在两种情况，一种是 内部函数正常在内部执行时，外部词法环境变量均存在，<strong>只要函数执行就存在闭包</strong></p>
-<p>一种是 内部函数执行时外部函数执行上下文已被销毁，</p>
-<p>当外部函数已被销毁，内部函数 引用了的外部变量依旧会被保存，</p>
-<p>而 未被引用的外部变量 会通过 tree-shaking的方式 被销毁。</p>
-<p>__多个内部函数共享共同一个闭包__，</p>
-<p>当外部函数有多个内部函数，只要任意内部函数使用了外部函数的变量，所有内部函数均持有闭包，且共享同一个闭包.</p>
-<p>返回内部函数时，JS引擎会提前分析闭包内部函数的词法环境，有引用的外部变量都不会被gc回收.</p>
-<h3 id="This"><a href="#This" class="headerlink" title="This"></a>This</h3><p><strong>This机制</strong>: 使用对象来调用其某个方法属性，该方法内部的This，指向的是对象</p>
-<p><strong>This机制的意义</strong>: 为了在对象内部的方法中使用对象内部的属性(然后用到原型链)</p>
-<p><strong>原型链机制的意义</strong>: 查找对象的属性时,会沿着原型链依次向上查找该属性.</p>
-<p><strong>缺陷</strong>: <strong>嵌套函数的This不会从外部函数继承</strong>(箭头函数解决)</p>
-<blockquote>
-<p>普通函数的This默认指向全局对象window<br>各种开源库中 函数返回函数 经常会先bind(This)一下，就是因为这个缺陷<br>原型链 与 作用域链 机制类似，却不是一套</p>
-</blockquote>
-<h2 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h2><h2 id="Promise面试题"><a href="#Promise面试题" class="headerlink" title="Promise面试题"></a>Promise面试题</h2><h2 id="Promise-和-async-await-有什么联系"><a href="#Promise-和-async-await-有什么联系" class="headerlink" title="Promise 和 async/await 有什么联系"></a>Promise 和 async/await 有什么联系</h2><h2 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h2><h2 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h2><h2 id="如何定位哪行js代码导致了页面刷新？"><a href="#如何定位哪行js代码导致了页面刷新？" class="headerlink" title="如何定位哪行js代码导致了页面刷新？"></a>如何定位哪行js代码导致了页面刷新？</h2><h2 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h2><p>__浅拷贝__，如果复制的对象是基本数据类型，拷贝的就是值，如果是引用类型，拷贝的就是内存地址，一个对象改变会影响另一个对象</p>
+<h3 id="如何遍历对象属性"><a href="#如何遍历对象属性" class="headerlink" title="如何遍历对象属性"></a>如何遍历对象属性</h3><p>仅<code>for/in</code>返回 原型链属性，仅 <code>Reflect.ownKeys()</code>返回 Symbol<br><code>Object.keys()</code>                 非继承，可枚举<br><code>Object.getOwnPropertyNames()</code>  非继承，可枚举，不可枚举<br><code>Reflect.ownKeys()</code>             非继承，可枚举，不可枚举，Symbol<br><code>for ... in ...</code>                  继承，可枚举</p>
+<p><strong>不可枚举</strong>: 在Object.defineProperty()方法中 <code>enumerable</code> 键值默认为 false</p>
+<p><strong>js的内置方法和属性几乎都不可枚举</strong></p>
+<h3 id="如何判断两个对象是否相等"><a href="#如何判断两个对象是否相等" class="headerlink" title="如何判断两个对象是否相等"></a>如何判断两个对象是否相等</h3><p><strong>=== 与 == 的区别</strong> : <code>==</code> 类型不同时会发生类型的自动转换，转换为相同的类型后再做比较</p>
+<h2 id="原型-作用域-this-已经拆分同名文章"><a href="#原型-作用域-this-已经拆分同名文章" class="headerlink" title="原型-作用域-this(已经拆分同名文章)"></a>原型-作用域-this(已经拆分同名文章)</h2><h2 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h2><h2 id="Promise面试题"><a href="#Promise面试题" class="headerlink" title="Promise面试题"></a>Promise面试题</h2><h2 id="Promise-和-async-await-有什么联系"><a href="#Promise-和-async-await-有什么联系" class="headerlink" title="Promise 和 async/await 有什么联系"></a>Promise 和 async/await 有什么联系</h2><h2 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h2><h2 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h2><h2 id="如何定位哪行js代码导致了页面刷新？"><a href="#如何定位哪行js代码导致了页面刷新？" class="headerlink" title="如何定位哪行js代码导致了页面刷新？"></a>如何定位哪行js代码导致了页面刷新？</h2><h2 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h2><p>__浅拷贝__，如果复制的对象是基本数据类型，拷贝的就是值，如果是引用类型，拷贝的就是内存地址，一个对象改变会影响另一个对象</p>
 <h3 id="JSON-parse-JSON-stringify-基本能用版"><a href="#JSON-parse-JSON-stringify-基本能用版" class="headerlink" title="JSON.parse(JSON.stringify()) 基本能用版"></a>JSON.parse(JSON.stringify()) 基本能用版</h3><ol>
 <li><code>JSON.parse(JSON.stringify())</code>，写法简单，但无法拷贝函数，循环引用，或特殊引用类型.</li>
 </ol>
-<h3 id="forIn遍历，递归自身，丐版"><a href="#forIn遍历，递归自身，丐版" class="headerlink" title="forIn遍历，递归自身，丐版"></a>forIn遍历，递归自身，丐版</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token parameter">target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<h2 id="手写扁平数组转tree"><a href="#手写扁平数组转tree" class="headerlink" title="手写扁平数组转tree"></a>手写扁平数组转tree</h2><h3 id="forIn遍历，递归自身，丐版"><a href="#forIn遍历，递归自身，丐版" class="headerlink" title="forIn遍历，递归自身，丐版"></a>forIn遍历，递归自身，丐版</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token parameter">target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> target <span class="token operator">!==</span> <span class="token string">'object'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> target<span class="token punctuation">;</span>
 
     <span class="token keyword">let</span> cloneTarget <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
@@ -917,12 +845,12 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
-                        <span class="chip bg-color">杂记</span>
-                    </a>
-                    
                     <a href="/tags/Chrome/">
                         <span class="chip bg-color">Chrome</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
                 </div>
@@ -1069,7 +997,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">140.7k</span>&nbsp;字
+                class="white-color">142.8k</span>&nbsp;字
             
             
             
