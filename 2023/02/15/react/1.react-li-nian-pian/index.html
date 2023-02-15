@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="阅读杂记Vue, 懒前端">
+    <meta name="keywords" content="React技术解密--理念篇笔记, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>阅读杂记Vue | 懒前端</title>
+    <title>React技术解密--理念篇笔记 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">阅读杂记Vue</h1>
+                    <h1 class="description center-align post-title">React技术解密--理念篇笔记</h1>
                 </div>
             </div>
         </div>
@@ -387,12 +387,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%9D%82%E8%AE%B0/">
-                                <span class="chip bg-color">杂记</span>
-                            </a>
-                        
-                            <a href="/tags/Vue/">
-                                <span class="chip bg-color">Vue</span>
+                            <a href="/tags/React/">
+                                <span class="chip bg-color">React</span>
                             </a>
                         
                     </div>
@@ -403,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
-                                经验帖
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                技术栈
                             </a>
                         
                     </div>
@@ -416,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-12-07
+                    2023-02-15
                 </div>
                 
 
@@ -425,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    9
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -450,7 +446,135 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="阅读杂记Vue"><a href="#阅读杂记Vue" class="headerlink" title="阅读杂记Vue"></a>阅读杂记Vue</h2><p>测试测试</p>
+                <h2 id="React技术解密–理念篇笔记"><a href="#React技术解密–理念篇笔记" class="headerlink" title="React技术解密–理念篇笔记"></a>React技术解密–理念篇笔记</h2><h2 id="React15架构是什么"><a href="#React15架构是什么" class="headerlink" title="React15架构是什么"></a>React15架构是什么</h2><p><strong>Reconciler（协调器）操作虚拟DOM</strong></p>
+<ol>
+<li><p>调用JSX生成虚拟DOM</p>
+</li>
+<li><p>新旧虚拟DOM对比与更新</p>
+</li>
+<li><p>通知 Renderer（渲染器）执行</p>
+</li>
+</ol>
+<p><strong>Renderer（渲染器）生成真实DOM</strong></p>
+<p>不同的Renderer，将虚拟DOM生成不同的平台数据结构</p>
+<p><strong>React15的缺点 Reconciler同步递归不可中断架构导致卡顿</strong> </p>
+<p>Reconciler 递归生成新虚拟DOM树的过程无法中断，递归更新时间超过了16ms，用户会感觉卡顿掉帧。</p>
+<p>无法中断让渡给渲染线程，如果中途中断函数调用，则执行栈销毁，无法复用之前的中间状态。</p>
+<p>Reconciler Renderer 交替执行</p>
+<blockquote>
+<p>React从理念上入手理解分为 Reconciler 和 Renderer<br>React从执行脉络上入手学习分为 初始化 和 更新 两个部分。</p>
+</blockquote>
+<h2 id="React16架构是什么"><a href="#React16架构是什么" class="headerlink" title="React16架构是什么"></a>React16架构是什么</h2><p><strong>React16核心目的</strong> : 将 <strong>同步递归不可中断更新架构</strong> 变为 <strong>异步可中断更新架构</strong></p>
+<p><strong>使用 fiber 重构 Reconciler，引入 Scheduler</strong></p>
+<p>Scheduler（调度器）—— 判断浏览器帧空闲时间,判断任务优先级,任务中断与开始<br>Reconciler（协调器）—— 操作虚拟DOM，标记出变更<br>Renderer（渲染器）—— 将虚拟DOM的变更体现在真实DOM上<br>Scheduler Reconciler 随时可因 <strong>更高优先级任务</strong>  <strong>当前帧剩余时间不足</strong> 中止</p>
+<p><strong>render阶段</strong>,Reconciler工作的阶段。<br><strong>commit阶段</strong>,Renderer工作的阶段。<br>render与commit阶段统称为work，即React在工作中。<br>相对应的，如果任务正在Scheduler内调度，就不属于work。</p>
+<h3 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7167335700424196127">React 之从 requestIdleCallback 到时间切片</a></p>
+<p><strong>requestIdleCallback</strong>: 浏览器提供的Api,其注册的回调函数会在空闲阶段执行,但是具有 浏览器兼容性, 触发频率不稳定 等问题.</p>
+<p><strong>Scheduler库</strong>: 由React实现的功能更完备的<code>requestIdleCallback</code>polyfill,判断浏览器帧空闲时间,额外能判断任务优先级.</p>
+<p>React 早期采用的是 requestAnimationFrame + postMessage 来实现</p>
+<h3 id="Reconciler"><a href="#Reconciler" class="headerlink" title="Reconciler"></a>Reconciler</h3><p>React16的Reconciler 从 递归 变成了可中断的 循环</p>
+<h2 id="Fiber是什么"><a href="#Fiber是什么" class="headerlink" title="Fiber是什么"></a>Fiber是什么</h2><p>可简单认为是,以链表结构相连的 虚拟DOM,同时挂载了 组件状态和更新操作</p>
+<p><strong>一种架构名称</strong> : React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。</p>
+<p>React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。</p>
+<p><strong>一种数据结构名称</strong> : 一个Fiber节点对应一个React element，包含组件的类型,虚拟DOM、真实DOM等信息。</p>
+<p><strong>React的最小工作单元</strong> : 运行时,Fiber 储存了该组件改变的状态、要执行的操作（删除/插入/更新…）。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">FiberNode</span><span class="token punctuation">(</span>
+    <span class="token parameter"><span class="token literal-property property">tag</span><span class="token operator">:</span> WorkTag<span class="token punctuation">,</span>
+    <span class="token literal-property property">pendingProps</span><span class="token operator">:</span> mixed<span class="token punctuation">,</span>
+    <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token keyword">null</span> <span class="token operator">|</span> string<span class="token punctuation">,</span>
+    <span class="token literal-property property">mode</span><span class="token operator">:</span> TypeOfMode<span class="token punctuation">,</span></span>
+<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 作为静态数据结构的属性</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>tag <span class="token operator">=</span> tag<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>key <span class="token operator">=</span> key<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>elementType <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>stateNode <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 作为架构</span>
+    <span class="token comment">// 用于连接其他Fiber节点形成Fiber树</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>return <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>child <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>sibling <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">this</span><span class="token punctuation">.</span>ref <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 作为动态的工作单元的属性</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>pendingProps <span class="token operator">=</span> pendingProps<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>memoizedProps <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>updateQueue <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>memoizedState <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dependencies <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">this</span><span class="token punctuation">.</span>mode <span class="token operator">=</span> mode<span class="token punctuation">;</span>
+
+    <span class="token keyword">this</span><span class="token punctuation">.</span>effectTag <span class="token operator">=</span> NoEffect<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>nextEffect <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">this</span><span class="token punctuation">.</span>firstEffect <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>lastEffect <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 调度优先级相关</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>lanes <span class="token operator">=</span> NoLanes<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>childLanes <span class="token operator">=</span> NoLanes<span class="token punctuation">;</span>
+
+    <span class="token comment">// 指向该fiber在另一次更新时对应的fiber</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>alternate <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/fiber.html#fiber%E7%9A%84%E5%90%AB%E4%B9%89">React技术揭秘–Fiber的结构</a></p>
+<h2 id="Fiber的工作原理-Fiber树篇"><a href="#Fiber的工作原理-Fiber树篇" class="headerlink" title="Fiber的工作原理(Fiber树篇)"></a>Fiber的工作原理(Fiber树篇)</h2><p>帧动画绘制时会采用 <strong>双缓存</strong> 机制,在内存中绘制帧,再直接替换当前帧,减少白屏.</p>
+<h3 id="Fiber架构模拟了双缓存机制"><a href="#Fiber架构模拟了双缓存机制" class="headerlink" title="Fiber架构模拟了双缓存机制"></a>Fiber架构模拟了双缓存机制</h3><p>React存在两颗Fiber树,当前页面内容对应的 <code>current Fiber树</code>, 内存中构建的 <code>workInProgress Fiber树</code></p>
+<p><code>workInProgress Fiber树</code>构建完成交给Renderer渲染，</p>
+<p>应用根节点的current指针指向<code>workInProgress Fiber树</code>，<code>workInProgress Fiber树</code>就变为<code>current Fiber树</code>。</p>
+<p>每次状态更新都会产生新的<code>workInProgress Fiber树</code>，通过current与workInProgress的替换，完成DOM更新。</p>
+<p><strong>在内存中构建树,可随时终止更新,让渡浏览器主线程,构建完毕一次性commit渲染视图</strong></p>
+<p><code>current Fiber树</code> 节点为 current fiber,<code>workInProgress Fiber树</code> 节点为 workInProgress fiber,他们通过alternate属性连接。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">currentFiber<span class="token punctuation">.</span>alternate <span class="token operator">===</span> workInProgressFiber<span class="token punctuation">;</span>
+workInProgressFiber<span class="token punctuation">.</span>alternate <span class="token operator">===</span> currentFiber<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="mount-与-update-流程"><a href="#mount-与-update-流程" class="headerlink" title="mount 与 update 流程"></a>mount 与 update 流程</h3><p><strong>mount时,</strong></p>
+<p>ReactDOM.render 会创建 <code>fiberRoot</code> 应用根节点,其 current 指向 当前页面内容对应的 <code>current Fiber树</code>.</p>
+<p>render阶段,在内存中 依组件次序 各自创建 虚拟DOM转换为 Fiber,连接构成Fiber树,此时为 <code>workInProgress Fiber树</code>.</p>
+<p>render阶段,构建 <code>workInProgress Fiber树</code> 时会尝试复用 <code>current Fiber树</code> 中已有的Fiber节点内的属性.</p>
+<p>commit阶段, <code>workInProgress Fiber树</code> 渲染到页面,<code>FiberRootNode.current</code>指向其,使其变成 <code>current Fiber 树</code>.</p>
+<p><strong>update时,</strong></p>
+<p>点击触发状态改变,这会 开启一次新的render阶段并构建一棵新的<code>workInProgress Fiber 树</code>。</p>
+<p>与 <strong>mount时</strong> 一样,render阶段,尝试复用,完成构建进入commit阶段完成渲染,<code>current Fiber 树</code>再次变更.</p>
+<p><a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/doubleBuffer.html#%E4%BB%80%E4%B9%88%E6%98%AF-%E5%8F%8C%E7%BC%93%E5%AD%98">React技术揭秘–Fiber的工作原理</a></p>
+<h2 id="Fiber的工作原理-Fiber节点篇"><a href="#Fiber的工作原理-Fiber节点篇" class="headerlink" title="Fiber的工作原理(Fiber节点篇)"></a>Fiber的工作原理(Fiber节点篇)</h2><p><a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/reconciler.html">React技术揭秘–架构篇Render阶段</a></p>
+<h2 id="JSX是什么"><a href="#JSX是什么" class="headerlink" title="JSX是什么"></a>JSX是什么</h2><p>JSX 是一种语法糖,就像 async函数是Promise的语法糖.</p>
+<ol>
+<li><p>babel对JSX语法进行正则匹配，通过AST语法树，将JSX代码替换为了<code>React.createElement()</code></p>
+</li>
+<li><p><code>React.createElement()</code> 运行时的返回值就是 虚拟DOM,也是 ReactElement</p>
+</li>
+<li><p>组件 mount 时, Reconciler 将 虚拟DOM 生成 Fiber节点</p>
+</li>
+</ol>
+<p>JSX =&gt; <code>React.createElement()</code> =&gt; 虚拟DOM =&gt; Fiber</p>
+<blockquote>
+<p>React17开始将JSX库单独提出，以便其他库使用JSX语法，而可以不引入React, <code>React.createElement()</code> 变成了 <code>jsx()</code></p>
+</blockquote>
+<h2 id="代数效应-未完成-待加深理解"><a href="#代数效应-未完成-待加深理解" class="headerlink" title="代数效应(未完成,待加深理解)"></a>代数效应(未完成,待加深理解)</h2><p>代数效应 是 函数式编程 中的一个概念，</p>
+<p>通过使用 代数语法 将副作用从 函数式编程 抽离, 保存函数式编程纯粹,避免副作用且无需关注其实现。</p>
+<p>使用代数效益的作用: __只需要关注纯粹业务逻辑,无需考虑副作用的管理.</p>
+<p>例如:</p>
+<p>代数效应 与 Hooks: 只需知道 useState 会保存并返回state, 无需关注state在Hook中是如何保存的.</p>
+<p><strong>Fiber的存在就是践行了代数效应</strong></p>
+<h3 id="为什么React不使用-Generator-实现异步可中断-的代数效应"><a href="#为什么React不使用-Generator-实现异步可中断-的代数效应" class="headerlink" title="为什么React不使用 Generator 实现异步可中断 的代数效应"></a>为什么React不使用 Generator 实现异步可中断 的代数效应</h3><p><a href="https://github.com/facebook/react/issues/7942">Fiber Principles: Contributing To Fiber</a></p>
+<ol>
+<li><p>Generator函数被调用时,需要调用者使用额外的语法</p>
+</li>
+<li><p>Generator</p>
+</li>
+</ol>
+<p>单一优先级任务的中断与继续,使用 Generator 可以实现 异步可中断更新</p>
+<p>高优先级任务插队, 的情况则无法使用 Generator</p>
+<p>Generator执行的中间状态是上下文关联的，所以计算y时无法复用之前已经计算出的x，需要重新计算。</p>
+<p>如果通过全局变量保存之前执行的中间状态，又会引入新的复杂度。</p>
+<p>基于这些原因，React没有采用Generator实现协调器。</p>
 
                 
             </div>
@@ -477,7 +601,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/2022/12/07/yue-du-za-ji/vue/yue-du-za-ji-vue/">https://github.com/LZY2333/LZY2333.github.io/2022/12/07/yue-du-za-ji/vue/yue-du-za-ji-vue/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/2023/02/15/react/1.react-li-nian-pian/">https://github.com/LZY2333/LZY2333.github.io/2023/02/15/react/1.react-li-nian-pian/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -515,12 +639,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
-                                    <span class="chip bg-color">杂记</span>
-                                </a>
-                            
-                                <a href="/tags/Vue/">
-                                    <span class="chip bg-color">Vue</span>
+                                <a href="/tags/React/">
+                                    <span class="chip bg-color">React</span>
                                 </a>
                             
                         </div>
@@ -690,66 +810,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/01/12/suan-fa-ti/ha-xi-biao-ji-he-ying-she-suan-fa-ti/">
+                <a href="/2023/02/15/react/1.react-li-nian-pian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="哈希表集合映射算法题">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="React技术解密--理念篇笔记">
                         
-                        <span class="card-title">哈希表集合映射算法题</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-12
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/12/05/vue3/vue3-xiang-ying-shi-yuan-li/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Vue3响应式原理">
-                        
-                        <span class="card-title">Vue3响应式原理</span>
+                        <span class="card-title">React技术解密--理念篇笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -760,7 +832,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-12-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-15
                             </span>
                         <span class="publish-author">
                             
@@ -774,11 +846,65 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Vue3/">
-                        <span class="chip bg-color">Vue3</span>
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/02/14/yue-du-za-ji/js/yuan-xing-zuo-yong-yu-this/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="原型-作用域-this">
+                        
+                        <span class="card-title">原型-作用域-this</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
+                                    经验帖
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">JS基础</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
                 </div>

@@ -461,8 +461,8 @@
 <p>如何让出执行权?</p>
 <p>如何拆分成更小粒度?</p>
 <p>应该拆成多小的粒度?</p>
-<h4 id="为什么说React15协调阶段不能被中断"><a href="#为什么说React15协调阶段不能被中断" class="headerlink" title="为什么说React15协调阶段不能被中断"></a>为什么说React15协调阶段不能被中断</h4><p>以前是函数递归遍历，生成新虚拟DOM，新旧虚拟DOM进行比较，更新真实DOM。</p>
-<p>如果中途中断函数调用，则执行栈销毁，无法恢复之前的进度。</p>
+<h4 id="为什么说React15协调阶段不能被中断"><a href="#为什么说React15协调阶段不能被中断" class="headerlink" title="为什么说React15协调阶段不能被中断"></a>为什么说React15协调阶段不能被中断</h4><p>Reconciler 递归生成新虚拟DOM树的过程无法中断，递归更新时间超过了16ms，用户会感觉卡顿掉帧。</p>
+<p>无法中断让渡给渲染线程，如果中途中断函数调用，则执行栈销毁，无法复用之前的中间状态。</p>
 <p>React Fiber 先将虚拟DOM构建为Fiber树(初始化时就构建了)，</p>
 <p>更新时每执行完一个fiber，就检查剩余时间，只要记录好当前fiber，随时中断，随时开始</p>
 <p>React15</p>
@@ -1184,7 +1184,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">142.8k</span>&nbsp;字
+                class="white-color">144.5k</span>&nbsp;字
             
             
             
