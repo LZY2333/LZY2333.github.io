@@ -8,21 +8,24 @@ tags:
 
 ### fiber
 
+__已被升级归纳入 React16_理念 文章内,请搜索,React16_理念__
+__已被升级归纳入 React16_理念 文章内,请搜索,React16_理念__
+__已被升级归纳入 React16_理念 文章内,请搜索,React16_理念__
+
 React16.13 开始中使用了 Fiber 架构
 
 React Fiber 是 React 核心算法的重新实现。
 
-它的主要特点是渐进式渲染: 能够将渲染工作分割成块，并将其分散到多个帧。
+它的主要特点是渐进式渲染: 能够将渲染工作分割成更小的Fiber单元，并将其分散到多个帧.
 
-fiber 结构就是为实现并发而准备的。
-
-[神光大佬的彻底搞懂 React 18 并发机制的原理](https://mp.weixin.qq.com/s/mQ2xQi9K1d6idAAsQSw0Mw)
 
 #### Fiber解决卡顿
 
-React15更新时 采用深度优先遍历 递归比对vdom树 同步更新变动的节点 的策略 (__Reconciliation协调__ 阶段)
+__React15的缺点: Reconciler同步递归更新不可中断 导致卡顿__ 
 
-这种递归调用 无法中断, 而 JS 线程和渲染线程是互斥的, 如果 JS 执行时间过长 导致一直占用主线程, 引起浏览器卡顿
+如果中途中断函数调用，则执行栈销毁，无法复用之前的中间状态。
+
+而 JS执行与Paint任务都发生在主线程, 是互斥的, 如果 JS 执行时间过长 导致一直占用主线程, 引起浏览器卡顿
 
 且 递归调用 调用栈太深时 资源占用高 
 
@@ -196,7 +199,7 @@ workLoop();
 
 如仍有剩余则继续下一个小任务, 如果当前帧已到时限则停止执行,等待下一帧的空闲时间继续执行,
 
-知道 当前协调执行完毕.
+直到 当前协调执行完毕.
 
 __requestAnimationFrame__ 浏览器提供的Api,其注册是回调函数会在4.阶段专门执行.
 
@@ -362,3 +365,8 @@ react因为先天的不足——无法精确更新，所以需要react fiber把�
 [为什么 React 的 Diff 算法不采用 Vue 的双端对比算法？](https://juejin.cn/post/7116141318853623839#heading-10)
 
 [函数式组件与类组件有何不同？](https://overreacted.io/zh-hans/how-are-function-components-different-from-classes/)
+
+
+fiber 结构就是为实现并发而准备的。
+
+[神光大佬的彻底搞懂 React 18 并发机制的原理](https://mp.weixin.qq.com/s/mQ2xQi9K1d6idAAsQSw0Mw)
