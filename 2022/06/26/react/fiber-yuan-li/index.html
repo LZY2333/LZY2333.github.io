@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    2.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    10 分
                 </div>
                 
 
@@ -446,13 +446,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="fiber"><a href="#fiber" class="headerlink" title="fiber"></a>fiber</h3><p>React16.13 开始中使用了 Fiber 架构</p>
+                <h3 id="fiber"><a href="#fiber" class="headerlink" title="fiber"></a>fiber</h3><p><strong>已被升级归纳入 React16_理念 文章内,请搜索,React16_理念</strong><br><strong>已被升级归纳入 React16_理念 文章内,请搜索,React16_理念</strong><br><strong>已被升级归纳入 React16_理念 文章内,请搜索,React16_理念</strong></p>
+<p>React16.13 开始中使用了 Fiber 架构</p>
 <p>React Fiber 是 React 核心算法的重新实现。</p>
-<p>它的主要特点是渐进式渲染: 能够将渲染工作分割成块，并将其分散到多个帧。</p>
-<p>fiber 结构就是为实现并发而准备的。</p>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mQ2xQi9K1d6idAAsQSw0Mw">神光大佬的彻底搞懂 React 18 并发机制的原理</a></p>
-<h4 id="Fiber解决卡顿"><a href="#Fiber解决卡顿" class="headerlink" title="Fiber解决卡顿"></a>Fiber解决卡顿</h4><p>React15更新时 采用深度优先遍历 递归比对vdom树 同步更新变动的节点 的策略 (<strong>Reconciliation协调</strong> 阶段)</p>
-<p>这种递归调用 无法中断, 而 JS 线程和渲染线程是互斥的, 如果 JS 执行时间过长 导致一直占用主线程, 引起浏览器卡顿</p>
+<p>它的主要特点是渐进式渲染: 能够将渲染工作分割成更小的Fiber单元，并将其分散到多个帧.</p>
+<h4 id="Fiber解决卡顿"><a href="#Fiber解决卡顿" class="headerlink" title="Fiber解决卡顿"></a>Fiber解决卡顿</h4><p><strong>React15的缺点: Reconciler同步递归更新不可中断 导致卡顿</strong> </p>
+<p>如果中途中断函数调用，则执行栈销毁，无法复用之前的中间状态。</p>
+<p>而 JS执行与Paint任务都发生在主线程, 是互斥的, 如果 JS 执行时间过长 导致一直占用主线程, 引起浏览器卡顿</p>
 <p>且 递归调用 调用栈太深时 资源占用高 </p>
 <p>于是引入 Fiber 进行调度, 把 <strong>Reconciliation协调</strong> 过程拆分为 更小粒度 可随时停止 可继续执行</p>
 <p>适时地让出 执行权, 让浏览器能及时响应用户交互 UI渲染</p>
@@ -596,7 +596,7 @@ nextUnitOfWork <span class="token operator">=</span> <span class="token constant
 </ol>
 <h4 id="Fiber基本原理"><a href="#Fiber基本原理" class="headerlink" title="Fiber基本原理"></a>Fiber基本原理</h4><p>在 浏览器每帧的空闲阶段 执行 已被拆分成小任务的 协调, 在每一个小任务 执行完后检查 当前帧剩余时间,</p>
 <p>如仍有剩余则继续下一个小任务, 如果当前帧已到时限则停止执行,等待下一帧的空闲时间继续执行,</p>
-<p>知道 当前协调执行完毕.</p>
+<p>直到 当前协调执行完毕.</p>
 <p><strong>requestAnimationFrame</strong> 浏览器提供的Api,其注册是回调函数会在4.阶段专门执行.</p>
 <p><strong>requestIdleCallback</strong> 浏览器提供的Api,其注册是回调函数会在空闲阶段执行.</p>
 <h4 id="什么是Fiber"><a href="#什么是Fiber" class="headerlink" title="什么是Fiber"></a>什么是Fiber</h4><ol>
@@ -714,6 +714,8 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>有一说一,这篇文章对Fiber的结构讲得不是很清楚<a target="_blank" rel="noopener" href="https://juejin.cn/post/6943896410987659277#comment">走进React Fiber的世界</a></p>
 <h3 id="回头看"><a href="#回头看" class="headerlink" title="回头看"></a>回头看</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7116141318853623839#heading-10">为什么 React 的 Diff 算法不采用 Vue 的双端对比算法？</a></p>
 <p><a target="_blank" rel="noopener" href="https://overreacted.io/zh-hans/how-are-function-components-different-from-classes/">函数式组件与类组件有何不同？</a></p>
+<p>fiber 结构就是为实现并发而准备的。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mQ2xQi9K1d6idAAsQSw0Mw">神光大佬的彻底搞懂 React 18 并发机制的原理</a></p>
 
                 
             </div>
@@ -1184,7 +1186,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">144.5k</span>&nbsp;字
+                class="white-color">146k</span>&nbsp;字
             
             
             
