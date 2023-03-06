@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    880
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 
@@ -446,7 +446,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="React16-Fiber"><a href="#React16-Fiber" class="headerlink" title="React16_Fiber"></a>React16_Fiber</h2><h2 id="Fiber是什么"><a href="#Fiber是什么" class="headerlink" title="Fiber是什么"></a>Fiber是什么</h2><p>可简单认为是,以链表结构相连的 虚拟DOM,同时挂载了 组件状态和更新操作</p>
+                <h3 id="React16-Fiber"><a href="#React16-Fiber" class="headerlink" title="React16_Fiber"></a>React16_Fiber</h3><h3 id="Fiber是什么"><a href="#Fiber是什么" class="headerlink" title="Fiber是什么"></a>Fiber是什么</h3><p>可简单认为是,以链表结构相连的 虚拟DOM,同时挂载了 组件状态和更新操作</p>
 <p><strong>一种架构名称</strong> : React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。</p>
 <p>React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。</p>
 <p><strong>一种数据结构名称</strong> : 一个Fiber节点对应一个React element，包含组件的类型,虚拟DOM、真实DOM等信息。</p>
@@ -497,8 +497,8 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/fiber.html#fiber%E7%9A%84%E5%90%AB%E4%B9%89">React技术揭秘–Fiber的结构</a></p>
-<h2 id="Fiber的工作原理-Fiber树篇"><a href="#Fiber的工作原理-Fiber树篇" class="headerlink" title="Fiber的工作原理(Fiber树篇)"></a>Fiber的工作原理(Fiber树篇)</h2><p>帧动画绘制时会采用 <strong>双缓存</strong> 机制,在内存中绘制帧,再直接替换当前帧,减少白屏.</p>
-<h3 id="Fiber架构模拟了双缓存机制"><a href="#Fiber架构模拟了双缓存机制" class="headerlink" title="Fiber架构模拟了双缓存机制"></a>Fiber架构模拟了双缓存机制</h3><p>React存在两颗Fiber树,当前页面内容对应的 <code>current Fiber树</code>, 内存中构建的 <code>workInProgress Fiber树</code></p>
+<h3 id="Fiber的工作原理-Fiber树篇"><a href="#Fiber的工作原理-Fiber树篇" class="headerlink" title="Fiber的工作原理(Fiber树篇)"></a>Fiber的工作原理(Fiber树篇)</h3><p>帧动画绘制时会采用 <strong>双缓存</strong> 机制,在内存中绘制帧,再直接替换当前帧,减少白屏.</p>
+<h4 id="Fiber架构模拟了双缓存机制"><a href="#Fiber架构模拟了双缓存机制" class="headerlink" title="Fiber架构模拟了双缓存机制"></a>Fiber架构模拟了双缓存机制</h4><p>React存在两颗Fiber树,当前页面内容对应的 <code>current Fiber树</code>, 内存中构建的 <code>workInProgress Fiber树</code></p>
 <p><code>workInProgress Fiber树</code>构建完成交给Renderer渲染，</p>
 <p>应用根节点的current指针指向<code>workInProgress Fiber树</code>，<code>workInProgress Fiber树</code>就变为<code>current Fiber树</code>。</p>
 <p>每次状态更新都会产生新的<code>workInProgress Fiber树</code>，通过current与workInProgress的替换，完成DOM更新。</p>
@@ -507,7 +507,7 @@
 <pre class="line-numbers language-js" data-language="js"><code class="language-js">currentFiber<span class="token punctuation">.</span>alternate <span class="token operator">===</span> workInProgressFiber<span class="token punctuation">;</span>
 workInProgressFiber<span class="token punctuation">.</span>alternate <span class="token operator">===</span> currentFiber<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h3 id="mount-与-update-流程"><a href="#mount-与-update-流程" class="headerlink" title="mount 与 update 流程"></a>mount 与 update 流程</h3><p><strong>mount时,</strong></p>
+<h4 id="mount-与-update-流程"><a href="#mount-与-update-流程" class="headerlink" title="mount 与 update 流程"></a>mount 与 update 流程</h4><p><strong>mount时,</strong></p>
 <p>ReactDOM.render 会创建 <code>fiberRoot</code> 应用根节点,其 current 指向 当前页面内容对应的 <code>current Fiber树</code>.</p>
 <p>render阶段,在内存中 依组件次序 各自创建 虚拟DOM转换为 Fiber,连接构成Fiber树,此时为 <code>workInProgress Fiber树</code>.</p>
 <p>render阶段,构建 <code>workInProgress Fiber树</code> 时会尝试复用 <code>current Fiber树</code> 中已有的Fiber节点内的属性.</p>
@@ -516,8 +516,11 @@ workInProgressFiber<span class="token punctuation">.</span>alternate <span class
 <p>点击触发状态改变,这会 开启一次新的render阶段并构建一棵新的<code>workInProgress Fiber 树</code>。</p>
 <p>与 <strong>mount时</strong> 一样,render阶段,尝试复用,完成构建进入commit阶段完成渲染,<code>current Fiber 树</code>再次变更.</p>
 <p><a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/doubleBuffer.html#%E4%BB%80%E4%B9%88%E6%98%AF-%E5%8F%8C%E7%BC%93%E5%AD%98">React技术揭秘–Fiber的工作原理</a></p>
-<h2 id="Fiber的工作原理-Fiber节点篇"><a href="#Fiber的工作原理-Fiber节点篇" class="headerlink" title="Fiber的工作原理(Fiber节点篇)"></a>Fiber的工作原理(Fiber节点篇)</h2><p><a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/reconciler.html">React技术揭秘–架构篇Render阶段</a></p>
-<h2 id="JSX是什么"><a href="#JSX是什么" class="headerlink" title="JSX是什么"></a>JSX是什么</h2><p>JSX 是一种语法糖,就像 async函数是Promise的语法糖.</p>
+<h3 id="Fiber的工作原理-Fiber节点篇"><a href="#Fiber的工作原理-Fiber节点篇" class="headerlink" title="Fiber的工作原理(Fiber节点篇)"></a>Fiber的工作原理(Fiber节点篇)</h3><p><code>didReceiveUpdate = false</code> 代表无法复用之前的Fiber，直接创建新Fiber替换</p>
+<p>在mount时只有rootFiber会赋值Placement effectTag，在commit阶段只会执行一次插入操作,</p>
+<p>换句话说，父节点无法复用，则所有子节点都会重新创建，不考虑复用。</p>
+<p><a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/reconciler.html">React技术揭秘–架构篇Render阶段</a></p>
+<h3 id="JSX是什么"><a href="#JSX是什么" class="headerlink" title="JSX是什么"></a>JSX是什么</h3><p>JSX 是一种语法糖,就像 async函数是Promise的语法糖.</p>
 <ol>
 <li><p>babel对JSX语法进行正则匹配，通过AST语法树，将JSX代码替换为了<code>React.createElement()</code></p>
 </li>
@@ -530,8 +533,10 @@ workInProgressFiber<span class="token punctuation">.</span>alternate <span class
 <blockquote>
 <p>React17开始将JSX库单独提出，以便其他库使用JSX语法，而可以不引入React, <code>React.createElement()</code> 变成了 <code>jsx()</code></p>
 </blockquote>
-<p>回头再补:React18以前会EffectList(副作用链)收集副作用，React18.2没有effect了。现在从根节点递归收集副作用</p>
-<h2 id="为什么Vue不需要Fiber"><a href="#为什么Vue不需要Fiber" class="headerlink" title="为什么Vue不需要Fiber"></a>为什么Vue不需要Fiber</h2>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>回头再补:React18以前会EffectList(副作用链)收集副作用，React18.2没有effect了。现在从根节点递归收集副作用</p>
+<p>18.2用 subTreeFlags，表示子节点是否有修改，冒泡</p>
+<h3 id="为什么Vue不需要Fiber"><a href="#为什么Vue不需要Fiber" class="headerlink" title="为什么Vue不需要Fiber"></a>为什么Vue不需要Fiber</h3><h3 id="Diff算法"><a href="#Diff算法" class="headerlink" title="Diff算法"></a>Diff算法</h3><p>当key不同时只代表遍历到的该fiber不能被p复用，后面还有兄弟fiber还没有遍历到。所以仅仅标记该fiber删除</p>
+
                 
             </div>
             <hr/>
@@ -770,31 +775,31 @@ workInProgressFiber<span class="token punctuation">.</span>alternate <span class
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/04/yue-du-za-ji/js/js-chang-jian-shou-xie/">
+                <a href="/2023/03/02/jian-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="JS常见手写">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="罗紫宇-前端开发-四年">
                         
-                        <span class="card-title">JS常见手写</span>
+                        <span class="card-title">罗紫宇-前端开发-四年</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            实现，类的继承，LRU淘汰算法，Ajax，节流函数，数组去重
+                            【绩效优异】两年间，共获1次年度A1(前10%)，2次季度A1，4座季度标兵奖杯，正式入职以来绩效未尝低于A2（A3/B1为优秀）。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-04
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-02
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%B8%96/" class="post-category">
-                                    经验帖
+                            <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
+                                    生活区
                                 </a>
                             
                             
@@ -804,8 +809,8 @@ workInProgressFiber<span class="token punctuation">.</span>alternate <span class
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">JS基础</span>
+                    <a href="/tags/%E8%AE%A1%E5%88%92/">
+                        <span class="chip bg-color">计划</span>
                     </a>
                     
                 </div>
@@ -1001,7 +1006,7 @@ workInProgressFiber<span class="token punctuation">.</span>alternate <span class
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">146k</span>&nbsp;字
+                class="white-color">148.8k</span>&nbsp;字
             
             
             

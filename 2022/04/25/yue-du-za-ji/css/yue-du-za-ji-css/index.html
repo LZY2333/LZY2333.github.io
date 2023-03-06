@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    335
+                    536
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -450,17 +450,75 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="阅读杂记CSS"><a href="#阅读杂记CSS" class="headerlink" title="阅读杂记CSS"></a>阅读杂记CSS</h1><h2 id="什么是盒模型"><a href="#什么是盒模型" class="headerlink" title="什么是盒模型"></a>什么是盒模型</h2><p>CSS盒模型分为 标准盒模型 IE盒模型, 由 margin border padding content</p>
+                <h1 id="阅读杂记CSS"><a href="#阅读杂记CSS" class="headerlink" title="阅读杂记CSS"></a>阅读杂记CSS</h1><h3 id="水平居中与垂直居中"><a href="#水平居中与垂直居中" class="headerlink" title="水平居中与垂直居中"></a>水平居中与垂直居中</h3><pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>father<span class="token punctuation">'</span></span> <span class="token special-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token value css language-css"><span class="token property">width</span><span class="token punctuation">:</span> 300px<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span> 300px<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span> pink<span class="token punctuation">;</span></span><span class="token punctuation">"</span></span></span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!-- 子元素宽高一半为 50px 50px --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>son<span class="token punctuation">'</span></span> <span class="token special-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token value css language-css"><span class="token property">width</span><span class="token punctuation">:</span> 100px<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span> 100px<span class="token punctuation">;</span> <span class="token property">background</span><span class="token punctuation">:</span> #ff00dd<span class="token punctuation">;</span></span><span class="token punctuation">"</span></span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>居中元素定宽高</p>
+<p>absolute + margin auto(<code>0;0;0;0; margin: auto;</code>)<br>absolute + 负margin(<code>50%;50%; margin-top: -50px;</code>)<br>absolute + calc(<code>top: calc(50% - 50px);</code>)</p>
+<p>居中元素不定宽高</p>
+<p>absolute + transform(<code>50%;50%; transform: translate(-50%, -50%)</code>)<br>flex</p>
+<p>absolute + margin auto</p>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.father</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token selector">.son</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span> <span class="token property">right</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span> <span class="token property">bottom</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span> <span class="token property">left</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+    <span class="token property">margin</span><span class="token punctuation">:</span> auto<span class="token punctuation">;</span> <span class="token comment">/* 自动填充 */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>absolute + 负margin</p>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.father</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token selector">.son</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span><span class="token punctuation">;</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+    <span class="token property">left</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+    <span class="token property">margin-top</span><span class="token punctuation">:</span> -50px<span class="token punctuation">;</span>
+    <span class="token property">margin-left</span><span class="token punctuation">:</span> -50px<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>absolute + calc</p>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.father</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token selector">.son</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span><span class="token punctuation">;</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> <span class="token function">calc</span><span class="token punctuation">(</span>50% - 50px<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token property">left</span><span class="token punctuation">:</span> <span class="token function">calc</span><span class="token punctuation">(</span>50% - 50px<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>absolute + transform</p>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.father</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token selector">.son</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span> <span class="token property">left</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translate</span><span class="token punctuation">(</span>-50%<span class="token punctuation">,</span> -50%<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>flex布局</p>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.father</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+    <span class="token property">justify-content</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+    <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token selector">.son</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h3><h3 id="什么是盒模型"><a href="#什么是盒模型" class="headerlink" title="什么是盒模型"></a>什么是盒模型</h3><p>CSS盒模型分为 标准盒模型 IE盒模型, 由 margin border padding content</p>
 <p>标准盒模型 width 和 height 只包括 content的大小<br>IE盒模型 width 和 height 等于 content + padding + border</p>
 <p>box-sizing: content-box(默认值,标准盒模型)<br>box-sizing: border-box(IE盒模型)</p>
 <p>一个 块级 默认定位 未声明 width 的盒子,其宽度为100%,也就是父盒子content的宽度,同时盒子的padding和border会向内挤压空间</p>
 <p>一个 绝对定位 未声明width 的盒子</p>
 <p>普通文档流中块框的垂直外边距才会发生外边距合并，行内框、浮动框或绝对定位之间的外边距不会合并。</p>
-<h2 id="CSS选择器的优先级"><a href="#CSS选择器的优先级" class="headerlink" title="CSS选择器的优先级"></a>CSS选择器的优先级</h2><p>内联 &gt; ID选择器 &gt; 类选择器/属性选择器 &gt; 标签选择器。</p>
+<h3 id="CSS选择器的优先级"><a href="#CSS选择器的优先级" class="headerlink" title="CSS选择器的优先级"></a>CSS选择器的优先级</h3><p>内联 &gt; ID选择器 &gt; 类选择器/属性选择器 &gt; 标签选择器。</p>
 <p>会计算 上面四类选择器的 出现次数,从左往右依次比较,以较大的为准,如果相同,则比较下一位.</p>
 <p>如果四位均相同,则 后出现的会覆盖前面出现的</p>
 <p>!important 的优先级最高,内联+important 的优先级最高</p>
-<h2 id="什么是重绘和重排"><a href="#什么是重绘和重排" class="headerlink" title="什么是重绘和重排"></a>什么是重绘和重排</h2><h2 id="水平垂直的多种实现方式"><a href="#水平垂直的多种实现方式" class="headerlink" title="水平垂直的多种实现方式"></a>水平垂直的多种实现方式</h2><h2 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h2><h2 id="lineHeight如何继承"><a href="#lineHeight如何继承" class="headerlink" title="lineHeight如何继承"></a>lineHeight如何继承</h2><h2 id="对BFC的理解"><a href="#对BFC的理解" class="headerlink" title="对BFC的理解"></a>对BFC的理解</h2><h2 id="实现两栏布局"><a href="#实现两栏布局" class="headerlink" title="实现两栏布局"></a>实现两栏布局</h2><h2 id="实现圣杯布局和双飞翼布局"><a href="#实现圣杯布局和双飞翼布局" class="headerlink" title="实现圣杯布局和双飞翼布局"></a>实现圣杯布局和双飞翼布局</h2><h2 id="REM"><a href="#REM" class="headerlink" title="REM"></a>REM</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7132046222327545870">https://juejin.cn/post/7132046222327545870</a></p>
+<h3 id="什么是重绘和重排"><a href="#什么是重绘和重排" class="headerlink" title="什么是重绘和重排"></a>什么是重绘和重排</h3><h3 id="水平垂直的多种实现方式"><a href="#水平垂直的多种实现方式" class="headerlink" title="水平垂直的多种实现方式"></a>水平垂直的多种实现方式</h3><h3 id="lineHeight如何继承"><a href="#lineHeight如何继承" class="headerlink" title="lineHeight如何继承"></a>lineHeight如何继承</h3><h3 id="对BFC的理解"><a href="#对BFC的理解" class="headerlink" title="对BFC的理解"></a>对BFC的理解</h3><h3 id="实现两栏布局"><a href="#实现两栏布局" class="headerlink" title="实现两栏布局"></a>实现两栏布局</h3><h3 id="实现圣杯布局和双飞翼布局"><a href="#实现圣杯布局和双飞翼布局" class="headerlink" title="实现圣杯布局和双飞翼布局"></a>实现圣杯布局和双飞翼布局</h3><h3 id="REM"><a href="#REM" class="headerlink" title="REM"></a>REM</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7132046222327545870">https://juejin.cn/post/7132046222327545870</a></p>
 
                 
             </div>
@@ -943,7 +1001,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">146k</span>&nbsp;字
+                class="white-color">148.8k</span>&nbsp;字
             
             
             

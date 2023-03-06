@@ -483,7 +483,7 @@
         <span class="token comment">// [a] 中加入b，若pre小于0，则b自己就是最大子数组</span>
         <span class="token comment">// [a, b] 中加入c，若pre大于0，则pre+c为最大子数组</span>
         <span class="token comment">// 一个个添入</span>
-        pre <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>pre <span class="token operator">+</span> x<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        pre <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>pre <span class="token operator">+</span> x<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// pre可能为第i个数，也可能为连续前n个数的和，必然符合连续子序列</span>
         <span class="token comment">// 顺便算一下每添加一个元素时，数组的maxAns</span>
         maxAns <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>maxAns<span class="token punctuation">,</span> pre<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1081,7 +1081,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">146k</span>&nbsp;字
+                class="white-color">148.8k</span>&nbsp;字
             
             
             
