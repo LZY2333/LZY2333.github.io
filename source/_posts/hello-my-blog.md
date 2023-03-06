@@ -1,7 +1,6 @@
 ---
 title: Hello My Blog
 date: 2021-02-06 20:15:28
-top: true
 categories: 生活区
 summary: 花了一下午时间又把自己的博客捡了起来。终于是了解了Hexo的用法，查找资料，琢磨配置，搭建了一个自己满意的博客。
 ---

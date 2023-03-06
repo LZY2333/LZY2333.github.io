@@ -10,7 +10,90 @@ summary: CSS杂记，阅读杂记系列为 【对日常看过的一些有趣帖�
 
 # 阅读杂记CSS
 
-## 什么是盒模型
+### 水平居中与垂直居中
+```html
+<div class='father' style="width: 300px; height: 300px; background: pink;">
+    <!-- 子元素宽高一半为 50px 50px -->
+    <div class='son' style="width: 100px; height: 100px; background: #ff00dd;"></div>
+</div>
+```
+居中元素定宽高
+
+absolute + margin auto(`0;0;0;0; margin: auto;`)
+absolute + 负margin(`50%;50%; margin-top: -50px;`)
+absolute + calc(`top: calc(50% - 50px);`)
+
+居中元素不定宽高
+
+absolute + transform(`50%;50%; transform: translate(-50%, -50%)`)
+flex
+
+absolute + margin auto
+```css
+.father {
+    position: relative;
+}
+.son {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    margin: auto; /* 自动填充 */
+}
+```
+
+absolute + 负margin
+```css
+.father {
+    position: relative;
+}
+.son {
+    position: absolute;;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+}
+```
+
+absolute + calc
+```css
+.father {
+    position: relative;
+}
+.son {
+    position: absolute;;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+}
+```
+
+absolute + transform
+```css
+.father {
+    position: relative;
+}
+.son {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+```
+
+flex布局
+```css
+.father {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.son { }
+```
+
+### flex布局
+
+
+
+
+### 什么是盒模型
 
 CSS盒模型分为 标准盒模型 IE盒模型, 由 margin border padding content
 
@@ -26,7 +109,7 @@ box-sizing: border-box(IE盒模型)
 
 普通文档流中块框的垂直外边距才会发生外边距合并，行内框、浮动框或绝对定位之间的外边距不会合并。
 
-## CSS选择器的优先级
+### CSS选择器的优先级
 
 内联 > ID选择器 > 类选择器/属性选择器 > 标签选择器。
 
@@ -36,21 +119,21 @@ box-sizing: border-box(IE盒模型)
 
 !important 的优先级最高,内联+important 的优先级最高
 
-## 什么是重绘和重排
+### 什么是重绘和重排
 
-## 水平垂直的多种实现方式
-
-## flex布局
-
-## lineHeight如何继承
+### 水平垂直的多种实现方式
 
 
-## 对BFC的理解
 
-## 实现两栏布局
-
-## 实现圣杯布局和双飞翼布局
+### lineHeight如何继承
 
 
-## REM
+### 对BFC的理解
+
+### 实现两栏布局
+
+### 实现圣杯布局和双飞翼布局
+
+
+### REM
 [https://juejin.cn/post/7132046222327545870](https://juejin.cn/post/7132046222327545870)
