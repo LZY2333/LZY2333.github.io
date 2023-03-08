@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ES6及JS类型, 懒前端">
+    <meta name="keywords" content="渲染流程, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ES6及JS类型 | 懒前端</title>
+    <title>渲染流程 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ES6及JS类型</h1>
+                    <h1 class="description center-align post-title">渲染流程</h1>
                 </div>
             </div>
         </div>
@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-17
+                    2021-06-26
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    119
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -446,19 +446,76 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="ES6及JS类型"><a href="#ES6及JS类型" class="headerlink" title="ES6及JS类型"></a>ES6及JS类型</h1><h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>会修改数组自身的七大方法:<br><code>push</code>/<code>pop</code>/<code>shift</code>/<code>unshift</code>/<code>sort</code>/<code>reverse</code>/<code>splice</code></p>
-<p><code>splice(删除与插入的起始位置,删除元素个数,添加的元素)</code><br>修改原数组,返回删除的元素组成的数组</p>
-<p><code>slice(start,end)</code> 前闭后开,不修改原数组,返回新数组</p>
-<p><code>split(&#39;&#39;)</code> 根据括号内符号切割字符串</p>
-<p>``</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 求和</span>
-<span class="token keyword">function</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> arr<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">total<span class="token punctuation">,</span>num</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> total <span class="token operator">+</span> num
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h3 id="HTML-CSS-JS"><a href="#HTML-CSS-JS" class="headerlink" title="HTML/CSS/JS"></a>HTML/CSS/JS</h3><p>浏览器接收 这三种文件,渲染出页面</p>
+<p><strong>HTML</strong>:HyperText Marked Language, 超文本标记语言, 标记 和 文本 组成<br><strong>CSS</strong>: Cascading Style Sheets,    层叠样式表,    选择器 和 属性组成<br><strong>JS</strong>:  Javascript, 解释型编程语言, 能让页面’动’起来</p>
+<p>渲染流水线分为以下8个子阶段:<br>构建DOM树 样式计算 布局阶段 分层 绘制 分块 光栅化 合成</p>
+<h3 id="构建DOM树"><a href="#构建DOM树" class="headerlink" title="构建DOM树"></a>构建DOM树</h3><p>创建出节点</p>
+<p>1.HTML被转换为浏览器能理解的结构,DOM树</p>
+<blockquote>
+<p>根据HTML中的 层次结构,将HTML解析为 具有父子节点关系的DOM树<br>浏览器输入document可以看到DOM树结构</p>
+</blockquote>
+<h3 id="样式计算"><a href="#样式计算" class="headerlink" title="样式计算"></a>样式计算</h3><p>计算出每个节点的样式</p>
+<p>2.将CSS转换为浏览器能理解的结构,styleSheets</p>
+<blockquote>
+<p>CSS三个来源link外部CSS文件,style标签内的CSS,元素style属性内的CSS<br>该结构具备查询和修改功能<br>浏览器输入document.styleSheets查看</p>
+</blockquote>
+<p>3.转换样式表中的属性值,使其标准化</p>
+<blockquote>
+<p>如:2em,blue,bold等属性值</p>
+</blockquote>
+<p>4.计算出DOM树中每个节点的具体样式(继承和层叠)</p>
+<blockquote>
+<p>继承:子节点继承父节点样式,层叠:一个DOM节点合并多个来源属性值的优先级</p>
+</blockquote>
+<h3 id="布局阶段"><a href="#布局阶段" class="headerlink" title="布局阶段"></a>布局阶段</h3><p>计算出DOM树中 可见元素 的 几何位置</p>
+<p>5.创建布局树</p>
+<blockquote>
+<p>构建只含可见元素的布局树,如 head标签下的全部内容全不可见</p>
+</blockquote>
+<p>6.布局计算</p>
+<blockquote>
+<p>进行布局操作的时候,会把布局运算的结构又写回布局树<br>所以布局树既是输入又是输出,这是布局阶段一个不合理的地方<br>Chrome团队正在重构代码,下一代布局系统叫LayoutNG,试图清晰分离输入输出,布局算法更加简单</p>
+</blockquote>
+<h3 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h3><ol start="6">
+<li><p>渲染引擎为特定节点生成专用图层，并生成图层树(layerTree)</p>
+<blockquote>
+<p>一个图层可包含多个节点,满足以下情况之一会生成图层<br>拥有层叠上下文属性的元素会单独一层(position:fixed,z-index,opacity:0.5)<br>被裁剪过的元素,如 div盒子长宽小于内容长宽</p>
+</blockquote>
+</li>
+<li><p>绘制列表 为每个图层生成绘制列表,交给合成线程</p>
+<blockquote>
+<p>渲染引擎将一个图层的绘制分成多个绘制指令,组成待绘制列表<br>绘制列表 只是用来记录 绘制顺序 和 绘制指令 的列表,</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h3><blockquote>
+<p>主线程将绘制列表提交给合成线程,实际绘制由 渲染引擎 中的 合成线程 来完成<br>视口(viewport):用户能看见的页面部分,<br>图块(tile):栅格化的最小单位,256X256或512X512,合成线程 将图层分化而来<br>栅格化/光栅化: 将 图块 转化为 位图<br>快速栅格化/GPU栅格化: 栅格化在专门的 栅格化线程池 中执行, 通常使用GPU生成位图,<br>结果的位图数据 在GPU内存中,这就涉及了跨进程操作,渲染进程 与 GPU进程</p>
+</blockquote>
+<ol start="8">
+<li><p>合成线程 将图层分为图块</p>
+</li>
+<li><p>图块在 栅格化线程池中 被栅格化 为位图</p>
+</li>
+</ol>
+<h3 id="合成"><a href="#合成" class="headerlink" title="合成"></a>合成</h3><ol start="10">
+<li><p>合成线程 在所有图块被光栅化后, 生成 绘制图块命令<code>DrawQuad</code>,提交 浏览器线程</p>
+</li>
+<li><p>浏览器线程, viz组件 接收 <code>DrawQuad</code>命令, 将页面内容绘制在 内存 中,最后将 内存 显示在屏幕上</p>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>渲染进程 将HTML转换为 DOM树</li>
+<li>渲染引擎 将CSS转换为 styleSheets,计算出 DOM节点 的 样式</li>
+<li>布局树 被创建,并 计算布局信息</li>
+<li>图层树 被创建,由 布局树 分层而来</li>
+<li>绘制列表 被根据每个图层生成, 并提交给 合成线程</li>
+<li>合成线程 将图层 分为 图块,并在 光栅化线程池 中将图块转换为 位图</li>
+<li>合成线程 发送 绘制图块命令DrawQuad 给 浏览器进程</li>
+<li>浏览器进程 根据 DrawQuad 生成页面,并 显示 在显示器上</li>
+</ol>
+<h3 id="重排-重绘-合成"><a href="#重排-重绘-合成" class="headerlink" title="重排 重绘 合成"></a>重排 重绘 合成</h3><h3 id="CSS文件的下载阻塞DOM树的合成"><a href="#CSS文件的下载阻塞DOM树的合成" class="headerlink" title="CSS文件的下载阻塞DOM树的合成"></a>CSS文件的下载阻塞DOM树的合成</h3><p>浏览器接收到HTML页面第一批数据的时候,DOM解析器开始工作</p>
+<p><strong>JS脚本会阻塞DOM渲染</strong><br><strong>JS外部脚本也会阻塞DOM渲染</strong><br><strong>JS脚本访问了元素样式,则会等待样式文件下载,从而阻塞DOM渲染</strong><br>如果,解析过程遇到内部JS脚本非文件,会暂停解析,执行JS脚本,再继续解析;<br>如果,解析过程遇到外部JS脚本文件,会暂停解析,下载并执行JS脚本,再继续解析;<br>如果,解析过程遇到JS脚本,会暂停解析,执行JS脚本,<br>如果,此JS脚本访问了某元素样式,会暂停JS执行,等待样式下载,才继续执行JS.</p>
 
-<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2>
                 
             </div>
             <hr/>
@@ -484,7 +541,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/mian-shi-ti/es6-ji-js-lei-xing/">https://github.com/LZY2333/LZY2333.github.io/mian-shi-ti/es6-ji-js-lei-xing/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/yue-du-za-ji/chrome/liu-lan-qi-xuan-ran-liu-cheng/">https://github.com/LZY2333/LZY2333.github.io/yue-du-za-ji/chrome/liu-lan-qi-xuan-ran-liu-cheng/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -697,13 +754,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/react/react-ji-chu/">
+                <a href="/javascript/js-ji-chu/js-shu-ju-hui-shou-ji-zhi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="React基础">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="JS数据回收机制">
                         
-                        <span class="card-title">React基础</span>
+                        <span class="card-title">JS数据回收机制</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -714,14 +771,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-18
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-01
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
+                                    知识点
                                 </a>
                             
                             
@@ -731,8 +788,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/React/">
-                        <span class="chip bg-color">React</span>
+                    <a href="/tags/JS%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">JS基础</span>
                     </a>
                     
                 </div>
@@ -746,13 +803,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/suan-fa/14.dui/">
+                <a href="/yue-du-za-ji/chrome/shu-ru-wang-zhi-dao-shou-ping-xuan-ran/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="堆">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="从输入网址到首屏渲染">
                         
-                        <span class="card-title">堆</span>
+                        <span class="card-title">从输入网址到首屏渲染</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -763,14 +820,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-22
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
+                            <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-category">
+                                    知识点
                                 </a>
                             
                             
@@ -780,8 +837,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                        <span class="chip bg-color">面试题</span>
+                    </a>
+                    
+                    <a href="/tags/Chrome/">
+                        <span class="chip bg-color">Chrome</span>
                     </a>
                     
                 </div>
@@ -928,7 +989,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148.9k</span>&nbsp;字
+                class="white-color">148.8k</span>&nbsp;字
             
             
             

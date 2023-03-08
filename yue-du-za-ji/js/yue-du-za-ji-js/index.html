@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    975
+                    650
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    2 分
                 </div>
                 
 
@@ -480,46 +480,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
 <p><strong>不可枚举</strong>: 在Object.defineProperty()方法中 <code>enumerable</code> 键值默认为 false</p>
 <p><strong>js的内置方法和属性几乎都不可枚举</strong></p>
 <h3 id="如何判断两个对象是否相等"><a href="#如何判断两个对象是否相等" class="headerlink" title="如何判断两个对象是否相等"></a>如何判断两个对象是否相等</h3><p><strong>=== 与 == 的区别</strong> : <code>==</code> 类型不同时会发生类型的自动转换，转换为相同的类型后再做比较</p>
-<h2 id="原型-作用域-this-已经拆分同名文章"><a href="#原型-作用域-this-已经拆分同名文章" class="headerlink" title="原型-作用域-this(已经拆分同名文章)"></a>原型-作用域-this(已经拆分同名文章)</h2><h2 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h2><h2 id="Promise题"><a href="#Promise题" class="headerlink" title="Promise题"></a>Promise题</h2><h2 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h2><h2 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h2><h2 id="如何定位哪行js代码导致了页面刷新？"><a href="#如何定位哪行js代码导致了页面刷新？" class="headerlink" title="如何定位哪行js代码导致了页面刷新？"></a>如何定位哪行js代码导致了页面刷新？</h2><h2 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h2><p>__浅拷贝__，如果复制的对象是基本数据类型，拷贝的就是值，如果是引用类型，拷贝的就是内存地址，一个对象改变会影响另一个对象</p>
-<h3 id="JSON-parse-JSON-stringify-基本能用版"><a href="#JSON-parse-JSON-stringify-基本能用版" class="headerlink" title="JSON.parse(JSON.stringify()) 基本能用版"></a>JSON.parse(JSON.stringify()) 基本能用版</h3><ol>
-<li><code>JSON.parse(JSON.stringify())</code>，写法简单，但无法拷贝函数，循环引用，或特殊引用类型.</li>
-</ol>
-<h2 id="手写扁平数组转tree"><a href="#手写扁平数组转tree" class="headerlink" title="手写扁平数组转tree"></a>手写扁平数组转tree</h2><h3 id="forIn遍历，递归自身，丐版"><a href="#forIn遍历，递归自身，丐版" class="headerlink" title="forIn遍历，递归自身，丐版"></a>forIn遍历，递归自身，丐版</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token parameter">target</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> target <span class="token operator">!==</span> <span class="token string">'object'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> target<span class="token punctuation">;</span>
-
-    <span class="token keyword">let</span> cloneTarget <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cloneTarget<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">clone</span><span class="token punctuation">(</span>target<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> cloneTarget
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="cloneTarget-兼容数组，map解决循环引用，够用了版"><a href="#cloneTarget-兼容数组，map解决循环引用，够用了版" class="headerlink" title="cloneTarget=[]兼容数组，map解决循环引用，够用了版"></a>cloneTarget=[]兼容数组，map解决循环引用，够用了版</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
- * 深拷贝
- * @param &#123;Object&#125; target 要拷贝的对象
- * @param &#123;WeakMap&#125; map 用于存储循环引用对象的地址
- */</span>
-<span class="token keyword">function</span> <span class="token function">deepClone</span><span class="token punctuation">(</span>target， map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WeakMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> target <span class="token operator">!==</span> <span class="token string">'object'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> target<span class="token punctuation">;</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// `map`解决循环引用</span>
-        <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">let</span> cloneTarget <span class="token operator">=</span> Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token comment">// 兼容数组</span>
-    
-    map<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>target， cloneTarget<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>obj<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// forIn会循环原型链上的可枚举属性，这里去掉</span>
-            cloneTarget<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">deepClone</span><span class="token punctuation">(</span>target<span class="token punctuation">[</span>key<span class="token punctuation">]</span>， map<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> cloneTarget
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="WeakMap弱引用-与-强引用"><a href="#WeakMap弱引用-与-强引用" class="headerlink" title="WeakMap弱引用 与 {}强引用"></a>WeakMap弱引用 与 {}强引用</h3><h3 id="forIn循环效率低，while循环效率高，性能优化版"><a href="#forIn循环效率低，while循环效率高，性能优化版" class="headerlink" title="forIn循环效率低，while循环效率高，性能优化版"></a>forIn循环效率低，while循环效率高，性能优化版</h3><h3 id="函数类型及特殊引用类型得专门判断"><a href="#函数类型及特殊引用类型得专门判断" class="headerlink" title="函数类型及特殊引用类型得专门判断"></a>函数类型及特殊引用类型得专门判断</h3><p><code>Map</code>， <code>Set</code> 等类型得专门判断</p>
-
+<h2 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h2><h2 id="原型-作用域-this"><a href="#原型-作用域-this" class="headerlink" title="原型-作用域-this"></a>原型-作用域-this</h2><h2 id="Promise题"><a href="#Promise题" class="headerlink" title="Promise题"></a>Promise题</h2><h2 id="call-apply-bind-new"><a href="#call-apply-bind-new" class="headerlink" title="call-apply-bind-new"></a>call-apply-bind-new</h2><h2 id="JS常见手写"><a href="#JS常见手写" class="headerlink" title="JS常见手写"></a>JS常见手写</h2><h2 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h2><h2 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h2><h2 id="如何定位哪行js代码导致了页面刷新？"><a href="#如何定位哪行js代码导致了页面刷新？" class="headerlink" title="如何定位哪行js代码导致了页面刷新？"></a>如何定位哪行js代码导致了页面刷新？</h2>
                 
             </div>
             <hr/>
@@ -845,12 +806,12 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Chrome/">
-                        <span class="chip bg-color">Chrome</span>
-                    </a>
-                    
                     <a href="/tags/%E6%9D%82%E8%AE%B0/">
                         <span class="chip bg-color">杂记</span>
+                    </a>
+                    
+                    <a href="/tags/Chrome/">
+                        <span class="chip bg-color">Chrome</span>
                     </a>
                     
                 </div>
@@ -997,7 +958,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148.9k</span>&nbsp;字
+                class="white-color">148.8k</span>&nbsp;字
             
             
             
