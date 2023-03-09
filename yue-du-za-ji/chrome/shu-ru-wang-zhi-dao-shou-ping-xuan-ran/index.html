@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.7k
                 </div>
                 
 
@@ -450,13 +450,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="从输入网址到首屏渲染"><a href="#从输入网址到首屏渲染" class="headerlink" title="从输入网址到首屏渲染"></a>从输入网址到首屏渲染</h1><p>用户发出URL请求 到 页面开始解析的过程,叫做导航</p>
-<h2 id="0-用户输入"><a href="#0-用户输入" class="headerlink" title="0. 用户输入"></a>0. 用户输入</h2><p>首先，浏览器判断地址栏 输入的是 <strong>URL规则</strong> 数据 还是 <strong>搜索内容</strong><br>是 符合 URL规则 的内容，拼上协议；<br>是 搜索内容，调用默认搜索引擎。</p>
+                <p>用户发出URL请求 到 页面开始解析的过程,叫做导航</p>
+<h3 id="0-用户输入"><a href="#0-用户输入" class="headerlink" title="0. 用户输入"></a>0. 用户输入</h3><p>首先，浏览器判断地址栏 输入的是 <strong>URL规则</strong> 数据 还是 <strong>搜索内容</strong><br>是 符合 URL规则 的内容，拼上协议；<br>是 搜索内容，调用默认搜索引擎。</p>
 <p><strong>beforeunloaded</strong><br>用户输入内容并回车，代表当前页面即将被替换为新的页面<br>此时 当前页面 还会最后调用 <code>beforeunloaded</code> 接口，<br><code>beforeunloaded</code> 允许页面退出之前做数据清理操作,或 询问用户是否离开当前页面<br>可通过<code>beforeunloaded</code> 来取消导航,让浏览器不再执行任何后续操作</p>
 <p>接下来便进入了 真正的页面资源请求过程.</p>
 <p>浏览器进程 通过 进程通讯(IPC) 把URL请求 发送至网络进程</p>
 <p>网络进程发起真正的URL请求</p>
-<h2 id="1-HTTP请求流程"><a href="#1-HTTP请求流程" class="headerlink" title="1. HTTP请求流程"></a>1. HTTP请求流程</h2><p>HTTP是一种允许浏览器向服务器获取资源的的协议，是Web的基础，通常由浏览器发起</p>
+<h3 id="1-HTTP请求流程"><a href="#1-HTTP请求流程" class="headerlink" title="1. HTTP请求流程"></a>1. HTTP请求流程</h3><p>HTTP是一种允许浏览器向服务器获取资源的的协议，是Web的基础，通常由浏览器发起</p>
 <ol>
 <li><p>构建请求行信息<br><code>GET /index.html HTTP1.1</code></p>
 </li>
@@ -493,12 +493,36 @@
 <blockquote>
 <p>页面渲染完成时, 渲染进程 会发送一个消息给浏览器进程,浏览器进程 停止标签图标上的加载动画</p>
 </blockquote>
-<h2 id="2-首屏渲染"><a href="#2-首屏渲染" class="headerlink" title="2. 首屏渲染"></a>2. 首屏渲染</h2><p>首屏渲染(FP:First Paint)指 从地址栏输入地址到首次绘制完成的时长</p>
+<h3 id="2-首屏渲染"><a href="#2-首屏渲染" class="headerlink" title="2. 首屏渲染"></a>2. 首屏渲染</h3><p>首屏渲染(FP:First Paint)指 从地址栏输入地址到首次绘制完成的时长</p>
 <p>白屏渲染时间 地址栏输入网址后回车 - 浏览器出现第一个元素<br>首屏渲染时间 地址栏输入网址后回车 - 浏览器第一屏渲染完成</p>
 <p>FP指标其中一个重要影响因素是 网络加载速度,另外就是页面优化,js优化了</p>
 <p><strong>记录首屏加载时间的方式</strong><br>1.在页面最前端和最后端加Date.now()<br>2.监听首屏内加载最慢的图片(通常首屏加载最慢的就是图片和iframe)<br>3.Performance API,performance.timing对象<br><strong>首屏渲染优化</strong></p>
 <p>使用额外<code>&lt;script&gt;</code>标签让浏览器并行下载部分JS库,<br>路由懒加载,<br>首屏loading图,<br>后端渲染</p>
-<h2 id="IP-UDP-TCP"><a href="#IP-UDP-TCP" class="headerlink" title="IP UDP TCP"></a>IP UDP TCP</h2><p>互联网实际上就是一套理念和协议组成的体系架构</p>
+<h3 id="chrome浏览器进程"><a href="#chrome浏览器进程" class="headerlink" title="chrome浏览器进程"></a>chrome浏览器进程</h3><p><strong>浏览器进程</strong></p>
+<p>界面显示 用户交互 子进程管理 提供储存功能</p>
+<p><strong>渲染进程</strong></p>
+<p>将HTML CSS JS转换为用户交互的页面</p>
+<p>排版引擎Blink JS引擎V8 运行其中</p>
+<p>非同源网站,每个Tab一个渲染进程</p>
+<p>安全考虑,渲染进程运行在沙箱模式下</p>
+<p><strong>GPU进程</strong></p>
+<p>初衷是为了实现3D CSS 效果</p>
+<p>随后 UI界面都采用 GPU来绘制</p>
+<p><strong>网络进程</strong></p>
+<p>负责网络资源的加载</p>
+<p>之前只是作为 浏览器进程 的一个模块</p>
+<p><strong>插件进程</strong></p>
+<p>插件易崩溃,通过插件进程来隔离,保证不对浏览器和页面造成影响</p>
+<h3 id="浏览器进程版URL请求流程"><a href="#浏览器进程版URL请求流程" class="headerlink" title="浏览器进程版URL请求流程"></a>浏览器进程版URL请求流程</h3><p>浏览器进程 ,收到用户输入的URL请求, 转发给</p>
+<p>网络进程 ,网络进程发起真正的URL请求, 一段时间后</p>
+<p>网络进程 ,接收到响应头数据,将数据 转发给</p>
+<p>浏览器进程 ,接收到响应头数据后,发送 “提交导航(CommitNavigation)”消息给</p>
+<p>渲染进程 ,开始准备接收HTML数据,直接和 网络进程 建立数据通道</p>
+<p>渲染进程 ,初始化完毕,向 浏览器进程 发送消息”确认提交”</p>
+<p>浏览器进程 ,接收到 渲染进程 的消息后,开始移除旧文档,更新自己的页面状态</p>
+<p>用户发出URL请求到页面开始解析的这个过程,叫做导航.</p>
+<h3 id="HTTP-请求的过程"><a href="#HTTP-请求的过程" class="headerlink" title="HTTP 请求的过程"></a>HTTP 请求的过程</h3><p>IP 负责把数据包送达目的主机。<br>UDP 负责把数据包送达具体应用。<br>TCP 保证了数据完整地传输，它的连接可分为三个阶段：建立连接、传输数据和断开连接。</p>
+<h3 id="IP-UDP-TCP"><a href="#IP-UDP-TCP" class="headerlink" title="IP UDP TCP"></a>IP UDP TCP</h3><p>互联网实际上就是一套理念和协议组成的体系架构</p>
 <p>IP(Internet Protocol) 网际协议</p>
 <blockquote>
 <p>IP其实就是计算机地址 访问网站就是访问另一台计算机<br>数据包交给网络层,包上IP头,交给底层,通过物理网络传输给目标主机的网络层</p>
@@ -525,30 +549,6 @@
 <p>TCP是底层通讯协议，定义的是数据传输和连接方式的规范<br>HTTP是应用层协议，定义的是传输数据的内容的规范<br>HTTP协议中的数据是利用TCP协议传输的，所以支持HTTP也就一定支持TCP</p>
 <p>HTTP支持的是www服务<br>而TCP/IP是协议<br>它是Internet国际互联网络的基础。TCP/IP是网络中使用的基本的通信协议。<br>TCP/IP实际上是一组协议，它包括上百个各种功能的协议，如：远程登录、文件传输和电子邮件等，而TCP协议和IP协议是保证数据完整传输的两个基本的重要协议。通常说TCP/IP是Internet协议族，而不单单是TCP和IP</p>
 <p><strong>总结</strong><br>IP 负责送达目标主机 UDP负责送达具体应用<br>使用TCP的话则保证了数据的完整传输</p>
-<h2 id="chrome浏览器进程"><a href="#chrome浏览器进程" class="headerlink" title="chrome浏览器进程"></a>chrome浏览器进程</h2><p><strong>浏览器进程</strong></p>
-<p>界面显示 用户交互 子进程管理 提供储存功能</p>
-<p><strong>渲染进程</strong></p>
-<p>将HTML CSS JS转换为用户交互的页面</p>
-<p>排版引擎Blink JS引擎V8 运行其中</p>
-<p>非同源网站,每个Tab一个渲染进程</p>
-<p>安全考虑,渲染进程运行在沙箱模式下</p>
-<p><strong>GPU进程</strong></p>
-<p>初衷是为了实现3D CSS 效果</p>
-<p>随后 UI界面都采用 GPU来绘制</p>
-<p><strong>网络进程</strong></p>
-<p>负责网络资源的加载</p>
-<p>之前只是作为 浏览器进程 的一个模块</p>
-<p><strong>插件进程</strong></p>
-<p>插件易崩溃,通过插件进程来隔离,保证不对浏览器和页面造成影响</p>
-<h2 id="浏览器进程版URL请求流程"><a href="#浏览器进程版URL请求流程" class="headerlink" title="浏览器进程版URL请求流程"></a>浏览器进程版URL请求流程</h2><p>浏览器进程 ,收到用户输入的URL请求, 转发给</p>
-<p>网络进程 ,网络进程发起真正的URL请求, 一段时间后</p>
-<p>网络进程 ,接收到响应头数据,将数据 转发给</p>
-<p>浏览器进程 ,接收到响应头数据后,发送 “提交导航(CommitNavigation)”消息给</p>
-<p>渲染进程 ,开始准备接收HTML数据,直接和 网络进程 建立数据通道</p>
-<p>渲染进程 ,初始化完毕,向 浏览器进程 发送消息”确认提交”</p>
-<p>浏览器进程 ,接收到 渲染进程 的消息后,开始移除旧文档,更新自己的页面状态</p>
-<p>用户发出URL请求到页面开始解析的这个过程,叫做导航.</p>
-<h2 id="HTTP协议字段及常见值"><a href="#HTTP协议字段及常见值" class="headerlink" title="HTTP协议字段及常见值"></a>HTTP协议字段及常见值</h2><p>未完待续</p>
 
                 
             </div>
@@ -796,9 +796,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="渲染流程">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="浏览器渲染流程">
                         
-                        <span class="card-title">渲染流程</span>
+                        <span class="card-title">浏览器渲染流程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1023,7 +1023,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148.8k</span>&nbsp;字
+                class="white-color">151.5k</span>&nbsp;字
             
             
             
