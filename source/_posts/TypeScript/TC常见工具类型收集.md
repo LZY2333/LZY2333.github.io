@@ -6,17 +6,6 @@ tags:
     - TypeScript
 ---
 
-## TS碰见的特殊类型收集
-
-包含 常用内置条件类型，及其实现 供随时查阅
-
-存在大量泛型进行类型转换
-
-[TS内置工具类型](https://www.typescriptlang.org/docs/handbook/utility-types.html)
-
-
-
-## 内置条件类型---------
 ### Pick
 
 __内置__
@@ -213,7 +202,4 @@ let type: ManType = {
 };
 ```
 
-## 业务碰见的需求类型----
-
-
-
+[TS内置工具类型](https://www.typescriptlang.org/docs/handbook/utility-types.html)
