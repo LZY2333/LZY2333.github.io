@@ -318,27 +318,25 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/11/03/jing-yan-tie/node-de-git-shang-chuan-jiao-ben/">
+                    <a href="/yue-du-za-ji/vue/yue-du-za-ji-vue/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Node的Git上传脚本">
+                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="阅读杂记Vue">
                             
-                            <span class="card-title">Node的Git上传脚本</span>
+                            <span class="card-title">阅读杂记Vue</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Node的Git上传脚本由于我自己用git的时候每次都是重复的 3个操作
-git add ./ git commit -m&quot;XXX&quot;/git push 
-希望能写个node脚本一句话解决,发现了这个Simple Git包
+                                jS杂记，阅读杂记系列为 【对日常看过的一些有趣帖子的笔记】/【对某一细节进行搜索深入了解后的分析】/【对某一技术原理架构分析后的脑图】，总贴记录 待研究的知识点 及 小知识点，分贴记录大知识点
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-12-07
                             </span>
                             <span class="publish-author">
                                 
@@ -356,8 +354,12 @@ git add ./ git commit -m&quot;XXX&quot;/git push
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/node/">
-                            <span class="chip bg-color">node</span>
+                        <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                            <span class="chip bg-color">杂记</span>
+                        </a>
+                        
+                        <a href="/tags/Vue/">
+                            <span class="chip bg-color">Vue</span>
                         </a>
                         
                     </div>
@@ -367,25 +369,28 @@ git add ./ git commit -m&quot;XXX&quot;/git push
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/10/31/wei-shi-me-qian-duan-yao-xue-zhe-me-duo-dong-xi/">
+                    <a href="/vue3/vue3-xiang-ying-shi-yuan-li/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="为什么前端要学这么多东西">
+                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Vue3响应式原理">
                             
-                            <span class="card-title">为什么前端要学这么多东西</span>
+                            <span class="card-title">Vue3响应式原理</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前端要学的东西真的好多，感觉要来不及了。今天又是焦虑，本来打算学习却又没学习的一天。
+                                1. Vue3响应式原理Vue 借鉴了 angular 的模板和数据绑定技术，又借鉴了 react 的组件化和虚拟 DOM 技术。
+Vue三要素响应式: 例如如何监听数据变化,其中的实现方法就是我们提到的双向绑定
+模板引擎: 如何解析模板
+
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-12-05
                             </span>
                             <span class="publish-author">
                                 
@@ -403,8 +408,8 @@ git add ./ git commit -m&quot;XXX&quot;/git push
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E6%8A%80%E6%9C%AF%E6%A0%88%E6%B1%87%E6%80%BB/">
-                            <span class="chip bg-color">技术栈汇总</span>
+                        <a href="/tags/Vue3/">
+                            <span class="chip bg-color">Vue3</span>
                         </a>
                         
                     </div>
@@ -414,29 +419,32 @@ git add ./ git commit -m&quot;XXX&quot;/git push
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/10/30/suan-fa-ti/er-fen-cha-zhao-suan-fa-ti/">
+                    <a href="/typescript/tc-chang-jian-gong-ju-lei-xing-shou-ji/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="二分查找算法题">
+                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="TS碰见的特殊类型收集">
                             
-                            <span class="card-title">二分查找算法题</span>
+                            <span class="card-title">TS碰见的特殊类型收集</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                二分查找算法题笔记篇,看的掘金文章
-神三元大佬的二分查找
-空间复杂度O(1),时间复杂度O(lgn)
+                                Pick内置
+type中选出指定属性构成新type
+type Pick&lt;T, K extends keyof T&gt; &#x3D; &#123;
+    [P in K]: T[P];
+&#125;;
 
-注意二分查找要求 必须 数据有序 无重复,换句话说 单增 或 单减且最好是 数组,因为数组随机访问时间复杂度为O(1),链表则为O(n)
+Partial内置
+typ
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-25
                             </span>
                             <span class="publish-author">
                                 
@@ -454,8 +462,8 @@ git add ./ git commit -m&quot;XXX&quot;/git push
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%AE%97%E6%B3%95/">
-                            <span class="chip bg-color">算法</span>
+                        <a href="/tags/TypeScript/">
+                            <span class="chip bg-color">TypeScript</span>
                         </a>
                         
                     </div>
@@ -465,29 +473,27 @@ git add ./ git commit -m&quot;XXX&quot;/git push
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/10/27/suan-fa-ti/tan-xin-suan-fa-ti/">
+                    <a href="/typescript/ni-bian-yu-xie-bian/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="贪心算法题">
+                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="逆变与协变">
                             
-                            <span class="card-title">贪心算法题</span>
+                            <span class="card-title">逆变与协变</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                贪心算法题学到的解题方法
-假设某道题需要 找到一堆 单增 或 单减，数据中 相反的那个，则用栈。
-贪心要 找对贪心的方向，有时候从前向后，有时候从后向前
-每一个数 需要和前一个数进行比较 并且含某种规律 用栈
-打算循环里套循环跳过数的时候,
+                                啰嗦但大概率能用 –再次彻底弄懂函数TS检查的逆变与协变前言TypeScript 官网过于简单，对于有后端基础的前端同学来说，可能会看得犯困。
+但兼容性这点，TS官方确实算是另辟蹊径，自开山门，允许你有一些”偷懒”，”不正确”的行为。
+函数
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-23
                             </span>
                             <span class="publish-author">
                                 
@@ -505,8 +511,8 @@ git add ./ git commit -m&quot;XXX&quot;/git push
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                            <span class="chip bg-color">算法题</span>
+                        <a href="/tags/TypeScript/">
+                            <span class="chip bg-color">TypeScript</span>
                         </a>
                         
                     </div>
@@ -516,30 +522,28 @@ git add ./ git commit -m&quot;XXX&quot;/git push
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/10/27/suan-fa/38.fen-zhi-suan-fa/">
+                    <a href="/typescript/7.ts-tiao-jian-lei-xing/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="分治算法">
+                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="TS条件类型">
                             
-                            <span class="card-title">分治算法</span>
+                            <span class="card-title">TS条件类型</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                分治算法divide and conquer
-核心: 分而治之
-将原问题分成n个规模较小,且结构与原问题相似的子问题,
-递归解决子问题,合并其结果,得到原问题的解.
+                                TS条件类型类似于各种计算出来的类型，基于extends，也常常带上泛型
+TS也提供了很多很多内置条件类型
 
-递归的定义类似于分治分治是一种处理问题的思想,递归是一种编程技巧分治算法
+type ResStatusMessage&lt;T&gt; &#x3D; T extends 200 | 201 | 204 |
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-22
                             </span>
                             <span class="publish-author">
                                 
@@ -557,8 +561,8 @@ git add ./ git commit -m&quot;XXX&quot;/git push
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%AE%97%E6%B3%95/">
-                            <span class="chip bg-color">算法</span>
+                        <a href="/tags/TypeScript/">
+                            <span class="chip bg-color">TypeScript</span>
                         </a>
                         
                     </div>
@@ -568,28 +572,26 @@ git add ./ git commit -m&quot;XXX&quot;/git push
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/10/27/suan-fa/39.hui-su-suan-fa/">
+                    <a href="/typescript/1.ts-ji-chu-lei-xing-he-han-shu/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="回溯算法">
+                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="1.TS基础类型和函数">
                             
-                            <span class="card-title">回溯算法</span>
+                            <span class="card-title">1.TS基础类型和函数</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                39.回溯算法回溯算法的本质是枚举，有规律 分步骤 的枚举所有解，
-每一步 有多个岔路口，当发现当前路走不通时，回到上一个路口，换条路继续走。
-适用于缺乏规律，或还不了解其规律的搜索场景中。
-分治算法实战八皇后问题8 * 8 的期盼,放8个
+                                TS笔记计划三天看完TS课程,此为课程笔记
+一点准备npm i typescript -g 全局安装TS编译器npm i ts-node -g 安装好后可在vscode右键run直接运行tstsc hello.ts可运行编译文件tsc --
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
                             </span>
                             <span class="publish-author">
                                 
@@ -607,8 +609,8 @@ git add ./ git commit -m&quot;XXX&quot;/git push
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%AE%97%E6%B3%95/">
-                            <span class="chip bg-color">算法</span>
+                        <a href="/tags/TypeScript/">
+                            <span class="chip bg-color">TypeScript</span>
                         </a>
                         
                     </div>
@@ -618,31 +620,25 @@ git add ./ git commit -m&quot;XXX&quot;/git push
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/10/26/suan-fa/37.tan-xin-suan-fa/">
+                    <a href="/typescript/typescript-za-ji/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="贪心算法">
+                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="TypeScript杂记">
                             
-                            <span class="card-title">贪心算法</span>
+                            <span class="card-title">TypeScript杂记</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                贪心算法贪心算法 分治算法 回溯算法 动态规划 四个算法思想
-greedy algorithm
-适用场景:
-一组数据,定义了 限制值 和 期望值, 在满足限制值的情况下,期望值最大
-典型应用:
-霍夫曼编码(Huffman Coding)
-P
+                                TypeScript是Javascript的超集，遵循最新的ES5/ES6规范。Typescript扩展了Javascript语法。
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
                             </span>
                             <span class="publish-author">
                                 
@@ -660,8 +656,8 @@ P
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%AE%97%E6%B3%95/">
-                            <span class="chip bg-color">算法</span>
+                        <a href="/tags/TypeScript/">
+                            <span class="chip bg-color">TypeScript</span>
                         </a>
                         
                     </div>
@@ -671,27 +667,121 @@ P
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/10/23/suan-fa-ti/zhao-dao-lian-biao-huan-jie-gou-ru-kou-jie-dian-142/">
+                    <a href="/sheng-huo/exist/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="查找链表环结构的入口结点">
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Exist">
                             
-                            <span class="card-title">查找链表环结构的入口结点</span>
+                            <span class="card-title">Exist</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                查找链表环结构的入口结点上吴师兄的算法课,刷leetcode时,遇到了 ‘查找链表环结构的入口结点’这题.
-看完 leetcode 的 ‘快慢指针,两次赛跑’(我取的名) 的解法时,一脸懵逼.
-结合 吴师兄给的 示例动图/解析, 并 划水整
+                                终于意识到 渴求之物 皆在吾心 并非无法控制的力量 而是必要的强大 若是向坚信之心奋勇迸发 终能找到答案
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
+                                    生活区
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E6%AD%8C%E8%AF%8D/">
+                            <span class="chip bg-color">歌词</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/sheng-huo/remember/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="REMEMBER">
+                            
+                            <span class="card-title">REMEMBER</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                终于意识到 渴求之物 皆在吾心 并非无法控制的力量 而是必要的强大 若是向坚信之心奋勇迸发 终能找到答案
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
+                                    生活区
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E6%AD%8C%E8%AF%8D/">
+                            <span class="chip bg-color">歌词</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/react/react2022-zui-xin-fu-xi-zheng-li/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="React2022最新复习整理">
+                            
+                            <span class="card-title">React2022最新复习整理</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                React2022最新复习整理本篇讲述 React15原理,从 初始化 以及 更新 两条线路进行.
+同时我认为,要学习前端框架的原理,沿着这两条线进行学习,有事半功倍的效果.
+React几个重要版本更新, 16 fiber, 16.8 ho
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
                             </span>
                             <span class="publish-author">
                                 
@@ -709,8 +799,8 @@ P
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                            <span class="chip bg-color">算法题</span>
+                        <a href="/tags/React/">
+                            <span class="chip bg-color">React</span>
                         </a>
                         
                     </div>
@@ -720,30 +810,27 @@ P
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/10/21/suan-fa-ti/pai-xu-suan-fa-ti/">
+                    <a href="/webpack/createreactapp/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="排序算法题">
+                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="CreateReactApp">
                             
-                            <span class="card-title">排序算法题</span>
+                            <span class="card-title">CreateReactApp</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                排序算法题学到的解题方法
-双指针
-设置map，值设为键
-理解题意的根本条件
-冒泡排序(bubbleSort)const bubbleSort = function(Array) &#123;
-    if(!Array.length || 
+                                CreateReactAppyarn 速度快，workspace功能，
+软链功能（yarn install 把 workspace内 的项目 都放了一份软链在根目录的node_modules下面，这样项目间可以相互引）
+monorepole
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-26
                             </span>
                             <span class="publish-author">
                                 
@@ -761,8 +848,8 @@ P
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                            <span class="chip bg-color">算法题</span>
+                        <a href="/tags/Webpack/">
+                            <span class="chip bg-color">Webpack</span>
                         </a>
                         
                     </div>
@@ -772,27 +859,29 @@ P
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/10/19/suan-fa-ti/dui-lie-suan-fa-ti/">
+                    <a href="/webpack/webpack-bian-yi-liu-cheng/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="队列算法题">
+                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Webpack编译流程">
                             
-                            <span class="card-title">队列算法题</span>
+                            <span class="card-title">Webpack编译流程</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                队列算法题forEach内的return不能return掉外部函数!!!!
-循环内splice数组记得要反向循环，不然先删前面的，会打乱index
-3.用栈实现队列 ( LeetCode 232 )var MyQueue = functio
+                                webpack 编译流程
+1.初始化参数：从配置文件和 Shell 语句中读取并合并参数,得出最终的配置对象
+2.用上一步得到的参数初始化 Compiler 对象
+3.加载所有配置的插件
+4.执行Compiler对象的 run 方法开始执行
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-26
                             </span>
                             <span class="publish-author">
                                 
@@ -810,110 +899,8 @@ P
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                            <span class="chip bg-color">算法题</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/10/18/suan-fa-ti/zhan-suan-fa-ti/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="栈算法题">
-                            
-                            <span class="card-title">栈算法题</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                栈算法题技巧1：栈内存放 数据数组下标，比较时通过 数据数组下标拿到数据进行比较存放 数据数组下标，可以快速定位数据位置(直接拿到下标)，也可以通过下标快速拿数据但是 存放数据的话就不好再去拿下标，用于 需要操作下标的情况
-3.有效的括号（
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-18
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                            <span class="chip bg-color">算法题</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/10/13/suan-fa-ti/lian-biao-suan-fa-ti/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="链表算法题">
-                            
-                            <span class="card-title">链表算法题</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                链表算法题先考虑是否要创建一个新的变量专门接收数据
-链表考什么？就是哨兵节点+虚拟节点+链表指针的移动
-双指针
-头部可能插值的问题都需要一个头空结点
-所有的反转链表都要记住三步:
-1.记录next节点,
-2.修改cur.next指向,
-3.
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-13
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">
-                            <span class="chip bg-color">算法题</span>
+                        <a href="/tags/Webpack/">
+                            <span class="chip bg-color">Webpack</span>
                         </a>
                         
                     </div>
@@ -938,7 +925,7 @@ P
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">2 / 6</div>
+            <div class="center-align b-text-gray">2 / 10</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -960,7 +947,7 @@ P
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021-2022</span>
+                <span id="year">2021-2023</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">罗紫宇</a>
@@ -969,7 +956,7 @@ P
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">84.7k</span>&nbsp;字
+                class="white-color">151.5k</span>&nbsp;字
             
             
             
