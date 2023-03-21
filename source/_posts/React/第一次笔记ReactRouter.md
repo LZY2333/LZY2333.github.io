@@ -1,14 +1,13 @@
 ---
-title: ReactRouter
+title: 第一次笔记ReactRouter
 date: 2022-03-04 11:11:13
 categories: 技术栈
 tags: 
     - React
 ---
 
-# ReactRouter
 
-## 路由基本原理
+### 路由基本原理
 
 第一种,通过监听 __哈希切换__
 
@@ -58,7 +57,7 @@ tags:
 })(history);
 ```
 
-## 6.0以前版本的 react-router原理
+### 6.0以前版本的 react-router原理
 
 从使用开始讲起
 
@@ -136,7 +135,7 @@ export default Route;
 
 6.0 版本全部用 函数组件 + hooks来实现了,用法也有一定差异
 
-## 6.0版本 react-router
+### 6.0版本 react-router
 
 用法
 ```js
@@ -219,7 +218,7 @@ function Router({ children, navigator, location }) {
 
 `Routes` 就是 拿到`LocationContext`里的路由,拿到`Route`里的`element`和`path`数组, 正则选择渲染哪个`element`
 
-## 继承window.history对象,监听操作路由
+### 继承window.history对象,监听操作路由
 
 `<BrowserRouter/>` 里面 `history` 提供了路由的信息, 由`createBrowserHistory()`函数创建
 
@@ -304,7 +303,7 @@ function createBrowserHistory() {
 export default createBrowserHistory;
 ```
 
-## 路径参数的原理
+### 路径参数的原理
 
 `<Route path="/post/:id" element={<Post />} />`
 
@@ -326,7 +325,7 @@ function Post(props) {
 }
 ```
 
-## Link NavLink Navigate的原理
+### Link NavLink Navigate的原理
 
 `Link` 实际上就是一个组件,从historyContext 拿到了history,调用了push方法
 

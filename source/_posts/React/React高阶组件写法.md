@@ -1,12 +1,11 @@
 ---
-title: React高阶组件
+title: React高阶组件写法
 date: 2022-02-24 16:29:33
 categories: 技术栈
 tags: 
     - React
 ---
 
-# React高阶组件
 
 React最重要的设计思想，React高阶组件.
 
@@ -16,7 +15,7 @@ __强化props__,劫持上层传入的props,混入新props
 
 下面记录几种高阶组件的编码方式
 
-## 正向属性代理
+### 正向属性代理
 
 最常见的使用,类似于组件外面包了一层组件,实现时的不同点在于,
 把父组件的props 完全透传 给了子组件`<OldComponent {...this.props} {...state} />`,
@@ -79,7 +78,7 @@ function TestHigherComponent () {
 export default TestHigherComponent
 ```
 
-## 反向继承
+### 反向继承
 
 用 新组件继承老组件, 将老组件的vdom作为属性拆解使用,使用时不会真正实例化老组件.
 
@@ -140,7 +139,7 @@ let WrappedButton = wrapper(Button);
 export default WrappedButton
 ```
 
-## react.cloneElement原理
+### react.cloneElement原理
 ```js
 function cloneElement(element, newProps, ...newChildren) {
     //处理children,newChildren会覆盖element上的children
@@ -156,7 +155,7 @@ function cloneElement(element, newProps, ...newChildren) {
 ```
 
 
-## 顺便学一个类似于插槽的写法,renderProps渲染函数
+### 顺便学一个类似于插槽的写法,renderProps渲染函数
 
 传递给组件 某个属性,或 子节点 可以是一个函数
 

@@ -1,13 +1,11 @@
 ---
-title: TypeScript杂记
+title: TypeScript笔记汇总
 date: 2022-11-14 10:34:47
 categories: 技术栈
 tags: 
     - TypeScript
 summary: TypeScript是Javascript的超集，遵循最新的ES5/ES6规范。Typescript扩展了Javascript语法。
 ---
-
-## TypeScript杂记
 
 为什么需要TS？
 
