@@ -7,9 +7,16 @@ tags:
 summary: Promise各种题，Promise各种题，Promise各种题，Promise各种题，Promise各种题，Promise各种题，Promise各种题，Promise各种题
 ---
 
-# Promise题
+async函数在抛出返回值时，会根据返回值类型开启不同数目的微任务
 
-## Promise.all()
+return结果值：非thenable、非promise（不等待）
+return结果值：thenable（等待 1个then的时间）
+return结果值：promise（等待 2个then的时间）
+
+await 结果值：非thenable、非promise、promise（不等待）
+await 结果值：thenable（等待 1个then的时间）
+
+### Promise.all()
 
 ```js
 Promise.MyAll = function (promises) {
@@ -36,15 +43,15 @@ Promise.MyAll = function (promises) {
 
 `Promise.resolve(item)`如果是普通函数,立即返回结果,
 
-## Promise.race()
+### Promise.race()
 
 ```js
 Promise.MyRace = function (promises) {
-  return new Promise((resolve, reject) => {
-    for (const item of promises) {
-      Promise.resolve(item).then(resolve, reject)
-    }
-  })
+    return new Promise((resolve, reject) => {
+        for (const item of promises) {
+            Promise.resolve(item).then(resolve, reject)
+        }
+    })
 }
 ```
 
@@ -52,7 +59,7 @@ Promise.MyRace = function (promises) {
 
 [滑稽鸭:请实现promise.all](https://juejin.cn/post/7069805387490263047#heading-5)
 
-## 实现mergePromise函数
+### 实现mergePromise函数
 
 把传进去的数组按顺序先后执行，并且把返回的数据先后放到数组data中,
 
@@ -105,7 +112,7 @@ mergePromise([ajax1, ajax2, ajax3]).then(data => {
 // 注意，mergePromise([ajax1, ajax2, ajax3])也是立即开始任务，而非.then之后才执行。
 ```
 
-## JS异步并发调度器
+### JS异步并发调度器
 
 ```js
 class Scheduler {
@@ -173,7 +180,7 @@ addTask(timer,text) {
 ```
 
 
-## 封装一个异步加载图片的方法
+### 封装一个异步加载图片的方法
 
 这个相对简单一些，只需要在图片的onload函数中，使用resolve返回一下就可以了。
 
@@ -197,9 +204,9 @@ function loadImg(url) {
 todo..
 
 
-## Promise 和 async/await 有什么联系
+### Promise 和 async/await 有什么联系
 
-## 使用Promise实现每隔1秒输出1,2,3
+### 使用Promise实现每隔1秒输出1,2,3
 
 ```js
 const arr = [1, 2, 3]
@@ -218,7 +225,7 @@ arr.reduce((p, item) => {
 其实就是拼了一个 `Promise().resolve().then(setTimeout).then(setTimeout).then(setTimeout)` 的结构,
 
 
-## 使用Promise实现红绿灯交替重复亮
+### 使用Promise实现红绿灯交替重复亮
 
 红灯3秒亮一次，黄灯2秒亮一次，绿灯1秒亮一次；如何让三个灯不断交替重复亮灯？
 
@@ -251,11 +258,159 @@ p()
 ```
 自己写是写出来了，但是没有想到light函数，三个灯一个个写的promise，没想到通用函数
 
-## ajax请求相同资源时，实际只发出一次请求
+### ajax请求相同资源时，实际只发出一次请求
 
 [前端并发10个相同的请求，怎么控制为只发一个请求？](https://juejin.cn/post/7052700635154219015)
 
-## 第一题
+### 第十题
+
+```js
+async function test () {
+    console.log(1);
+    await {
+        then (cb) {
+            cb();
+        },
+    };
+    console.log(2);
+}
+
+test(); // 2个then
+console.log(3);
+
+Promise.resolve()
+    .then(() => console.log(4))
+    .then(() => console.log(5))
+    .then(() => console.log(6))
+    .then(() => console.log(7));
+
+// 最终结果: 1 3 4 2 5 6 7
+```
+
+await 结果值：非thenable、非promise、promise（不等待）
+await 结果值：thenable（等待 1个then的时间）
+
+### 第九题
+
+```js
+async function async1 () {
+    console.log('1')
+    await async2()
+    console.log('AAA')
+}
+
+async function async2 () {
+    console.log('3')
+    return new Promise((resolve, reject) => {
+        resolve()
+        console.log('4')
+    })
+}
+
+console.log('5')
+
+setTimeout(() => {
+    console.log('6')
+}, 0);
+
+async1()
+
+new Promise((resolve) => {
+    console.log('7')
+    resolve()
+}).then(() => {
+    console.log('8')
+}).then(() => {
+    console.log('9')
+}).then(() => {
+    console.log('10')
+})
+console.log('11')
+
+// 最终结果: 5 1 3 4 7 11 8 9 AAA 10 6
+```
+
+### 第八题
+
+```js
+async function async1 () {
+    await async2()
+    console.log('A')
+}
+
+async function async2 () {
+    return new Promise((resolve, reject) => {
+        resolve()
+    })
+}
+
+async1()
+
+new Promise((resolve) => {
+    console.log('B')
+    resolve()
+}).then(() => {
+    console.log('C')
+}).then(() => {
+    console.log('D')
+})
+
+// B C D A
+```
+
+```js
+async function testA () {
+    return 1;
+}
+
+testA().then(() => console.log(1)); // 1个then
+Promise.resolve()
+    .then(() => console.log(2)) // 1个then
+    .then(() => console.log(3));// 2个then
+
+// (不等待)最终结果: 1 2 3
+```
+
+```js
+async function testB () {
+    return {
+        then (cb) {
+            cb();
+        }
+    };
+}
+
+testB().then(() => console.log(1)); // 2个then
+Promise.resolve()
+    .then(() => console.log(2)) // 1个then
+    .then(() => console.log(3));// 2个then
+
+// (等待一个then)最终结果: 2 1 3
+```
+
+```js
+async function testC () {
+    return new Promise((resolve, reject) => {
+        resolve()
+    })
+} 
+
+testC().then(() => console.log(1));
+Promise.resolve()
+    .then(() => console.log(2))
+    .then(() => console.log(3))
+    .then(() => console.log(4))
+
+// (等待两个then)最终结果: 2 3 1 4
+```
+
+async函数在抛出返回值时，会根据返回值类型开启不同数目的微任务
+
+return结果值：非thenable、非promise（不等待）
+return结果值：thenable（等待 1个then的时间）
+return结果值：promise（等待 2个then的时间）
+
+### 第一题
 ```js
 const fn = () => (new Promise((resolve, reject) => {
   console.log(1);
@@ -271,7 +426,7 @@ console.log('start')
 // 'success'
 ```
 
-## 第二题
+### 第二题
 
 ```js
 Promise.resolve().then(() => {
@@ -290,7 +445,7 @@ Promise.resolve().then(() => {
 
 被包裹成了`return Promise.resolve(new Error('error!!!'))`
 
-## 第三题
+### 第三题
 
 ```js
 Promise.resolve(1)
@@ -306,7 +461,7 @@ Promise.resolve(1)
 
 因此发生了透传，将resolve(1) 的值直接传到最后一个then里。
 
-## 第四题
+### 第四题
 
 ```js
 function runAsync (x) {
@@ -335,7 +490,7 @@ Promise.all([runAsync(1), runReject(4), runAsync(3), runReject(2)])
 
 且不会影响数组中其它的异步任务的执行
 
-## 第五题
+### 第五题
 
 ```js
 async function async1() {
@@ -361,7 +516,7 @@ async 视为 new promise，await(包括await这行)之前都是立即执行的 e
 await下一行开始都是promise.then
 
 
-## 第六题
+### 第六题
 
 ```js
 async function async1 () {
@@ -385,7 +540,7 @@ console.log('script end')
 
 await后面的Promise是没有返回值，始终是pending状态，await却始终没有响应...
 
-## 第七题
+### 第七题
 
 ```js
 async function fn () {
@@ -413,6 +568,9 @@ await 就算跟个常量也会 将其包装为一个promise，因此多一层微
 
 `return await 2`完全等于 `return await Promise.resolve(2)`
 
-## 感谢
+### 感谢
 
 [LinDaiDai_霖呆呆：【建议星星】要就来45道Promise面试题一次爽到底(1.1w字用心整理)](https://juejin.cn/post/6844904077537574919)
+
+
+[你不知道的async/await魔鬼细节](https://mp.weixin.qq.com/s/Gr7ajRYYazdm5YQvZS6gXg)
