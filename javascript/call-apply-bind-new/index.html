@@ -449,8 +449,8 @@
                 <h1 id="call-apply-bind-new"><a href="#call-apply-bind-new" class="headerlink" title="call-apply-bind-new"></a>call-apply-bind-new</h1><p>call/apply/bind</p>
 <p>三个函数均可以改变函数的this指向</p>
 <p><strong>call(context,arg1,arg2…)</strong> ,改变函数的this指向 并立即执行</p>
-<p><strong>apply(context,[arg1,arg2…])</strong> ,改变函数的this指向 并立即指向,与call接收的参数不同</p>
-<p><strong>bind(context,arg1,arg2…)</strong> ,改变函数的shit指向</p>
+<p><strong>apply(context,[arg1,arg2…])</strong> ,改变函数的this指向 并立即执行,与call接收的参数不同</p>
+<p><strong>bind(context,arg1,arg2…)</strong> ,改变函数的this指向</p>
 <h3 id="call-context-arg1-arg2…"><a href="#call-context-arg1-arg2…" class="headerlink" title="call(context,arg1,arg2…)"></a>call(context,arg1,arg2…)</h3><p>ES6</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token class-name">Function</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">call2</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">context <span class="token operator">=</span> window<span class="token punctuation">,</span><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 不能写箭头函数,不然this出问题</span>
     context<span class="token punctuation">.</span>fn <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span> <span class="token comment">// 可以防止变量覆盖 const key = Symbol();context[key] = this</span>
@@ -1132,7 +1132,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">152.6k</span>&nbsp;字
+                class="white-color">152.7k</span>&nbsp;字
             
             
             
