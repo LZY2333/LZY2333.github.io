@@ -19,16 +19,16 @@ await 结果值：thenable（等待 1个then的时间）
 ### Promise.all()
 
 ```js
-Promise.MyAll = function (promises) {
+Promise.myAll = function (promises) {
     let arr = [], count = 0
     return new Promise((resolve, reject) => {
         promises.forEach((item, i) => {
-            Promise.resolve(item).then(res => {
+            Promise.resolve(item).then((res) => {
                 arr[i] = res
-                count ++
+                count++
                 if (count === promises.length) resolve(arr)
             }).catch(reject)
-        })
+        });
     })
 }
 ```
@@ -41,7 +41,7 @@ Promise.MyAll = function (promises) {
 
 `.catch(reject)` 任意一个失败,则失败
 
-`Promise.resolve(item)`如果是普通函数,立即返回结果,
+`Promise.resolve(item)`如果是普通函数,常数,立即返回结果
 
 ### Promise.race()
 
@@ -66,16 +66,14 @@ Promise.MyRace = function (promises) {
 类似于 `.all()`,但是 `.all()`是同步开始执行,`.merge` 是等上一个执行完再开始下一个
 
 ```js
-function mergePromise(ajaxArray) {
-    const data = [];
-    let promise = Promise.resolve();
-    ajaxArray.forEach(ajax => {
-        promise = promise.then(ajax).then(res => {
-            data.push(res);
-            return data;
+function mergePromise(promises) {
+    let arr = []
+    return promises.reduce((pre, cur) => {
+        return pre.then(cur).then(res => {
+            arr.push(res)
+            return arr
         })
-    })
-    return promise;
+    }, Promise.resolve())
 }
 ```
 

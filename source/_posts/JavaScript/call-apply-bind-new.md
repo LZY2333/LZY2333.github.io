@@ -15,9 +15,9 @@ call/apply/bind
 
 __call(context,arg1,arg2...)__ ,改变函数的this指向 并立即执行
 
-__apply(context,[arg1,arg2...])__ ,改变函数的this指向 并立即指向,与call接收的参数不同
+__apply(context,[arg1,arg2...])__ ,改变函数的this指向 并立即执行,与call接收的参数不同
 
-__bind(context,arg1,arg2...)__ ,改变函数的shit指向
+__bind(context,arg1,arg2...)__ ,改变函数的this指向
 
 ### call(context,arg1,arg2...)
 
