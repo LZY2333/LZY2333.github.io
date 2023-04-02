@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -452,7 +452,7 @@
             <div id="articleContent">
                 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7182382408807743548#heading-13">一文带你梳理React面试题（2023年版本）</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7016593221815910408#heading-71">🔥 连八股文都不懂还指望在前端混下去么</a></p>
-<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><h3 id="1-请说一下你对-React-的理解"><a href="#1-请说一下你对-React-的理解" class="headerlink" title="1. 请说一下你对 React 的理解?"></a>1. 请说一下你对 React 的理解?</h3><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html">珠峰</a></p>
+<h2 id="React源码"><a href="#React源码" class="headerlink" title="React源码"></a>React源码</h2><h3 id="1-请说一下你对-React-的理解"><a href="#1-请说一下你对-React-的理解" class="headerlink" title="1. 请说一下你对 React 的理解?"></a>1. 请说一下你对 React 的理解?</h3><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html">珠峰</a></p>
 <h2 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h2><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html#t112.%E4%B8%BA%E4%BB%80%E4%B9%88%20React%20%E4%BC%9A%E5%BC%95%E5%85%A5%20JSX?">珠峰</a></p>
 <h2 id="React事件机制"><a href="#React事件机制" class="headerlink" title="React事件机制"></a>React事件机制</h2><h3 id="1-描述一下React的事件机制，优点，缺点？"><a href="#1-描述一下React的事件机制，优点，缺点？" class="headerlink" title="1. 描述一下React的事件机制，优点，缺点？"></a>1. 描述一下React的事件机制，优点，缺点？</h3><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.12.react-4.html#t102.React%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F">珠峰</a></p>
 <p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html#t707.%20%E8%AF%B7%E8%AF%B4%E4%B8%80%E4%B8%8B%E4%BD%A0%E5%AF%B9%20React%20%E5%90%88%E6%88%90%E4%BA%8B%E4%BB%B6%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F">珠峰</a></p>
@@ -474,7 +474,14 @@
 <h3 id="React-17-0-有什么变化"><a href="#React-17-0-有什么变化" class="headerlink" title="React 17.0 有什么变化"></a>React 17.0 有什么变化</h3><p>1.合成事件的变化，事件委托放在了 root 元素上，同时去掉了事件池</p>
 <p>2.全新 jsx 的变化，可以单独使用 jsx，不需要手动引入 react;</p>
 <p>旧版 jsx 会被转换为 React.createElement, 新版 jsx 转换为_jsx()</p>
-<h3 id="React-18-0-有哪些更新"><a href="#React-18-0-有哪些更新" class="headerlink" title="React 18.0 有哪些更新"></a>React 18.0 有哪些更新</h3><h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="1-在-React-中如何做好性能优化"><a href="#1-在-React-中如何做好性能优化" class="headerlink" title="1. 在 React 中如何做好性能优化 ?"></a>1. 在 React 中如何做好性能优化 ?</h3><p>代码分割 (在 React 中如何实现代码分割)[<a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/code-splitting.html]">https://zh-hans.reactjs.org/docs/code-splitting.html]</a></p>
+<h3 id="React-18-0-有哪些更新"><a href="#React-18-0-有哪些更新" class="headerlink" title="React 18.0 有哪些更新"></a>React 18.0 有哪些更新</h3><h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><h3 id="受控组件和非受控组件"><a href="#受控组件和非受控组件" class="headerlink" title="受控组件和非受控组件"></a>受控组件和非受控组件</h3><p>React没有双向绑定</p>
+<p>受控组件: 使用state控制表单元素的value，使用onChange 与 setState更新state，从而更新视图，控制用户输入过程表单的操作。</p>
+<p>非受控组件: 通过使用Ref属性拿到DOM，再通过.value拿到数据。</p>
+<p>绝大部分时候推荐使用受控组件来实现表单，因为在受控组件中，表单数据由React组件负责处理</p>
+<p>当然如果选择非受控组件的话，表单数据相当于由DOM自己处理。</p>
+<p>file类型的表单控件只能由用户设置值，作为非受控组件</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6858276396968951822#heading-2">受控组件与非受控组件</a></p>
+<h3 id="React-组件是怎么渲染为-DOM-元素到页面上的"><a href="#React-组件是怎么渲染为-DOM-元素到页面上的" class="headerlink" title="React 组件是怎么渲染为 DOM 元素到页面上的"></a>React 组件是怎么渲染为 DOM 元素到页面上的</h3><h3 id="React-中-setState-调用以后会经历哪些流程"><a href="#React-中-setState-调用以后会经历哪些流程" class="headerlink" title="React 中 setState 调用以后会经历哪些流程"></a>React 中 setState 调用以后会经历哪些流程</h3><h3 id="如何进行数据管理"><a href="#如何进行数据管理" class="headerlink" title="如何进行数据管理"></a>如何进行数据管理</h3><h3 id="你提到了-React-Context，说一下它的原理"><a href="#你提到了-React-Context，说一下它的原理" class="headerlink" title="你提到了 React Context，说一下它的原理"></a>你提到了 React Context，说一下它的原理</h3><h3 id="能说一下-Redux-的原理吗"><a href="#能说一下-Redux-的原理吗" class="headerlink" title="能说一下 Redux 的原理吗"></a>能说一下 Redux 的原理吗</h3><h3 id="useState-是怎么实现的"><a href="#useState-是怎么实现的" class="headerlink" title="useState 是怎么实现的"></a>useState 是怎么实现的</h3><h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="1-在-React-中如何做好性能优化"><a href="#1-在-React-中如何做好性能优化" class="headerlink" title="1. 在 React 中如何做好性能优化 ?"></a>1. 在 React 中如何做好性能优化 ?</h3><p>代码分割 (在 React 中如何实现代码分割)[<a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/code-splitting.html]">https://zh-hans.reactjs.org/docs/code-splitting.html]</a></p>
 <h3 id="react-与-vue-数组中-key-的作用是什么？"><a href="#react-与-vue-数组中-key-的作用是什么？" class="headerlink" title="react 与 vue 数组中 key 的作用是什么？"></a>react 与 vue 数组中 key 的作用是什么？</h3><p>提升diff算法的判断速度，</p>
 <p>diff算法 会首先判断 新旧 key 和 元素类型 是否一致，如果一致再去递归判断子节点</p>
 <h2 id="虚拟DOM带来了什么好处？"><a href="#虚拟DOM带来了什么好处？" class="headerlink" title="虚拟DOM带来了什么好处？"></a>虚拟DOM带来了什么好处？</h2><p><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/70.html">大厂面试题每日一题</a></p>
@@ -955,7 +962,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">155.1k</span>&nbsp;字
+                class="white-color">155.5k</span>&nbsp;字
             
             
             

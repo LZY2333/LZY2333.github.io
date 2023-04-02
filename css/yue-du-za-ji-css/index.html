@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    997
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 
@@ -520,7 +520,8 @@
 <p>!important 的优先级最高,内联+important 的优先级最高</p>
 <h3 id="什么是重绘和重排，改善方案"><a href="#什么是重绘和重排，改善方案" class="headerlink" title="什么是重绘和重排，改善方案"></a>什么是重绘和重排，改善方案</h3><p>浏览器请求到对应页面资源的时候，会将HTML解析成DOM，把CSS解析成CSSDOM，然后将DOM和CSSDOM合并就产生了Render Tree。在有了渲染树之后，浏览器会根据流式布局模型来计算它们在页面上的大小和位置，最后将节点绘制在页面上。<br>那么当Render Tree中部分或全部元素的尺寸、结构、或某些属性发生改变，浏览器就会重新渲染页面，这个就是浏览器的回流。常见的回流操作有：页面的首次渲染、浏览器窗口尺寸改变、部分元素尺寸或位置变化、添加或删除可见的DOM、激活伪类、查询某些属性或调用方法（各种宽高的获取，滚动方法的执行等）。<br>当页面中的元素样式的改变不影响它在文档流的位置时（如color、background-color等），浏览器对应元素的样式，这个就是回流。<br>可见：回流必将导致重绘，重绘不一定会引起回流。回流比重绘的代价更高。<br>常见改善方案：</p>
 <p>在进行频繁操作的时候，使用防抖和节流来控制调用频率。<br>避免频繁操作DOM，可以利用DocumentFragment，来进行对应的DOM操作，将最后的结果添加到文档中。<br>灵活使用display: none属性，操作结束后将其显示出来，因为display的属性为none的元素上进行的DOM操作不会引发回流和重绘。<br>获取各种会引起重绘/回流的属性，尽量将其缓存起来，不要频繁的去获取。<br>对复杂动画采用绝对定位，使其脱离文档流，否则它会频繁的引起父元素及其后续元素的回流。</p>
-<h3 id="水平垂直的多种实现方式"><a href="#水平垂直的多种实现方式" class="headerlink" title="水平垂直的多种实现方式"></a>水平垂直的多种实现方式</h3><h3 id="lineHeight如何继承"><a href="#lineHeight如何继承" class="headerlink" title="lineHeight如何继承"></a>lineHeight如何继承</h3><h3 id="对BFC的理解"><a href="#对BFC的理解" class="headerlink" title="对BFC的理解"></a>对BFC的理解</h3><h3 id="实现两栏布局"><a href="#实现两栏布局" class="headerlink" title="实现两栏布局"></a>实现两栏布局</h3><h3 id="实现圣杯布局和双飞翼布局"><a href="#实现圣杯布局和双飞翼布局" class="headerlink" title="实现圣杯布局和双飞翼布局"></a>实现圣杯布局和双飞翼布局</h3><h3 id="REM"><a href="#REM" class="headerlink" title="REM"></a>REM</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7132046222327545870">https://juejin.cn/post/7132046222327545870</a></p>
+<h3 id="display"><a href="#display" class="headerlink" title="display"></a>display</h3><p>| none          |    元素不显示，并从文档流中移除  |<br>| inline        |    行内元素类型，高度宽度无效，text-align无效，可设置左右方向的padding margin  |<br>| block            |    块级元素，默认宽度继承父类，高度由子类撑开，独占一行，即使宽度能放下下一个block |<br>| inline-block  |     行内块元素，一行内可存在多个的块级元素，inline-block结合text-align: justify  |<br>| list-item        |    把元素作为列表显示，要完全模仿列表的话还需要加上 list-style-position，list-style-type  |<br>| table            |   块级表格，前后有换行符，一个HTML元素和它的子节点像table元素一样，可用于实现三栏布局   |<br>| inherit        |    从父元素继承display属性   |<br>| flex            |    弹性布局 ，子元素的float、clear和vertical-align属性将失效  |</p>
+<h3 id="lineHeight如何继承"><a href="#lineHeight如何继承" class="headerlink" title="lineHeight如何继承"></a>lineHeight如何继承</h3><h3 id="对BFC的理解"><a href="#对BFC的理解" class="headerlink" title="对BFC的理解"></a>对BFC的理解</h3><h3 id="实现两栏布局，三栏布局"><a href="#实现两栏布局，三栏布局" class="headerlink" title="实现两栏布局，三栏布局"></a>实现两栏布局，三栏布局</h3><h3 id="实现圣杯布局和双飞翼布局"><a href="#实现圣杯布局和双飞翼布局" class="headerlink" title="实现圣杯布局和双飞翼布局"></a>实现圣杯布局和双飞翼布局</h3><h3 id="REM"><a href="#REM" class="headerlink" title="REM"></a>REM</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7132046222327545870">https://juejin.cn/post/7132046222327545870</a></p>
 
                 
             </div>
@@ -1003,7 +1004,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">155.1k</span>&nbsp;字
+                class="white-color">155.5k</span>&nbsp;字
             
             
             
