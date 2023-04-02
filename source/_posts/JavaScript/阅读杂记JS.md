@@ -85,7 +85,7 @@ __=== 与 == 的区别__ : `==` 类型不同时会发生类型的自动转换，
 
 ### 事件循环/宏任务和微任务
 
-
+异步的一些 API，比如 setTimeout，setInterval，requestIdleCallback 和 requestAnimationFrame 还有 Promise，这几个有什么区别？
 
 ### 原型-作用域-this
 ### Promise题

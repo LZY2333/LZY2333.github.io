@@ -13,7 +13,7 @@ summary: jS杂记，阅读杂记系列为 【对日常看过的一些有趣帖�
 [🔥 连八股文都不懂还指望在前端混下去么](https://juejin.cn/post/7016593221815910408#heading-71)
 
 
-## React
+## React源码
 
 ### 1. 请说一下你对 React 的理解?
 [珠峰](http://zhufengpeixun.com/strong/html/126.11.react-1.html)
@@ -118,10 +118,34 @@ React15 和 16 执行过程的区别 初始化  更新
 ### React 18.0 有哪些更新
 
 
+## React
 
+### 受控组件和非受控组件
+React没有双向绑定
 
+受控组件: 使用state控制表单元素的value，使用onChange 与 setState更新state，从而更新视图，控制用户输入过程表单的操作。
 
+非受控组件: 通过使用Ref属性拿到DOM，再通过.value拿到数据。
 
+绝大部分时候推荐使用受控组件来实现表单，因为在受控组件中，表单数据由React组件负责处理
+
+当然如果选择非受控组件的话，表单数据相当于由DOM自己处理。
+
+file类型的表单控件只能由用户设置值，作为非受控组件
+
+[受控组件与非受控组件](https://juejin.cn/post/6858276396968951822#heading-2)
+
+### React 组件是怎么渲染为 DOM 元素到页面上的
+
+### React 中 setState 调用以后会经历哪些流程
+
+### 如何进行数据管理
+
+### 你提到了 React Context，说一下它的原理
+
+### 能说一下 Redux 的原理吗
+
+### useState 是怎么实现的
 
 ## 性能优化
 

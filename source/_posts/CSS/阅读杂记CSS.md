@@ -132,18 +132,23 @@ box-sizing: border-box(IE盒模型)
 获取各种会引起重绘/回流的属性，尽量将其缓存起来，不要频繁的去获取。
 对复杂动画采用绝对定位，使其脱离文档流，否则它会频繁的引起父元素及其后续元素的回流。
 
+### display
 
-
-### 水平垂直的多种实现方式
-
-
+| none          |    元素不显示，并从文档流中移除  | 
+| inline        |    行内元素类型，高度宽度无效，text-align无效，可设置左右方向的padding margin  |
+| block	        |    块级元素，默认宽度继承父类，高度由子类撑开，独占一行，即使宽度能放下下一个block |
+| inline-block  |	 行内块元素，一行内可存在多个的块级元素，inline-block结合text-align: justify  |
+| list-item	    |    把元素作为列表显示，要完全模仿列表的话还需要加上 list-style-position，list-style-type  |
+| table	        |   块级表格，前后有换行符，一个HTML元素和它的子节点像table元素一样，可用于实现三栏布局   |
+| inherit	    |    从父元素继承display属性   |
+| flex    	    |    弹性布局 ，子元素的float、clear和vertical-align属性将失效  |
 
 ### lineHeight如何继承
 
 
 ### 对BFC的理解
 
-### 实现两栏布局
+### 实现两栏布局，三栏布局
 
 ### 实现圣杯布局和双飞翼布局
 
