@@ -7,7 +7,7 @@ tags:
     - 日常
 ---
 
-[桌面](https://s1.ax1x.com/2023/04/03/pph96xK.jpg)
+![桌面](https://s1.ax1x.com/2023/04/03/pph96xK.jpg)
 
 谢邀@若川大佬
 
@@ -253,4 +253,4 @@ MacOS，确实需要熟悉成本，折腾的过程还是累的，各种查资料
 
 3699，主打看视频，刷网页，写文章，运行web程序，能折腾，Mac mini绝对是个不错的选择。
 
-[Mac mini + 手办，好看](https://s1.ax1x.com/2023/04/03/pph9gKO.jpg)
+![Mac mini](https://s1.ax1x.com/2023/04/03/pph9gKO.jpg)
