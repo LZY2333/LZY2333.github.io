@@ -35,3 +35,15 @@ babel本质上会运行babel-loader一个函数，在运行时会匹配到对应
 
 ### vite
 vite在开环境时基于ESBuild打包，相比webpack的编译方式，大大提高了项目的启动和热更新速度。
+
+### Tree Shaking 的原理，CommonJS能用吗，Tree Shaking 有什么副作用吗？
+
+async 和 defer 区别，使用 async 需要注意什么？（回答下载后立刻执行，如何文件的依赖还没有下载完则会报错）那么 Webpack 是如何解决这个问题的？（我不会哇！）
+
+### Webpack的初始化流程？
+
+### module，chunk，bundle 是什么意思。
+
+### CommonJS 和 ES Module 有什么区别？
+
+### 为什么 ES Module 需要把 import 放在顶部，CommonJS 不需要？

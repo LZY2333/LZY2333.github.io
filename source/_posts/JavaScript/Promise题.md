@@ -16,6 +16,7 @@ return结果值：promise（等待 2个then的时间）
 await 结果值：非thenable、非promise、promise（不等待）
 await 结果值：thenable（等待 1个then的时间）
 
+async函数的缺点，调用async的函数也必须是async或promise
 ### Promise.all()
 
 ```js
@@ -60,6 +61,8 @@ Promise.MyRace = function (promises) {
 [滑稽鸭:请实现promise.all](https://juejin.cn/post/7069805387490263047#heading-5)
 
 ### 实现mergePromise函数
+如果有多个异步函数，怎么串行执行？回答 async/await
+如果不使用 async/await 怎么实现？写一下。
 
 把传进去的数组按顺序先后执行，并且把返回的数据先后放到数组data中,
 

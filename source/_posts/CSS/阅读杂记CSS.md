@@ -143,6 +143,11 @@ box-sizing: border-box(IE盒模型)
 | inherit	    |    从父元素继承display属性   |
 | flex    	    |    弹性布局 ，子元素的float、clear和vertical-align属性将失效  |
 
+### 如果想实现一个吸顶功能怎么实现
+
+回答 position: sticky;，那么不用 CSS 怎么实现。
+
+
 ### lineHeight如何继承
 
 

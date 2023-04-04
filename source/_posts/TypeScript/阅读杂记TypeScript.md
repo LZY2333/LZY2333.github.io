@@ -9,11 +9,14 @@ summary: jS杂记，阅读杂记系列为 【对日常看过的一些有趣帖�
 ---
 
 
-### 泛型
+### 泛型***
 
 ### infer
+
 ### type和interface的区别
 
-### any、unknown、never
+### any、unknown、never、void***
 
 ### 常见的工具类型
+
+TS中，如果声明了一个对象，又声明了一个对象和之前的对象大部分key是相同的，怎么做。
