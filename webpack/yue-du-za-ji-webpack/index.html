@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    682
+                    798
                 </div>
                 
 
@@ -455,7 +455,8 @@
 <h3 id="webpack优化方案"><a href="#webpack优化方案" class="headerlink" title="webpack优化方案"></a>webpack优化方案</h3><p>基于esm的tree shaking<br>对balel设置缓存，缩小babel-loader的处理范围,及精准指定要处理的目录。<br>压缩资源（mini-css-extract-plugin，compression-webpack-plugin）<br>配置资源的按需引入（第三方组件库）<br>配置splitChunks来进行按需加载（根据）<br>设置CDN优化</p>
 <h3 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h3><p>babel是一个工具链，主要用于将ES2015+代码转换为当前和旧浏览器或环境中向后兼容的Js版本。这句话比较官方，其实babel就是一个语法转换工具链，它会将我们书写的代码（vue或react）通过相关的解析（对应的Preset），主要是词法解析和语法解析，通过babel-parser转换成对应的AST树，再对得到的抽象语法树根据相关的规则配置，转换成最终需要的目标平台识别的AST树，再得到目标代码。<br>在日程的Webpack使用主要有三个插件：babel-loader、babel-core、babel-preset-env。<br>babel本质上会运行babel-loader一个函数，在运行时会匹配到对应的文件，根据babel.config.js（.balelrc）的配置（这里会配置相关的babel-preset-env,它会告诉babel用什么规则去进行代码转换）去将代码进行一个解析和转换（转换依靠的是babel-core），最终得到目标平台的代码。</p>
 <h3 id="vite"><a href="#vite" class="headerlink" title="vite"></a>vite</h3><p>vite在开环境时基于ESBuild打包，相比webpack的编译方式，大大提高了项目的启动和热更新速度。</p>
-
+<h3 id="Tree-Shaking-的原理，CommonJS能用吗，Tree-Shaking-有什么副作用吗？"><a href="#Tree-Shaking-的原理，CommonJS能用吗，Tree-Shaking-有什么副作用吗？" class="headerlink" title="Tree Shaking 的原理，CommonJS能用吗，Tree Shaking 有什么副作用吗？"></a>Tree Shaking 的原理，CommonJS能用吗，Tree Shaking 有什么副作用吗？</h3><p>async 和 defer 区别，使用 async 需要注意什么？（回答下载后立刻执行，如何文件的依赖还没有下载完则会报错）那么 Webpack 是如何解决这个问题的？（我不会哇！）</p>
+<h3 id="Webpack的初始化流程？"><a href="#Webpack的初始化流程？" class="headerlink" title="Webpack的初始化流程？"></a>Webpack的初始化流程？</h3><h3 id="module，chunk，bundle-是什么意思。"><a href="#module，chunk，bundle-是什么意思。" class="headerlink" title="module，chunk，bundle 是什么意思。"></a>module，chunk，bundle 是什么意思。</h3><h3 id="CommonJS-和-ES-Module-有什么区别？"><a href="#CommonJS-和-ES-Module-有什么区别？" class="headerlink" title="CommonJS 和 ES Module 有什么区别？"></a>CommonJS 和 ES Module 有什么区别？</h3><h3 id="为什么-ES-Module-需要把-import-放在顶部，CommonJS-不需要？"><a href="#为什么-ES-Module-需要把-import-放在顶部，CommonJS-不需要？" class="headerlink" title="为什么 ES Module 需要把 import 放在顶部，CommonJS 不需要？"></a>为什么 ES Module 需要把 import 放在顶部，CommonJS 不需要？</h3>
                 
             </div>
             <hr/>
@@ -933,7 +934,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">155.8k</span>&nbsp;字
+                class="white-color">156.8k</span>&nbsp;字
             
             
             
