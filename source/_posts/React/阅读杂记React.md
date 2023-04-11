@@ -13,6 +13,47 @@ summary: jS杂记，阅读杂记系列为 【对日常看过的一些有趣帖�
 [🔥 连八股文都不懂还指望在前端混下去么](https://juejin.cn/post/7016593221815910408#heading-71)
 
 
+## React版本区别
+React 15 采用 stack架构 stackReconciler，分为两层:
+Reconciler（协调器）：负责找出变化的组件，递归实现，不可中断
+Renderer（渲染器）：负责将变化的组件渲染到页面上
+
+React 16 采用 Fiber 架构实现，将递归变成了可以中断的循环
+Scheduler（调度器）：调度任务的优先级，高优先级的任务先进入 Reconciler
+Reconciler（协调器）：负责找出变化的组件，
+Renderer（渲染器）：负责将变化的组件渲染到页面上（此过程不可以中断）
+
+React 17 架构优化：
+之前版本中事件委托是挂在document上，17开始 事件委托挂载到了渲染 React 树的根 DOM 容器中，使React可多版本并存。
+全新 jsx 的变化，可以单独使用 jsx，不需要手动引入 react
+
+
+在 React 16 的基础上，加入了 Concurrent 模式，目的是实现一套可中断/恢复的更新机制，需要注意在稳定版本默认没有使用此模式，需要手动设置渲染模式为 Concurrent 才可以
+将 React 16 的 expirationTimes 模型优化为 Lanes 模型
+
+React 18 架构优化：
+
+
+
+
+
+## 虚拟DOM
+
+虚拟dom是什么? 原理? 优缺点?
+
+vue 和 react 在虚拟dom的diff上，做了哪些改进使得速度很快?
+
+vue 和 react 里的key的作用是什么? 为什么不能用Index？用了会怎样? 如果不加key会怎样?
+
+
+
+## React 和 Vue 的本质区别：
+
+Vue 是静态分析 template 文件，采用预编译优化，在解析模板的同时构建 AST 依赖树，同时标记出可能会变化的动态节点。利用数据双向绑定，进行数据拦截或代理，进行响应式处理。从而能够比较精准的计算出有改变的 DOM，减少计算量。
+React 是局部渲重新渲染，核心就是一堆递归的 React.createElement 的执行调用。其优化的方向是不断的优化 React.createElement 的执行速度，让其更快，更合理的创建最终的元素。
+
+
+
 ## React源码
 
 ### 1. 请说一下你对 React 的理解?
@@ -93,6 +134,17 @@ Fiber出现在React16版本，在15及以前的版本，React更新DOM都是使�
 fiber作为react创建的element和真实DOM之间的桥梁，每一次更新的触发会在React element发起，经过fiber的调和，然后更新到真实DOM上。fiber上标识了各种不同类型的element，同时记录了对应和当前fiber有关的其他fiber信息（return指向父级、child指向子级、sibling指向兄弟）。
 在React应用中，应用首次构建时，会创建一个fiberRoot作为整个React应用的根基。然后当ReactDOM.render渲染出来时，会创建一个rootFiber对象（一个Ract应用可以用多个rootFiber，但只能有一个fiberRoot），当一次挂载完成时，fiberRoot的current属性会指向对应rootFiber。挂载完成后，会进入正式渲染阶段，在这个阶段必须知道一个workInProgerss树（它是正在内存在构建的Fiber树，在一次更新中，所有的更新都发生在workInProgeress树上，更新完成后，将变成current树用于渲染视图）,当前的current树（rootFiber）的alternate会作为workInProgerss，同时会用alternate将workInProgress与current树进行关联（该关联只有在初始化第一次创建alternate时进行）。
 
+### Fiber是什么
+
+可简单认为是,以链表结构相连的 虚拟DOM,同时挂载了 组件状态和更新操作
+
+__一种架构名称__ : React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。
+
+React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。
+
+__一种数据结构名称__ : 一个Fiber节点对应一个React element，包含组件的类型,虚拟DOM、真实DOM等信息。
+
+__React的最小工作单元__ : 运行时,Fiber 储存了该组件改变的状态、要执行的操作（删除/插入/更新...）。
 
 
 ## React-router
@@ -102,20 +154,6 @@ fiber作为react创建的element和真实DOM之间的桥梁，每一次更新的
 ## React组件通信方式
 [八股文](https://juejin.cn/post/7016593221815910408#heading-71)
 
-
-
-## React版本区别
-React15 和 16 执行过程的区别 初始化  更新
-
-### React 17.0 有什么变化
-
-1.合成事件的变化，事件委托放在了 root 元素上，同时去掉了事件池
-
-2.全新 jsx 的变化，可以单独使用 jsx，不需要手动引入 react;
-
-旧版 jsx 会被转换为 React.createElement, 新版 jsx 转换为_jsx()
-
-### React 18.0 有哪些更新
 
 
 ## React
@@ -181,3 +219,15 @@ diff算法 会首先判断 新旧 key 和 元素类型 是否一致，如果一�
 ## LRU算法
 在React16.6引入了Suspense和React.lazy，用来分割组件代码。
 
+
+
+## 性能优化
+
+使用 React.memo 来缓存组件。
+使用 React.useMemo 缓存大量的计算。
+避免使用匿名函数。
+利用 React.lazy 和 React.Suspense 延迟加载不是立即需要的组件。
+尽量使用 CSS 而不是强制加载和卸载组件。
+使用 React.Fragment 避免添加额外的 DOM。
+
+[React性能优化的8种方式了解一下？](https://juejin.cn/post/6844903924302888973)

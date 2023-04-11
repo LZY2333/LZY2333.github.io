@@ -55,7 +55,14 @@ undefined 表示尚未被赋值，却尝试读取，如变量声明，函数无�
 
 #### Object.prototype.toString.call() 能判断所有内置类型
 
-`Object.prototype.toString.call([]); // "[object Array]"`(类型首字母大写)
+```js
+Object.prototype.toString.call([]); // [object Array](类型首字母大写)
+
+const Xxx = {}
+Object.defineProperty(Xxx, Symbol.toStringTag, { value: 'Xxx' })
+Object.prototype.toString.call(Xxx); // [object Xxx]
+```
+
 
 #### 如何判断变量为数组
 ```js
@@ -89,23 +96,21 @@ __=== 与 == 的区别__ : `==` 类型不同时会发生类型的自动转换，
 
 浏览器和node的
 
-### 原型-作用域-this
-### Promise题
-### call-apply-bind-new
-### JS常见手写
+### 什么是闭包
 
+
+
+### 导致js里this指向混乱的原因是什么?
 
 ### 0.1 + 0.2 !== 0.3，如何解决
 
 ### 写一个发布订阅模型
-
 
 ### 如何定位哪行js代码导致了页面刷新？
 
 ### 0.1 + 0.2 是否等于 0.3，如何解决？
 
 ### 数组的 sort 默认是按什么排序的？使用的什么算法？
-
 
 ### 如何终止JS程序的执行
 
@@ -117,5 +122,12 @@ JS由于其特殊的 JS运行机制 事件循环机制 ，没有设置exit函数
 
 上述两个方法都不能阻止异步任务的继续执行
 
+
 ### 如何优化一个网站的性能
 ### 如何在前一个页面对下一个页面进行优化
+
+
+### JS常见手写
+### 原型-作用域-this
+### Promise题
+### call-apply-bind-new
