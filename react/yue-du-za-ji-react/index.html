@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    8 分
                 </div>
                 
 
@@ -452,6 +452,15 @@
             <div id="articleContent">
                 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7182382408807743548#heading-13">一文带你梳理React面试题（2023年版本）</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7016593221815910408#heading-71">🔥 连八股文都不懂还指望在前端混下去么</a></p>
+<h2 id="React版本区别"><a href="#React版本区别" class="headerlink" title="React版本区别"></a>React版本区别</h2><p>React 15 采用 stack架构 stackReconciler，分为两层:<br>Reconciler（协调器）：负责找出变化的组件，递归实现，不可中断<br>Renderer（渲染器）：负责将变化的组件渲染到页面上</p>
+<p>React 16 采用 Fiber 架构实现，将递归变成了可以中断的循环<br>Scheduler（调度器）：调度任务的优先级，高优先级的任务先进入 Reconciler<br>Reconciler（协调器）：负责找出变化的组件，<br>Renderer（渲染器）：负责将变化的组件渲染到页面上（此过程不可以中断）</p>
+<p>React 17 架构优化：<br>之前版本中事件委托是挂在document上，17开始 事件委托挂载到了渲染 React 树的根 DOM 容器中，使React可多版本并存。<br>全新 jsx 的变化，可以单独使用 jsx，不需要手动引入 react</p>
+<p>在 React 16 的基础上，加入了 Concurrent 模式，目的是实现一套可中断/恢复的更新机制，需要注意在稳定版本默认没有使用此模式，需要手动设置渲染模式为 Concurrent 才可以<br>将 React 16 的 expirationTimes 模型优化为 Lanes 模型</p>
+<p>React 18 架构优化：</p>
+<h2 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h2><p>虚拟dom是什么? 原理? 优缺点?</p>
+<p>vue 和 react 在虚拟dom的diff上，做了哪些改进使得速度很快?</p>
+<p>vue 和 react 里的key的作用是什么? 为什么不能用Index？用了会怎样? 如果不加key会怎样?</p>
+<h2 id="React-和-Vue-的本质区别："><a href="#React-和-Vue-的本质区别：" class="headerlink" title="React 和 Vue 的本质区别："></a>React 和 Vue 的本质区别：</h2><p>Vue 是静态分析 template 文件，采用预编译优化，在解析模板的同时构建 AST 依赖树，同时标记出可能会变化的动态节点。利用数据双向绑定，进行数据拦截或代理，进行响应式处理。从而能够比较精准的计算出有改变的 DOM，减少计算量。<br>React 是局部渲重新渲染，核心就是一堆递归的 React.createElement 的执行调用。其优化的方向是不断的优化 React.createElement 的执行速度，让其更快，更合理的创建最终的元素。</p>
 <h2 id="React源码"><a href="#React源码" class="headerlink" title="React源码"></a>React源码</h2><h3 id="1-请说一下你对-React-的理解"><a href="#1-请说一下你对-React-的理解" class="headerlink" title="1. 请说一下你对 React 的理解?"></a>1. 请说一下你对 React 的理解?</h3><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html">珠峰</a></p>
 <h2 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h2><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html#t112.%E4%B8%BA%E4%BB%80%E4%B9%88%20React%20%E4%BC%9A%E5%BC%95%E5%85%A5%20JSX?">珠峰</a></p>
 <h2 id="React事件机制"><a href="#React事件机制" class="headerlink" title="React事件机制"></a>React事件机制</h2><h3 id="1-描述一下React的事件机制，优点，缺点？"><a href="#1-描述一下React的事件机制，优点，缺点？" class="headerlink" title="1. 描述一下React的事件机制，优点，缺点？"></a>1. 描述一下React的事件机制，优点，缺点？</h3><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.12.react-4.html#t102.React%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F">珠峰</a></p>
@@ -468,13 +477,14 @@
 <h2 id="请说一下React中的渲染流程"><a href="#请说一下React中的渲染流程" class="headerlink" title="请说一下React中的渲染流程"></a>请说一下React中的渲染流程</h2><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html#t485.%20%E8%AF%B7%E8%AF%B4%E4%B8%80%E4%B8%8B%20React%20%E4%B8%AD%E7%9A%84%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B">珠峰</a></p>
 <h2 id="diff算法"><a href="#diff算法" class="headerlink" title="diff算法"></a>diff算法</h2><h2 id="函数组件和类组件"><a href="#函数组件和类组件" class="headerlink" title="函数组件和类组件"></a>函数组件和类组件</h2><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html#t354.%20%E5%87%BD%E6%95%B0%E7%BB%84%E4%BB%B6%E5%92%8C%E7%B1%BB%E7%BB%84%E4%BB%B6%E7%9A%84%E7%9B%B8%E5%90%8C%E7%82%B9%E5%92%8C%E4%B8%8D%E5%90%8C%E7%82%B9?">珠峰</a></p>
 <h2 id="React-Fiber"><a href="#React-Fiber" class="headerlink" title="React Fiber"></a>React Fiber</h2><p><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/165.html">React 中 fiber 是用来做什么的</a><br>Fiber出现在React16版本，在15及以前的版本，React更新DOM都是使用递归的方式进行遍历，每次更新都会从应用根部递归执行，且一旦开始，无法中断，这样层级越来越深，结构复杂度高的项目就会出现明显的卡顿。fiber架构出现就是为了解决这个问题，fiber是在React中最小粒度的执行单元，可以将fiber理解为是React的虚拟DOM。在React中，更新fiber的过程叫做调和，每一个fiber都可以作为一个执行单元进行处理，同时每个fiber都有一个优先级lane（16版本是expirationTime）来判断是否还有空间或时间来执行更新，如果没有时间更新，就会把主动权交给浏览器去做一些渲染（如动画、重排、重绘等），用户就不会感觉到卡顿。然后，当浏览器空闲了（requestIdleCallback），就通过scheduler（调度器）将执行恢复到执行单元上，这样本质上是中断了渲染，不过题改了用户的体验。React实现的fiber模式是一个具有链表和指针的异步模型。<br>fiber作为react创建的element和真实DOM之间的桥梁，每一次更新的触发会在React element发起，经过fiber的调和，然后更新到真实DOM上。fiber上标识了各种不同类型的element，同时记录了对应和当前fiber有关的其他fiber信息（return指向父级、child指向子级、sibling指向兄弟）。<br>在React应用中，应用首次构建时，会创建一个fiberRoot作为整个React应用的根基。然后当ReactDOM.render渲染出来时，会创建一个rootFiber对象（一个Ract应用可以用多个rootFiber，但只能有一个fiberRoot），当一次挂载完成时，fiberRoot的current属性会指向对应rootFiber。挂载完成后，会进入正式渲染阶段，在这个阶段必须知道一个workInProgerss树（它是正在内存在构建的Fiber树，在一次更新中，所有的更新都发生在workInProgeress树上，更新完成后，将变成current树用于渲染视图）,当前的current树（rootFiber）的alternate会作为workInProgerss，同时会用alternate将workInProgress与current树进行关联（该关联只有在初始化第一次创建alternate时进行）。</p>
+<h3 id="Fiber是什么"><a href="#Fiber是什么" class="headerlink" title="Fiber是什么"></a>Fiber是什么</h3><p>可简单认为是,以链表结构相连的 虚拟DOM,同时挂载了 组件状态和更新操作</p>
+<p><strong>一种架构名称</strong> : React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。</p>
+<p>React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。</p>
+<p><strong>一种数据结构名称</strong> : 一个Fiber节点对应一个React element，包含组件的类型,虚拟DOM、真实DOM等信息。</p>
+<p><strong>React的最小工作单元</strong> : 运行时,Fiber 储存了该组件改变的状态、要执行的操作（删除/插入/更新…）。</p>
 <h2 id="React-router"><a href="#React-router" class="headerlink" title="React-router"></a>React-router</h2><p><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/463.html#history-api">React/Vue 中的 router 实现原理如何</a></p>
 <h2 id="React组件通信方式"><a href="#React组件通信方式" class="headerlink" title="React组件通信方式"></a>React组件通信方式</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7016593221815910408#heading-71">八股文</a></p>
-<h2 id="React版本区别"><a href="#React版本区别" class="headerlink" title="React版本区别"></a>React版本区别</h2><p>React15 和 16 执行过程的区别 初始化  更新</p>
-<h3 id="React-17-0-有什么变化"><a href="#React-17-0-有什么变化" class="headerlink" title="React 17.0 有什么变化"></a>React 17.0 有什么变化</h3><p>1.合成事件的变化，事件委托放在了 root 元素上，同时去掉了事件池</p>
-<p>2.全新 jsx 的变化，可以单独使用 jsx，不需要手动引入 react;</p>
-<p>旧版 jsx 会被转换为 React.createElement, 新版 jsx 转换为_jsx()</p>
-<h3 id="React-18-0-有哪些更新"><a href="#React-18-0-有哪些更新" class="headerlink" title="React 18.0 有哪些更新"></a>React 18.0 有哪些更新</h3><h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><h3 id="受控组件和非受控组件"><a href="#受控组件和非受控组件" class="headerlink" title="受控组件和非受控组件"></a>受控组件和非受控组件</h3><p>React没有双向绑定</p>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><h3 id="受控组件和非受控组件"><a href="#受控组件和非受控组件" class="headerlink" title="受控组件和非受控组件"></a>受控组件和非受控组件</h3><p>React没有双向绑定</p>
 <p>受控组件: 使用state控制表单元素的value，使用onChange 与 setState更新state，从而更新视图，控制用户输入过程表单的操作。</p>
 <p>非受控组件: 通过使用Ref属性拿到DOM，再通过.value拿到数据。</p>
 <p>绝大部分时候推荐使用受控组件来实现表单，因为在受控组件中，表单数据由React组件负责处理</p>
@@ -488,6 +498,8 @@
 <h2 id="什么是函数式编程"><a href="#什么是函数式编程" class="headerlink" title="什么是函数式编程"></a>什么是函数式编程</h2><h2 id="类组件"><a href="#类组件" class="headerlink" title="类组件"></a>类组件</h2><p>(类组件有哪些缺点?)(生命周期有哪些)(setState 同步还是异步)</p>
 <p><a target="_blank" rel="noopener" href="https://www.modb.pro/db/122805">先记一下位置回头总结</a></p>
 <h2 id="React-涉及的算法"><a href="#React-涉及的算法" class="headerlink" title="React 涉及的算法"></a>React 涉及的算法</h2><h2 id="LRU算法"><a href="#LRU算法" class="headerlink" title="LRU算法"></a>LRU算法</h2><p>在React16.6引入了Suspense和React.lazy，用来分割组件代码。</p>
+<h2 id="性能优化-1"><a href="#性能优化-1" class="headerlink" title="性能优化"></a>性能优化</h2><p>使用 React.memo 来缓存组件。<br>使用 React.useMemo 缓存大量的计算。<br>避免使用匿名函数。<br>利用 React.lazy 和 React.Suspense 延迟加载不是立即需要的组件。<br>尽量使用 CSS 而不是强制加载和卸载组件。<br>使用 React.Fragment 避免添加额外的 DOM。</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903924302888973">React性能优化的8种方式了解一下？</a></p>
 
                 
             </div>
@@ -731,31 +743,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/sheng-huo/ke-neng-shi-ge-xue-xi-ji-hua/">
+                <a href="/suan-fa-ti/qian-zhui-he-shuang-zhi-zhen/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="可能是个学习计划">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="前缀和双指针">
                         
-                        <span class="card-title">可能是个学习计划</span>
+                        <span class="card-title">前缀和双指针</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            当理想自我和实际自我合二为一时，人们就会失去学习的动力。
+                            
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-29
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-31
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%94%9F%E6%B4%BB%E5%8C%BA/" class="post-category">
-                                    生活区
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                    技术栈
                                 </a>
                             
                             
@@ -765,8 +777,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%A1%E5%88%92/">
-                        <span class="chip bg-color">计划</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -962,7 +974,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">156.8k</span>&nbsp;字
+                class="white-color">157.6k</span>&nbsp;字
             
             
             

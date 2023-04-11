@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    825
+                    864
                 </div>
                 
 
@@ -469,7 +469,13 @@
 <h3 id="如何判断数据类型"><a href="#如何判断数据类型" class="headerlink" title="如何判断数据类型"></a>如何判断数据类型</h3><h4 id="typeof-能判断8种基本类型-function"><a href="#typeof-能判断8种基本类型-function" class="headerlink" title="typeof 能判断8种基本类型 function"></a>typeof 能判断8种基本类型 function</h4><p><code>typeof</code> 能判断8种基本类型，及<code>function</code>类型，<code>Object</code>的衍生类型都只能返回<code>object</code>(全部小写字符串)</p>
 <h4 id="instanceof-能判断-实例-的-对象类型"><a href="#instanceof-能判断-实例-的-对象类型" class="headerlink" title="instanceof 能判断 实例 的 对象类型"></a>instanceof 能判断 实例 的 对象类型</h4><p><code>instanceof</code> 能判断实例的对象类型，不能判断8种基本数据类型，原理是顺着原型链找，也就是prototype</p>
 <p><code>console.log(people1 instanceof People); // true</code></p>
-<h4 id="Object-prototype-toString-call-能判断所有内置类型"><a href="#Object-prototype-toString-call-能判断所有内置类型" class="headerlink" title="Object.prototype.toString.call() 能判断所有内置类型"></a>Object.prototype.toString.call() 能判断所有内置类型</h4><p><code>Object.prototype.toString.call([]); // &quot;[object Array]&quot;</code>(类型首字母大写)</p>
+<h4 id="Object-prototype-toString-call-能判断所有内置类型"><a href="#Object-prototype-toString-call-能判断所有内置类型" class="headerlink" title="Object.prototype.toString.call() 能判断所有内置类型"></a>Object.prototype.toString.call() 能判断所有内置类型</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [object Array](类型首字母大写)</span>
+
+<span class="token keyword">const</span> Xxx <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>Xxx<span class="token punctuation">,</span> Symbol<span class="token punctuation">.</span>toStringTag<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token string">'Xxx'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>Xxx<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [object Xxx]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <h4 id="如何判断变量为数组"><a href="#如何判断变量为数组" class="headerlink" title="如何判断变量为数组"></a>如何判断变量为数组</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
 arr<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">;</span> <span class="token comment">// true</span>
@@ -482,11 +488,11 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
 <h4 id="如何判断两个对象是否相等"><a href="#如何判断两个对象是否相等" class="headerlink" title="如何判断两个对象是否相等"></a>如何判断两个对象是否相等</h4><p><strong>=== 与 == 的区别</strong> : <code>==</code> 类型不同时会发生类型的自动转换，转换为相同的类型后再做比较</p>
 <h3 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h3><p>异步的一些 API，比如 setTimeout，setInterval，requestIdleCallback 和 requestAnimationFrame 还有 Promise，这几个有什么区别？</p>
 <p>浏览器和node的</p>
-<h3 id="原型-作用域-this"><a href="#原型-作用域-this" class="headerlink" title="原型-作用域-this"></a>原型-作用域-this</h3><h3 id="Promise题"><a href="#Promise题" class="headerlink" title="Promise题"></a>Promise题</h3><h3 id="call-apply-bind-new"><a href="#call-apply-bind-new" class="headerlink" title="call-apply-bind-new"></a>call-apply-bind-new</h3><h3 id="JS常见手写"><a href="#JS常见手写" class="headerlink" title="JS常见手写"></a>JS常见手写</h3><h3 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h3><h3 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h3><h3 id="如何定位哪行js代码导致了页面刷新？"><a href="#如何定位哪行js代码导致了页面刷新？" class="headerlink" title="如何定位哪行js代码导致了页面刷新？"></a>如何定位哪行js代码导致了页面刷新？</h3><h3 id="0-1-0-2-是否等于-0-3，如何解决？"><a href="#0-1-0-2-是否等于-0-3，如何解决？" class="headerlink" title="0.1 + 0.2 是否等于 0.3，如何解决？"></a>0.1 + 0.2 是否等于 0.3，如何解决？</h3><h3 id="数组的-sort-默认是按什么排序的？使用的什么算法？"><a href="#数组的-sort-默认是按什么排序的？使用的什么算法？" class="headerlink" title="数组的 sort 默认是按什么排序的？使用的什么算法？"></a>数组的 sort 默认是按什么排序的？使用的什么算法？</h3><h3 id="如何终止JS程序的执行"><a href="#如何终止JS程序的执行" class="headerlink" title="如何终止JS程序的执行"></a>如何终止JS程序的执行</h3><p>JS由于其特殊的 JS运行机制 事件循环机制 ，没有设置exit函数，</p>
+<h3 id="什么是闭包"><a href="#什么是闭包" class="headerlink" title="什么是闭包"></a>什么是闭包</h3><h3 id="导致js里this指向混乱的原因是什么"><a href="#导致js里this指向混乱的原因是什么" class="headerlink" title="导致js里this指向混乱的原因是什么?"></a>导致js里this指向混乱的原因是什么?</h3><h3 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h3><h3 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h3><h3 id="如何定位哪行js代码导致了页面刷新？"><a href="#如何定位哪行js代码导致了页面刷新？" class="headerlink" title="如何定位哪行js代码导致了页面刷新？"></a>如何定位哪行js代码导致了页面刷新？</h3><h3 id="0-1-0-2-是否等于-0-3，如何解决？"><a href="#0-1-0-2-是否等于-0-3，如何解决？" class="headerlink" title="0.1 + 0.2 是否等于 0.3，如何解决？"></a>0.1 + 0.2 是否等于 0.3，如何解决？</h3><h3 id="数组的-sort-默认是按什么排序的？使用的什么算法？"><a href="#数组的-sort-默认是按什么排序的？使用的什么算法？" class="headerlink" title="数组的 sort 默认是按什么排序的？使用的什么算法？"></a>数组的 sort 默认是按什么排序的？使用的什么算法？</h3><h3 id="如何终止JS程序的执行"><a href="#如何终止JS程序的执行" class="headerlink" title="如何终止JS程序的执行"></a>如何终止JS程序的执行</h3><p>JS由于其特殊的 JS运行机制 事件循环机制 ，没有设置exit函数，</p>
 <p>但是存在中断函数运行的方法，</p>
 <p>可以将整个脚本包裹为自执行函数，再 throw 或 return，</p>
 <p>上述两个方法都不能阻止异步任务的继续执行</p>
-<h3 id="如何优化一个网站的性能"><a href="#如何优化一个网站的性能" class="headerlink" title="如何优化一个网站的性能"></a>如何优化一个网站的性能</h3><h3 id="如何在前一个页面对下一个页面进行优化"><a href="#如何在前一个页面对下一个页面进行优化" class="headerlink" title="如何在前一个页面对下一个页面进行优化"></a>如何在前一个页面对下一个页面进行优化</h3>
+<h3 id="如何优化一个网站的性能"><a href="#如何优化一个网站的性能" class="headerlink" title="如何优化一个网站的性能"></a>如何优化一个网站的性能</h3><h3 id="如何在前一个页面对下一个页面进行优化"><a href="#如何在前一个页面对下一个页面进行优化" class="headerlink" title="如何在前一个页面对下一个页面进行优化"></a>如何在前一个页面对下一个页面进行优化</h3><h3 id="JS常见手写"><a href="#JS常见手写" class="headerlink" title="JS常见手写"></a>JS常见手写</h3><h3 id="原型-作用域-this"><a href="#原型-作用域-this" class="headerlink" title="原型-作用域-this"></a>原型-作用域-this</h3><h3 id="Promise题"><a href="#Promise题" class="headerlink" title="Promise题"></a>Promise题</h3><h3 id="call-apply-bind-new"><a href="#call-apply-bind-new" class="headerlink" title="call-apply-bind-new"></a>call-apply-bind-new</h3>
                 
             </div>
             <hr/>
@@ -964,7 +970,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">156.8k</span>&nbsp;字
+                class="white-color">157.6k</span>&nbsp;字
             
             
             
