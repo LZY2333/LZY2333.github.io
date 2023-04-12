@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    864
+                    871
                 </div>
                 
 
@@ -466,14 +466,16 @@
 <p>JS所有数字均以 <strong>双精度64位浮点格式</strong> 表示.</p>
 <h4 id="null-和-undefined区别"><a href="#null-和-undefined区别" class="headerlink" title="null 和 undefined区别"></a>null 和 undefined区别</h4><p>null 表示值就是空，如原型链的终点</p>
 <p>undefined 表示尚未被赋值，却尝试读取，如变量声明，函数无返回值</p>
-<h3 id="如何判断数据类型"><a href="#如何判断数据类型" class="headerlink" title="如何判断数据类型"></a>如何判断数据类型</h3><h4 id="typeof-能判断8种基本类型-function"><a href="#typeof-能判断8种基本类型-function" class="headerlink" title="typeof 能判断8种基本类型 function"></a>typeof 能判断8种基本类型 function</h4><p><code>typeof</code> 能判断8种基本类型，及<code>function</code>类型，<code>Object</code>的衍生类型都只能返回<code>object</code>(全部小写字符串)</p>
+<h3 id="如何判断数据类型"><a href="#如何判断数据类型" class="headerlink" title="如何判断数据类型"></a>如何判断数据类型</h3><p>typeof instanceof toString</p>
+<h4 id="typeof-能判断8种基本类型-function"><a href="#typeof-能判断8种基本类型-function" class="headerlink" title="typeof 能判断8种基本类型 function"></a>typeof 能判断8种基本类型 function</h4><p><code>typeof</code> 能判断8种基本类型，及<code>function</code>类型，<code>Object</code>的衍生类型都只能返回<code>object</code>(全部小写字符串)</p>
 <h4 id="instanceof-能判断-实例-的-对象类型"><a href="#instanceof-能判断-实例-的-对象类型" class="headerlink" title="instanceof 能判断 实例 的 对象类型"></a>instanceof 能判断 实例 的 对象类型</h4><p><code>instanceof</code> 能判断实例的对象类型，不能判断8种基本数据类型，原理是顺着原型链找，也就是prototype</p>
 <p><code>console.log(people1 instanceof People); // true</code></p>
 <h4 id="Object-prototype-toString-call-能判断所有内置类型"><a href="#Object-prototype-toString-call-能判断所有内置类型" class="headerlink" title="Object.prototype.toString.call() 能判断所有内置类型"></a>Object.prototype.toString.call() 能判断所有内置类型</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [object Array](类型首字母大写)</span>
 
 <span class="token keyword">const</span> Xxx <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
 Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>Xxx<span class="token punctuation">,</span> Symbol<span class="token punctuation">.</span>toStringTag<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token string">'Xxx'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>Xxx<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [object Xxx]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>Xxx<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [object Xxx]</span>
+Xxx<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// [object Xxx]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <h4 id="如何判断变量为数组"><a href="#如何判断变量为数组" class="headerlink" title="如何判断变量为数组"></a>如何判断变量为数组</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
@@ -970,7 +972,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">157.6k</span>&nbsp;字
+                class="white-color">157.8k</span>&nbsp;字
             
             
             
