@@ -43,6 +43,8 @@ undefined 表示尚未被赋值，却尝试读取，如变量声明，函数无�
 
 ### 如何判断数据类型
 
+typeof instanceof toString
+
 #### typeof 能判断8种基本类型 function
 
 `typeof` 能判断8种基本类型，及`function`类型，`Object`的衍生类型都只能返回`object`(全部小写字符串)
@@ -61,6 +63,7 @@ Object.prototype.toString.call([]); // [object Array](类型首字母大写)
 const Xxx = {}
 Object.defineProperty(Xxx, Symbol.toStringTag, { value: 'Xxx' })
 Object.prototype.toString.call(Xxx); // [object Xxx]
+Xxx.toString() // [object Xxx]
 ```
 
 

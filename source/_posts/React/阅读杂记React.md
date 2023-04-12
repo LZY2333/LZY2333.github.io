@@ -14,27 +14,51 @@ summary: jS杂记，阅读杂记系列为 【对日常看过的一些有趣帖�
 
 
 ## React版本区别
-React 15 采用 stack架构 stackReconciler，分为两层:
-Reconciler（协调器）：负责找出变化的组件，递归实现，不可中断
-Renderer（渲染器）：负责将变化的组件渲染到页面上
 
-React 16 采用 Fiber 架构实现，将递归变成了可以中断的循环
-Scheduler（调度器）：调度任务的优先级，高优先级的任务先进入 Reconciler
-Reconciler（协调器）：负责找出变化的组件，
-Renderer（渲染器）：负责将变化的组件渲染到页面上（此过程不可以中断）
+React 15
+【stack架构】采用不可中断的递归方式更新的Stack Reconciler（老架构）
+【Reconciler协调器】负责找出变化的组件
+【Renderer渲染器】负责将变化的组件渲染到页面上
 
-React 17 架构优化：
-之前版本中事件委托是挂在document上，17开始 事件委托挂载到了渲染 React 树的根 DOM 容器中，使React可多版本并存。
-全新 jsx 的变化，可以单独使用 jsx，不需要手动引入 react
+React 16
+【Fiber 架构】采用可中断的遍历方式更新的Fiber Reconciler（新架构）
+【Scheduler调度器】调度任务的优先级，高优先级的任务先进入 Reconciler
+【Hooks】
 
+React 17
+【事件委托变更】不再挂在document上，挂载在根DOM容器中，使React可多版本并存
+【新jsx-runtime】无需引入React，减小包装尺寸，考虑多版本React共存的情况
+【移除事件池复用机制】
 
-在 React 16 的基础上，加入了 Concurrent 模式，目的是实现一套可中断/恢复的更新机制，需要注意在稳定版本默认没有使用此模式，需要手动设置渲染模式为 Concurrent 才可以
-将 React 16 的 expirationTimes 模型优化为 Lanes 模型
+React 18
+1. 直接ReactDOM.render 的api 改变为 ReactDOM.createRoot。
+2. 【自动批处理】，无论同步异步
 
-React 18 架构优化：
+React 18之前，只有在React 事件处理函数中才会进行批处理更新，
+异步API不会进行批处理，promise、setTimeout、原生事件处理函数中、或任何其它事件内。
 
+批处理: 多个状态更新批量处理，合并成一次更新，这样只进行一次渲染
+以前，同步内多处setState，只进行一次组件重新渲染，setTimeout内有几次setState，就重新渲染几次
 
+为什么要改1中的api: 为了兼容老版本
+在18中使用render老api代表使用17的特性，使用新api代表开启18的特性，也即自动批处理。
 
+[React18 新特性解读](https://juejin.cn/post/7094037148088664078)
+
+## Fiber是什么
+
+可简单认为是,以链表结构相连的 虚拟DOM,同时挂载了 组件状态和更新操作
+
+__一种架构名称__ : React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。
+
+React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。
+
+__一种数据结构名称__ : 一个Fiber节点对应一个React element，也对应一个虚拟DOM，以及更多的信息，组件的类型，虚拟DOM、真实DOM等信息。
+
+__React的最小工作单元__ : 运行时,Fiber 储存了该组件改变的状态、要执行的操作（删除/插入/更新...）。
+
+## JSX
+[珠峰](http://zhufengpeixun.com/strong/html/126.11.react-1.html#t112.%E4%B8%BA%E4%BB%80%E4%B9%88%20React%20%E4%BC%9A%E5%BC%95%E5%85%A5%20JSX?)
 
 
 ## 虚拟DOM
@@ -44,8 +68,6 @@ React 18 架构优化：
 vue 和 react 在虚拟dom的diff上，做了哪些改进使得速度很快?
 
 vue 和 react 里的key的作用是什么? 为什么不能用Index？用了会怎样? 如果不加key会怎样?
-
-
 
 ## React 和 Vue 的本质区别：
 
@@ -60,8 +82,7 @@ React 是局部渲重新渲染，核心就是一堆递归的 React.createElement
 [珠峰](http://zhufengpeixun.com/strong/html/126.11.react-1.html)
 
 
-## JSX
-[珠峰](http://zhufengpeixun.com/strong/html/126.11.react-1.html#t112.%E4%B8%BA%E4%BB%80%E4%B9%88%20React%20%E4%BC%9A%E5%BC%95%E5%85%A5%20JSX?)
+
 
 ## React事件机制
 
