@@ -33,6 +33,7 @@ React 17
 React 18
 1. 直接ReactDOM.render 的api 改变为 ReactDOM.createRoot。
 2. 【自动批处理】，无论同步异步
+3. Lane优先级 代替 
 
 React 18之前，只有在React 事件处理函数中才会进行批处理更新，
 异步API不会进行批处理，promise、setTimeout、原生事件处理函数中、或任何其它事件内。
@@ -109,6 +110,12 @@ React17以后，是每个事件注册两道，一道捕获，一道冒泡，捕�
 
 3. React 中 onChange 的原生事件是什么？
 
+
+
+## Lane优先级
+
+[react - 关于 react 为什么要从 ExpirationTime 切换到 lane 的一次考古](https://juejin.cn/post/7095307142046941191)
+顺便看看这个大佬的其他文章
 
 ## 类组件和函数组件
 
