@@ -459,6 +459,7 @@
 <ol>
 <li>直接ReactDOM.render 的api 改变为 ReactDOM.createRoot。</li>
 <li>【自动批处理】，无论同步异步</li>
+<li>Lane优先级 代替 </li>
 </ol>
 <p>React 18之前，只有在React 事件处理函数中才会进行批处理更新，<br>异步API不会进行批处理，promise、setTimeout、原生事件处理函数中、或任何其它事件内。</p>
 <p>批处理: 多个状态更新批量处理，合并成一次更新，这样只进行一次渲染<br>以前，同步内多处setState，只进行一次组件重新渲染，setTimeout内有几次setState，就重新渲染几次</p>
@@ -494,6 +495,7 @@
 <li><p>React 中 onChange 的原生事件是什么？</p>
 </li>
 </ol>
+<h2 id="Lane优先级"><a href="#Lane优先级" class="headerlink" title="Lane优先级"></a>Lane优先级</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7095307142046941191">react - 关于 react 为什么要从 ExpirationTime 切换到 lane 的一次考古</a><br>顺便看看这个大佬的其他文章</p>
 <h2 id="类组件和函数组件"><a href="#类组件和函数组件" class="headerlink" title="类组件和函数组件"></a>类组件和函数组件</h2><p>类组件面向对象编程，函数组件函数式思想<br>都可以接收属性并返回ReactElement</p>
 <p><strong>函数组件更加契合 React 框架的设计理念</strong><br>React 组件的主要工作 就是 一个吃进数据、吐出 UI 的函数。<br>React 框架的主要工作 就是 把声明式的代码转换为命令式的 DOM 操作。</p>
 <p><strong>函数组件的优点</strong><br>语法简单<br>易于测试<br>Hooks 提供了更细粒度的逻辑组织与复用<br>更好地适用于时间切片与并发模式</p>
@@ -1010,7 +1012,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">158.3k</span>&nbsp;字
+                class="white-color">158.4k</span>&nbsp;字
             
             
             
