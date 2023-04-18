@@ -82,8 +82,73 @@ __React的最小工作单元__ : 运行时,Fiber 储存了该组件改变的状�
 
 【缺点】虚拟DOM占内存，首屏渲染相对慢，需要从零遍历构建第一颗fiber树
 
-## Diff算法
+__虚拟DOM具有哪些属性__
 
+注意，组件中通过props是拿不到ref 和key的，被delete并挂载在了vdom上，但可以拿到children
+
+## Diff算法(React15)
+
+__DOM-Diff的根本目的是复用旧真实dom,减少渲染消耗__
+
+__React的 Diff算法 只同层级比较，不同key不同type直接替换整个分支__
+
+在React中由 `compareTwoVdom`, `updateChildren` 两个函数进行处理。
+
+`compareTwoVdom`，根据新旧vdom比较两个节点，
+
+1. 如果二者type不同，卸载 oldVdom 整个分支，根据 新vdom 创建 新真实DOM分支，并插入。
+
+2. 如果二者type相同，复用 旧真实DOM，更新 真实DOM的Props属性，`updateChildren` 更新子节点。
+
+`updateChildren`，子节点比较，进行 插入、移动、删除 三种操作。
+
+1. 旧Vdom生成map结构，key为旧Vdom的key，遍历新vdom，查找是否存在 旧Vdom
+
+2. 如果存在 旧vdom，更新 旧vdom，updateElement
+
+3. unmount卸载 
+
+
+> unMountVdom,卸载的过程，会找到其真实DOM，Ref置为空，递归卸载子Vdom，最后移除自己的真实DOM。
+
+> 函数组件和类组件没有自己的真实DOM，需要递归调用findDOM，拿到子代vdom的真实DOM
+
+> 需要移动: 可复用的 旧真实DOM 索引 比上一个不需要移动的节点的索引要小的话
+
+
+## Diff算法(React18)
+
+React同时维护两棵虚拟DOM树：一棵表示当前的DOM结构，另一棵在React状态变更将要重新渲染时生成。
+
+React通过比较这两棵树的差异，决定是否需要修改DOM结构，以及如何修改。
+
+但是目前的代码，似乎是自上而下，一边生成新vdom，一边进行比较更新，
+
+而不是生成整个新vdom树，再新旧vdom树进行比较更新。
+
+旧的虚拟DOM树一直存在，新的一边对比一边生成？
+
+## key的作用
+
+__提升diff算法的判断速度__
+
+React在进行节点对比时，会先对 新旧Vdom 的 key 进行判断，只有 key 相同，才进行进一步的对比。
+
+key不同时，直接判定 旧真实DOM 不能复用，根据新数据创建 新真实DOM， 卸载 旧真实DOM。
+
+key相同时，再进一步判断 新旧Vdom 的type，type不同则卸载，type相同，则复用 旧真实DOM。
+
+__用index作为key__ 
+
+__1. 可能会引发没有必要的真实DOM更新，但界面不会出现问题__
+
+假设在数据头 进行了 添加 删除 操作，index作为key不会改变，同时type相同，则会判定所有DOM需要复用并更新。
+
+__2. 如果不存在对 数据头 的添加删除操作，则可以使用index作为key。__
+
+__3. 如果包含输入类的DOM，界面会出现问题__
+
+__Diff算法(React16+)未解决__
 
 
 
@@ -199,6 +264,9 @@ useEffect 依赖为空数组与 componentDidMount 区别
 vue 和 react 在虚拟dom的diff上，做了哪些改进使得速度很快?
 
 vue 和 react 里的key的作用是什么? 为什么不能用Index？用了会怎样? 如果不加key会怎样?
+react 与 vue 数组中 key 的作用是什么？
+提升diff算法的判断速度，
+diff算法 会首先判断 新旧 key 和 元素类型 是否一致，如果一致再去递归判断子节点
 
 React 和 Vue 的本质区别: 
 Vue 是静态分析 template 文件，采用预编译优化，在解析模板的同时构建 AST 依赖树，同时标记出可能会变化的动态节点。
@@ -223,9 +291,7 @@ React 是局部渲重新渲染，核心就是一堆递归的 React.createElement
 1. 在 React 中如何做好性能优化 ?
 代码分割 (在 React 中如何实现代码分割)[https://zh-hans.reactjs.org/docs/code-splitting.html]
 
-2. react 与 vue 数组中 key 的作用是什么？
-提升diff算法的判断速度，
-diff算法 会首先判断 新旧 key 和 元素类型 是否一致，如果一致再去递归判断子节点
+
 
 在React16.6引入了Suspense和React.lazy，用来分割组件代码。
 
@@ -276,3 +342,5 @@ __LRU算法__
 
 ## React-router
 [React/Vue 中的 router 实现原理如何](https://q.shanyue.tech/fe/react/463.html#history-api)
+
+
