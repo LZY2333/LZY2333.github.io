@@ -189,41 +189,6 @@ React capture阶段的合成事件提前到原生事件capture阶段执行
 
 __React 中 onChange 的原生事件是什么？__
 
-## Hooks
-
-__1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？__
-[浅谈: 为啥vue和react都选择了Hooks🏂？](https://juejin.cn/post/7066951709678895141)
-
-[在 Vue3 中实现 React 原生 Hooks（useState、useEffect）进而深入理解 React Hooks 的本质原理](https://juejin.cn/post/7121363865840910372)
-
-[大厂面试题每日一题](https://q.shanyue.tech/fe/react/14.html)
-
-[Hooks 对于 Vue 意味着什么？](https://juejin.cn/post/7062259204941152293)
-
-[React Hooks: 给React带来了什么变化？](https://juejin.cn/post/6844904149453111304)
-
-__2. 为什么不能在条件和循环里使用Hooks？__
-[为什么不能在条件和循环里使用Hooks?](https://zh-hans.reactjs.org/docs/hooks-rules.html#explanation)
-
-__3. 为什么不能在函数组件外部使用Hooks？__
-__4. React Hooks的状态保存在了哪里？__
-__5. 为什么传入二次相同的状态，函数组件不更新？ __
-__6. HOC 和 hook 的区别？__
-[【React深入】从Mixin到HOC再到Hook](https://juejin.cn/post/6844903815762673671)
-
-__7. 如何将类组件转换为函数组件？__
-[[译] 5种方法将React类组件转换为具有React Hooks的功能组件](https://juejin.cn/post/6844903830203678727)
-
-__1. 函数组件的useState和类组件的setState有什么区别？__
-__2. react hooks 中如何模拟 componentDidMount__
-`useEffect(callback, []);`
-useState useEffect用法及原理
-useReducer 和 useContext
-自定义Hook 和 useCallback
-useEffect 和 useLayoutEffect 区别
-useCallback() 和 useMemo() 的区别
-useEffect 依赖为空数组与 componentDidMount 区别
-
 ## 生命周期
 
 挂载
@@ -288,6 +253,40 @@ ref的本质就是创建一个 `{current:null}` 对象，并将ref对象传递�
 > 本质，createContext() 返回一个context，具有两个属性，provider和consumer，
 > 这两个属性对象具有 _context属性，又指向context
 > 之后所有给provider挂载的属性，都会挂载进provider._context对象中，供子代consumer使用。
+
+
+## Hooks(React 16.8)
+
+__1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？__
+[浅谈: 为啥vue和react都选择了Hooks🏂？](https://juejin.cn/post/7066951709678895141)
+
+[在 Vue3 中实现 React 原生 Hooks（useState、useEffect）进而深入理解 React Hooks 的本质原理](https://juejin.cn/post/7121363865840910372)
+
+[大厂面试题每日一题](https://q.shanyue.tech/fe/react/14.html)
+
+[Hooks 对于 Vue 意味着什么？](https://juejin.cn/post/7062259204941152293)
+
+[React Hooks: 给React带来了什么变化？](https://juejin.cn/post/6844904149453111304)
+
+__2. 为什么不能在条件和循环里使用Hooks？__
+[为什么不能在条件和循环里使用Hooks?](https://zh-hans.reactjs.org/docs/hooks-rules.html#explanation)
+__3. 为什么不能在函数组件外部使用Hooks？__
+__4. React Hooks的状态保存在了哪里？__
+__5. 为什么传入二次相同的状态，函数组件不更新？__
+__1. 函数组件的useState和类组件的setState有什么区别？__
+__2. react hooks 中如何模拟 componentDidMount__
+`useEffect(callback, []);`
+useState useEffect用法及原理
+useReducer 和 useContext
+自定义Hook 和 useCallback
+useEffect 和 useLayoutEffect 区别
+useCallback() 和 useMemo() 的区别
+useEffect 依赖为空数组与 componentDidMount 区别
+
+
+__6. HOC 和 hook 的区别？__
+[【React深入】从Mixin到HOC再到Hook](https://juejin.cn/post/6844903815762673671)
+
 
 
 
