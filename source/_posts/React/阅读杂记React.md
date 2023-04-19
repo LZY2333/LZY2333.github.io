@@ -46,18 +46,6 @@ React 18之前，只有在React 事件处理函数中才会进行批处理更新
 
 [React18 新特性解读](https://juejin.cn/post/7094037148088664078)
 
-## Fiber是什么
-
-可简单认为是,以链表结构相连的 虚拟DOM结构,同时挂载了 组件状态和更新操作 等数据
-
-__一种架构名称__ : React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。
-
-React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。
-
-__一种数据结构名称__ : 一个Fiber节点对应一个React element，也对应一个虚拟DOM，以及更多的信息，组件的类型，虚拟DOM、真实DOM等信息。
-
-__React的最小工作单元__ : 运行时,Fiber 储存了该组件改变的状态、要执行的操作（删除/插入/更新...）。
-
 ## JSX是什么
 
 【本质】JSX本质上是 React.createElement() 的语法糖。
@@ -102,31 +90,19 @@ __React的 Diff算法 只同层级比较，不同key不同type直接替换整个
 
 `updateChildren`，子节点比较，进行 插入、移动、删除 三种操作。
 
-1. 旧Vdom生成map结构，key为旧Vdom的key，遍历新vdom，查找是否存在 旧Vdom
+1. 旧Vdom生成map结构，key为旧Vdom的key，遍历新vdom，查找是否存在 key相同可复用的旧Vdom
 
-2. 如果存在 旧vdom，更新 旧vdom，updateElement
+2. 可复用的旧Vdom会因为序号变更可能会被标记为 Move，无旧Vdom命中的新Vdom会被标记为 PLACEMENT
 
-3. unmount卸载 
+3. 每找到一个可复用的旧Vdom 就将其从map中删除，剩下的不可复用的vdom将其真实DOM unmount卸载
 
+4. 再根据 patch补丁 标记，对剩余vdom进行操作。
 
 > unMountVdom,卸载的过程，会找到其真实DOM，Ref置为空，递归卸载子Vdom，最后移除自己的真实DOM。
 
 > 函数组件和类组件没有自己的真实DOM，需要递归调用findDOM，拿到子代vdom的真实DOM
 
 > 需要移动: 可复用的 旧真实DOM 索引 比上一个不需要移动的节点的索引要小的话
-
-
-## Diff算法(React18)
-
-React同时维护两棵虚拟DOM树：一棵表示当前的DOM结构，另一棵在React状态变更将要重新渲染时生成。
-
-React通过比较这两棵树的差异，决定是否需要修改DOM结构，以及如何修改。
-
-但是目前的代码，似乎是自上而下，一边生成新vdom，一边进行比较更新，
-
-而不是生成整个新vdom树，再新旧vdom树进行比较更新。
-
-旧的虚拟DOM树一直存在，新的一边对比一边生成？
 
 ## key的作用
 
@@ -150,61 +126,68 @@ __3. 如果包含输入类的DOM，界面会出现问题__
 
 __Diff算法(React16+)未解决__
 
-
-
 ## 事件机制
 
-减少绑定，提高性能
+### 合成事件
+__React合成事件__ SyntheticEvent，DOM原生事件再次封装，加上了一些自定义的属性和函数,
+stopPropagation阻止React事件冒泡，
+preventDefault 阻止浏览器默认行为，
+nativeEvent代表原生DOM
+
+浏览器兼容
+
+多平台适配，ReactNative也能使用；
+
+实现事件委托，减少事件绑定
 
 统一进行事件处理
 
-合成事件，就是把React原生事件 再加上了一些自定义的属性和函数
+批量更新，一次事件内触发的setState更新放在更新队列内收集，全部收集完成后逐个处理，得到新state，再触发一次性渲染
 
-批量更新，一次事件内触发的setState更新放在更新队列内收集，全部收集完成后逐个处理，得到新state，再触发一次性渲染。
+事件池机制，避免频繁创建和销毁SyntheticEvent对象，释放过程将SyntheticEvent对象的大部分属性置为null，提升旧浏览器的性能。
 
-__React事件处理捕获和冒泡__
+### 事件代理
+
+事件绑定时
+1. 事件监听 绑定在 容器root上， 
+2. 事件处理函数 以 键值对的形式储存在 DOM.store中，key为事件类型 value为事件处理函数。
+
+事件触发时
+1. 事件冒泡，触发 容器root 的事件监听，容器root 调用其 统一事件处理函数，
+2. 统一事件处理函数 通过event.target 拿到对应DOM， event.type 拿到事件类型
+3. 通过 DOM.store[event.type] 调用 真正的相应 事件处理函数handler(并传入 合成事件 )
+   
+> 这种做法叫切片编程，react可以在事件处理时做一些统一的事情，比如 处理浏览器兼容性
+
+### 批量更新
+
+一次浏览器事件触发多个监听handler，一个监听handler调用多个setState，多次属性修改，合并为一次vdom更新，和渲染更新。
+
+1. 统一事件处理函数被调用时，将标记 isBatchingUpdate 置为true，随后 循环调用 事件触发的所有handler
+
+2. 当标记为true时，所有 handler 内 setState 的属性更新都会储存在更新队列中。
+
+3. 等 所有 handler执行完毕，再 更新所有vdom，并将 标记 isBatchingUpdate 置为false，再 diff创建真实DOM。
+
+> 标记为false时，setState 的属性更新 会直接更新vdom，diff创建真实DOM。
+> 其实并没有异步,还在当次同步任务内,只不过数据更新在所有handler执行完之后
+> 这么做使得React无法控制的异步setState变为了更安全的立即更新，而React控制范围内的setState为批量更新。
+
+### React 17以后 事件机制有什么不同？
+
+1. 以前委托到document，17事件委托到root
+为了允许同时运行多个版本React
+
+2. React事件处理捕获和冒泡：
 React17以前，是捕获到冒泡，再自己模拟一遍捕获和冒泡，一个个去触发捕获事件和冒泡事件，与原生事件顺序不兼容。
 React17以后，是每个事件注册两道，一道捕获，一道冒泡，捕获触发的时候一个个去触发捕获事件，冒泡触发的时候一个个去触发冒泡事件。
+React capture阶段的合成事件提前到原生事件capture阶段执行
 
-1. 描述一下React的事件机制，优点，缺点？
-[珠峰](http://zhufengpeixun.com/strong/html/126.12.react-4.html#t102.React%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F)
+3. 移除事件池机制；
 
-[珠峰](http://zhufengpeixun.com/strong/html/126.11.react-1.html#t707.%20%E8%AF%B7%E8%AF%B4%E4%B8%80%E4%B8%8B%E4%BD%A0%E5%AF%B9%20React%20%E5%90%88%E6%88%90%E4%BA%8B%E4%BB%B6%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F)
+4. 事件有优先级。 连续事件 > 用户阻塞事件 > 离散事件
 
-2. 16和17事件机制有什么不同？
-
-3. React 中 onChange 的原生事件是什么？
-
-
-
-## Lane优先级
-
-[react - 关于 react 为什么要从 ExpirationTime 切换到 lane 的一次考古](https://juejin.cn/post/7095307142046941191)
-顺便看看这个大佬的其他文章
-
-## 类组件和函数组件
-
-类组件面向对象编程，函数组件函数式思想
-都可以接收属性并返回ReactElement
-
-__函数组件更加契合 React 框架的设计理念__
-React 组件的主要工作 就是 一个吃进数据、吐出 UI 的函数。
-React 框架的主要工作 就是 把声明式的代码转换为命令式的 DOM 操作。
-
-__函数组件的优点__
-语法简单
-易于测试
-Hooks 提供了更细粒度的逻辑组织与复用 
-更好地适用于时间切片与并发模式
-
-__类组件的缺点__
-this 的模糊性
-业务逻辑散落在生命周期中
-类组件可以通过继承实现逻辑复用，但是继承的灵活性差，细节屏蔽多，不推荐使用
-类组件需要创建并保存实例，会占用一定内存
-
-
-## 生命周期
+__React 中 onChange 的原生事件是什么？__
 
 ## Hooks
 
@@ -241,19 +224,101 @@ useEffect 和 useLayoutEffect 区别
 useCallback() 和 useMemo() 的区别
 useEffect 依赖为空数组与 componentDidMount 区别
 
+## 生命周期
 
+挂载
+constructor
+componentWillMount
+render
+componentDidMount
 
+更新
+componentWillReceiveProps
+shouldComponentUpdate
+componentWillUpdate
+render
+componentDidUpdate
+
+卸载
+componentWillUnmount
+
+React 16.3 开始
+【__getDerivedStateFromProps__】从props获取派发状态,static函数,无法使用this
+> 被故意设计成 static 函数,因为以前在 componentWillReceiveProps中用setState会死循环,现在不让用this了
+
+【__getSnapshotBeforeUpdate__】render之后新旧vdom即将对比替换时执行
+用于在组件真实DOM更新之前,拿到老真实DOM的一些信息,返回值会传给 componentDidUpdate
+
+挂载
+constructor
+getDerivedStateFromProps
+render
+componentDidMount
+
+更新
+getDerivedStateFromProps
+shouldComponentUpdate
+render
+getSnapshotBeforeUpdate
+componentDidUpdate
+
+卸载
+componentWillUnmount
+
+__生命周期的父子组件的执行顺序？__
+
+__函数组件的生命周期？__
+
+## ref原理
+
+ref的本质就是创建一个 `{current:null}` 对象，并将ref对象传递给子组件
+
+子组件在 初始化过程中， 真实dom 创建完成后，赋值给 ref.current
+
+这样，在初始化完成后，外部即可通过ref.current获取到，真实dom
+
+## context原理
+
+1. provider和consumer 的context属性 指向同一个对象
+
+2. provider consumer 本质是渲染其 子vdom，就像函数组件，类组件一样，只不过会给子代添加一些属性。
+
+3. 父Provider往共有对象上存值，在其初始化完成后，子代开始初始化，此时子代consumer就可以从这个对象里拿值并使用
+
+> 本质，createContext() 返回一个context，具有两个属性，provider和consumer，
+> 这两个属性对象具有 _context属性，又指向context
+> 之后所有给provider挂载的属性，都会挂载进provider._context对象中，供子代consumer使用。
 
 
 
 ## 组件通信
 [八股文](https://juejin.cn/post/7016593221815910408#heading-71)
 
+## Lane优先级
 
+[react - 关于 react 为什么要从 ExpirationTime 切换到 lane 的一次考古](https://juejin.cn/post/7095307142046941191)
+顺便看看这个大佬的其他文章
 
+## 类组件和函数组件
 
+类组件面向对象编程，函数组件函数式思想
+都可以接收属性并返回ReactElement
 
+__函数组件更加契合 React 框架的设计理念__
+React 组件的主要工作 就是 一个吃进数据、吐出 UI 的函数。
+React 框架的主要工作 就是 把声明式的代码转换为命令式的 DOM 操作。
 
+__函数组件的优点__
+语法简单
+易于测试
+Hooks 提供了更细粒度的逻辑组织与复用 
+更好地适用于时间切片与并发模式
+
+__类组件的缺点__
+this 的模糊性
+业务逻辑散落在生命周期中
+类组件可以通过继承实现逻辑复用，但是继承的灵活性差，细节屏蔽多，不推荐使用
+类组件需要创建并保存实例，会占用一定内存
 
 ## React和Vue对比
 
@@ -275,8 +340,6 @@ Vue 是静态分析 template 文件，采用预编译优化，在解析模板的
 React 是局部渲重新渲染，核心就是一堆递归的 React.createElement 的执行调用。
 其优化的方向是不断的优化 React.createElement 的执行速度，让其更快，更合理的创建最终的元素。
 
-
-
 ## 性能优化
 
 使用 React.memo 来缓存组件。
@@ -291,11 +354,7 @@ React 是局部渲重新渲染，核心就是一堆递归的 React.createElement
 1. 在 React 中如何做好性能优化 ?
 代码分割 (在 React 中如何实现代码分割)[https://zh-hans.reactjs.org/docs/code-splitting.html]
 
-
-
 在React16.6引入了Suspense和React.lazy，用来分割组件代码。
-
-
 
 
 ## React
@@ -344,3 +403,29 @@ __LRU算法__
 [React/Vue 中的 router 实现原理如何](https://q.shanyue.tech/fe/react/463.html#history-api)
 
 
+## React18
+
+## Fiber是什么
+
+可简单认为是,以链表结构相连的 虚拟DOM结构,同时挂载了 组件状态和更新操作 等数据
+
+__一种架构名称__ : React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。
+
+React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。
+
+__一种数据结构名称__ : 一个Fiber节点对应一个React element，也对应一个虚拟DOM，以及更多的信息，组件的类型，虚拟DOM、真实DOM等信息。
+
+__React的最小工作单元__ : 运行时,Fiber 储存了该组件改变的状态、要执行的操作（删除/插入/更新...）。
+
+
+## Diff算法(React18)
+
+React同时维护两棵虚拟DOM树：一棵表示当前的DOM结构，另一棵在React状态变更将要重新渲染时生成。
+
+React通过比较这两棵树的差异，决定是否需要修改DOM结构，以及如何修改。
+
+但是目前的代码，似乎是自上而下，一边生成新vdom，一边进行比较更新，
+
+而不是生成整个新vdom树，再新旧vdom树进行比较更新。
+
+旧的虚拟DOM树一直存在，新的一边对比一边生成？

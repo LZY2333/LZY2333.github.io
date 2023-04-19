@@ -1,23 +1,10 @@
 ---
-title: React2022笔记
+title: 第二次笔记React2022
 date: 2022-11-1 15:54:54
 categories: 技术栈
 tags:
     - React
 ---
-本篇讲述 __React15原理__,从 __初始化__ 以及 __更新__ 两条线路进行.
-
-同时我认为,要学习前端框架的原理,沿着这两条线进行学习,有事半功倍的效果.
-
-React几个重要版本更新, 16 fiber, 16.8 hooks, 18 优先级调度 并发执行.
-
-其中fiber,是 React 核心算法的重新实现,也就是说其核心思想依旧不变.
-
-从React15开始,理解React原理,再加入fiber等后续更新,也更能理解fiber的存在价值.
-
-最后要说的是,React15真的很简单,是我看过所有框架原理中最容易理解的一个.
-
-相信读完本文,你也会感叹,原来是这样!
 
 ### 1. 代码中所有JSX其实都是函数
 
@@ -385,38 +372,34 @@ __批量更新的单位是,当前同步任务内 同一个事件处理函数 内
 
 ### 5. React的事件都绑定在容器上代理,而Handler在当前真实dom的store属性上
 
-#### React的事件处理原理
+#### 事件代理
 
-1. React事件绑定时,并没有将事件绑定在 当前DOM,而是绑定在 容器div#root
+事件绑定时
+1. 事件监听 绑定在 容器root上， 
+2. 事件处理函数 以 键值对的形式储存在 DOM.store中，key为事件类型 value为事件处理函数。
 
-2. 事件绑定在 容器上,事件处理函数 还是保存在 当前DOM.store中
- 
-3. click 当前DOM,必然事件冒泡,触发 容器div#root 绑定的click事件,
-
-4. 容器调用其 统一事件处理函数 拿到event.target/type,调用 真正的相应 事件处理函数
-   
-   (并传入react 修改后加了点属性的的event,如果要用的话)
-
-5. target就是 当前DOM,挂载了 事件处理函数,type 就是事件类型,据此调用 当前DOM 上的 事件处理函数
+事件触发时
+1. 事件冒泡，触发 容器root 的事件监听，容器root 调用其 统一事件处理函数，
+2. 统一事件处理函数 通过event.target 拿到对应DOM， event.type 拿到事件类型
+3. 通过 DOM.store[event.type] 调用 真正的相应 事件处理函数handler(并传入 合成事件 )
 
 > 这种做法叫切片编程，react可以在事件处理时做一些统一的事情，比如 处理浏览器兼容性
 > 15的事件都是代理到document,17之后都代理给了容器 div#root
 > 因为React希望一个页面可以运行多个react版本 
 
 #### 当前同步任务内,一个事件多个handler为一个批次合并更新。
-__容器统一事件处理函数会让当前 事件处理 结束后组件的状态 异步批量更新__
 
-1. 容器统一事件处理函数的步骤如下,
+一次浏览器事件触发多个监听handler，一个监听handler调用多个setState，多次属性修改，合并为一次vdom更新，和渲染更新。
 
-2. 首先,updateQueue.isBatchingUpdate=true;// 事件函数执行前先设置批量更新模式为true
+1. 统一事件处理函数被调用时，将标记 isBatchingUpdate 置为true，随后 循环调用 事件触发的所有handler
 
-3. 这样当前如果有同步任务的setState 就会作为 异步批量更新的一部分,放入 updateQueue 的待更新队列,
+2. 当标记为true时，所有 handler 内 setState 的属性更新都会储存在更新队列中。
 
-   isBatchingUpdate === false,setState会直接同步触发 组件的state更新
+3. 等 所有 handler执行完毕，再 更新所有vdom，并将 标记 isBatchingUpdate 置为false，再 diff创建真实DOM。
 
-4. 此时调用 当前DOM 上的 事件处理函数,如果里面有 setState 就按上面的逻辑来
-
-6. 最后 isBatchingUpdate = false, updateQueue.batchUpdate()启动批量更新
+> 标记为false时，setState 的属性更新 会直接更新vdom，diff创建真实DOM。
+> 其实并没有异步,还在当次同步任务内,只不过数据更新在所有handler执行完之后
+> 这么做使得React无法控制的异步setState变为了更安全的立即更新，而React控制范围内的setState为批量更新。
 
 ```js
 export function addEvent(dom, eventType, handler) {
@@ -498,11 +481,9 @@ let usernameRef = React.createRef();
 
 ref的本质就是创建一个 `{current:null}` 对象，并将ref对象传递给子组件
 
-子组件在 初始化过程中， 真实dom 创建完成后，更新 属性时，对ref对象进行专门处理，
+子组件在 初始化过程中， 真实dom 创建完成后，赋值给 ref.current
 
-将真实dom 赋值给 ref.current
-
-如此，初始化完成后，外部即可通过ref.current获取到，真实dom
+这样，在初始化完成后，外部即可通过ref.current获取到，真实dom
 
 ```js
 function createDOM(vdom) {
@@ -740,6 +721,8 @@ class Page extends React.Component {
 __就是provider和consumer指向同一个对象,从这个对象上拿值__
 
 __渲染 context provider consumer 就是渲染其 子vdom，就像函数组件，类组件一样。__
+
+__父Provider往对象上存值，在其初始化完成后，子代开始初始化，此时子代consumer就可以从这个对象里拿值并使用__
 
 `react.createContext()`,返回一个对象context,内含provider,consumer,这两个对象,又循环引用context
 
