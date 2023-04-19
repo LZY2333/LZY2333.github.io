@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.7k
+                    4.6k
                 </div>
                 
 
@@ -564,15 +564,6 @@
 </li>
 </ol>
 <p><strong>React 中 onChange 的原生事件是什么？</strong></p>
-<h2 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h2><p><strong>1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7066951709678895141">浅谈: 为啥vue和react都选择了Hooks🏂？</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7121363865840910372">在 Vue3 中实现 React 原生 Hooks（useState、useEffect）进而深入理解 React Hooks 的本质原理</a></p>
-<p><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/14.html">大厂面试题每日一题</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7062259204941152293">Hooks 对于 Vue 意味着什么？</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904149453111304">React Hooks: 给React带来了什么变化？</a></p>
-<p><strong>2. 为什么不能在条件和循环里使用Hooks？</strong><br><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/hooks-rules.html#explanation">为什么不能在条件和循环里使用Hooks?</a></p>
-<p><strong>3. 为什么不能在函数组件外部使用Hooks？</strong><br><strong>4. React Hooks的状态保存在了哪里？</strong><br><strong>5. 为什么传入二次相同的状态，函数组件不更新？ __<br>__6. HOC 和 hook 的区别？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903815762673671">【React深入】从Mixin到HOC再到Hook</a></p>
-<p><strong>7. 如何将类组件转换为函数组件？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903830203678727">[译] 5种方法将React类组件转换为具有React Hooks的功能组件</a></p>
-<p><strong>1. 函数组件的useState和类组件的setState有什么区别？</strong><br><strong>2. react hooks 中如何模拟 componentDidMount</strong><br><code>useEffect(callback, []);</code><br>useState useEffect用法及原理<br>useReducer 和 useContext<br>自定义Hook 和 useCallback<br>useEffect 和 useLayoutEffect 区别<br>useCallback() 和 useMemo() 的区别<br>useEffect 依赖为空数组与 componentDidMount 区别</p>
 <h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>挂载<br>constructor<br>componentWillMount<br>render<br>componentDidMount</p>
 <p>更新<br>componentWillReceiveProps<br>shouldComponentUpdate<br>componentWillUpdate<br>render<br>componentDidUpdate</p>
 <p>卸载<br>componentWillUnmount</p>
@@ -600,6 +591,13 @@
 <blockquote>
 <p>本质，createContext() 返回一个context，具有两个属性，provider和consumer，<br>这两个属性对象具有 _context属性，又指向context<br>之后所有给provider挂载的属性，都会挂载进provider._context对象中，供子代consumer使用。</p>
 </blockquote>
+<h2 id="Hooks-React-16-8"><a href="#Hooks-React-16-8" class="headerlink" title="Hooks(React 16.8)"></a>Hooks(React 16.8)</h2><p><strong>1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7066951709678895141">浅谈: 为啥vue和react都选择了Hooks🏂？</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7121363865840910372">在 Vue3 中实现 React 原生 Hooks（useState、useEffect）进而深入理解 React Hooks 的本质原理</a></p>
+<p><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/14.html">大厂面试题每日一题</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7062259204941152293">Hooks 对于 Vue 意味着什么？</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904149453111304">React Hooks: 给React带来了什么变化？</a></p>
+<p><strong>2. 为什么不能在条件和循环里使用Hooks？</strong><br><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/hooks-rules.html#explanation">为什么不能在条件和循环里使用Hooks?</a><br><strong>3. 为什么不能在函数组件外部使用Hooks？</strong><br><strong>4. React Hooks的状态保存在了哪里？</strong><br><strong>5. 为什么传入二次相同的状态，函数组件不更新？</strong><br><strong>1. 函数组件的useState和类组件的setState有什么区别？</strong><br><strong>2. react hooks 中如何模拟 componentDidMount</strong><br><code>useEffect(callback, []);</code><br>useState useEffect用法及原理<br>useReducer 和 useContext<br>自定义Hook 和 useCallback<br>useEffect 和 useLayoutEffect 区别<br>useCallback() 和 useMemo() 的区别<br>useEffect 依赖为空数组与 componentDidMount 区别</p>
+<p><strong>6. HOC 和 hook 的区别？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903815762673671">【React深入】从Mixin到HOC再到Hook</a></p>
 <h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7016593221815910408#heading-71">八股文</a></p>
 <h2 id="Lane优先级"><a href="#Lane优先级" class="headerlink" title="Lane优先级"></a>Lane优先级</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7095307142046941191">react - 关于 react 为什么要从 ExpirationTime 切换到 lane 的一次考古</a><br>顺便看看这个大佬的其他文章</p>
 <h2 id="类组件和函数组件"><a href="#类组件和函数组件" class="headerlink" title="类组件和函数组件"></a>类组件和函数组件</h2><p>类组件面向对象编程，函数组件函数式思想<br>都可以接收属性并返回ReactElement</p>
