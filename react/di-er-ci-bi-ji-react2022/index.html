@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="React2022笔记, 懒前端">
+    <meta name="keywords" content="第二次笔记React2022, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>React2022笔记 | 懒前端</title>
+    <title>第二次笔记React2022 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">React2022笔记</h1>
+                    <h1 class="description center-align post-title">第二次笔记React2022</h1>
                 </div>
             </div>
         </div>
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.4k
+                    6.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    27 分
+                    26 分
                 </div>
                 
 
@@ -446,14 +446,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>本篇讲述 <strong>React15原理</strong>,从 <strong>初始化</strong> 以及 <strong>更新</strong> 两条线路进行.</p>
-<p>同时我认为,要学习前端框架的原理,沿着这两条线进行学习,有事半功倍的效果.</p>
-<p>React几个重要版本更新, 16 fiber, 16.8 hooks, 18 优先级调度 并发执行.</p>
-<p>其中fiber,是 React 核心算法的重新实现,也就是说其核心思想依旧不变.</p>
-<p>从React15开始,理解React原理,再加入fiber等后续更新,也更能理解fiber的存在价值.</p>
-<p>最后要说的是,React15真的很简单,是我看过所有框架原理中最容易理解的一个.</p>
-<p>相信读完本文,你也会感叹,原来是这样!</p>
-<h3 id="1-代码中所有JSX其实都是函数"><a href="#1-代码中所有JSX其实都是函数" class="headerlink" title="1. 代码中所有JSX其实都是函数"></a>1. 代码中所有JSX其实都是函数</h3><p>总所周知，JSX是一种语法糖，就像<code>async</code>函数是<code>Promise</code>语法糖一样。</p>
+                <h3 id="1-代码中所有JSX其实都是函数"><a href="#1-代码中所有JSX其实都是函数" class="headerlink" title="1. 代码中所有JSX其实都是函数"></a>1. 代码中所有JSX其实都是函数</h3><p>总所周知，JSX是一种语法糖，就像<code>async</code>函数是<code>Promise</code>语法糖一样。</p>
 <p>那么，JSX的原型又是什么呢？</p>
 <p><strong>React17以前</strong></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> babel <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@babel/core'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -736,36 +729,32 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <blockquote>
 <p>当前同步任务内,一个事件多个handler为一个批次合并更新。<br>React18以后setTimeout中的setState也是批量的了,新版本里是用的更新优先级来合并.</p>
 </blockquote>
-<h3 id="5-React的事件都绑定在容器上代理-而Handler在当前真实dom的store属性上"><a href="#5-React的事件都绑定在容器上代理-而Handler在当前真实dom的store属性上" class="headerlink" title="5. React的事件都绑定在容器上代理,而Handler在当前真实dom的store属性上"></a>5. React的事件都绑定在容器上代理,而Handler在当前真实dom的store属性上</h3><h4 id="React的事件处理原理"><a href="#React的事件处理原理" class="headerlink" title="React的事件处理原理"></a>React的事件处理原理</h4><ol>
-<li><p>React事件绑定时,并没有将事件绑定在 当前DOM,而是绑定在 容器div#root</p>
-</li>
-<li><p>事件绑定在 容器上,事件处理函数 还是保存在 当前DOM.store中</p>
-</li>
-<li><p>click 当前DOM,必然事件冒泡,触发 容器div#root 绑定的click事件,</p>
-</li>
-<li><p>容器调用其 统一事件处理函数 拿到event.target/type,调用 真正的相应 事件处理函数</p>
-<p>(并传入react 修改后加了点属性的的event,如果要用的话)</p>
-</li>
-<li><p>target就是 当前DOM,挂载了 事件处理函数,type 就是事件类型,据此调用 当前DOM 上的 事件处理函数</p>
-</li>
+<h3 id="5-React的事件都绑定在容器上代理-而Handler在当前真实dom的store属性上"><a href="#5-React的事件都绑定在容器上代理-而Handler在当前真实dom的store属性上" class="headerlink" title="5. React的事件都绑定在容器上代理,而Handler在当前真实dom的store属性上"></a>5. React的事件都绑定在容器上代理,而Handler在当前真实dom的store属性上</h3><h4 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h4><p>事件绑定时</p>
+<ol>
+<li>事件监听 绑定在 容器root上， </li>
+<li>事件处理函数 以 键值对的形式储存在 DOM.store中，key为事件类型 value为事件处理函数。</li>
+</ol>
+<p>事件触发时</p>
+<ol>
+<li>事件冒泡，触发 容器root 的事件监听，容器root 调用其 统一事件处理函数，</li>
+<li>统一事件处理函数 通过event.target 拿到对应DOM， event.type 拿到事件类型</li>
+<li>通过 DOM.store[event.type] 调用 真正的相应 事件处理函数handler(并传入 合成事件 )</li>
 </ol>
 <blockquote>
 <p>这种做法叫切片编程，react可以在事件处理时做一些统一的事情，比如 处理浏览器兼容性<br>15的事件都是代理到document,17之后都代理给了容器 div#root<br>因为React希望一个页面可以运行多个react版本 </p>
 </blockquote>
-<h4 id="当前同步任务内-一个事件多个handler为一个批次合并更新。"><a href="#当前同步任务内-一个事件多个handler为一个批次合并更新。" class="headerlink" title="当前同步任务内,一个事件多个handler为一个批次合并更新。"></a>当前同步任务内,一个事件多个handler为一个批次合并更新。</h4><p><strong>容器统一事件处理函数会让当前 事件处理 结束后组件的状态 异步批量更新</strong></p>
+<h4 id="当前同步任务内-一个事件多个handler为一个批次合并更新。"><a href="#当前同步任务内-一个事件多个handler为一个批次合并更新。" class="headerlink" title="当前同步任务内,一个事件多个handler为一个批次合并更新。"></a>当前同步任务内,一个事件多个handler为一个批次合并更新。</h4><p>一次浏览器事件触发多个监听handler，一个监听handler调用多个setState，多次属性修改，合并为一次vdom更新，和渲染更新。</p>
 <ol>
-<li><p>容器统一事件处理函数的步骤如下,</p>
+<li><p>统一事件处理函数被调用时，将标记 isBatchingUpdate 置为true，随后 循环调用 事件触发的所有handler</p>
 </li>
-<li><p>首先,updateQueue.isBatchingUpdate=true;// 事件函数执行前先设置批量更新模式为true</p>
+<li><p>当标记为true时，所有 handler 内 setState 的属性更新都会储存在更新队列中。</p>
 </li>
-<li><p>这样当前如果有同步任务的setState 就会作为 异步批量更新的一部分,放入 updateQueue 的待更新队列,</p>
-<p>isBatchingUpdate === false,setState会直接同步触发 组件的state更新</p>
-</li>
-<li><p>此时调用 当前DOM 上的 事件处理函数,如果里面有 setState 就按上面的逻辑来</p>
-</li>
-<li><p>最后 isBatchingUpdate = false, updateQueue.batchUpdate()启动批量更新</p>
+<li><p>等 所有 handler执行完毕，再 更新所有vdom，并将 标记 isBatchingUpdate 置为false，再 diff创建真实DOM。</p>
 </li>
 </ol>
+<blockquote>
+<p>标记为false时，setState 的属性更新 会直接更新vdom，diff创建真实DOM。<br>其实并没有异步,还在当次同步任务内,只不过数据更新在所有handler执行完之后<br>这么做使得React无法控制的异步setState变为了更安全的立即更新，而React控制范围内的setState为批量更新。</p>
+</blockquote>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">addEvent</span><span class="token punctuation">(</span><span class="token parameter">dom<span class="token punctuation">,</span> eventType<span class="token punctuation">,</span> handler</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">let</span> store <span class="token operator">=</span> dom<span class="token punctuation">.</span>store <span class="token operator">||</span> <span class="token punctuation">(</span>dom<span class="token punctuation">.</span>store <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//保证DOM节点有一个自定义的属性对象</span>
   store<span class="token punctuation">[</span>eventType<span class="token punctuation">]</span> <span class="token operator">=</span> handler<span class="token punctuation">;</span><span class="token comment">//store.onclick=handler 把处理函数保存到真实DOM节点上 </span>
@@ -826,9 +815,8 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token operator">&lt;</span>input ref<span class="token operator">=</span><span class="token punctuation">&#123;</span>usernameRef<span class="token punctuation">&#125;</span> <span class="token operator">/</span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>ref的本质就是创建一个 <code>&#123;current:null&#125;</code> 对象，并将ref对象传递给子组件</p>
-<p>子组件在 初始化过程中， 真实dom 创建完成后，更新 属性时，对ref对象进行专门处理，</p>
-<p>将真实dom 赋值给 ref.current</p>
-<p>如此，初始化完成后，外部即可通过ref.current获取到，真实dom</p>
+<p>子组件在 初始化过程中， 真实dom 创建完成后，赋值给 ref.current</p>
+<p>这样，在初始化完成后，外部即可通过ref.current获取到，真实dom</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">createDOM</span><span class="token punctuation">(</span><span class="token parameter">vdom</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> type<span class="token punctuation">,</span> props<span class="token punctuation">,</span> ref <span class="token punctuation">&#125;</span> <span class="token operator">=</span> vdom<span class="token punctuation">;</span>
   <span class="token keyword">let</span> dom<span class="token punctuation">;</span><span class="token comment">//真实DOM元素</span>
@@ -847,7 +835,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
 <h3 id="7-DOM-Diff"><a href="#7-DOM-Diff" class="headerlink" title="7. DOM-Diff"></a>7. DOM-Diff</h3><p>在批处理完成，拿到最新state之后，调用函数获得 newVdom</p>
 <p>新旧vdom进行对比，更新节点，这个对比过程就是 DOM-Diff，</p>
-<p>先对父vdom进行对比，再处理其子节点，处理子节点时将用到 DOM-Diff。</p>
 <p><strong>DOM-Diff的根本目的是复用老真实dom,减少渲染消耗</strong></p>
 <p><code>compareTwoVdom</code>, <code>updateChildren</code></p>
 <h4 id="当前节点对比"><a href="#当前节点对比" class="headerlink" title="当前节点对比"></a>当前节点对比</h4><p>父vdom或者说当前vdom的比较非常简单</p>
@@ -908,15 +895,14 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
 <h4 id="子节点对比"><a href="#子节点对比" class="headerlink" title="子节点对比"></a>子节点对比</h4><p><strong>Key属性</strong>,每个子节点通过key属性是否相同,判断是否为同一节点,同一节点保留并复用旧真实dom.</p>
 <p><strong>为什么子节点对比这么复杂</strong></p>
-<p>因为孩子节点是数组类型,可能存在位置的变换,直接按位对比会有较大误差.</p>
-<p>例如 第一个子节点被删除时,后面依次补位.</p>
-<p>此时新旧节点对比,如果直接按位对比,本可复用的节点,被判定为无法复用,造成性能损耗.</p>
+<p>新旧节点对比,如果直接按位对比,本可复用的节点,被判定为无法复用,造成性能损耗.</p>
 <p><strong>子节点对比</strong></p>
 <ol>
 <li><p>用map储存好oldVChildren, 然后依次一个个检查 newVChildren 数组中的元素, </p>
 </li>
-<li><p>如果 map 中存在该</p>
+<li><p>如果 map 中存在该 该元素，代表可以复用，从map中删除。</p>
 </li>
+<li></li>
 </ol>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 更新孩子节点</span>
 <span class="token keyword">function</span> <span class="token function">updateChildren</span><span class="token punctuation">(</span><span class="token parameter">parentDOM<span class="token punctuation">,</span> oldVChildren<span class="token punctuation">,</span> newVChildren</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1037,6 +1023,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
 <h4 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h4><p><strong>就是provider和consumer指向同一个对象,从这个对象上拿值</strong></p>
 <p><strong>渲染 context provider consumer 就是渲染其 子vdom，就像函数组件，类组件一样。</strong></p>
+<p><strong>父Provider往对象上存值，在其初始化完成后，子代开始初始化，此时子代consumer就可以从这个对象里拿值并使用</strong></p>
 <p><code>react.createContext()</code>,返回一个对象context,内含provider,consumer,这两个对象,又循环引用context</p>
 <p><strong>渲染</strong><br>当<code>createDom()</code> 创建DOM节点时发现类型为provider,就把provider接受的props,绑在<code>provider._contexts._currentValue</code>身上</p>
 <p>当<code>createDom()</code> 发现当前节点类型为consumer,因为两者的<code>_contexts</code>指向一个对象,就从其<code>consumer._contexts._currentValue</code>身上读value</p>
@@ -1181,7 +1168,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/react/react2022-bi-ji/">https://github.com/LZY2333/LZY2333.github.io/react/react2022-bi-ji/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/react/di-er-ci-bi-ji-react2022/">https://github.com/LZY2333/LZY2333.github.io/react/di-er-ci-bi-ji-react2022/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1625,7 +1612,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">158.4k</span>&nbsp;字
+                class="white-color">159.8k</span>&nbsp;字
             
             
             

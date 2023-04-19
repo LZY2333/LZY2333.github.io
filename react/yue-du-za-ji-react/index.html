@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3k
+                    4.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    16 分
                 </div>
                 
 
@@ -465,11 +465,6 @@
 <p>批处理: 多个状态更新批量处理，合并成一次更新，这样只进行一次渲染<br>以前，同步内多处setState，只进行一次组件重新渲染，setTimeout内有几次setState，就重新渲染几次</p>
 <p>为什么要改1中的api: 为了兼容老版本<br>在18中使用render老api代表使用17的特性，使用新api代表开启18的特性，也即自动批处理。</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7094037148088664078">React18 新特性解读</a></p>
-<h2 id="Fiber是什么"><a href="#Fiber是什么" class="headerlink" title="Fiber是什么"></a>Fiber是什么</h2><p>可简单认为是,以链表结构相连的 虚拟DOM结构,同时挂载了 组件状态和更新操作 等数据</p>
-<p><strong>一种架构名称</strong> : React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。</p>
-<p>React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。</p>
-<p><strong>一种数据结构名称</strong> : 一个Fiber节点对应一个React element，也对应一个虚拟DOM，以及更多的信息，组件的类型，虚拟DOM、真实DOM等信息。</p>
-<p><strong>React的最小工作单元</strong> : 运行时,Fiber 储存了该组件改变的状态、要执行的操作（删除/插入/更新…）。</p>
 <h2 id="JSX是什么"><a href="#JSX是什么" class="headerlink" title="JSX是什么"></a>JSX是什么</h2><p>【本质】JSX本质上是 React.createElement() 的语法糖。</p>
 <p>【目的】React团队希望 __结构与样式与事件 能够高内聚形成组件__，而组件与组件之间低耦合，达到复用和组合的目的。</p>
 <p>【目的】JSX可以将JS与HTML标签结合使用，使得 <strong>UI与逻辑结合</strong> 在一起，而不是强行分割，增加心智负担。</p>
@@ -480,27 +475,96 @@
 <p>【优点】数据渲染视图，无需关注DOM修改，减少心智负担，专注业务逻辑，从而提升开发效率。</p>
 <p>【优点】自动Diff以及批处理提升性能，跨平台兼容，跨浏览器兼容</p>
 <p>【缺点】虚拟DOM占内存，首屏渲染相对慢，需要从零遍历构建第一颗fiber树</p>
-<h2 id="Diff算法"><a href="#Diff算法" class="headerlink" title="Diff算法"></a>Diff算法</h2><h2 id="事件机制"><a href="#事件机制" class="headerlink" title="事件机制"></a>事件机制</h2><p>减少绑定，提高性能</p>
-<p>统一进行事件处理</p>
-<p>合成事件，就是把React原生事件 再加上了一些自定义的属性和函数</p>
-<p>批量更新，一次事件内触发的setState更新放在更新队列内收集，全部收集完成后逐个处理，得到新state，再触发一次性渲染。</p>
-<p><strong>React事件处理捕获和冒泡</strong><br>React17以前，是捕获到冒泡，再自己模拟一遍捕获和冒泡，一个个去触发捕获事件和冒泡事件，与原生事件顺序不兼容。<br>React17以后，是每个事件注册两道，一道捕获，一道冒泡，捕获触发的时候一个个去触发捕获事件，冒泡触发的时候一个个去触发冒泡事件。</p>
+<p><strong>虚拟DOM具有哪些属性</strong></p>
+<p>注意，组件中通过props是拿不到ref 和key的，被delete并挂载在了vdom上，但可以拿到children</p>
+<h2 id="Diff算法-React15"><a href="#Diff算法-React15" class="headerlink" title="Diff算法(React15)"></a>Diff算法(React15)</h2><p><strong>DOM-Diff的根本目的是复用旧真实dom,减少渲染消耗</strong></p>
+<p><strong>React的 Diff算法 只同层级比较，不同key不同type直接替换整个分支</strong></p>
+<p>在React中由 <code>compareTwoVdom</code>, <code>updateChildren</code> 两个函数进行处理。</p>
+<p><code>compareTwoVdom</code>，根据新旧vdom比较两个节点，</p>
 <ol>
-<li>描述一下React的事件机制，优点，缺点？<br><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.12.react-4.html#t102.React%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F">珠峰</a></li>
-</ol>
-<p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html#t707.%20%E8%AF%B7%E8%AF%B4%E4%B8%80%E4%B8%8B%E4%BD%A0%E5%AF%B9%20React%20%E5%90%88%E6%88%90%E4%BA%8B%E4%BB%B6%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F">珠峰</a></p>
-<ol start="2">
-<li><p>16和17事件机制有什么不同？</p>
+<li><p>如果二者type不同，卸载 oldVdom 整个分支，根据 新vdom 创建 新真实DOM分支，并插入。</p>
 </li>
-<li><p>React 中 onChange 的原生事件是什么？</p>
+<li><p>如果二者type相同，复用 旧真实DOM，更新 真实DOM的Props属性，<code>updateChildren</code> 更新子节点。</p>
 </li>
 </ol>
-<h2 id="Lane优先级"><a href="#Lane优先级" class="headerlink" title="Lane优先级"></a>Lane优先级</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7095307142046941191">react - 关于 react 为什么要从 ExpirationTime 切换到 lane 的一次考古</a><br>顺便看看这个大佬的其他文章</p>
-<h2 id="类组件和函数组件"><a href="#类组件和函数组件" class="headerlink" title="类组件和函数组件"></a>类组件和函数组件</h2><p>类组件面向对象编程，函数组件函数式思想<br>都可以接收属性并返回ReactElement</p>
-<p><strong>函数组件更加契合 React 框架的设计理念</strong><br>React 组件的主要工作 就是 一个吃进数据、吐出 UI 的函数。<br>React 框架的主要工作 就是 把声明式的代码转换为命令式的 DOM 操作。</p>
-<p><strong>函数组件的优点</strong><br>语法简单<br>易于测试<br>Hooks 提供了更细粒度的逻辑组织与复用<br>更好地适用于时间切片与并发模式</p>
-<p><strong>类组件的缺点</strong><br>this 的模糊性<br>业务逻辑散落在生命周期中<br>类组件可以通过继承实现逻辑复用，但是继承的灵活性差，细节屏蔽多，不推荐使用<br>类组件需要创建并保存实例，会占用一定内存</p>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><h2 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h2><p><strong>1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7066951709678895141">浅谈: 为啥vue和react都选择了Hooks🏂？</a></p>
+<p><code>updateChildren</code>，子节点比较，进行 插入、移动、删除 三种操作。</p>
+<ol>
+<li><p>旧Vdom生成map结构，key为旧Vdom的key，遍历新vdom，查找是否存在 key相同可复用的旧Vdom</p>
+</li>
+<li><p>可复用的旧Vdom会因为序号变更可能会被标记为 Move，无旧Vdom命中的新Vdom会被标记为 PLACEMENT</p>
+</li>
+<li><p>每找到一个可复用的旧Vdom 就将其从map中删除，剩下的不可复用的vdom将其真实DOM unmount卸载</p>
+</li>
+<li><p>再根据 patch补丁 标记，对剩余vdom进行操作。</p>
+</li>
+</ol>
+<blockquote>
+<p>unMountVdom,卸载的过程，会找到其真实DOM，Ref置为空，递归卸载子Vdom，最后移除自己的真实DOM。</p>
+</blockquote>
+<blockquote>
+<p>函数组件和类组件没有自己的真实DOM，需要递归调用findDOM，拿到子代vdom的真实DOM</p>
+</blockquote>
+<blockquote>
+<p>需要移动: 可复用的 旧真实DOM 索引 比上一个不需要移动的节点的索引要小的话</p>
+</blockquote>
+<h2 id="key的作用"><a href="#key的作用" class="headerlink" title="key的作用"></a>key的作用</h2><p><strong>提升diff算法的判断速度</strong></p>
+<p>React在进行节点对比时，会先对 新旧Vdom 的 key 进行判断，只有 key 相同，才进行进一步的对比。</p>
+<p>key不同时，直接判定 旧真实DOM 不能复用，根据新数据创建 新真实DOM， 卸载 旧真实DOM。</p>
+<p>key相同时，再进一步判断 新旧Vdom 的type，type不同则卸载，type相同，则复用 旧真实DOM。</p>
+<p><strong>用index作为key</strong> </p>
+<p><strong>1. 可能会引发没有必要的真实DOM更新，但界面不会出现问题</strong></p>
+<p>假设在数据头 进行了 添加 删除 操作，index作为key不会改变，同时type相同，则会判定所有DOM需要复用并更新。</p>
+<p><strong>2. 如果不存在对 数据头 的添加删除操作，则可以使用index作为key。</strong></p>
+<p><strong>3. 如果包含输入类的DOM，界面会出现问题</strong></p>
+<p><strong>Diff算法(React16+)未解决</strong></p>
+<h2 id="事件机制"><a href="#事件机制" class="headerlink" title="事件机制"></a>事件机制</h2><h3 id="合成事件"><a href="#合成事件" class="headerlink" title="合成事件"></a>合成事件</h3><p><strong>React合成事件</strong> SyntheticEvent，DOM原生事件再次封装，加上了一些自定义的属性和函数,<br>stopPropagation阻止React事件冒泡，<br>preventDefault 阻止浏览器默认行为，<br>nativeEvent代表原生DOM</p>
+<p>浏览器兼容</p>
+<p>多平台适配，ReactNative也能使用；</p>
+<p>实现事件委托，减少事件绑定</p>
+<p>统一进行事件处理</p>
+<p>批量更新，一次事件内触发的setState更新放在更新队列内收集，全部收集完成后逐个处理，得到新state，再触发一次性渲染</p>
+<p>事件池机制，避免频繁创建和销毁SyntheticEvent对象，释放过程将SyntheticEvent对象的大部分属性置为null，提升旧浏览器的性能。</p>
+<h3 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h3><p>事件绑定时</p>
+<ol>
+<li>事件监听 绑定在 容器root上， </li>
+<li>事件处理函数 以 键值对的形式储存在 DOM.store中，key为事件类型 value为事件处理函数。</li>
+</ol>
+<p>事件触发时</p>
+<ol>
+<li><p>事件冒泡，触发 容器root 的事件监听，容器root 调用其 统一事件处理函数，</p>
+</li>
+<li><p>统一事件处理函数 通过event.target 拿到对应DOM， event.type 拿到事件类型</p>
+</li>
+<li><p>通过 DOM.store[event.type] 调用 真正的相应 事件处理函数handler(并传入 合成事件 )</p>
+<blockquote>
+<p>这种做法叫切片编程，react可以在事件处理时做一些统一的事情，比如 处理浏览器兼容性</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="批量更新"><a href="#批量更新" class="headerlink" title="批量更新"></a>批量更新</h3><p>一次浏览器事件触发多个监听handler，一个监听handler调用多个setState，多次属性修改，合并为一次vdom更新，和渲染更新。</p>
+<ol>
+<li><p>统一事件处理函数被调用时，将标记 isBatchingUpdate 置为true，随后 循环调用 事件触发的所有handler</p>
+</li>
+<li><p>当标记为true时，所有 handler 内 setState 的属性更新都会储存在更新队列中。</p>
+</li>
+<li><p>等 所有 handler执行完毕，再 更新所有vdom，并将 标记 isBatchingUpdate 置为false，再 diff创建真实DOM。</p>
+</li>
+</ol>
+<blockquote>
+<p>标记为false时，setState 的属性更新 会直接更新vdom，diff创建真实DOM。<br>其实并没有异步,还在当次同步任务内,只不过数据更新在所有handler执行完之后<br>这么做使得React无法控制的异步setState变为了更安全的立即更新，而React控制范围内的setState为批量更新。</p>
+</blockquote>
+<h3 id="React-17以后-事件机制有什么不同？"><a href="#React-17以后-事件机制有什么不同？" class="headerlink" title="React 17以后 事件机制有什么不同？"></a>React 17以后 事件机制有什么不同？</h3><ol>
+<li><p>以前委托到document，17事件委托到root<br>为了允许同时运行多个版本React</p>
+</li>
+<li><p>React事件处理捕获和冒泡：<br>React17以前，是捕获到冒泡，再自己模拟一遍捕获和冒泡，一个个去触发捕获事件和冒泡事件，与原生事件顺序不兼容。<br>React17以后，是每个事件注册两道，一道捕获，一道冒泡，捕获触发的时候一个个去触发捕获事件，冒泡触发的时候一个个去触发冒泡事件。<br>React capture阶段的合成事件提前到原生事件capture阶段执行</p>
+</li>
+<li><p>移除事件池机制；</p>
+</li>
+<li><p>事件有优先级。 连续事件 &gt; 用户阻塞事件 &gt; 离散事件</p>
+</li>
+</ol>
+<p><strong>React 中 onChange 的原生事件是什么？</strong></p>
+<h2 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h2><p><strong>1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7066951709678895141">浅谈: 为啥vue和react都选择了Hooks🏂？</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7121363865840910372">在 Vue3 中实现 React 原生 Hooks（useState、useEffect）进而深入理解 React Hooks 的本质原理</a></p>
 <p><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/14.html">大厂面试题每日一题</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7062259204941152293">Hooks 对于 Vue 意味着什么？</a></p>
@@ -509,20 +573,49 @@
 <p><strong>3. 为什么不能在函数组件外部使用Hooks？</strong><br><strong>4. React Hooks的状态保存在了哪里？</strong><br><strong>5. 为什么传入二次相同的状态，函数组件不更新？ __<br>__6. HOC 和 hook 的区别？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903815762673671">【React深入】从Mixin到HOC再到Hook</a></p>
 <p><strong>7. 如何将类组件转换为函数组件？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903830203678727">[译] 5种方法将React类组件转换为具有React Hooks的功能组件</a></p>
 <p><strong>1. 函数组件的useState和类组件的setState有什么区别？</strong><br><strong>2. react hooks 中如何模拟 componentDidMount</strong><br><code>useEffect(callback, []);</code><br>useState useEffect用法及原理<br>useReducer 和 useContext<br>自定义Hook 和 useCallback<br>useEffect 和 useLayoutEffect 区别<br>useCallback() 和 useMemo() 的区别<br>useEffect 依赖为空数组与 componentDidMount 区别</p>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>挂载<br>constructor<br>componentWillMount<br>render<br>componentDidMount</p>
+<p>更新<br>componentWillReceiveProps<br>shouldComponentUpdate<br>componentWillUpdate<br>render<br>componentDidUpdate</p>
+<p>卸载<br>componentWillUnmount</p>
+<p>React 16.3 开始<br>【__getDerivedStateFromProps__】从props获取派发状态,static函数,无法使用this</p>
+<blockquote>
+<p>被故意设计成 static 函数,因为以前在 componentWillReceiveProps中用setState会死循环,现在不让用this了</p>
+</blockquote>
+<p>【__getSnapshotBeforeUpdate__】render之后新旧vdom即将对比替换时执行<br>用于在组件真实DOM更新之前,拿到老真实DOM的一些信息,返回值会传给 componentDidUpdate</p>
+<p>挂载<br>constructor<br>getDerivedStateFromProps<br>render<br>componentDidMount</p>
+<p>更新<br>getDerivedStateFromProps<br>shouldComponentUpdate<br>render<br>getSnapshotBeforeUpdate<br>componentDidUpdate</p>
+<p>卸载<br>componentWillUnmount</p>
+<p><strong>生命周期的父子组件的执行顺序？</strong></p>
+<p><strong>函数组件的生命周期？</strong></p>
+<h2 id="ref原理"><a href="#ref原理" class="headerlink" title="ref原理"></a>ref原理</h2><p>ref的本质就是创建一个 <code>&#123;current:null&#125;</code> 对象，并将ref对象传递给子组件</p>
+<p>子组件在 初始化过程中， 真实dom 创建完成后，赋值给 ref.current</p>
+<p>这样，在初始化完成后，外部即可通过ref.current获取到，真实dom</p>
+<h2 id="context原理"><a href="#context原理" class="headerlink" title="context原理"></a>context原理</h2><ol>
+<li><p>provider和consumer 的context属性 指向同一个对象</p>
+</li>
+<li><p>provider consumer 本质是渲染其 子vdom，就像函数组件，类组件一样，只不过会给子代添加一些属性。</p>
+</li>
+<li><p>父Provider往共有对象上存值，在其初始化完成后，子代开始初始化，此时子代consumer就可以从这个对象里拿值并使用</p>
+</li>
+</ol>
+<blockquote>
+<p>本质，createContext() 返回一个context，具有两个属性，provider和consumer，<br>这两个属性对象具有 _context属性，又指向context<br>之后所有给provider挂载的属性，都会挂载进provider._context对象中，供子代consumer使用。</p>
+</blockquote>
 <h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7016593221815910408#heading-71">八股文</a></p>
+<h2 id="Lane优先级"><a href="#Lane优先级" class="headerlink" title="Lane优先级"></a>Lane优先级</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7095307142046941191">react - 关于 react 为什么要从 ExpirationTime 切换到 lane 的一次考古</a><br>顺便看看这个大佬的其他文章</p>
+<h2 id="类组件和函数组件"><a href="#类组件和函数组件" class="headerlink" title="类组件和函数组件"></a>类组件和函数组件</h2><p>类组件面向对象编程，函数组件函数式思想<br>都可以接收属性并返回ReactElement</p>
+<p><strong>函数组件更加契合 React 框架的设计理念</strong><br>React 组件的主要工作 就是 一个吃进数据、吐出 UI 的函数。<br>React 框架的主要工作 就是 把声明式的代码转换为命令式的 DOM 操作。</p>
+<p><strong>函数组件的优点</strong><br>语法简单<br>易于测试<br>Hooks 提供了更细粒度的逻辑组织与复用<br>更好地适用于时间切片与并发模式</p>
+<p><strong>类组件的缺点</strong><br>this 的模糊性<br>业务逻辑散落在生命周期中<br>类组件可以通过继承实现逻辑复用，但是继承的灵活性差，细节屏蔽多，不推荐使用<br>类组件需要创建并保存实例，会占用一定内存</p>
 <h2 id="React和Vue对比"><a href="#React和Vue对比" class="headerlink" title="React和Vue对比"></a>React和Vue对比</h2><p><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html#t112.%E4%B8%BA%E4%BB%80%E4%B9%88%20React%20%E4%BC%9A%E5%BC%95%E5%85%A5%20JSX?">珠峰</a></p>
 <p>虚拟dom是什么? 原理? 优缺点?</p>
 <p>vue 和 react 在虚拟dom的diff上，做了哪些改进使得速度很快?</p>
-<p>vue 和 react 里的key的作用是什么? 为什么不能用Index？用了会怎样? 如果不加key会怎样?</p>
+<p>vue 和 react 里的key的作用是什么? 为什么不能用Index？用了会怎样? 如果不加key会怎样?<br>react 与 vue 数组中 key 的作用是什么？<br>提升diff算法的判断速度，<br>diff算法 会首先判断 新旧 key 和 元素类型 是否一致，如果一致再去递归判断子节点</p>
 <p>React 和 Vue 的本质区别:<br>Vue 是静态分析 template 文件，采用预编译优化，在解析模板的同时构建 AST 依赖树，同时标记出可能会变化的动态节点。<br>利用数据双向绑定，进行数据拦截或代理，进行响应式处理。从而能够比较精准的计算出有改变的 DOM，减少计算量。</p>
 <p>React 是局部渲重新渲染，核心就是一堆递归的 React.createElement 的执行调用。<br>其优化的方向是不断的优化 React.createElement 的执行速度，让其更快，更合理的创建最终的元素。</p>
 <h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><p>使用 React.memo 来缓存组件。<br>使用 React.useMemo 缓存大量的计算。<br>避免使用匿名函数。<br>利用 React.lazy 和 React.Suspense 延迟加载不是立即需要的组件。<br>尽量使用 CSS 而不是强制加载和卸载组件。<br>使用 React.Fragment 避免添加额外的 DOM。</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903924302888973">React性能优化的8种方式了解一下？</a></p>
 <ol>
-<li><p>在 React 中如何做好性能优化 ?<br>代码分割 (在 React 中如何实现代码分割)[<a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/code-splitting.html]">https://zh-hans.reactjs.org/docs/code-splitting.html]</a></p>
-</li>
-<li><p>react 与 vue 数组中 key 的作用是什么？<br>提升diff算法的判断速度，<br>diff算法 会首先判断 新旧 key 和 元素类型 是否一致，如果一致再去递归判断子节点</p>
-</li>
+<li>在 React 中如何做好性能优化 ?<br>代码分割 (在 React 中如何实现代码分割)[<a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/code-splitting.html]">https://zh-hans.reactjs.org/docs/code-splitting.html]</a></li>
 </ol>
 <p>在React16.6引入了Suspense和React.lazy，用来分割组件代码。</p>
 <h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p><strong>请说一下你对 React 的理解?</strong><br><a target="_blank" rel="noopener" href="http://zhufengpeixun.com/strong/html/126.11.react-1.html">珠峰</a></p>
@@ -538,6 +631,16 @@
 <p><strong>React 中 fiber 是用来做什么的</strong><br><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/165.html">React 中 fiber 是用来做什么的</a><br>Fiber出现在React16版本，在15及以前的版本，React更新DOM都是使用递归的方式进行遍历，每次更新都会从应用根部递归执行，且一旦开始，无法中断，这样层级越来越深，结构复杂度高的项目就会出现明显的卡顿。fiber架构出现就是为了解决这个问题，fiber是在React中最小粒度的执行单元，可以将fiber理解为是React的虚拟DOM。在React中，更新fiber的过程叫做调和，每一个fiber都可以作为一个执行单元进行处理，同时每个fiber都有一个优先级lane（16版本是expirationTime）来判断是否还有空间或时间来执行更新，如果没有时间更新，就会把主动权交给浏览器去做一些渲染（如动画、重排、重绘等），用户就不会感觉到卡顿。然后，当浏览器空闲了（requestIdleCallback），就通过scheduler（调度器）将执行恢复到执行单元上，这样本质上是中断了渲染，不过题改了用户的体验。React实现的fiber模式是一个具有链表和指针的异步模型。<br>fiber作为react创建的element和真实DOM之间的桥梁，每一次更新的触发会在React element发起，经过fiber的调和，然后更新到真实DOM上。fiber上标识了各种不同类型的element，同时记录了对应和当前fiber有关的其他fiber信息（return指向父级、child指向子级、sibling指向兄弟）。<br>在React应用中，应用首次构建时，会创建一个fiberRoot作为整个React应用的根基。然后当ReactDOM.render渲染出来时，会创建一个rootFiber对象（一个Ract应用可以用多个rootFiber，但只能有一个fiberRoot），当一次挂载完成时，fiberRoot的current属性会指向对应rootFiber。挂载完成后，会进入正式渲染阶段，在这个阶段必须知道一个workInProgerss树（它是正在内存在构建的Fiber树，在一次更新中，所有的更新都发生在workInProgeress树上，更新完成后，将变成current树用于渲染视图）,当前的current树（rootFiber）的alternate会作为workInProgerss，同时会用alternate将workInProgress与current树进行关联（该关联只有在初始化第一次创建alternate时进行）。</p>
 <h2 id="React-涉及的算法"><a href="#React-涉及的算法" class="headerlink" title="React 涉及的算法"></a>React 涉及的算法</h2><p><strong>LRU算法</strong><br>在React16.6引入了Suspense和React.lazy，用来分割组件代码。</p>
 <h2 id="React-router"><a href="#React-router" class="headerlink" title="React-router"></a>React-router</h2><p><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/463.html#history-api">React/Vue 中的 router 实现原理如何</a></p>
+<h2 id="React18"><a href="#React18" class="headerlink" title="React18"></a>React18</h2><h2 id="Fiber是什么"><a href="#Fiber是什么" class="headerlink" title="Fiber是什么"></a>Fiber是什么</h2><p>可简单认为是,以链表结构相连的 虚拟DOM结构,同时挂载了 组件状态和更新操作 等数据</p>
+<p><strong>一种架构名称</strong> : React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。</p>
+<p>React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。</p>
+<p><strong>一种数据结构名称</strong> : 一个Fiber节点对应一个React element，也对应一个虚拟DOM，以及更多的信息，组件的类型，虚拟DOM、真实DOM等信息。</p>
+<p><strong>React的最小工作单元</strong> : 运行时,Fiber 储存了该组件改变的状态、要执行的操作（删除/插入/更新…）。</p>
+<h2 id="Diff算法-React18"><a href="#Diff算法-React18" class="headerlink" title="Diff算法(React18)"></a>Diff算法(React18)</h2><p>React同时维护两棵虚拟DOM树：一棵表示当前的DOM结构，另一棵在React状态变更将要重新渲染时生成。</p>
+<p>React通过比较这两棵树的差异，决定是否需要修改DOM结构，以及如何修改。</p>
+<p>但是目前的代码，似乎是自上而下，一边生成新vdom，一边进行比较更新，</p>
+<p>而不是生成整个新vdom树，再新旧vdom树进行比较更新。</p>
+<p>旧的虚拟DOM树一直存在，新的一边对比一边生成？</p>
 
                 
             </div>
@@ -1012,7 +1115,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">158.4k</span>&nbsp;字
+                class="white-color">159.8k</span>&nbsp;字
             
             
             
