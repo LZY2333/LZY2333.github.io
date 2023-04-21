@@ -340,6 +340,9 @@ React 是局部渲重新渲染，核心就是一堆递归的 React.createElement
 其优化的方向是不断的优化 React.createElement 的执行速度，让其更快，更合理的创建最终的元素。
 
 ## 性能优化
+React.PureComponent,React.memo,当属性不变时，不重新渲染，跳过更新逻辑
+
+最外层加上，内层也会相当于PureComponent，因为父组件不更新子组件也不会更新
 
 使用 React.memo 来缓存组件。
 使用 React.useMemo 缓存大量的计算。
