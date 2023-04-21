@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.6k
+                    4.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    16 分
+                    17 分
                 </div>
                 
 
@@ -610,7 +610,9 @@
 <p>vue 和 react 里的key的作用是什么? 为什么不能用Index？用了会怎样? 如果不加key会怎样?<br>react 与 vue 数组中 key 的作用是什么？<br>提升diff算法的判断速度，<br>diff算法 会首先判断 新旧 key 和 元素类型 是否一致，如果一致再去递归判断子节点</p>
 <p>React 和 Vue 的本质区别:<br>Vue 是静态分析 template 文件，采用预编译优化，在解析模板的同时构建 AST 依赖树，同时标记出可能会变化的动态节点。<br>利用数据双向绑定，进行数据拦截或代理，进行响应式处理。从而能够比较精准的计算出有改变的 DOM，减少计算量。</p>
 <p>React 是局部渲重新渲染，核心就是一堆递归的 React.createElement 的执行调用。<br>其优化的方向是不断的优化 React.createElement 的执行速度，让其更快，更合理的创建最终的元素。</p>
-<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><p>使用 React.memo 来缓存组件。<br>使用 React.useMemo 缓存大量的计算。<br>避免使用匿名函数。<br>利用 React.lazy 和 React.Suspense 延迟加载不是立即需要的组件。<br>尽量使用 CSS 而不是强制加载和卸载组件。<br>使用 React.Fragment 避免添加额外的 DOM。</p>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><p>React.PureComponent,React.memo,当属性不变时，不重新渲染，跳过更新逻辑</p>
+<p>最外层加上，内层也会相当于PureComponent，因为父组件不更新子组件也不会更新</p>
+<p>使用 React.memo 来缓存组件。<br>使用 React.useMemo 缓存大量的计算。<br>避免使用匿名函数。<br>利用 React.lazy 和 React.Suspense 延迟加载不是立即需要的组件。<br>尽量使用 CSS 而不是强制加载和卸载组件。<br>使用 React.Fragment 避免添加额外的 DOM。</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903924302888973">React性能优化的8种方式了解一下？</a></p>
 <ol>
 <li>在 React 中如何做好性能优化 ?<br>代码分割 (在 React 中如何实现代码分割)[<a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/code-splitting.html]">https://zh-hans.reactjs.org/docs/code-splitting.html]</a></li>
@@ -1113,7 +1115,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">159.8k</span>&nbsp;字
+                class="white-color">159.9k</span>&nbsp;字
             
             
             
