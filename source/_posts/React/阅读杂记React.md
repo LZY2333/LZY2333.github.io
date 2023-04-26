@@ -189,6 +189,8 @@ React capture阶段的合成事件提前到原生事件capture阶段执行
 
 __React 中 onChange 的原生事件是什么？__
 
+__input组件中，onChange失去焦点时触发，onInput输入时触发__
+
 ## 生命周期
 
 挂载
@@ -257,6 +259,53 @@ ref的本质就是创建一个 `{current:null}` 对象，并将ref对象传递�
 
 ## Hooks(React 16.8)
 
+__为什么不能在条件和循环里使用Hooks__
+React的hooks用于存储状态，但函数是无法储存状态的，因为执行完后函数执行栈就会销毁
+所以，hooks的状态保存在函数组件的 虚拟dom上，
+采用的数据结构也不是 object的键值对模式，而是链表模式。
+每个hooks执行都属于链表的一环，初始化执行时顺序储存数据，
+后续更新时，顺序读取数据，所以顺序不能被打乱，所以不能在条件和循环内使用。
+
+__useState 和 useReducer 的区别__
+useState直接在fiber中储存用户传入的值
+useReducer将 用户传入的值 传给reducer处理函数执行后 储存在fiber中。
+useState，内部其实就是调用的 useReducer。
+useReducer，用于处理复杂的数据处理逻辑。
+
+__useMemo 和 useCallback 的区别__
+接收创建函数和依赖项数组作为参数，依赖项改变时才重新计算 memoized 值。
+用于避免每次渲染都进行高开销的属性计算
+useCallback，依赖变更时才返回新函数，适用于父节点传递函数给子节点调用的情况，可以优化性能。
+
+__useEffect 和 useLayoutEffect 区别__
+
+
+__useContext原理__
+useContext本身的原理非常简单，就是从传入的context对象上读取了他的，下划线currentValue属性
+使用react.createContext的时候会创建一个全局对象context，
+这个对象有provider consumer _currentValue属性
+在父节点调用provider 会对 currentValue进行赋值，在子节点再从currentValue取值。
+
+__useRef是单例的__
+useRef的返回值ref 对象在组件的整个生命周期内持续存在
+而不像setState一样，其值需要在下一个生命周期才得到体现。
+但是注意， 变更 .current 属性不会引发组件重新渲染。
+
+
+
+__useEffect 依赖为空数组与 componentDidMount 区别__
+二者都是会在组件初次渲染完成后执行一次。
+两者最根本的区别在于，
+componentDidMount 的时机更为精确，他确确实实是在组件创建完真实DOM并挂载完成后立即调用的。
+useEffect 实际上是创建了一个宏任务，在下个事件循环执行，这个时候也必然已经完成了渲染流程。
+
+__函数组件的useState和类组件的setState有什么区别__
+类组件的setState，修改的数据储存在其实例中，useState储存在当前函数组件对应的fiber中。
+类组件的setState，是真正的修改数据的操作，useState不是。
+
+
+
+
 __1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？__
 [浅谈: 为啥vue和react都选择了Hooks🏂？](https://juejin.cn/post/7066951709678895141)
 
@@ -268,27 +317,21 @@ __1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？__
 
 [React Hooks: 给React带来了什么变化？](https://juejin.cn/post/6844904149453111304)
 
-__2. 为什么不能在条件和循环里使用Hooks？__
-[为什么不能在条件和循环里使用Hooks?](https://zh-hans.reactjs.org/docs/hooks-rules.html#explanation)
-__3. 为什么不能在函数组件外部使用Hooks？__
-__4. React Hooks的状态保存在了哪里？__
-__5. 为什么传入二次相同的状态，函数组件不更新？__
-__1. 函数组件的useState和类组件的setState有什么区别？__
-__2. react hooks 中如何模拟 componentDidMount__
-`useEffect(callback, []);`
-useState useEffect用法及原理
-useReducer 和 useContext
-自定义Hook 和 useCallback
-useEffect 和 useLayoutEffect 区别
-useCallback() 和 useMemo() 的区别
-useEffect 依赖为空数组与 componentDidMount 区别
+__为什么传入二次相同的状态，函数组件不更新__
+数据和虚拟dom是更新了的，UI没更新，DOM复用了旧DOM。
+数据都没更新只可能是使用了PureComponent
+
+__hooks和生命周期的异同__
+类组件的生命周期函数，是在注册之后，在组件运行的特定时间进行调用。
+函数组件的hooks，在函数每次执行的时候都会被调用。
+
+__自定义Hook__
+自定义Hook必须以use开头，内部可以调用其他hooks，用于抽离公共逻辑
+hooks的特性更像是组件，两个组件调用同一个hooks，state不会共享。
 
 
 __6. HOC 和 hook 的区别？__
 [【React深入】从Mixin到HOC再到Hook](https://juejin.cn/post/6844903815762673671)
-
-
-
 
 ## 组件通信
 [八股文](https://juejin.cn/post/7016593221815910408#heading-71)
@@ -341,6 +384,8 @@ React 是局部渲重新渲染，核心就是一堆递归的 React.createElement
 
 ## 性能优化
 React.PureComponent,React.memo,当属性不变时，不重新渲染，跳过更新逻辑
+memo在渲染的时候和函数组件一样，拿到vdom然后渲染，
+但是在更新的时候，会通过传入的compare函数执行，进行props对比，如果不同，才会更新，如果相同，则会复用旧虚拟dom
 
 最外层加上，内层也会相当于PureComponent，因为父组件不更新子组件也不会更新
 
