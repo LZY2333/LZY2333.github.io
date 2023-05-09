@@ -7,6 +7,39 @@ tags:
 summary: 实现，类的继承，LRU淘汰算法，Ajax，节流函数，数组去重
 ---
 
+### 浅比较
+```js
+/**
+ * 浅比较(如果是对象，只比较第一层属性，与深比较/深拷贝相比性能更好，平常够用)
+ * @param obj1 任意基本类型或引用类型
+ * @param obj2 任意基本类型或引用类型
+ * @returns 是否同一对象
+ */
+function shallowEqual(obj1: any, obj2: any): boolean {
+    // 同基本类型，或同引用地址，返回true
+    if (obj1 === obj2) return true;
+
+    // 非对象类型 或 为null 返回 false
+    if (typeof obj1 !== 'object' || obj1 === null || typeof obj2 !== 'object' || obj2 == null) return false
+
+    const keys1 = Object.keys(obj1)
+    const keys2 = Object.keys(obj2)
+    if (keys1.length !== keys2.length) return false
+
+    // 如果obj2中没有obj1中的某个属性，或该属性值不相等返回false
+    for (let key of keys1) {
+        if (!obj2.hasOwnProperty(key) || obj1[key] !== obj2[key]) {
+            return false
+        }
+    }
+
+    return true
+}
+
+const obj11 = { a: 1 }
+const obj12 = { a: 1 }
+console.log(shallowEqual(obj11, obj12)); // true
+```
 
 ### 手写深拷贝
 __浅拷贝__，如果复制的对象是基本数据类型，拷贝的就是值，如果是引用类型，拷贝的就是内存地址，一个对象改变会影响另一个对象

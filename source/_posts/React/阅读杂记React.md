@@ -153,9 +153,10 @@ nativeEvent代表原生DOM
 2. 事件处理函数 以 键值对的形式储存在 DOM.store中，key为事件类型 value为事件处理函数。
 
 事件触发时
-1. 事件冒泡，触发 容器root 的事件监听，容器root 调用其 统一事件处理函数，
-2. 统一事件处理函数 通过event.target 拿到对应DOM， event.type 拿到事件类型
+1. 事件冒泡，触发 容器root 的事件监听，容器root 调用其 统一事件处理函数 dispatchEvent，
+2. dispatchEvent 通过event.target 拿到对应DOM， event.type 拿到事件类型
 3. 通过 DOM.store[event.type] 调用 真正的相应 事件处理函数handler(并传入 合成事件 )
+4. handler内的setState将数据存入更新队列，最后 dispatchEvent 批量更新。
    
 > 这种做法叫切片编程，react可以在事件处理时做一些统一的事情，比如 处理浏览器兼容性
 
