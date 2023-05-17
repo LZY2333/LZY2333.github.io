@@ -450,10 +450,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="阅读杂记Algorithm"><a href="#阅读杂记Algorithm" class="headerlink" title="阅读杂记Algorithm"></a>阅读杂记Algorithm</h1><h2 id="为什么需要-时间复杂度分析"><a href="#为什么需要-时间复杂度分析" class="headerlink" title="为什么需要 时间复杂度分析"></a>为什么需要 时间复杂度分析</h2><p>如果 将程序跑一遍,通过统计/监控 得到算法执行的时间和占用的内存(<strong>事后统计法</strong>)</p>
+                <h3 id="为什么需要-时间复杂度分析"><a href="#为什么需要-时间复杂度分析" class="headerlink" title="为什么需要 时间复杂度分析"></a>为什么需要 时间复杂度分析</h3><p>如果 将程序跑一遍,通过统计/监控 得到算法执行的时间和占用的内存(<strong>事后统计法</strong>)</p>
 <p>这样做得到得数据</p>
 <p>1.受测试环境影响 2.受数据规模的影响很大</p>
-<h2 id="什么是-大O复杂度表示法"><a href="#什么是-大O复杂度表示法" class="headerlink" title="什么是 大O复杂度表示法"></a>什么是 大O复杂度表示法</h2><p><strong>大O 时间复杂度</strong>,也称为 <strong>渐进式时间复杂度</strong>,表示 代码执行时间 随数据规模增长 </p>
+<h3 id="什么是-大O复杂度表示法"><a href="#什么是-大O复杂度表示法" class="headerlink" title="什么是 大O复杂度表示法"></a>什么是 大O复杂度表示法</h3><p><strong>大O 时间复杂度</strong>,也称为 <strong>渐进式时间复杂度</strong>,表示 代码执行时间 随数据规模增长 </p>
 <p>T(n) = O(n²)</p>
 <p>T(n) 总执行时间, F(n) 每行代码总执行次数</p>
 <h2 id="如何进行时间复杂度分析"><a href="#如何进行时间复杂度分析" class="headerlink" title="如何进行时间复杂度分析"></a>如何进行时间复杂度分析</h2><p>一段代码</p>
@@ -622,7 +622,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token function">quickSort</span><span class="token punctuation">(</span>testArr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> testArr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'排序后:'</span><span class="token punctuation">,</span> testArr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">mergeSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">mergeSort</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> arr
     <span class="token keyword">const</span> middle <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>arr<span class="token punctuation">.</span>length <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span>
     <span class="token keyword">const</span> left <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> middle<span class="token punctuation">)</span>
@@ -1161,7 +1161,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">160.6k</span>&nbsp;字
+                class="white-color">160.8k</span>&nbsp;字
             
             
             

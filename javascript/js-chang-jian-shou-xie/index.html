@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    572
+                    772
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -446,7 +446,38 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h3><p>__浅拷贝__，如果复制的对象是基本数据类型，拷贝的就是值，如果是引用类型，拷贝的就是内存地址，一个对象改变会影响另一个对象</p>
+                <h3 id="浅比较"><a href="#浅比较" class="headerlink" title="浅比较"></a>浅比较</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+ * 浅比较(如果是对象，只比较第一层属性，与深比较/深拷贝相比性能更好，平常够用)
+ * @param obj1 任意基本类型或引用类型
+ * @param obj2 任意基本类型或引用类型
+ * @returns 是否同一对象
+ */</span>
+<span class="token keyword">function</span> <span class="token function">shallowEqual</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">obj1</span><span class="token operator">:</span> any<span class="token punctuation">,</span> <span class="token literal-property property">obj2</span><span class="token operator">:</span> any</span><span class="token punctuation">)</span><span class="token operator">:</span> boolean <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 同基本类型，或同引用地址，返回true</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>obj1 <span class="token operator">===</span> obj2<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 非对象类型 或 为null 返回 false</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> obj1 <span class="token operator">!==</span> <span class="token string">'object'</span> <span class="token operator">||</span> obj1 <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> <span class="token keyword">typeof</span> obj2 <span class="token operator">!==</span> <span class="token string">'object'</span> <span class="token operator">||</span> obj2 <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+
+    <span class="token keyword">const</span> keys1 <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>obj1<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> keys2 <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>obj2<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>keys1<span class="token punctuation">.</span>length <span class="token operator">!==</span> keys2<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+
+    <span class="token comment">// 如果obj2中没有obj1中的某个属性，或该属性值不相等返回false</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> key <span class="token keyword">of</span> keys1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>obj2<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token operator">||</span> obj1<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">!==</span> obj2<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">const</span> obj11 <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">a</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span>
+<span class="token keyword">const</span> obj12 <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">a</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">shallowEqual</span><span class="token punctuation">(</span>obj11<span class="token punctuation">,</span> obj12<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h3><p>__浅拷贝__，如果复制的对象是基本数据类型，拷贝的就是值，如果是引用类型，拷贝的就是内存地址，一个对象改变会影响另一个对象</p>
 <h4 id="JSON-parse-JSON-stringify-基本能用版"><a href="#JSON-parse-JSON-stringify-基本能用版" class="headerlink" title="JSON.parse(JSON.stringify()) 基本能用版"></a>JSON.parse(JSON.stringify()) 基本能用版</h4><ol>
 <li><code>JSON.parse(JSON.stringify())</code>，写法简单，但无法拷贝函数，循环引用，或特殊引用类型.</li>
 </ol>
@@ -980,7 +1011,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">160.6k</span>&nbsp;字
+                class="white-color">160.8k</span>&nbsp;字
             
             
             

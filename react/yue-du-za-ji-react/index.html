@@ -531,11 +531,13 @@
 </ol>
 <p>事件触发时</p>
 <ol>
-<li><p>事件冒泡，触发 容器root 的事件监听，容器root 调用其 统一事件处理函数，</p>
+<li><p>事件冒泡，触发 容器root 的事件监听，容器root 调用其 统一事件处理函数 dispatchEvent，</p>
 </li>
-<li><p>统一事件处理函数 通过event.target 拿到对应DOM， event.type 拿到事件类型</p>
+<li><p>dispatchEvent 通过event.target 拿到对应DOM， event.type 拿到事件类型</p>
 </li>
 <li><p>通过 DOM.store[event.type] 调用 真正的相应 事件处理函数handler(并传入 合成事件 )</p>
+</li>
+<li><p>handler内的setState将数据存入更新队列，最后 dispatchEvent 批量更新。</p>
 <blockquote>
 <p>这种做法叫切片编程，react可以在事件处理时做一些统一的事情，比如 处理浏览器兼容性</p>
 </blockquote>
@@ -1126,7 +1128,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">160.6k</span>&nbsp;字
+                class="white-color">160.8k</span>&nbsp;字
             
             
             
