@@ -567,6 +567,23 @@
 </ol>
 <p><strong>React 中 onChange 的原生事件是什么？</strong></p>
 <p><strong>input组件中，onChange失去焦点时触发，onInput输入时触发</strong></p>
+<h2 id="Hooks-React-16-8"><a href="#Hooks-React-16-8" class="headerlink" title="Hooks(React 16.8)"></a>Hooks(React 16.8)</h2><p><strong>为什么不能在条件和循环里使用Hooks</strong><br>React的hooks用于存储状态，但函数是无法储存状态的，因为执行完后函数执行栈就会销毁<br>所以，hooks的状态保存在函数组件的 虚拟dom上，<br>采用的数据结构也不是 object的键值对模式，而是链表模式。<br>每个hooks执行都属于链表的一环，初始化执行时顺序储存数据，<br>后续更新时，顺序读取数据，所以顺序不能被打乱，所以不能在条件和循环内使用。</p>
+<p><strong>useState 和 useReducer 的区别</strong><br>useState直接在fiber中储存用户传入的值<br>useReducer将 用户传入的值 传给reducer处理函数执行后 储存在fiber中。<br>useState，内部其实就是调用的 useReducer。<br>useReducer，用于处理复杂的数据处理逻辑。</p>
+<p><strong>useMemo 和 useCallback 的区别</strong><br>接收创建函数和依赖项数组作为参数，依赖项改变时才重新计算 memoized 值。<br>用于避免每次渲染都进行高开销的属性计算<br>useCallback，依赖变更时才返回新函数，适用于父节点传递函数给子节点调用的情况，可以优化性能。</p>
+<p><strong>useEffect 和 useLayoutEffect 区别</strong></p>
+<p><strong>useContext原理</strong><br>useContext本身的原理非常简单，就是从传入的context对象上读取了他的，下划线currentValue属性<br>使用react.createContext的时候会创建一个全局对象context，<br>这个对象有provider consumer _currentValue属性<br>在父节点调用provider 会对 currentValue进行赋值，在子节点再从currentValue取值。</p>
+<p><strong>useRef是单例的</strong><br>useRef的返回值ref 对象在组件的整个生命周期内持续存在<br>而不像setState一样，其值需要在下一个生命周期才得到体现。<br>但是注意， 变更 .current 属性不会引发组件重新渲染。</p>
+<p><strong>useEffect 依赖为空数组与 componentDidMount 区别</strong><br>二者都是会在组件初次渲染完成后执行一次。<br>两者最根本的区别在于，<br>componentDidMount 的时机更为精确，他确确实实是在组件创建完真实DOM并挂载完成后立即调用的。<br>useEffect 实际上是创建了一个宏任务，在下个事件循环执行，这个时候也必然已经完成了渲染流程。</p>
+<p><strong>函数组件的useState和类组件的setState有什么区别</strong><br>类组件的setState，修改的数据储存在其实例中，useState储存在当前函数组件对应的fiber中。<br>类组件的setState，是真正的修改数据的操作，useState不是。</p>
+<p><strong>1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7066951709678895141">浅谈: 为啥vue和react都选择了Hooks🏂？</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7121363865840910372">在 Vue3 中实现 React 原生 Hooks（useState、useEffect）进而深入理解 React Hooks 的本质原理</a></p>
+<p><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/14.html">大厂面试题每日一题</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7062259204941152293">Hooks 对于 Vue 意味着什么？</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904149453111304">React Hooks: 给React带来了什么变化？</a></p>
+<p><strong>为什么传入二次相同的状态，函数组件不更新</strong><br>数据和虚拟dom是更新了的，UI没更新，DOM复用了旧DOM。<br>数据都没更新只可能是使用了PureComponent</p>
+<p><strong>hooks和生命周期的异同</strong><br>类组件的生命周期函数，是在注册之后，在组件运行的特定时间进行调用。<br>函数组件的hooks，在函数每次执行的时候都会被调用。</p>
+<p><strong>自定义Hook</strong><br>自定义Hook必须以use开头，内部可以调用其他hooks，用于抽离公共逻辑<br>hooks的特性更像是组件，两个组件调用同一个hooks，state不会共享。</p>
+<p><strong>6. HOC 和 hook 的区别？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903815762673671">【React深入】从Mixin到HOC再到Hook</a></p>
 <h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>挂载<br>constructor<br>componentWillMount<br>render<br>componentDidMount</p>
 <p>更新<br>componentWillReceiveProps<br>shouldComponentUpdate<br>componentWillUpdate<br>render<br>componentDidUpdate</p>
 <p>卸载<br>componentWillUnmount</p>
@@ -594,23 +611,6 @@
 <blockquote>
 <p>本质，createContext() 返回一个context，具有两个属性，provider和consumer，<br>这两个属性对象具有 _context属性，又指向context<br>之后所有给provider挂载的属性，都会挂载进provider._context对象中，供子代consumer使用。</p>
 </blockquote>
-<h2 id="Hooks-React-16-8"><a href="#Hooks-React-16-8" class="headerlink" title="Hooks(React 16.8)"></a>Hooks(React 16.8)</h2><p><strong>为什么不能在条件和循环里使用Hooks</strong><br>React的hooks用于存储状态，但函数是无法储存状态的，因为执行完后函数执行栈就会销毁<br>所以，hooks的状态保存在函数组件的 虚拟dom上，<br>采用的数据结构也不是 object的键值对模式，而是链表模式。<br>每个hooks执行都属于链表的一环，初始化执行时顺序储存数据，<br>后续更新时，顺序读取数据，所以顺序不能被打乱，所以不能在条件和循环内使用。</p>
-<p><strong>useState 和 useReducer 的区别</strong><br>useState直接在fiber中储存用户传入的值<br>useReducer将 用户传入的值 传给reducer处理函数执行后 储存在fiber中。<br>useState，内部其实就是调用的 useReducer。<br>useReducer，用于处理复杂的数据处理逻辑。</p>
-<p><strong>useMemo 和 useCallback 的区别</strong><br>接收创建函数和依赖项数组作为参数，依赖项改变时才重新计算 memoized 值。<br>用于避免每次渲染都进行高开销的属性计算<br>useCallback，依赖变更时才返回新函数，适用于父节点传递函数给子节点调用的情况，可以优化性能。</p>
-<p><strong>useEffect 和 useLayoutEffect 区别</strong></p>
-<p><strong>useContext原理</strong><br>useContext本身的原理非常简单，就是从传入的context对象上读取了他的，下划线currentValue属性<br>使用react.createContext的时候会创建一个全局对象context，<br>这个对象有provider consumer _currentValue属性<br>在父节点调用provider 会对 currentValue进行赋值，在子节点再从currentValue取值。</p>
-<p><strong>useRef是单例的</strong><br>useRef的返回值ref 对象在组件的整个生命周期内持续存在<br>而不像setState一样，其值需要在下一个生命周期才得到体现。<br>但是注意， 变更 .current 属性不会引发组件重新渲染。</p>
-<p><strong>useEffect 依赖为空数组与 componentDidMount 区别</strong><br>二者都是会在组件初次渲染完成后执行一次。<br>两者最根本的区别在于，<br>componentDidMount 的时机更为精确，他确确实实是在组件创建完真实DOM并挂载完成后立即调用的。<br>useEffect 实际上是创建了一个宏任务，在下个事件循环执行，这个时候也必然已经完成了渲染流程。</p>
-<p><strong>函数组件的useState和类组件的setState有什么区别</strong><br>类组件的setState，修改的数据储存在其实例中，useState储存在当前函数组件对应的fiber中。<br>类组件的setState，是真正的修改数据的操作，useState不是。</p>
-<p><strong>1. 为什么 React 和 Vue3 都选择了hooks，它带来了那些便利？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7066951709678895141">浅谈: 为啥vue和react都选择了Hooks🏂？</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7121363865840910372">在 Vue3 中实现 React 原生 Hooks（useState、useEffect）进而深入理解 React Hooks 的本质原理</a></p>
-<p><a target="_blank" rel="noopener" href="https://q.shanyue.tech/fe/react/14.html">大厂面试题每日一题</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7062259204941152293">Hooks 对于 Vue 意味着什么？</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904149453111304">React Hooks: 给React带来了什么变化？</a></p>
-<p><strong>为什么传入二次相同的状态，函数组件不更新</strong><br>数据和虚拟dom是更新了的，UI没更新，DOM复用了旧DOM。<br>数据都没更新只可能是使用了PureComponent</p>
-<p><strong>hooks和生命周期的异同</strong><br>类组件的生命周期函数，是在注册之后，在组件运行的特定时间进行调用。<br>函数组件的hooks，在函数每次执行的时候都会被调用。</p>
-<p><strong>自定义Hook</strong><br>自定义Hook必须以use开头，内部可以调用其他hooks，用于抽离公共逻辑<br>hooks的特性更像是组件，两个组件调用同一个hooks，state不会共享。</p>
-<p><strong>6. HOC 和 hook 的区别？</strong><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903815762673671">【React深入】从Mixin到HOC再到Hook</a></p>
 <h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7016593221815910408#heading-71">八股文</a></p>
 <h2 id="Lane优先级"><a href="#Lane优先级" class="headerlink" title="Lane优先级"></a>Lane优先级</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7095307142046941191">react - 关于 react 为什么要从 ExpirationTime 切换到 lane 的一次考古</a><br>顺便看看这个大佬的其他文章</p>
 <h2 id="类组件和函数组件"><a href="#类组件和函数组件" class="headerlink" title="类组件和函数组件"></a>类组件和函数组件</h2><p>类组件面向对象编程，函数组件函数式思想<br>都可以接收属性并返回ReactElement</p>
@@ -1128,7 +1128,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">161.1k</span>&nbsp;字
+                class="white-color">161.4k</span>&nbsp;字
             
             
             
