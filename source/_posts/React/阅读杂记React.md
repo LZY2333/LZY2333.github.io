@@ -192,72 +192,6 @@ __React 中 onChange 的原生事件是什么？__
 
 __input组件中，onChange失去焦点时触发，onInput输入时触发__
 
-## 生命周期
-
-挂载
-constructor
-componentWillMount
-render
-componentDidMount
-
-更新
-componentWillReceiveProps
-shouldComponentUpdate
-componentWillUpdate
-render
-componentDidUpdate
-
-卸载
-componentWillUnmount
-
-React 16.3 开始
-【__getDerivedStateFromProps__】从props获取派发状态,static函数,无法使用this
-> 被故意设计成 static 函数,因为以前在 componentWillReceiveProps中用setState会死循环,现在不让用this了
-
-【__getSnapshotBeforeUpdate__】render之后新旧vdom即将对比替换时执行
-用于在组件真实DOM更新之前,拿到老真实DOM的一些信息,返回值会传给 componentDidUpdate
-
-挂载
-constructor
-getDerivedStateFromProps
-render
-componentDidMount
-
-更新
-getDerivedStateFromProps
-shouldComponentUpdate
-render
-getSnapshotBeforeUpdate
-componentDidUpdate
-
-卸载
-componentWillUnmount
-
-__生命周期的父子组件的执行顺序？__
-
-__函数组件的生命周期？__
-
-## ref原理
-
-ref的本质就是创建一个 `{current:null}` 对象，并将ref对象传递给子组件
-
-子组件在 初始化过程中， 真实dom 创建完成后，赋值给 ref.current
-
-这样，在初始化完成后，外部即可通过ref.current获取到，真实dom
-
-## context原理
-
-1. provider和consumer 的context属性 指向同一个对象
-
-2. provider consumer 本质是渲染其 子vdom，就像函数组件，类组件一样，只不过会给子代添加一些属性。
-
-3. 父Provider往共有对象上存值，在其初始化完成后，子代开始初始化，此时子代consumer就可以从这个对象里拿值并使用
-
-> 本质，createContext() 返回一个context，具有两个属性，provider和consumer，
-> 这两个属性对象具有 _context属性，又指向context
-> 之后所有给provider挂载的属性，都会挂载进provider._context对象中，供子代consumer使用。
-
-
 ## Hooks(React 16.8)
 
 __为什么不能在条件和循环里使用Hooks__
@@ -333,6 +267,73 @@ hooks的特性更像是组件，两个组件调用同一个hooks，state不会�
 
 __6. HOC 和 hook 的区别？__
 [【React深入】从Mixin到HOC再到Hook](https://juejin.cn/post/6844903815762673671)
+
+## 生命周期
+
+挂载
+constructor
+componentWillMount
+render
+componentDidMount
+
+更新
+componentWillReceiveProps
+shouldComponentUpdate
+componentWillUpdate
+render
+componentDidUpdate
+
+卸载
+componentWillUnmount
+
+React 16.3 开始
+【__getDerivedStateFromProps__】从props获取派发状态,static函数,无法使用this
+> 被故意设计成 static 函数,因为以前在 componentWillReceiveProps中用setState会死循环,现在不让用this了
+
+【__getSnapshotBeforeUpdate__】render之后新旧vdom即将对比替换时执行
+用于在组件真实DOM更新之前,拿到老真实DOM的一些信息,返回值会传给 componentDidUpdate
+
+挂载
+constructor
+getDerivedStateFromProps
+render
+componentDidMount
+
+更新
+getDerivedStateFromProps
+shouldComponentUpdate
+render
+getSnapshotBeforeUpdate
+componentDidUpdate
+
+卸载
+componentWillUnmount
+
+__生命周期的父子组件的执行顺序？__
+
+__函数组件的生命周期？__
+
+## ref原理
+
+ref的本质就是创建一个 `{current:null}` 对象，并将ref对象传递给子组件
+
+子组件在 初始化过程中， 真实dom 创建完成后，赋值给 ref.current
+
+这样，在初始化完成后，外部即可通过ref.current获取到，真实dom
+
+## context原理
+
+1. provider和consumer 的context属性 指向同一个对象
+
+2. provider consumer 本质是渲染其 子vdom，就像函数组件，类组件一样，只不过会给子代添加一些属性。
+
+3. 父Provider往共有对象上存值，在其初始化完成后，子代开始初始化，此时子代consumer就可以从这个对象里拿值并使用
+
+> 本质，createContext() 返回一个context，具有两个属性，provider和consumer，
+> 这两个属性对象具有 _context属性，又指向context
+> 之后所有给provider挂载的属性，都会挂载进provider._context对象中，供子代consumer使用。
+
+
 
 ## 组件通信
 [八股文](https://juejin.cn/post/7016593221815910408#heading-71)
