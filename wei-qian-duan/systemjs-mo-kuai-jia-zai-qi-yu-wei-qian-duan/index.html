@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SystemJS, 懒前端">
+    <meta name="keywords" content="systemJS, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SystemJS | 懒前端</title>
+    <title>systemJS | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SystemJS</h1>
+                    <h1 class="description center-align post-title">systemJS</h1>
                 </div>
             </div>
         </div>
@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    40
+                    354
                 </div>
                 
 
@@ -446,8 +446,21 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="SystemJS"><a href="#SystemJS" class="headerlink" title="SystemJS"></a>SystemJS</h2><p><a target="_blank" rel="noopener" href="https://codeantenna.com/a/r4IDkV7IxL">systemjs 通用模块加载器 源码分析原理 并 实现</a></p>
-<p>CDN是什么原理</p>
+                <h2 id="systemJS"><a href="#systemJS" class="headerlink" title="systemJS"></a>systemJS</h2><h3 id="微前端"><a href="#微前端" class="headerlink" title="微前端"></a>微前端</h3><h4 id="第一步，解决了什么痛点"><a href="#第一步，解决了什么痛点" class="headerlink" title="第一步，解决了什么痛点:"></a>第一步，解决了什么痛点:</h4><p><strong>大应用拆分</strong><br><strong>渐进式技术栈升级</strong></p>
+<p>附带优势:<br><strong>多团队合作，独立部署</strong></p>
+<h4 id="第二步，实现了什么功能"><a href="#第二步，实现了什么功能" class="headerlink" title="第二步，实现了什么功能:"></a>第二步，实现了什么功能:</h4><p><strong>沙箱:CSS隔离，JS隔离，路由隔离</strong><br><strong>微应用调度</strong></p>
+<h4 id="第三步，如何实现沙箱和微应用调度…"><a href="#第三步，如何实现沙箱和微应用调度…" class="headerlink" title="第三步，如何实现沙箱和微应用调度…."></a>第三步，如何实现沙箱和微应用调度….</h4><p>qiankun:   实现微应用接入配置简化，无痛接入，实现沙箱<br>singleSpa: 实现基于路由进行微应用调度，定义了微应用生命周期<br>systemJS:  实现模块化加载</p>
+<p>三者是层层递进的关系，qiankun的实现依赖了singleSpa，singleSpa依赖了systemJS</p>
+<p>本文将从从最基础的systemJS展开，systemJS的原理</p>
+<h3 id="模块规范"><a href="#模块规范" class="headerlink" title="模块规范"></a>模块规范</h3><p>前端的工程化中最重要的就是模块化</p>
+<p>模块: 实现特定功能的文件，每个文件作用域相互独立，通过暴露接口相互引用</p>
+<p>模块化优势: 复用性 可维护性 命名冲突 按需加载</p>
+<p>模块化规范: ESM，CJS，UMD，AMD，CMD</p>
+<blockquote>
+<p>就像主机间的沟通需要各种协议，模块化也有各类规范，其实都是一种统一约定</p>
+</blockquote>
+<p>SystemJS 最初诞生的目的是为了做一个通用的模块加载器，在浏览器端实现对 CommonJS、AMD、UMD 等各种模块的加载。</p>
+<h3 id="systemJS使用"><a href="#systemJS使用" class="headerlink" title="systemJS使用"></a>systemJS使用</h3><h3 id="systemJS原理"><a href="#systemJS原理" class="headerlink" title="systemJS原理"></a>systemJS原理</h3><p>CDN是什么原理</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/402155045">SystemJS 探秘</a></p>
 <p>ESModule、CommonJS、AMD、UMD、SystemJS</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6870141103958589454#comment">学习ES模块、CommonJS、AMD、UMD、SystemJS</a></p>
@@ -477,7 +490,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/wei-qian-duan/systemjs-mo-kuai-jia-zai-qi/">https://github.com/LZY2333/LZY2333.github.io/wei-qian-duan/systemjs-mo-kuai-jia-zai-qi/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/wei-qian-duan/systemjs-mo-kuai-jia-zai-qi-yu-wei-qian-duan/">https://github.com/LZY2333/LZY2333.github.io/wei-qian-duan/systemjs-mo-kuai-jia-zai-qi-yu-wei-qian-duan/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -921,7 +934,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">161.7k</span>&nbsp;字
+                class="white-color">162.2k</span>&nbsp;字
             
             
             
