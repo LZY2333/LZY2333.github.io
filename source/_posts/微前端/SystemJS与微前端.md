@@ -1,12 +1,12 @@
 ---
-title: 微前端中的SystemJS
+title: SystemJS与微前端
 date: 2022-09-14 23:24:22
 categories: 技术栈
 tags: 
     - 微前端
 ---
 
-## 微前端中的SystemJS
+## SystemJS与微前端
 
 ### 微前端
 
