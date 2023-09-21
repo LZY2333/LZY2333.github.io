@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    443
+                    619
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -446,7 +446,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="SingleSpa"><a href="#SingleSpa" class="headerlink" title="SingleSpa"></a>SingleSpa</h2><h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>基于路由的微前端</p>
+                <h2 id="SingleSpa"><a href="#SingleSpa" class="headerlink" title="SingleSpa"></a>SingleSpa</h2><h3 id="微前端"><a href="#微前端" class="headerlink" title="微前端"></a>微前端</h3><h4 id="第一步，解决了什么痛点"><a href="#第一步，解决了什么痛点" class="headerlink" title="第一步，解决了什么痛点:"></a>第一步，解决了什么痛点:</h4><p><strong>大应用拆分</strong><br><strong>渐进式技术栈升级</strong></p>
+<p>附带优势:<br><strong>多团队合作，独立部署</strong><br><strong>技术栈无关</strong></p>
+<h4 id="第二步，实现了什么功能"><a href="#第二步，实现了什么功能" class="headerlink" title="第二步，实现了什么功能:"></a>第二步，实现了什么功能:</h4><p><strong>沙箱:CSS隔离，JS隔离，路由隔离</strong><br><strong>微应用调度</strong></p>
+<h4 id="第三步，如何实现沙箱和微应用调度…"><a href="#第三步，如何实现沙箱和微应用调度…" class="headerlink" title="第三步，如何实现沙箱和微应用调度…."></a>第三步，如何实现沙箱和微应用调度….</h4><p>qiankun:   实现沙箱，实现微应用接入配置简化，无痛接入<br>singleSpa: 实现基于路由进行微应用调度，定义了微应用生命周期<br>systemJS:  实现动态加载模块</p>
+<p>三者是层层递进的关系，qiankun的实现依赖了singleSpa，singleSpa依赖了systemJS</p>
+<p>本文将从从最基础的singleSpa展开，singleSpa的原理</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>基于路由的微前端</p>
 <p>微应用提供的四个生命周期接口</p>
 <p>加载loadApp 激活bootstrap 挂载mount 卸载unmount</p>
 <p>singleSpa 监听路由的变化，通过调用微应用的生命周期接口，调度微应用</p>
@@ -927,7 +933,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.9k</span>&nbsp;字
+                class="white-color">164.7k</span>&nbsp;字
             
             
             

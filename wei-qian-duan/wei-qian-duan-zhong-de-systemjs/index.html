@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    346
+                    2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    8 分
                 </div>
                 
 
@@ -449,7 +449,7 @@
                 <h2 id="微前端中的SystemJS"><a href="#微前端中的SystemJS" class="headerlink" title="微前端中的SystemJS"></a>微前端中的SystemJS</h2><h3 id="微前端"><a href="#微前端" class="headerlink" title="微前端"></a>微前端</h3><h4 id="第一步，解决了什么痛点"><a href="#第一步，解决了什么痛点" class="headerlink" title="第一步，解决了什么痛点:"></a>第一步，解决了什么痛点:</h4><p><strong>大应用拆分</strong><br><strong>渐进式技术栈升级</strong></p>
 <p>附带优势:<br><strong>多团队合作，独立部署</strong><br><strong>技术栈无关</strong></p>
 <h4 id="第二步，实现了什么功能"><a href="#第二步，实现了什么功能" class="headerlink" title="第二步，实现了什么功能:"></a>第二步，实现了什么功能:</h4><p><strong>沙箱:CSS隔离，JS隔离，路由隔离</strong><br><strong>微应用调度</strong></p>
-<h4 id="第三步，如何实现沙箱和微应用调度…"><a href="#第三步，如何实现沙箱和微应用调度…" class="headerlink" title="第三步，如何实现沙箱和微应用调度…."></a>第三步，如何实现沙箱和微应用调度….</h4><p>qiankun:   实现沙箱，实现微应用接入配置简化，无痛接入<br>singleSpa: 实现基于路由进行微应用调度，定义了微应用生命周期<br>systemJS:  实现模块化加载</p>
+<h4 id="第三步，如何实现沙箱和微应用调度…"><a href="#第三步，如何实现沙箱和微应用调度…" class="headerlink" title="第三步，如何实现沙箱和微应用调度…."></a>第三步，如何实现沙箱和微应用调度….</h4><p>qiankun:   实现沙箱，实现微应用接入配置简化，无痛接入<br>singleSpa: 实现基于路由进行微应用调度，定义了微应用生命周期<br>systemJS:  实现动态加载模块</p>
 <p>三者是层层递进的关系，qiankun的实现依赖了singleSpa，singleSpa依赖了systemJS</p>
 <p>本文将从从最基础的systemJS展开，systemJS的原理</p>
 <h3 id="模块规范"><a href="#模块规范" class="headerlink" title="模块规范"></a>模块规范</h3><p>前端的工程化中最重要的就是模块化</p>
@@ -460,10 +460,230 @@
 <p>就像主机间的沟通需要各种协议，模块化也有各类规范，其实都是一种统一约定</p>
 </blockquote>
 <h3 id="systemJS"><a href="#systemJS" class="headerlink" title="systemJS"></a>systemJS</h3><p>systemJS 通用模块加载器，支持多种模块化规范，无window变量污染</p>
-<h3 id="systemJS使用"><a href="#systemJS使用" class="headerlink" title="systemJS使用"></a>systemJS使用</h3><h3 id="systemJS原理"><a href="#systemJS原理" class="headerlink" title="systemJS原理"></a>systemJS原理</h3><p>CDN是什么原理</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/402155045">SystemJS 探秘</a></p>
-<p>ESModule、CommonJS、AMD、UMD、SystemJS</p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6870141103958589454#comment">学习ES模块、CommonJS、AMD、UMD、SystemJS</a></p>
+<p>使用systemJS可以让使用者，在指定的时机加载模块文件并运行，</p>
+<h3 id="systemJS原理简述"><a href="#systemJS原理简述" class="headerlink" title="systemJS原理简述"></a>systemJS原理简述</h3><ol>
+<li><p>通过JSONP的方式去加载当前entry依赖的模块文件</p>
+</li>
+<li><p>监听到依赖文件加载完成后，执行依赖文件，获取其exports，再执行entry</p>
+</li>
+</ol>
+<blockquote>
+<p>JSONP是一种跨域请求的方法，通过动态创建script标签实现。Ajax请求普通文件存在跨域问题。</p>
+</blockquote>
+<h3 id="systemJS在微前端中的职责"><a href="#systemJS在微前端中的职责" class="headerlink" title="systemJS在微前端中的职责"></a>systemJS在微前端中的职责</h3><p>systemJS的职责非常纯粹，动态加载模块</p>
+<p>此处的目的仅仅是为了展示systemJS的原理，动态加载并调用了react 与 react-dom</p>
+<p>看上去似乎普普通通，</p>
+<p>但注意这个动态加载时机是可以由使用者控制的，那变成了 <strong>按需动态加载</strong></p>
+<p>有了systemJS的加入，qiankun拥有了 <strong>拆分大应用</strong>, <strong>按需动态加载</strong> 模块/微应用 的功能。</p>
+<h3 id="systemJS与webpack懒加载"><a href="#systemJS与webpack懒加载" class="headerlink" title="systemJS与webpack懒加载"></a>systemJS与webpack懒加载</h3><p>动态加载分为两个部分 <strong>加载模块文件</strong> 和 <strong>监听加载结果</strong></p>
+<p>二者 <strong>加载模块文件</strong> 原理相同都是 <strong>JSONP</strong> </p>
+<p>二者 <strong>监听加载结果</strong> 原理不同，</p>
+<p>systemJS的原理是 <strong>监听window的属性修改</strong> ，<br>由此获取模块导出，也因此需要umd格式，模块加载并执行后挂载在window上。</p>
+<p>webpack懒加载原理是 <strong>window上挂载回调函数供调用</strong> ，<br>打包时被分离出去的模块，最外层会包裹一层对window上该回调函数的调用。</p>
+<h3 id="跨域-待更新"><a href="#跨域-待更新" class="headerlink" title="跨域(待更新)"></a>跨域(待更新)</h3><p>说起JSONP，就想起跨域的知识点了，回头总结一下</p>
+<p><strong>看到这里就可以结束了,后面是比较繁琐的内容.仅代表,记一下以防自己以后忘记</strong></p>
+<h3 id="systemJS使用"><a href="#systemJS使用" class="headerlink" title="systemJS使用"></a>systemJS使用</h3><p>这里假设一个React项目，依赖react，react-dom两个包，实现两个包b的动态加载</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// src/index.js</span>
+<span class="token keyword">import</span> ReactDOM <span class="token keyword">from</span> <span class="token string">'react-dom/client'</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> root <span class="token operator">=</span> ReactDOM<span class="token punctuation">.</span><span class="token function">createRoot</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token function-variable function">App</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token operator">&lt;</span>div<span class="token operator">></span><span class="token operator">&lt;</span>h1<span class="token operator">></span>Hello<span class="token punctuation">,</span> World<span class="token operator">!</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+root<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>App <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 注意这里别写成了 App 不带尖括号的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// webpack.config.js</span>
+<span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">env</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 开发模式，方便看到打包后的代码</span>
+        <span class="token literal-property property">mode</span><span class="token operator">:</span> <span class="token string">'development'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">output</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">filename</span><span class="token operator">:</span> <span class="token string">'index.js'</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">path</span><span class="token operator">:</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'dist'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token comment">// 指定entry文件打包为systemJS的格式</span>
+            <span class="token literal-property property">libraryTarget</span><span class="token operator">:</span> <span class="token string">'system'</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">module</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">rules</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span>
+                <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.js$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+                <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'babel-loader'</span><span class="token punctuation">,</span>
+                <span class="token literal-property property">exclude</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">node_modules</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+                <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+                    <span class="token literal-property property">presets</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                        <span class="token punctuation">[</span> <span class="token string">"@babel/preset-react"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string-property property">"runtime"</span><span class="token operator">:</span> <span class="token string">"automatic"</span><span class="token punctuation">&#125;</span> <span class="token punctuation">]</span>
+                    <span class="token punctuation">]</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">]</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token comment">// 不打包react,react-dom，模拟分包</span>
+        <span class="token literal-property property">externals</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'react'</span><span class="token punctuation">,</span> <span class="token string">'react-dom'</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上述文件配置好后，运行webpack，在dist目录下生成index.js</p>
+<p>随后再创建一个html文件，如下</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>IE=edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>root<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!-- 1. 写好模块的路径映射,注意须是umd格式 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>systemjs-importmap<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+        <span class="token punctuation">&#123;</span>
+            <span class="token string-property property">"imports"</span><span class="token operator">:</span><span class="token punctuation">&#123;</span>
+                <span class="token string-property property">"react-dom"</span><span class="token operator">:</span><span class="token string">"https://cdn.bootcdn.net/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"</span><span class="token punctuation">,</span>
+                <span class="token string-property property">"react"</span><span class="token operator">:</span><span class="token string">"https://cdn.bootcdn.net/ajax/libs/react/18.2.0/umd/react.development.js"</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!-- 2. 引入systemJS --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.bootcdn.net/ajax/libs/systemjs/6.10.1/system.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!-- 3. 引入打包好的system模块规范的entry文件 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+        System<span class="token punctuation">.</span><span class="token function">import</span><span class="token punctuation">(</span><span class="token string">'./index.js'</span><span class="token punctuation">)</span>
+    </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>浏览器打开index.html文件,hello world 展示完成</p>
+<h3 id="systemJS原理"><a href="#systemJS原理" class="headerlink" title="systemJS原理"></a>systemJS原理</h3><p>打包为system模块规范的 index.js文件如下</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">System<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"react-dom"</span><span class="token punctuation">,</span><span class="token string">"react"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">__WEBPACK_DYNAMIC_EXPORT__<span class="token punctuation">,</span> __system_context__</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ol start="0">
+<li><p>首先拿到<code>type=&quot;systemjs-importmap&quot;</code>中的map模块路径进行解析,拿到CDN路径</p>
+</li>
+<li><p><code>System.import(&#39;./index.js&#39;)</code> 引入 index.js 并执行<code>System.register(执行包的依赖包,执行包)</code></p>
+<p> 要执行执行包,首先要加载依赖包</p>
+</li>
+<li><p>通过JSONP的方式,异步加载依赖<code>[&quot;react-dom&quot;,&quot;react&quot;]</code>,监听load事件加载完时触发回调</p>
+</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">load</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> script <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'script'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        script<span class="token punctuation">.</span>src <span class="token operator">=</span> map<span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token operator">||</span> id<span class="token punctuation">;</span> <span class="token comment">// 支持cdn的查找</span>
+        script<span class="token punctuation">.</span>async <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        document<span class="token punctuation">.</span>head<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>script<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        script<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'load'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li><p>加载完的script都会自动执行,umd格式的模块执行完会在window挂载一个具有自身所有API的对象.</p>
+</li>
+<li><p>systemJS 在load事件后,检查window上是否有新增属性,将其加入 执行包的执行上下文.</p>
+</li>
+<li><p>两个依赖包都加载完成后,开始执行执行包,执行包内部会调用依赖包的API,hello world!</p>
+</li>
+</ol>
+<h3 id="systemJS简单实现"><a href="#systemJS简单实现" class="headerlink" title="systemJS简单实现"></a>systemJS简单实现</h3><pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.bootcdn.net/ajax/libs/systemjs/6.10.1/system.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+    System<span class="token punctuation">.</span><span class="token function">import</span><span class="token punctuation">(</span><span class="token string">'./index.js'</span><span class="token punctuation">)</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>将index.html中 上述几行替换为下面的内容,效果不变</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+    <span class="token comment">//  直接加载子应用, 导入打包后的包 来进行加载， 采用的规范 system规范</span>
+    <span class="token comment">// 这个地方是自己实现systemjs  </span>
+    <span class="token comment">// 1) systemjs 是如何定义的 先看打包后的结果 System.register(依赖列表,后调函数返回值一个setters，execute）</span>
+    <span class="token comment">// 2) react , react-dom  加载后调用setters 将对应的结果赋予给webpack</span>
+    <span class="token comment">// 3) 调用执行逻辑  执行页面渲染</span>
+    <span class="token comment">// 模块规范 用来加载system模块的</span>
+    <span class="token keyword">const</span> newMapUrl <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token comment">// 解析 importsMap</span>
+    <span class="token keyword">function</span> <span class="token function">processScripts</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        Array<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">'script'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">script</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>script<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">"systemjs-importmap"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">const</span> imports <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>script<span class="token punctuation">.</span>innerHTML<span class="token punctuation">)</span><span class="token punctuation">.</span>imports
+                Object<span class="token punctuation">.</span><span class="token function">entries</span><span class="token punctuation">(</span>imports<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">[</span>key<span class="token punctuation">,</span> value<span class="token punctuation">]</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> newMapUrl<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> value<span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 加载资源</span>
+    <span class="token keyword">function</span> <span class="token function">load</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">const</span> script <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'script'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            script<span class="token punctuation">.</span>src <span class="token operator">=</span> newMapUrl<span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token operator">||</span> id<span class="token punctuation">;</span> <span class="token comment">// 支持cdn的查找</span>
+            script<span class="token punctuation">.</span>async <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+            document<span class="token punctuation">.</span>head<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>script<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 此时会执行代码</span>
+            script<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'load'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">let</span> _lastRegister <span class="token operator">=</span> lastRegister<span class="token punctuation">;</span>
+                lastRegister <span class="token operator">=</span> <span class="token keyword">undefined</span>
+                <span class="token function">resolve</span><span class="token punctuation">(</span>_lastRegister<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">let</span> set <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1）先保存window上的属性</span>
+    <span class="token keyword">function</span> <span class="token function">saveGlobalProperty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> k <span class="token keyword">in</span> window<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            set<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">saveGlobalProperty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">function</span> <span class="token function">getLastGlobalProperty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 看下window上新增的属性</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> k <span class="token keyword">in</span> window<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>set<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+
+            set<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> window<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 我通过script新增的变量</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">let</span> lastRegister<span class="token punctuation">;</span>
+    <span class="token keyword">class</span> <span class="token class-name">SystemJs</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">import</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 这个id原则上可以是一个第三方路径cdn</span>
+            <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token function">processScripts</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">// 1）去当前路径查找 对应的资源 index.jsw</span>
+                <span class="token keyword">const</span> lastSepIndex <span class="token operator">=</span> location<span class="token punctuation">.</span>href<span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">const</span> baseURL <span class="token operator">=</span> location<span class="token punctuation">.</span>href<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> lastSepIndex <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>id<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">'./'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">return</span> baseURL <span class="token operator">+</span> id<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token comment">// http  https</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">// 根据文件的路径 来加载资源</span>
+                <span class="token keyword">let</span> execute
+                <span class="token keyword">return</span> <span class="token function">load</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">register</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">let</span> <span class="token punctuation">&#123;</span> setters<span class="token punctuation">,</span> <span class="token literal-property property">execute</span><span class="token operator">:</span>exe <span class="token punctuation">&#125;</span> <span class="token operator">=</span> register<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+                    execute <span class="token operator">=</span> exe
+                    <span class="token comment">// execute 是真正执行的渲染逻辑 </span>
+                    <span class="token comment">// setters 是用来保存加载后的资源，加载资源调用setters</span>
+                    <span class="token comment">//    console.log(setters,execute)</span>
+                    <span class="token keyword">return</span> <span class="token punctuation">[</span>register<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> setters<span class="token punctuation">]</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">[</span>registeration<span class="token punctuation">,</span> setters<span class="token punctuation">]</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span>registeration<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">dep<span class="token punctuation">,</span> i</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                        <span class="token keyword">return</span> <span class="token function">load</span><span class="token punctuation">(</span>dep<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                            <span class="token keyword">const</span> property <span class="token operator">=</span> <span class="token function">getLastGlobalProperty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                            <span class="token comment">// 加载完毕后，会在window上增添属性 window.React window.ReactDOM</span>
+                            setters<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">(</span>property<span class="token punctuation">)</span>
+                        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+                        <span class="token comment">// 拿到的是函数，加载资源 将加载后的模块传递给这个setter</span>
+                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                    <span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">register</span><span class="token punctuation">(</span><span class="token parameter">deps<span class="token punctuation">,</span> declare</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 将毁掉的结果保存起来</span>
+            lastRegister <span class="token operator">=</span> <span class="token punctuation">[</span>deps<span class="token punctuation">,</span> declare<span class="token punctuation">]</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">const</span> System <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SystemJs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    System<span class="token punctuation">.</span><span class="token function">import</span><span class="token punctuation">(</span><span class="token string">'./index.js'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'模块加载完毕'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// 本质就是先加载依赖列表 再去加载真正的逻辑 </span>
+    <span class="token comment">// (内部通过script脚本加载资源 ， 给window拍照保存先后状态)</span>
+    <span class="token comment">// JSONP</span>
+    <span class="token comment">// single-spa 如何借助了 这个system 来实现了模块的加载</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -934,7 +1154,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.9k</span>&nbsp;字
+                class="white-color">164.7k</span>&nbsp;字
             
             
             
