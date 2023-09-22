@@ -61,7 +61,9 @@ systemJS 通用模块加载器，支持多种模块化规范，无window变量�
 
 systemJS的职责非常纯粹，动态加载模块
 
-此处的目的仅仅是为了展示systemJS的原理，动态加载并调用了react 与 react-dom
+后文systemJS的使用 章节中，
+
+仅仅是为了展示systemJS的原理，动态加载并调用了react 与 react-dom
 
 看上去似乎普普通通，
 
