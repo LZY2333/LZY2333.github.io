@@ -412,7 +412,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-09-14
+                    2023-09-22
                 </div>
                 
 
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    745
+                    477
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    1 分
                 </div>
                 
 
@@ -446,40 +446,55 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="微前端的优点"><a href="#微前端的优点" class="headerlink" title="微前端的优点"></a>微前端的优点</h3><p>站在商业的角度,<strong>微前端 最大的作用在于 确保一个项目的生命力</strong>.</p>
-<p>微前端架构,旧有项目能一直运行,若干年后能接入热门技术,随时能招到新人(Angular与react)</p>
-<p>在技术的角度讲,微前端解决了现在前端存在的一个问题,那就是,</p>
-<p>前端发展太快,并且百花齐放，如果web 技术栈能得到统一，所有library升级都做向下兼容，那么也没必要微前端</p>
-<ol>
-<li><p><strong>技术栈无关</strong>: 不限制接入应用的技术栈，微应用具备完全自主权</p>
-</li>
-<li><p><strong>独立开发、独立部署</strong>: 微应用仓库独立，前后端可独立开发，部署完成后主框架自动完成同步更新</p>
-</li>
-<li><p><strong>增量升级</strong>: 渐进式重构的重要策略，新老技术栈同时应用</p>
-</li>
-<li><p><strong>独立运行时</strong>: 微应用之间相互独立,状态不共享</p>
-</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://qiankun.umijs.org/zh/guide">qiankun介绍</a></p>
+                <h2 id="qiankun学习笔记"><a href="#qiankun学习笔记" class="headerlink" title="qiankun学习笔记"></a>qiankun学习笔记</h2><h3 id="微前端"><a href="#微前端" class="headerlink" title="微前端"></a>微前端</h3><h4 id="第一步，解决了什么痛点"><a href="#第一步，解决了什么痛点" class="headerlink" title="第一步，解决了什么痛点:"></a>第一步，解决了什么痛点:</h4><p><strong>大应用拆分</strong><br><strong>渐进式技术栈升级</strong></p>
+<p>附带优势:<br><strong>多团队合作，独立部署</strong><br><strong>技术栈无关</strong></p>
+<h4 id="第二步，实现了什么功能"><a href="#第二步，实现了什么功能" class="headerlink" title="第二步，实现了什么功能:"></a>第二步，实现了什么功能:</h4><p><strong>沙箱:CSS隔离，JS隔离，路由隔离</strong><br><strong>微应用调度</strong></p>
+<h4 id="第三步，如何实现沙箱和微应用调度…"><a href="#第三步，如何实现沙箱和微应用调度…" class="headerlink" title="第三步，如何实现沙箱和微应用调度…."></a>第三步，如何实现沙箱和微应用调度….</h4><p>qiankun:   实现沙箱，实现微应用接入配置简化，无痛接入<br>singleSpa: 实现基于路由进行微应用调度，定义了微应用生命周期<br>systemJS:  实现动态加载模块</p>
 <h3 id="Why-Not-Iframe"><a href="#Why-Not-Iframe" class="headerlink" title="Why Not Iframe"></a>Why Not Iframe</h3><p>iframe 优势是能完美解决 样式隔离、js 隔离, 劣势是 无法突破这些隔离.</p>
-<p><strong>URL不同步</strong>. 例如: 刷新丢失URL,无法 前进 后退</p>
-<p><strong>UI不同步,DOM结构不共享,无法合并计算样式.</strong> 例如: iframe内弹出的弹出,要求 遮罩 居中 随浏览器Resize</p>
-<p><strong>全局上下文完全隔离，内存变量不共享</strong> 例如: 无法 数据状态同步, iframe设置的cookie会被视为第三方cookie, 被浏览器禁止.</p>
+<p><strong>路由隔离</strong>. 例如: 刷新丢失URL,无法 前进 后退</p>
+<p><strong>UI隔离,DOM结构不共享,无法合并计算样式.</strong> 例如: iframe内弹出的弹出,要求 遮罩 居中 随浏览器Resize</p>
+<p><strong>全局上下文隔离，内存变量不共享</strong> 例如: 无法 数据状态同步, iframe设置的cookie会被视为第三方cookie, 被浏览器禁止.</p>
 <p><strong>慢</strong> 每次进入 都须 重新加载资源, 重建浏览器上下文</p>
 <p><a target="_blank" rel="noopener" href="https://www.yuque.com/kuitos/gky7yw/gesexv">Why Not Iframe</a></p>
-<h3 id="公共逻辑抽离的-各种方式对比"><a href="#公共逻辑抽离的-各种方式对比" class="headerlink" title="公共逻辑抽离的 各种方式对比"></a>公共逻辑抽离的 各种方式对比</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6984682096291741704">微前端模块共享你真的懂了吗</a></p>
-<h3 id="single-spa"><a href="#single-spa" class="headerlink" title="single-spa"></a>single-spa</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904046822686733">从0实现一个前端微服务（上）</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6885211340999229454">微前端框架 之 qiankun 从入门到源码分析</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6862661545592111111">微前端框架 之 single-spa 从入门到精通</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6859569958742196237">你的 import 被 webpack 编译成了什么？</a></p>
-<h3 id="使用微前端方案需要注意什么"><a href="#使用微前端方案需要注意什么" class="headerlink" title="使用微前端方案需要注意什么"></a>使用微前端方案需要注意什么</h3><p><strong>技术栈无关 是 微前端框架 和 架构上的准绳，</strong></p>
-<p>那么整个架构方案的实现上，都应该秉持这一原则，任何违背这一原则的做法都应该被摒弃。</p>
-<p><strong>微应用之间不应该有任何直接或间接的技术栈、依赖、以及实现上的耦合。</strong></p>
-<p>比如我们不能要求子应用、主应用必须使用某一版本的技术栈实现。</p>
-<p>比如在通信机制的设计与选择上，尽量基于浏览器原生的 CustomEvent api，而不是自己搞的 pub/sub。</p>
-<p>比如子应用是否具备不依赖宿主环境独立运行的能力，衡量标准是是否能一行代码不改，或者只改很少的配置，就能达成这一目标。</p>
-<p>所以我认为正确的微前端方案的目标应该是：方案上跟使用 iframe 做微前端一样简单，同时又解决了 iframe 带来的各种体验上的问题。</p>
-
+<h3 id="qiankun使用"><a href="#qiankun使用" class="headerlink" title="qiankun使用"></a>qiankun使用</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js">
+<span class="token function">registerMicroApps</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'reactApp'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">entry</span><span class="token operator">:</span> <span class="token string">'//localhost:40000'</span><span class="token punctuation">,</span> <span class="token comment">// 默认react启动的入口是10000端口</span>
+        <span class="token literal-property property">activeRule</span><span class="token operator">:</span> <span class="token string">'/react'</span><span class="token punctuation">,</span> <span class="token comment">// 当路径是 /react的时候启动</span>
+        <span class="token literal-property property">container</span><span class="token operator">:</span> <span class="token string">'#container'</span><span class="token punctuation">,</span> <span class="token comment">// 应用挂载的位置</span>
+        loader<span class="token punctuation">,</span> <span class="token comment">// 微应用加载时触发钩子</span>
+        <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">a</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token literal-property property">util</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span> <span class="token comment">// 可传给微应用生命周期的属性</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'vueApp'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">entry</span><span class="token operator">:</span> <span class="token string">'//localhost:20000'</span><span class="token punctuation">,</span> <span class="token comment">// 默认react启动的入口是10000端口</span>
+        <span class="token literal-property property">activeRule</span><span class="token operator">:</span> <span class="token string">'/vue'</span><span class="token punctuation">,</span> <span class="token comment">// 当路径是 /react的时候启动</span>
+        <span class="token literal-property property">container</span><span class="token operator">:</span> <span class="token string">'#container'</span><span class="token punctuation">,</span> <span class="token comment">// 应用挂载的位置</span>
+        loader<span class="token punctuation">,</span>
+        <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">a</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token literal-property property">util</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// qiankun的生命周期钩子，作用不大</span>
+    <span class="token function">beforeLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'before load'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">beforeMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'before mount'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">afterMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'after mount'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">beforeUnmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'before unmount'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">afterUnmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'after unmount'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">// start可以传入一些额外的配置</span>
+<span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -714,17 +729,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/wei-qian-duan/systemjs-yu-wei-qian-duan/">
+                <a href="/wei-qian-duan/qiankun-xue-xi-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="SystemJS与微前端">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="qiankun学习笔记">
                         
-                        <span class="card-title">SystemJS与微前端</span>
+                        <span class="card-title">qiankun学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -734,9 +750,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -749,6 +765,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -767,13 +784,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/css/advancedcss-sass/">
+                <a href="/react/hash-lu-you-he-history-lu-you/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="AdvancedCSS&amp;Sass">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Hash路由和History路由">
                         
-                        <span class="card-title">AdvancedCSS&amp;Sass</span>
+                        <span class="card-title">Hash路由和History路由</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -784,7 +801,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-19
                             </span>
                         <span class="publish-author">
                             
@@ -801,8 +818,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CSS/">
-                        <span class="chip bg-color">CSS</span>
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
                     </a>
                     
                 </div>
@@ -949,7 +966,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">165.2k</span>&nbsp;字
+                class="white-color">164.9k</span>&nbsp;字
             
             
             
