@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="微前端中的SystemJS, 懒前端">
+    <meta name="keywords" content="SystemJS与微前端, 懒前端">
     <meta name="description" content="Had I not seen the sun, I could have borne the shade.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>微前端中的SystemJS | 懒前端</title>
+    <title>SystemJS与微前端 | 懒前端</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -266,12 +266,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">微前端中的SystemJS</h1>
+                    <h1 class="description center-align post-title">SystemJS与微前端</h1>
                 </div>
             </div>
         </div>
@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2k
+                    2.1k
                 </div>
                 
 
@@ -446,7 +446,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="微前端中的SystemJS"><a href="#微前端中的SystemJS" class="headerlink" title="微前端中的SystemJS"></a>微前端中的SystemJS</h2><h3 id="微前端"><a href="#微前端" class="headerlink" title="微前端"></a>微前端</h3><h4 id="第一步，解决了什么痛点"><a href="#第一步，解决了什么痛点" class="headerlink" title="第一步，解决了什么痛点:"></a>第一步，解决了什么痛点:</h4><p><strong>大应用拆分</strong><br><strong>渐进式技术栈升级</strong></p>
+                <h2 id="SystemJS与微前端"><a href="#SystemJS与微前端" class="headerlink" title="SystemJS与微前端"></a>SystemJS与微前端</h2><h3 id="微前端"><a href="#微前端" class="headerlink" title="微前端"></a>微前端</h3><h4 id="第一步，解决了什么痛点"><a href="#第一步，解决了什么痛点" class="headerlink" title="第一步，解决了什么痛点:"></a>第一步，解决了什么痛点:</h4><p><strong>大应用拆分</strong><br><strong>渐进式技术栈升级</strong></p>
 <p>附带优势:<br><strong>多团队合作，独立部署</strong><br><strong>技术栈无关</strong></p>
 <h4 id="第二步，实现了什么功能"><a href="#第二步，实现了什么功能" class="headerlink" title="第二步，实现了什么功能:"></a>第二步，实现了什么功能:</h4><p><strong>沙箱:CSS隔离，JS隔离，路由隔离</strong><br><strong>微应用调度</strong></p>
 <h4 id="第三步，如何实现沙箱和微应用调度…"><a href="#第三步，如何实现沙箱和微应用调度…" class="headerlink" title="第三步，如何实现沙箱和微应用调度…."></a>第三步，如何实现沙箱和微应用调度….</h4><p>qiankun:   实现沙箱，实现微应用接入配置简化，无痛接入<br>singleSpa: 实现基于路由进行微应用调度，定义了微应用生命周期<br>systemJS:  实现动态加载模块</p>
@@ -462,16 +462,17 @@
 <h3 id="systemJS"><a href="#systemJS" class="headerlink" title="systemJS"></a>systemJS</h3><p>systemJS 通用模块加载器，支持多种模块化规范，无window变量污染</p>
 <p>使用systemJS可以让使用者，在指定的时机加载模块文件并运行，</p>
 <h3 id="systemJS原理简述"><a href="#systemJS原理简述" class="headerlink" title="systemJS原理简述"></a>systemJS原理简述</h3><ol>
-<li><p>通过JSONP的方式去加载当前entry依赖的模块文件</p>
+<li><p>通过JSONP的方式去异步加载指定路径的模块文件。</p>
 </li>
-<li><p>监听到依赖文件加载完成后，执行依赖文件，获取其exports，再执行entry</p>
+<li><p>同时监听到模块文件加载，完成后执行模块代码，并触发用户注册好的回调。</p>
 </li>
 </ol>
 <blockquote>
 <p>JSONP是一种跨域请求的方法，通过动态创建script标签实现。Ajax请求普通文件存在跨域问题。</p>
 </blockquote>
 <h3 id="systemJS在微前端中的职责"><a href="#systemJS在微前端中的职责" class="headerlink" title="systemJS在微前端中的职责"></a>systemJS在微前端中的职责</h3><p>systemJS的职责非常纯粹，动态加载模块</p>
-<p>此处的目的仅仅是为了展示systemJS的原理，动态加载并调用了react 与 react-dom</p>
+<p>后文systemJS的使用 章节中，</p>
+<p>仅仅是为了展示systemJS的原理，动态加载并调用了react 与 react-dom</p>
 <p>看上去似乎普普通通，</p>
 <p>但注意这个动态加载时机是可以由使用者控制的，那变成了 <strong>按需动态加载</strong></p>
 <p>有了systemJS的加入，qiankun拥有了 <strong>拆分大应用</strong>, <strong>按需动态加载</strong> 模块/微应用 的功能。</p>
@@ -710,7 +711,7 @@ module<span class="token punctuation">.</span><span class="token function-variab
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/LZY2333/LZY2333.github.io/wei-qian-duan/wei-qian-duan-zhong-de-systemjs/">https://github.com/LZY2333/LZY2333.github.io/wei-qian-duan/wei-qian-duan-zhong-de-systemjs/</a>
+                    <a href="https://github.com/LZY2333/LZY2333.github.io/wei-qian-duan/systemjs-yu-wei-qian-duan/">https://github.com/LZY2333/LZY2333.github.io/wei-qian-duan/systemjs-yu-wei-qian-duan/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -923,6 +924,55 @@ module<span class="token punctuation">.</span><span class="token function-variab
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/webpack/webpack-ji-chu-pei-zhi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Webpack基础配置">
+                        
+                        <span class="card-title">Webpack基础配置</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-19
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
+                                    技术栈
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Webpack/">
+                        <span class="chip bg-color">Webpack</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/wei-qian-duan/qiankun-xue-xi-bi-ji/">
                     <div class="card-image">
                         
@@ -939,9 +989,9 @@ module<span class="token punctuation">.</span><span class="token function-variab
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-14
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -959,55 +1009,6 @@ module<span class="token punctuation">.</span><span class="token function-variab
                     
                     <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">
                         <span class="chip bg-color">微前端</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/css/advancedcss-sass/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="AdvancedCSS&amp;Sass">
-                        
-                        <span class="card-title">AdvancedCSS&amp;Sass</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-08
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-category">
-                                    技术栈
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/CSS/">
-                        <span class="chip bg-color">CSS</span>
                     </a>
                     
                 </div>
@@ -1154,7 +1155,7 @@ module<span class="token punctuation">.</span><span class="token function-variab
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">164.7k</span>&nbsp;字
+                class="white-color">165.2k</span>&nbsp;字
             
             
             

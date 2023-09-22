@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    619
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    4 分
                 </div>
                 
 
@@ -452,17 +452,95 @@
 <h4 id="第三步，如何实现沙箱和微应用调度…"><a href="#第三步，如何实现沙箱和微应用调度…" class="headerlink" title="第三步，如何实现沙箱和微应用调度…."></a>第三步，如何实现沙箱和微应用调度….</h4><p>qiankun:   实现沙箱，实现微应用接入配置简化，无痛接入<br>singleSpa: 实现基于路由进行微应用调度，定义了微应用生命周期<br>systemJS:  实现动态加载模块</p>
 <p>三者是层层递进的关系，qiankun的实现依赖了singleSpa，singleSpa依赖了systemJS</p>
 <p>本文将从从最基础的singleSpa展开，singleSpa的原理</p>
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>基于路由的微前端</p>
+<h3 id="SingleSpa-1"><a href="#SingleSpa-1" class="headerlink" title="SingleSpa"></a>SingleSpa</h3><p>SingleSpa本身已是一个成熟的微前端框架</p>
+<p><strong>渐进式技术栈升级</strong>: 新功能使用新框架，旧项目不用重新可以继续共存</p>
+<p><strong>大应用拆分</strong>: 分包，按需动态加载模块</p>
+<p><strong>技术栈无关</strong>: 可使用多个前端框架</p>
+<p><strong>多团队合作，独立部署</strong>: 微应用可独立部署</p>
+<p>其原理是: 基于路由进行微应用调度，基于微应用暴露的生命周期，对微应用进行控制</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- 基座index.html 中需用如下格式写入 公共包CDN地址映射，微应用地址映射，并import基座entry包--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>systemjs-importmap<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+<span class="token punctuation">&#123;</span>
+    <span class="token string-property property">"imports"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token string-property property">"single-spa"</span><span class="token operator">:</span> <span class="token string">"https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"index.js"</span><span class="token operator">:</span> <span class="token string">"xxx"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"app1"</span><span class="token operator">:</span> <span class="token string">"xxx"</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+System<span class="token punctuation">.</span><span class="token function">import</span><span class="token punctuation">(</span><span class="token string">'index.js'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 基座index.js 注册微应用，并调用start，开启路由监听，渲染页面</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> registerApplication<span class="token punctuation">,</span> start <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'single-spa'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 基座中调用中注册 注册微应用，需要提供微应用的加载路径，以及告知何时渲染该微应用</span>
+<span class="token function">registerApplication</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'app1'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">app</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> System<span class="token punctuation">.</span><span class="token function">import</span><span class="token punctuation">(</span><span class="token string">'app1'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 加载</span>
+    <span class="token function-variable function">activeWhen</span><span class="token operator">:</span> <span class="token parameter">location</span> <span class="token operator">=></span> location<span class="token punctuation">.</span>hash<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">'#/app1'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">customProps</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 开启路由监听</span>
+<span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 微应用中暴露接口，接入的微应用需要提供三个生命周期函数，供singleSpa调度</span>
+<span class="token keyword">let</span> app1 <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token function-variable function">bootstrap</span><span class="token operator">:</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'app1 bootstrap2'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 初始化</span>
+    <span class="token function-variable function">mount</span><span class="token operator">:</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'app1 mount'</span><span class="token punctuation">,</span> props<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 挂载</span>
+    <span class="token function-variable function">unmount</span><span class="token operator">:</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'app1 unmount'</span><span class="token punctuation">,</span> props<span class="token punctuation">)</span> <span class="token comment">// 卸载</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果是对接vue react的微应用，有专门的 single-spa-react包 single-spa-vue包 </p>
+<p>用于生成暴露给singleSpa的接口，也就是 bootstrap，mount，unmount</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> ReactDOM <span class="token keyword">from</span> <span class="token string">"react-dom"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> singleSpaReact <span class="token keyword">from</span> <span class="token string">"single-spa-react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> Root <span class="token keyword">from</span> <span class="token string">"./root.component"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> lifecycle <span class="token operator">=</span> <span class="token function">singleSpaReact</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  React<span class="token punctuation">,</span>
+  ReactDOM<span class="token punctuation">,</span>
+  <span class="token literal-property property">rootComponent</span><span class="token operator">:</span> Root<span class="token punctuation">,</span>
+  <span class="token function">errorBoundary</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> info<span class="token punctuation">,</span> props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Customize the root error boundary for your microfrontend here.</span>
+    <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 接入协议 ， 子应用必须提供接入协议</span>
+<span class="token comment">// 对于single-spa 而言 保留接入协议 就可以接入到项目中</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> bootstrap<span class="token punctuation">,</span> mount<span class="token punctuation">,</span> unmount <span class="token punctuation">&#125;</span> <span class="token operator">=</span> lifecycle<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>基于路由的微前端</p>
 <p>微应用提供的四个生命周期接口</p>
-<p>加载loadApp 激活bootstrap 挂载mount 卸载unmount</p>
+<p>加载loadApp 初始化bootstrap 挂载mount 卸载unmount</p>
 <p>singleSpa 监听路由的变化，通过调用微应用的生命周期接口，调度微应用</p>
-<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>相当于，在用户的路由监听之前，先监听了一层路由，其余基本和路由功能一样，没有沙箱功能</p>
-<p>调用原生addEventListener，监听’hashchange’,’popstate’，<br>这两个路由事件触发时，检测中根据路由调度微应用</p>
-<p>然后劫持了addEventListener,如果用户对’hashchange’,’popstate’进行了监听,<br>则延后执行 用户的 监听callback,等我 singleSpa把应用 加载 挂载完之后，再去执行用户的callback<br>劫持了用户的劫持</p>
-<p>额外劫持了pushState，replaceState，在劫持中手动派发popstate事件，<br>因为这两个原生接口的调用，造成的路由切换不会触发 ‘hashchange’,’popstate’的监听，</p>
-<p>如果有vue-router react-router的源码基础，对微前端更好理解，其实是一样的东西<br>但是微前端的对路由的拦截，比vue-router react-router更高一层，因为微前端拦截了addEventListener</p>
-<p>每次路由发生变化，触发浏览器事件，触发singleSpa的监听回调，调用reroute方法，<br>遍历微应用activeWhen方法，根据路由，及微应用当前状态，将所有微应用分为三类 toUnMount toLoad toMount<br>如果根据当前路由，activeWhen返回true，代表你需要被展示，但是文件还没被加载，那就 toLoad，<br>如果文件已经被加载，那就 toMount， 如果activeWhen返回false， 那就 toUnMount</p>
-<p>最后分别调用 这三类微应用的 unMount load mount 方法，完成一个singleSpa的生命周期。</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p><strong>调度微应用</strong></p>
+<p>每次路由发生变化，触发浏览器事件，触发singleSpa的监听回调，调用reroute方法:</p>
+<ol>
+<li><p>遍历微应用activeWhen方法，根据路由，及微应用当前状态，将所有微应用分为三类 toUnMount toLoad toMount</p>
+</li>
+<li><p>分别调用 这三类微应用的 unMount load mount 方法，</p>
+<p> 加载微应用，执行并在指定位置渲染dom，完成一个singleSpa的生命周期。</p>
+</li>
+</ol>
+<p><strong>监听路由</strong></p>
+<p>本质上是在微应用监听到路由变化产生回调之前，先监听路由产生回调。</p>
+<ol>
+<li><p>调用原生addEventListener，监听’hashchange’,’popstate’，调用reroute函数，检测中根据路由调度微应用</p>
+</li>
+<li><p>劫持addEventListener,记录微应用对 ‘hashchange’,’popstate’ 的监听callback,</p>
+<p> 每次路由产生变化，先执行完SingleSpa的reroute渲染，再执行微应用的路由监听callback</p>
+</li>
+<li><p>额外劫持了 pushState，replaceState，在劫持中手动派发popstate事件，</p>
+<p> 因为这两个原生接口的调用，造成的路由切换不会触发 ‘hashchange’,’popstate’的事件派发，</p>
+</li>
+</ol>
+<p>如果有vue-router react-router的源码基础，对微前端更好理解，其实是一样的东西</p>
+<p>但是微前端的对路由的拦截，比vue-router react-router更高一层，因为微前端拦截了addEventListener</p>
 
                 
             </div>
@@ -933,7 +1011,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">164.7k</span>&nbsp;字
+                class="white-color">165.2k</span>&nbsp;字
             
             
             
