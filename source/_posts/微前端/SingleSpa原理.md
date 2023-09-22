@@ -1,5 +1,5 @@
 ---
-title: SingleSpa
+title: SingleSpa原理
 date: 2023-09-13 19:27:19
 categories: 技术栈
 tags: 
@@ -7,7 +7,7 @@ tags:
 ---
 
 
-## SingleSpa
+## SingleSpa原理
 
 ### 微前端
 
