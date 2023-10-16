@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    5 分
                 </div>
                 
 
@@ -446,8 +446,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TS类"><a href="#TS类" class="headerlink" title="TS类"></a>TS类</h1><p>在TS中声明了一个类的时候,实际上声明了两个东西<br>一个是创建了 <strong>类的实例的类型</strong><br>一个是创建了 <strong>一个叫构造函数的值</strong><br>这个 构造函数 会在创建类实例的时候被调用</p>
-<h2 id="如何定义类"><a href="#如何定义类" class="headerlink" title="如何定义类"></a>如何定义类</h2><p>存取器 构造函数</p>
+                <h2 id="TS类"><a href="#TS类" class="headerlink" title="TS类"></a>TS类</h2><p>在TS中声明了一个类的时候,实际上声明了两个东西<br>一个是创建了 <strong>类的实例的类型</strong><br>一个是创建了 <strong>一个叫构造函数的值</strong><br>这个 构造函数 会在创建类实例的时候被调用</p>
+<h3 id="如何定义类"><a href="#如何定义类" class="headerlink" title="如何定义类"></a>如何定义类</h3><p>存取器 构造函数</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class User &#123;
     private myName:string;
     constructor(myName: string) &#123; &#x2F;&#x2F; 构造函数，初始化成员属性
@@ -462,8 +462,7 @@
 &#125;
 &#x2F;&#x2F; 存取器只有get 没有set 的private属性,会被自动推断为readonly<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>public: 默认,可以在任何地方使用<br>private: 不可为声明的类的外部访问<br>protected: 在自己和子类中可以访问,其他地方不可以访问</p>
-<h3 id="类中的-static-和-public-和-get-set"><a href="#类中的-static-和-public-和-get-set" class="headerlink" title="类中的 static 和 public 和 get/set"></a>类中的 static 和 public 和 get/set</h3><p><strong>static挂载在函数对象上</strong></p>
+<h3 id="类-编译结果"><a href="#类-编译结果" class="headerlink" title="类 编译结果"></a>类 编译结果</h3><p><strong>static挂载在函数对象上</strong></p>
 <p><strong>get/set挂载在原型对象上</strong></p>
 <p><strong>public/private/protected 挂载在实例对象上</strong></p>
 <p>get/set 属性 不可和 public/private/protected 重名，可以和 static 重名</p>
@@ -496,7 +495,8 @@
     <span class="token keyword">return</span> Animal1<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="构造函数-修饰符"><a href="#构造函数-修饰符" class="headerlink" title="构造函数+修饰符"></a>构造函数+修饰符</h3><p>实例上的属性需要先声明在使用</p>
+<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><p>public: 默认,可以在任何地方使用<br>private: 不可为声明的类的外部访问<br>protected: 在自己和子类中可以访问,其他地方不可以访问</p>
+<h4 id="省略属性的声明"><a href="#省略属性的声明" class="headerlink" title="省略属性的声明"></a>省略属性的声明</h4><p>实例上的属性需要先声明在使用</p>
 <p>在 构造函数 参数 前添加修饰符,可省略属性的声明</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class User2 &#123;
     constructor(public myName: string) &#123;&#125;
@@ -510,9 +510,9 @@
 let user &#x3D; new User2(&#39;lzy&#39;);
 console.log(user.name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="readonly"><a href="#readonly" class="headerlink" title="readonly"></a>readonly</h3><p>readonly 修饰的变量 只能在构造函数中初始化</p>
+<h4 id="readonly"><a href="#readonly" class="headerlink" title="readonly"></a>readonly</h4><p>readonly 修饰的变量 只能在构造函数中初始化</p>
 <p>readonly 在编译时被检查 const 在运行时被检查</p>
-<h3 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h3><p>在TS中,</p>
+<h4 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h4><p>在TS中,</p>
 <p>正常情况 Animal类 的变量 可接收 Employee类型的数据,</p>
 <p>因为他们类型检查一样(二者都有且仅有name,且假设二者的name是public)</p>
 <p>但是,比较类型的时候, 如果出现了 private/protected成员,</p>
@@ -540,7 +540,7 @@ animal &#x3D; rhino;
 animal &#x3D; employee; &#x2F;&#x2F; 错误: Animal 与 Employee 不兼容.
 &#x2F;&#x2F;  尽管Employee里也有一个私有成员name，但它明显不是Animal里面定义的那个<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>子类(派生类) 继承 父类(基类/超类) 有用 父类的 属性和方法,增强复用性<br>子类 公用方法 抽象出来放在父类,在子类 写更具体的逻辑 重写父类的方法<br>super 调用 父类的 方法和属性<br>子类 构造函数 必须使用 super() 以执行父类的构造函数 </p>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>子类 构造函数 必须使用 super() 以执行父类的构造函数 </p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Person &#123;
     name: string;&#x2F;&#x2F;定义实例的属性，默认省略public修饰符
     age: number;
@@ -567,7 +567,7 @@ class Student extends Person&#123;
 &#125;
 let s1&#x3D;new Student(&#39;lzy&#39;,25,1);
 console.log(s1);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="静态属性和静态方法"><a href="#静态属性和静态方法" class="headerlink" title="静态属性和静态方法"></a>静态属性和静态方法</h2><p>静态属性 一般代表所有实例会共同用到的 属性<br>可通过 类名.静态属性名访问<br>可通过 类的实例.静态属性名访问<br>不需要 创建类实例可直接获取</p>
+<h3 id="静态属性和静态方法"><a href="#静态属性和静态方法" class="headerlink" title="静态属性和静态方法"></a>静态属性和静态方法</h3><p>静态属性 一般代表所有实例会共同用到的 属性<br>可通过 类.静态 类的实例.静态 访问<br>不需要 创建类实例可直接获取</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">class Father &#123;
     static className&#x3D;&#39;Father&#39;;
     static getClassName() &#123;
@@ -582,7 +582,7 @@ console.log(s1);<span aria-hidden="true" class="line-numbers-rows"><span></span>
 console.log(Father.className);
 console.log(Father.getClassName());<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>作为其他派生类的基类使用,代表一种抽象的概念.<br>无法被实例化,只能被继承.<br>抽象类中的抽象方法,不能在抽象类中实现,<br>只能在派生类中实现,且必须在派生类中实现.</p>
+<h3 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h3><p>作为其他派生类的基类使用,代表一种抽象的概念.<br>无法被实例化,只能被继承.<br>抽象类中的抽象方法,不能在抽象类中实现,<br>只能在派生类中实现,且必须在派生类中实现.</p>
 <p>一般不会被直接实例化.<br>抽象方法 和 接口方法 都定义方法前面 当不包含方法体.<br>不同于接口,抽象类可以包含成员的实现细节.</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">abstract class Department &#123;
 
@@ -617,7 +617,7 @@ department.printName();
 department.printMeeting();
 department.generateReports(); &#x2F;&#x2F; 错误: 方法在声明的抽象类中不存在<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h2><p>装饰器是一种特殊类型的声明,<br>它能够被附加到类声明、方法、属性或参数上,可以修改类的行为</p>
+<h3 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h3><p>装饰器是一种特殊类型的声明,<br>它能够被附加到类声明、方法、属性或参数上,可以修改类的行为</p>
 <p>常见的装饰器有 <strong>类装饰器</strong> <strong>属性装饰器</strong> <strong>方法装饰器</strong> <strong>参数装饰器</strong></p>
 <p>装饰器的写法分为普通装饰器和装饰器工厂</p>
 
@@ -1090,7 +1090,7 @@ department.generateReports(); &#x2F;&#x2F; 错误: 方法在声明的抽象类�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">164.9k</span>&nbsp;字
+                class="white-color">167.7k</span>&nbsp;字
             
             
             

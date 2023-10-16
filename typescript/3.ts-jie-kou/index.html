@@ -446,7 +446,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="TS接口"><a href="#TS接口" class="headerlink" title="TS接口"></a>TS接口</h3><p><strong>接口</strong> 定义一个类型,以 <strong>约束变量</strong> 或 <strong>约束类</strong>,</p>
+                <h2 id="TS接口"><a href="#TS接口" class="headerlink" title="TS接口"></a>TS接口</h2><p><strong>接口</strong> 定义一个类型,以 <strong>约束变量</strong> 或 <strong>约束类</strong>,</p>
 <p>类型检查器会以接口类型为标准对值的结构进行类型检查.</p>
 <p><strong>使用场景: 抽象的,描述形状的,extends,implements</strong></p>
 <p><strong>“鸭式辨型法”</strong>:如果它走起 路来像鸭子,叫起来也是鸭子,那么它就是鸭子</p>
@@ -508,18 +508,8 @@ const a:SquareConfig &#x3D; &#123;
 &#x2F;&#x2F; 继承 也是类似的效果， 
 &#x2F;&#x2F; 三个属性都写 SquareConfig 里也是类似的效果<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="约束变量-为-对象"><a href="#约束变量-为-对象" class="headerlink" title="约束变量 为 对象"></a>约束变量 为 对象</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束变量 接收的值 必须为对象
-interface Speakable&#123;
-    speak():void;
-    name:string;
-&#125;
-let speakMan:Speakable &#x3D; &#123;
-    speak()&#123;&#125;,&#x2F;&#x2F;少属性会报错
-    name,
-    age&#x2F;&#x2F;多属性也会报错
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="接口继承"><a href="#接口继承" class="headerlink" title="接口继承"></a>接口继承</h3><p>类 实现 接口</p>
+<h3 id="接口继承，约束类"><a href="#接口继承，约束类" class="headerlink" title="接口继承，约束类"></a>接口继承，约束类</h3><p>类 实现 接口</p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface Speakable&#123; &#x2F;&#x2F; 代表具有speak函数的对象
     speak():void;
 &#125;
@@ -567,7 +557,19 @@ let square &#x3D; &lt;Square&gt;&#123;&#125;; &#x2F;&#x2F; Square类型的对象
 square.color &#x3D; &quot;blue&quot;;
 square.sideLength &#x3D; 10;
 square.penWidth &#x3D; 5.0;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="约束-变量-为-函数类型"><a href="#约束-变量-为-函数类型" class="headerlink" title="约束 变量 为 函数类型"></a>约束 变量 为 函数类型</h3><p>约束 变量 的值为 特定类型函数</p>
+
+<h3 id="约束变量-为-对象类型"><a href="#约束变量-为-对象类型" class="headerlink" title="约束变量 为 对象类型"></a>约束变量 为 对象类型</h3><pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">&#x2F;&#x2F; 约束变量 接收的值 必须为对象
+interface Speakable&#123;
+    speak():void;
+    name:string;
+&#125;
+let speakMan:Speakable &#x3D; &#123;
+    speak()&#123;&#125;,&#x2F;&#x2F;少属性会报错
+    name,
+    age&#x2F;&#x2F;多属性也会报错
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="约束变量-为-函数类型"><a href="#约束变量-为-函数类型" class="headerlink" title="约束变量 为 函数类型"></a>约束变量 为 函数类型</h3><p>约束 变量 的值为 特定类型函数</p>
 <p>对于约束 函数变量 的值时,值(函数) 的参数名不需要和接口中一致,</p>
 <p><strong>只要求 对应位置上的参数类型是兼容的</strong></p>
 <pre class="line-numbers language-ts" data-language="ts"><code class="language-ts">interface SearchFunc &#123;
@@ -1153,7 +1155,7 @@ type PropTypeValueUnion <span class="token operator">=</span> Person<span class=
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">164.9k</span>&nbsp;字
+                class="white-color">167.7k</span>&nbsp;字
             
             
             
