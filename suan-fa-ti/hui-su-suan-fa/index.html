@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    13 分
+                    14 分
                 </div>
                 
 
@@ -849,6 +849,50 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="332-重新安排行程"><a href="#332-重新安排行程" class="headerlink" title="332. 重新安排行程"></a>332. 重新安排行程</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reconstruct-itinerary/description/">https://leetcode.cn/problems/reconstruct-itinerary/description/</a></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<h3 id="51-N-皇后"><a href="#51-N-皇后" class="headerlink" title="51. N 皇后"></a>51. N 皇后</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/n-queens/description/">https://leetcode.cn/problems/n-queens/description/</a></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">solveNQueens</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> path <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token function">backTracking</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> result
+
+    <span class="token keyword">function</span> <span class="token function">backTracking</span><span class="token punctuation">(</span><span class="token parameter">row</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>path<span class="token punctuation">.</span>length <span class="token operator">===</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">draw</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> col <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> col <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> col<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isOK</span><span class="token punctuation">(</span>col<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">continue</span>
+            path<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>col<span class="token punctuation">)</span>
+            <span class="token function">backTracking</span><span class="token punctuation">(</span>row <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+            path<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">function</span> <span class="token function">isOK</span><span class="token punctuation">(</span><span class="token parameter">col</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// row = path.length - 1 代表上一行</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> row <span class="token operator">=</span> path<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> leftUp <span class="token operator">=</span> col <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> rightUp <span class="token operator">=</span> col <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> row <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> row<span class="token operator">--</span><span class="token punctuation">,</span> leftUp<span class="token operator">--</span><span class="token punctuation">,</span> rightUp<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 检测左上:如果leftUp(上一行的col)没超出棋盘，且存在重合，则不符合规则</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>leftUp <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> path<span class="token punctuation">[</span>row<span class="token punctuation">]</span> <span class="token operator">===</span> leftUp<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>rightUp <span class="token operator">&lt;</span> n <span class="token operator">&amp;&amp;</span> path<span class="token punctuation">[</span>row<span class="token punctuation">]</span> <span class="token operator">===</span> rightUp<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>path<span class="token punctuation">[</span>row<span class="token punctuation">]</span> <span class="token operator">===</span> col<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">function</span> <span class="token function">draw</span><span class="token punctuation">(</span><span class="token parameter">chessboard<span class="token punctuation">,</span> n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> emptyStr <span class="token operator">=</span> <span class="token string">'.'</span><span class="token punctuation">.</span><span class="token function">repeat</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+        <span class="token comment">// 匹配了两个组，item个. 和 1个. , 没有被使用到的组 $2所匹配到的内容会被删除</span>
+        <span class="token keyword">return</span> chessboard<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">item</span> <span class="token operator">=></span> emptyStr<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RegExp</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">(.&#123;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>item<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">&#125;)(.)</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">$1Q</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">solveNQueens</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>
+    <span class="token punctuation">[</span><span class="token string">'.Q..'</span><span class="token punctuation">,</span> <span class="token string">'...Q'</span><span class="token punctuation">,</span> <span class="token string">'Q...'</span><span class="token punctuation">,</span> <span class="token string">'..Q.'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token string">'..Q.'</span><span class="token punctuation">,</span> <span class="token string">'Q...'</span><span class="token punctuation">,</span> <span class="token string">'...Q'</span><span class="token punctuation">,</span> <span class="token string">'.Q..'</span><span class="token punctuation">]</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="37-解数独"><a href="#37-解数独" class="headerlink" title="37. 解数独"></a>37. 解数独</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sudoku-solver/description/">https://leetcode.cn/problems/sudoku-solver/description/</a></p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
                 
             </div>
@@ -1321,7 +1365,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">176k</span>&nbsp;字
+                class="white-color">176.2k</span>&nbsp;字
             
             
             
