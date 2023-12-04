@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    477
+                    599
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -495,6 +495,13 @@
 <span class="token comment">// start可以传入一些额外的配置</span>
 <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="CSS隔离方案"><a href="#CSS隔离方案" class="headerlink" title="CSS隔离方案"></a>CSS隔离方案</h3><p>css-module，scoped 打包的时候生成选择器名字实现隔离<br>BEM 规范<br>CSS in js<br>shadowDOM 严格的隔离</p>
+<h3 id="JS隔离方案"><a href="#JS隔离方案" class="headerlink" title="JS隔离方案"></a>JS隔离方案</h3><p>window快照方案: 储存一份window属性快照，对比，记录属性新增修改，失活时从window删除变化属性性，激活时复原变化属性</p>
+<p>浪费内存</p>
+<p>演化方案: 仅储存window 新增修改的属性，不储存window属性，基于proxy</p>
+<p>最终方案：多例代理，基于proxy</p>
+
                 
             </div>
             <hr/>
@@ -964,7 +971,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">176.2k</span>&nbsp;字
+                class="white-color">176.4k</span>&nbsp;字
             
             
             
