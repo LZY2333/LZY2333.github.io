@@ -43,7 +43,6 @@ __慢__ 每次进入 都须 重新加载资源, 重建浏览器上下文
 
 ### qiankun使用
 
-
 ```js
 
 registerMicroApps([
@@ -85,3 +84,20 @@ registerMicroApps([
 start()
 
 ```
+
+### CSS隔离方案
+
+css-module，scoped 打包的时候生成选择器名字实现隔离
+BEM 规范
+CSS in js
+shadowDOM 严格的隔离
+
+### JS隔离方案
+
+window快照方案: 储存一份window属性快照，对比，记录属性新增修改，失活时从window删除变化属性性，激活时复原变化属性
+
+浪费内存
+
+演化方案: 仅储存window 新增修改的属性，不储存window属性，基于proxy
+
+最终方案：多例代理，基于proxy
