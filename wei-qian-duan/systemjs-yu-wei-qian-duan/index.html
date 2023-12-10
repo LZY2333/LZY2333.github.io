@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    9 分
                 </div>
                 
 
@@ -481,6 +481,12 @@
 <p>二者 <strong>监听加载结果</strong> 原理不同，</p>
 <p>systemJS的原理是 <strong>监听window的属性修改</strong> ，<br>由此获取模块导出，也因此需要umd格式，模块加载并执行后挂载在window上。</p>
 <p>webpack懒加载原理是 <strong>window上挂载回调函数供调用</strong> ，<br>打包时被分离出去的模块，最外层会包裹一层对window上该回调函数的调用。</p>
+<h3 id="iframe-待更新"><a href="#iframe-待更新" class="headerlink" title="iframe(待更新)"></a>iframe(待更新)</h3><p>完美的沙箱机制，自带应用隔离</p>
+<p>可以通过postMessage进行通讯</p>
+<p>应用之间沟通差，状态无法保存，弹窗只能在iframe中</p>
+<blockquote>
+<p>Web Component。浏览器支持问题</p>
+</blockquote>
 <h3 id="跨域-待更新"><a href="#跨域-待更新" class="headerlink" title="跨域(待更新)"></a>跨域(待更新)</h3><p>说起JSONP，就想起跨域的知识点了，回头总结一下</p>
 <p><strong>看到这里就可以结束了,后面是比较繁琐的内容.仅代表,记一下以防自己以后忘记</strong></p>
 <h3 id="systemJS使用"><a href="#systemJS使用" class="headerlink" title="systemJS使用"></a>systemJS使用</h3><p>这里假设一个React项目，依赖react，react-dom两个包，实现两个包b的动态加载</p>
@@ -554,15 +560,20 @@ module<span class="token punctuation">.</span><span class="token function-variab
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <ol start="0">
-<li><p>首先拿到<code>type=&quot;systemjs-importmap&quot;</code>中的map模块路径进行解析,拿到CDN路径</p>
+<li><p>首先拿到<code>type=&quot;systemjs-importmap&quot;</code>中的map模块路径进行解析,拿到依赖模块的CDN路径</p>
 </li>
-<li><p><code>System.import(&#39;./index.js&#39;)</code> 引入 index.js 并执行<code>System.register(执行包的依赖包,执行包)</code></p>
-<p> 要执行执行包,首先要加载依赖包</p>
+<li><p><code>System.import(&#39;./index.js&#39;)</code> 通过JSONP的方式，异步从服务器获取 <code>index.js</code></p>
+</li>
+<li><p>加载完的script都会自动执行, 即执行<code>System.register(执行包的依赖包,执行包)</code>,</p>
+<p> 将setters依赖包安装函数，execute执行包，挂载在全局对象</p>
+</li>
+<li><p>要运行执行包，需要先加载依赖包，<code>promise.all(load(map(setters[])))</code></p>
 </li>
 <li><p>通过JSONP的方式,异步加载依赖<code>[&quot;react-dom&quot;,&quot;react&quot;]</code>,监听load事件加载完时触发回调</p>
 </li>
 </ol>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">load</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 引入index.js 和 依赖包都使用了load方法，此方法为JSONP加载包</span>
+<span class="token keyword">function</span> <span class="token function">load</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">const</span> script <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'script'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         script<span class="token punctuation">.</span>src <span class="token operator">=</span> map<span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token operator">||</span> id<span class="token punctuation">;</span> <span class="token comment">// 支持cdn的查找</span>
@@ -570,15 +581,15 @@ module<span class="token punctuation">.</span><span class="token function-variab
         document<span class="token punctuation">.</span>head<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>script<span class="token punctuation">)</span><span class="token punctuation">;</span>
         script<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'load'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> 
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<ol start="3">
-<li><p>加载完的script都会自动执行,umd格式的模块执行完会在window挂载一个具有自身所有API的对象.</p>
+<ol start="5">
+<li><p>加载完的script都会自动执行, umd格式的模块执行完会在window挂载一个具有自身所有API的对象.</p>
 </li>
-<li><p>systemJS 在load事件后,检查window上是否有新增属性,将其加入 执行包的执行上下文.</p>
+<li><p>systemJS 在load事件后,检查window上是否有新增属性,通过setters将其加入 执行包的执行上下文.</p>
 </li>
-<li><p>两个依赖包都加载完成后,开始执行执行包,执行包内部会调用依赖包的API,hello world!</p>
+<li><p>两个依赖包都加载完成后，开始执行执行包,执行包内部会调用依赖包的API,hello world!</p>
 </li>
 </ol>
 <h3 id="systemJS简单实现"><a href="#systemJS简单实现" class="headerlink" title="systemJS简单实现"></a>systemJS简单实现</h3><pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.bootcdn.net/ajax/libs/systemjs/6.10.1/system.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
@@ -1155,7 +1166,7 @@ module<span class="token punctuation">.</span><span class="token function-variab
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">176.4k</span>&nbsp;字
+                class="white-color">176.6k</span>&nbsp;字
             
             
             
