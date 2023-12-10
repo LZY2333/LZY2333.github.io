@@ -85,6 +85,16 @@ systemJS的原理是 __监听window的属性修改__ ，
 webpack懒加载原理是 __window上挂载回调函数供调用__ ，
 打包时被分离出去的模块，最外层会包裹一层对window上该回调函数的调用。
 
+### iframe(待更新)
+
+完美的沙箱机制，自带应用隔离
+
+可以通过postMessage进行通讯
+
+应用之间沟通差，状态无法保存，弹窗只能在iframe中
+
+> Web Component。浏览器支持问题
+
 ### 跨域(待更新)
 
 说起JSONP，就想起跨域的知识点了，回头总结一下
@@ -176,15 +186,20 @@ System.register(["react-dom","react"], function(__WEBPACK_DYNAMIC_EXPORT__, __sy
 })
 ```
 
-0. 首先拿到`type="systemjs-importmap"`中的map模块路径进行解析,拿到CDN路径
+0. 首先拿到`type="systemjs-importmap"`中的map模块路径进行解析,拿到依赖模块的CDN路径
 
-1. `System.import('./index.js')` 引入 index.js 并执行`System.register(执行包的依赖包,执行包)`
+1. `System.import('./index.js')` 通过JSONP的方式，异步从服务器获取 `index.js`
 
-    要执行执行包,首先要加载依赖包
+2. 加载完的script都会自动执行, 即执行`System.register(执行包的依赖包,执行包)`,
+    
+    将setters依赖包安装函数，execute执行包，挂载在全局对象
 
-2. 通过JSONP的方式,异步加载依赖`["react-dom","react"]`,监听load事件加载完时触发回调
+3. 要运行执行包，需要先加载依赖包，`promise.all(load(map(setters[])))`
+
+4. 通过JSONP的方式,异步加载依赖`["react-dom","react"]`,监听load事件加载完时触发回调
 
 ```js
+// 引入index.js 和 依赖包都使用了load方法，此方法为JSONP加载包
 function load(id) {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
@@ -193,15 +208,15 @@ function load(id) {
         document.head.appendChild(script);
         script.addEventListener('load', function () {
         })
-    })
+    }) 
 }
 ```
 
-3. 加载完的script都会自动执行,umd格式的模块执行完会在window挂载一个具有自身所有API的对象.
+5. 加载完的script都会自动执行, umd格式的模块执行完会在window挂载一个具有自身所有API的对象.
 
-4. systemJS 在load事件后,检查window上是否有新增属性,将其加入 执行包的执行上下文.
+6. systemJS 在load事件后,检查window上是否有新增属性,通过setters将其加入 执行包的执行上下文.
 
-5. 两个依赖包都加载完成后,开始执行执行包,执行包内部会调用依赖包的API,hello world!
+7. 两个依赖包都加载完成后，开始执行执行包,执行包内部会调用依赖包的API,hello world!
 
 ### systemJS简单实现
 
