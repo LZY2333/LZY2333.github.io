@@ -12,6 +12,10 @@ tags:
 
 源码的分块分层,组件的复用,项目模块懒加载等,都依赖于模块化的存在.
 
+没有模块 -> CommonJS 同步加载 -> AMD 异步加载 -> UMD = CommonJS + AMD
+
+-> ES Module 是标准规范, 取代 UMD，是大势所趋。
+
 __PS:本文章使用的Webpack配置如下:__
 ```js
 const path = require('path')

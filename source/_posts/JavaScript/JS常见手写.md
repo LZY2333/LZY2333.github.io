@@ -86,6 +86,18 @@ function deepClone(target, map = new WeakMap()) {
 }
 ```
 #### WeakMap弱引用 与 {}强引用
+
+Map 和Weakmap 的区别
+
+WeakMap是ES6中新增的一种集合类型，叫做弱映射。它和Map是兄弟关系，与Map的区别在于这个弱字，API还是Map那套API。
+
+Map的键可以是任意类型，WeakMap只接受对象作为键，不接受其它类型的值作为键
+
+Map的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键；WeakMap的键是弱引用，如果创建了一个弱引用对象，不会被垃圾回收关注，如果不再需要，weakmap中的键名对象和所对应的键值对会自动消失，不再手动删除引用。
+
+Map可以被遍历，WeakMap不能被遍历
+
+
 #### forIn循环效率低，while循环效率高，性能优化版
 #### 函数类型及特殊引用类型得专门判断
 `Map`， `Set` 等类型得专门判断
