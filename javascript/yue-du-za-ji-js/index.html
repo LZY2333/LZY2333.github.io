@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    871
+                    2.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    9 分
                 </div>
                 
 
@@ -463,7 +463,17 @@
 <p>或者是作为开源库内的 对象属性， <code>Object.keys</code> 和<code>Object.getOwnPropertyNames</code> 均不会返回<code>Symbol</code>，</p>
 <p><code>Object.getOwnPropertySymbols</code>可以返回对象所有<code>Symbol</code>属性</p>
 <h4 id="BigInt-用来表示大于-2-53-1-的整数"><a href="#BigInt-用来表示大于-2-53-1-的整数" class="headerlink" title="BigInt 用来表示大于 2^53-1 的整数"></a>BigInt 用来表示大于 2^53-1 的整数</h4><p><code>BigInt</code> 真没怎么用过，只知道是用来表示 大于 2^53-1 的数的，末尾加n就行</p>
-<p>JS所有数字均以 <strong>双精度64位浮点格式</strong> 表示.</p>
+<h4 id="最大安全整数-2-53-1"><a href="#最大安全整数-2-53-1" class="headerlink" title="最大安全整数 2^53-1"></a>最大安全整数 2^53-1</h4><p>JS没有整数类型，所有数字均以 <strong>双精度64位浮点格式</strong> 表示. 由 8Byte，64bit 组成。</p>
+<p>bit63 符号位, bits62-52 指数位(移码), bits51-0 尾数位.</p>
+<p>11位指数位 用于小数浮点数的计算,  52位尾数位 用于整数位的表示, 即最大可表示 2^53-1。</p>
+<p>大于这个数需要53位去储存，但是没有第53位，它的策略是忽略第53位，因此大于这个数均会 <strong>相等</strong></p>
+<p>原码 反码 补码 移码 计算机原理的，大学学过，现在已经忘了。</p>
+<p><code>Number.MAX_SAFE_INTEGER</code> <code>Number.POSITIVE_INFINITY</code> <code>Number.MAX_VALUE</code> <code>Infinity</code> </p>
+<h3 id="为什么-1Byte-是-8bit"><a href="#为什么-1Byte-是-8bit" class="headerlink" title="为什么 1Byte 是 8bit"></a>为什么 1Byte 是 8bit</h3><p>一是因为ASCII规范，二是因为物理上 内存的最小管理单位就是8bit, 1元素 管理8个小电容。</p>
+<p>1B = 8b, Byte(字节) 是硬件能访问的最小单位, bit(位) 是 储存数据的最小单位</p>
+<p>计算机只认识01, 人类认识数字字母, 建立规范将数字字母与01对应, 将字母编码为01给计算机执行。</p>
+<p>ASCII编码（全称American Standard Code for information Interchange 美国信息交换标准码）</p>
+<p>包含数字 字母 标点符号, 共计 128个, 2^7, 并扩容为 2^8, 8 bit, 1 Byte。</p>
 <h4 id="null-和-undefined区别"><a href="#null-和-undefined区别" class="headerlink" title="null 和 undefined区别"></a>null 和 undefined区别</h4><p>null 表示值就是空，如原型链的终点</p>
 <p>undefined 表示尚未被赋值，却尝试读取，如变量声明，函数无返回值</p>
 <h3 id="如何判断数据类型"><a href="#如何判断数据类型" class="headerlink" title="如何判断数据类型"></a>如何判断数据类型</h3><p>typeof instanceof toString</p>
@@ -477,7 +487,6 @@ Object<span class="token punctuation">.</span><span class="token function">defin
 <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>Xxx<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [object Xxx]</span>
 Xxx<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// [object Xxx]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
 <h4 id="如何判断变量为数组"><a href="#如何判断变量为数组" class="headerlink" title="如何判断变量为数组"></a>如何判断变量为数组</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
 arr<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">;</span> <span class="token comment">// true</span>
@@ -485,12 +494,63 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
 <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'Array'</span> <span class="token comment">// true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="如何遍历对象属性"><a href="#如何遍历对象属性" class="headerlink" title="如何遍历对象属性"></a>如何遍历对象属性</h4><p>仅<code>for/in</code>返回 原型链属性，仅 <code>Reflect.ownKeys()</code>返回 Symbol<br><code>Object.keys()</code>                 非继承，可枚举<br><code>Object.getOwnPropertyNames()</code>  非继承，可枚举，不可枚举<br><code>Reflect.ownKeys()</code>             非继承，可枚举，不可枚举，Symbol<br><code>for ... in ...</code>                  继承，可枚举</p>
-<p><strong>不可枚举</strong>: 在Object.defineProperty()方法中 <code>enumerable</code> 键值默认为 false</p>
+<p>可枚举属性 指 <code>enumerable</code> 标志设置为 true 的属性</p>
+<p>Object.defineProperty定义的属性，<code>enumerable</code> 标志默认为 false</p>
 <p><strong>js的内置方法和属性几乎都不可枚举</strong></p>
 <h4 id="如何判断两个对象是否相等"><a href="#如何判断两个对象是否相等" class="headerlink" title="如何判断两个对象是否相等"></a>如何判断两个对象是否相等</h4><p><strong>=== 与 == 的区别</strong> : <code>==</code> 类型不同时会发生类型的自动转换，转换为相同的类型后再做比较</p>
+<h4 id="Object-assign-create"><a href="#Object-assign-create" class="headerlink" title="Object.assign()/.create()"></a>Object.assign()/.create()</h4><p><code>Object.assign()</code> 将所有可枚举属性的值从一个或多个源对象复制到目标对象，并返回目标对象</p>
+<p><code>Object.create()</code> 创建一个新对象，将第一个参数作为其原型链的原型，第二个参数为其属性配置。</p>
+<h3 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h3><p>JS垃圾回收机制就是 定期找出 不再用到的变量 释放其内存。</p>
+<p>不再用到的变量，即 对没有被其他对象引用到 的对象</p>
+<p>被引用， 即内被另一个对象访问到， 或称处于另一个对象的必备内， 包括 原型链 this链 作用域。</p>
+<p>缺点: 内存碎片化 分配速度慢，需要标记整理法</p>
+<h4 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h4><p>内存泄漏: 系统执行没用到的内存，却一直没释放。</p>
+<p>全局变量、定时器、回调函数、事件监听器、递归、console</p>
+<p>减少全局变量，使用完数据及时解除引用，理清代码逻辑减少逻辑嵌套</p>
+<h3 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h3><p>利用事件冒泡机制，将DOM事件在其父节点处注册的机制。</p>
+<p>多个事件只绑定一次，减少事件绑定，减少DOM交互次数</p>
+<p>抹平平台差异，浏览器兼容，ReactNative也可使用</p>
+<p>切片编程，统一进行事件处理，</p>
+<p>批量更新，交互触发多个事件状态变化，可进行一次更新。</p>
+<h3 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7184720010563027001#heading-57">https://juejin.cn/post/7184720010563027001#heading-57</a></p>
 <h3 id="事件循环-宏任务和微任务"><a href="#事件循环-宏任务和微任务" class="headerlink" title="事件循环/宏任务和微任务"></a>事件循环/宏任务和微任务</h3><p>异步的一些 API，比如 setTimeout，setInterval，requestIdleCallback 和 requestAnimationFrame 还有 Promise，这几个有什么区别？</p>
 <p>浏览器和node的</p>
-<h3 id="什么是闭包"><a href="#什么是闭包" class="headerlink" title="什么是闭包"></a>什么是闭包</h3><h3 id="导致js里this指向混乱的原因是什么"><a href="#导致js里this指向混乱的原因是什么" class="headerlink" title="导致js里this指向混乱的原因是什么?"></a>导致js里this指向混乱的原因是什么?</h3><h3 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h3><h3 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h3><h3 id="如何定位哪行js代码导致了页面刷新？"><a href="#如何定位哪行js代码导致了页面刷新？" class="headerlink" title="如何定位哪行js代码导致了页面刷新？"></a>如何定位哪行js代码导致了页面刷新？</h3><h3 id="0-1-0-2-是否等于-0-3，如何解决？"><a href="#0-1-0-2-是否等于-0-3，如何解决？" class="headerlink" title="0.1 + 0.2 是否等于 0.3，如何解决？"></a>0.1 + 0.2 是否等于 0.3，如何解决？</h3><h3 id="数组的-sort-默认是按什么排序的？使用的什么算法？"><a href="#数组的-sort-默认是按什么排序的？使用的什么算法？" class="headerlink" title="数组的 sort 默认是按什么排序的？使用的什么算法？"></a>数组的 sort 默认是按什么排序的？使用的什么算法？</h3><h3 id="如何终止JS程序的执行"><a href="#如何终止JS程序的执行" class="headerlink" title="如何终止JS程序的执行"></a>如何终止JS程序的执行</h3><p>JS由于其特殊的 JS运行机制 事件循环机制 ，没有设置exit函数，</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>理解闭包的产生比理解闭包的概念更重要，</p>
+<p><strong>闭包的产生</strong></p>
+<p>根据词法作用域规则，函数的作用域链由函数声明位置决定，声明位置在内部的函数总是可以访问外部函数的变量，</p>
+<p>即使内部函数的调用位置，不在其声明的外层函数内，甚至外部函数已经执行结束，</p>
+<p>但内部函数 引用的外部函数变量依旧保存在内存中，这些变量的集合称为闭包.</p>
+<p><strong>闭包</strong></p>
+<p>函数与其引用的外部函数词法环境的集合.（函数，自己内部的变量，外部词法环境，可访问的外部变量）</p>
+<p>闭包存在两种情况，一种是 内部函数正常在内部执行时，外部词法环境变量均存在，<strong>只要函数执行就存在闭包</strong></p>
+<p>一种是 内部函数执行时外部函数执行上下文已被销毁，</p>
+<p>当外部函数已被销毁，内部函数 引用了的外部变量依旧会被保存，</p>
+<p>而 未被引用的外部变量 会通过 tree-shaking的方式 被销毁。</p>
+<h3 id="关于重绘和重排"><a href="#关于重绘和重排" class="headerlink" title="关于重绘和重排 ?"></a>关于重绘和重排 ?</h3><p>重绘：某些元素的外观被改变</p>
+<p>重排：局部或者整体布局发生改变，需要重新生成布局，重新排列元素。</p>
+<p>导致重排的场景：</p>
+<p>添加或删除可见的DOM元素</p>
+<p>元素的位置发生变化</p>
+<p>元素的尺寸发生变化（包括外边距、内边框、边框大小、高度和宽度等）</p>
+<p>内容发生变化，比如文本变化或图片被另一个不同尺寸的图片所替代</p>
+<p>页面一开始渲染的时候（这避免不了）</p>
+<p>浏览器的窗口尺寸变化（因为回流是根据视口的大小来计算元素的位置和大小的）</p>
+<p>如何减少重排：</p>
+<p>避免频繁操作样式</p>
+<p>减少重排范围，尽可能将样式加在具体元素上，而不是它的父级</p>
+<p>对于那些复杂的动画，对其设置 position: fixed/absolute，尽可能地使元素脱离文档流，从而减少对其他元素的影响</p>
+<p>动画样式启用GPU加速，transform、opacity、filters这些动画不会引起回流重绘</p>
+<h3 id="history路由模式需后端配合"><a href="#history路由模式需后端配合" class="headerlink" title="history路由模式需后端配合"></a>history路由模式需后端配合</h3><p>history模式下，url发生改变并刷新页面，浏览器会认为是请求了一个新的页面，发起http 请求，而新的页面是不存在的（后端没配置的话），所以就会导致404。</p>
+<p>nginx 配置静态资源代理，告诉服务器返回什么静态文件。</p>
+<p>server{<br>     listen 8080;<br>     server_name localhost;<br>     root /usr/share/nginx/lhtml/dist;<br>     try_files $uri /index.html;  // 添加这一条<br>     index index.html;<br>     charset utf-8;<br>}</p>
+<p>使用webpack解决本地运行</p>
+<p>devServer:{ <br>    historyApiFallback:true<br>}</p>
+<h3 id="WeakMap弱引用-与-强引用"><a href="#WeakMap弱引用-与-强引用" class="headerlink" title="WeakMap弱引用 与 {}强引用"></a>WeakMap弱引用 与 {}强引用</h3><p>Map 和Weakmap 的区别</p>
+<p>WeakMap是ES6中新增的一种集合类型，叫做弱映射。它和Map是兄弟关系，与Map的区别在于这个弱字，API还是Map那套API。</p>
+<p>Map的键可以是任意类型，WeakMap只接受对象作为键，不接受其它类型的值作为键</p>
+<p>Map的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键；WeakMap的键是弱引用，如果创建了一个弱引用对象，不会被垃圾回收关注，如果不再需要，weakmap中的键名对象和所对应的键值对会自动消失，不再手动删除引用。</p>
+<p>Map可以被遍历，WeakMap不能被遍历</p>
+<h3 id="导致js里this指向混乱的原因是什么"><a href="#导致js里this指向混乱的原因是什么" class="headerlink" title="导致js里this指向混乱的原因是什么?"></a>导致js里this指向混乱的原因是什么?</h3><h3 id="0-1-0-2-0-3，如何解决"><a href="#0-1-0-2-0-3，如何解决" class="headerlink" title="0.1 + 0.2 !== 0.3，如何解决"></a>0.1 + 0.2 !== 0.3，如何解决</h3><h3 id="写一个发布订阅模型"><a href="#写一个发布订阅模型" class="headerlink" title="写一个发布订阅模型"></a>写一个发布订阅模型</h3><h3 id="如何定位哪行js代码导致了页面刷新？"><a href="#如何定位哪行js代码导致了页面刷新？" class="headerlink" title="如何定位哪行js代码导致了页面刷新？"></a>如何定位哪行js代码导致了页面刷新？</h3><h3 id="0-1-0-2-是否等于-0-3，如何解决？"><a href="#0-1-0-2-是否等于-0-3，如何解决？" class="headerlink" title="0.1 + 0.2 是否等于 0.3，如何解决？"></a>0.1 + 0.2 是否等于 0.3，如何解决？</h3><h3 id="数组的-sort-默认是按什么排序的？使用的什么算法？"><a href="#数组的-sort-默认是按什么排序的？使用的什么算法？" class="headerlink" title="数组的 sort 默认是按什么排序的？使用的什么算法？"></a>数组的 sort 默认是按什么排序的？使用的什么算法？</h3><h3 id="如何终止JS程序的执行"><a href="#如何终止JS程序的执行" class="headerlink" title="如何终止JS程序的执行"></a>如何终止JS程序的执行</h3><p>JS由于其特殊的 JS运行机制 事件循环机制 ，没有设置exit函数，</p>
 <p>但是存在中断函数运行的方法，</p>
 <p>可以将整个脚本包裹为自执行函数，再 throw 或 return，</p>
 <p>上述两个方法都不能阻止异步任务的继续执行</p>
@@ -972,7 +1032,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">176.6k</span>&nbsp;字
+                class="white-color">178.5k</span>&nbsp;字
             
             
             

@@ -421,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    772
+                    954
                 </div>
                 
 
@@ -513,7 +513,12 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> cloneTarget
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="WeakMap弱引用-与-强引用"><a href="#WeakMap弱引用-与-强引用" class="headerlink" title="WeakMap弱引用 与 {}强引用"></a>WeakMap弱引用 与 {}强引用</h4><h4 id="forIn循环效率低，while循环效率高，性能优化版"><a href="#forIn循环效率低，while循环效率高，性能优化版" class="headerlink" title="forIn循环效率低，while循环效率高，性能优化版"></a>forIn循环效率低，while循环效率高，性能优化版</h4><h4 id="函数类型及特殊引用类型得专门判断"><a href="#函数类型及特殊引用类型得专门判断" class="headerlink" title="函数类型及特殊引用类型得专门判断"></a>函数类型及特殊引用类型得专门判断</h4><p><code>Map</code>， <code>Set</code> 等类型得专门判断</p>
+<h4 id="WeakMap弱引用-与-强引用"><a href="#WeakMap弱引用-与-强引用" class="headerlink" title="WeakMap弱引用 与 {}强引用"></a>WeakMap弱引用 与 {}强引用</h4><p>Map 和Weakmap 的区别</p>
+<p>WeakMap是ES6中新增的一种集合类型，叫做弱映射。它和Map是兄弟关系，与Map的区别在于这个弱字，API还是Map那套API。</p>
+<p>Map的键可以是任意类型，WeakMap只接受对象作为键，不接受其它类型的值作为键</p>
+<p>Map的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键；WeakMap的键是弱引用，如果创建了一个弱引用对象，不会被垃圾回收关注，如果不再需要，weakmap中的键名对象和所对应的键值对会自动消失，不再手动删除引用。</p>
+<p>Map可以被遍历，WeakMap不能被遍历</p>
+<h4 id="forIn循环效率低，while循环效率高，性能优化版"><a href="#forIn循环效率低，while循环效率高，性能优化版" class="headerlink" title="forIn循环效率低，while循环效率高，性能优化版"></a>forIn循环效率低，while循环效率高，性能优化版</h4><h4 id="函数类型及特殊引用类型得专门判断"><a href="#函数类型及特殊引用类型得专门判断" class="headerlink" title="函数类型及特殊引用类型得专门判断"></a>函数类型及特殊引用类型得专门判断</h4><p><code>Map</code>， <code>Set</code> 等类型得专门判断</p>
 <h3 id="手写防抖节流"><a href="#手写防抖节流" class="headerlink" title="手写防抖节流"></a>手写防抖节流</h3><p>防抖和节流都是防止某一事件频繁触发</p>
 <h4 id="防抖-debounce"><a href="#防抖-debounce" class="headerlink" title="防抖(debounce)"></a>防抖(debounce)</h4><p>施法前摇，在读条期间再次触发会打断施法，重新读条，直到正常读条结束，触发函数。</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">debounce</span><span class="token punctuation">(</span><span class="token parameter">fn<span class="token punctuation">,</span> wait</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1011,7 +1016,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">176.6k</span>&nbsp;字
+                class="white-color">178.5k</span>&nbsp;字
             
             
             
