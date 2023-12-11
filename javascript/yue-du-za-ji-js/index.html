@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    2.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    10 分
                 </div>
                 
 
@@ -465,10 +465,17 @@
 <h4 id="BigInt-用来表示大于-2-53-1-的整数"><a href="#BigInt-用来表示大于-2-53-1-的整数" class="headerlink" title="BigInt 用来表示大于 2^53-1 的整数"></a>BigInt 用来表示大于 2^53-1 的整数</h4><p><code>BigInt</code> 真没怎么用过，只知道是用来表示 大于 2^53-1 的数的，末尾加n就行</p>
 <h4 id="最大安全整数-2-53-1"><a href="#最大安全整数-2-53-1" class="headerlink" title="最大安全整数 2^53-1"></a>最大安全整数 2^53-1</h4><p>JS没有整数类型，所有数字均以 <strong>双精度64位浮点格式</strong> 表示. 由 8Byte，64bit 组成。</p>
 <p>bit63 符号位, bits62-52 指数位(移码), bits51-0 尾数位.</p>
-<p>11位指数位 用于小数浮点数的计算,  52位尾数位 用于整数位的表示, 即最大可表示 2^53-1。</p>
-<p>大于这个数需要53位去储存，但是没有第53位，它的策略是忽略第53位，因此大于这个数均会 <strong>相等</strong></p>
-<p>原码 反码 补码 移码 计算机原理的，大学学过，现在已经忘了。</p>
-<p><code>Number.MAX_SAFE_INTEGER</code> <code>Number.POSITIVE_INFINITY</code> <code>Number.MAX_VALUE</code> <code>Infinity</code> </p>
+<p>11位指数位, 52位尾数位, 最大尾数位拉满1, 再加上省略的默认整数位1, 可表示 53位1 即 2^53-1。</p>
+<p>大于52位尾数的数, 无法储存的位会被忽略，出现和小数一样的精度丢失情况，不同的数被储存后存在数与其完全相等。</p>
+<p>安全，代表精度没有损失，代表双精度展示 和 整数是一对一对应的的。</p>
+<p><code>Number.MAX_SAFE_INTEGER</code> <code>Number.POSITIVE_INFINITY</code> <code>Number.MAX_VALUE</code> <code>Infinity</code></p>
+<blockquote>
+<p>计算机采用科学计数法储存数，科学计数法 与 原码 反码 补码 移码 计算机原理，大学学过。<br>二进制1 = 2^1-1，二进制 11 = 2^2-1,二进制 111 = 2^3-1, 二进制 53位1 = 2^53-1<br>2^53 - 1 双精度64位浮点格式 默认整数位1, 加上52位尾数位全为 1，共 53位1, 为最大安全整数<br>2^53     指数位储存53, 尾数位需要储存53个0, 但最后1位0被忽略, 能被JS正常储存<br>2^53 + 1 指数位储存53，尾数位需要储存52个0, 和最后1位1被忽略, 因此与 2^53 相等。</p>
+</blockquote>
+<h3 id="为什么-0-1-0-2-不等于-0-3"><a href="#为什么-0-1-0-2-不等于-0-3" class="headerlink" title="为什么 0.1 + 0.2 不等于 0.3"></a>为什么 0.1 + 0.2 不等于 0.3</h3><p>0.1和0.2转换成二进制后会无限循环</p>
+<p>尾数位数限制52位，再加上省略的一位，这53位是JS精度范围，需要将后面多余的位截掉</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903680362151950">https://juejin.cn/post/6844903680362151950</a></p>
+<p><a target="_blank" rel="noopener" href="https://xiaolincoding.com/os/1_hardware/float.html#_2-7-%E4%B8%BA%E4%BB%80%E4%B9%88-0-1-0-2-%E4%B8%8D%E7%AD%89%E4%BA%8E-0-3">https://xiaolincoding.com/os/1_hardware/float.html#_2-7-%E4%B8%BA%E4%BB%80%E4%B9%88-0-1-0-2-%E4%B8%8D%E7%AD%89%E4%BA%8E-0-3</a></p>
 <h3 id="为什么-1Byte-是-8bit"><a href="#为什么-1Byte-是-8bit" class="headerlink" title="为什么 1Byte 是 8bit"></a>为什么 1Byte 是 8bit</h3><p>一是因为ASCII规范，二是因为物理上 内存的最小管理单位就是8bit, 1元素 管理8个小电容。</p>
 <p>1B = 8b, Byte(字节) 是硬件能访问的最小单位, bit(位) 是 储存数据的最小单位</p>
 <p>计算机只认识01, 人类认识数字字母, 建立规范将数字字母与01对应, 将字母编码为01给计算机执行。</p>
@@ -526,7 +533,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
 <p>一种是 内部函数执行时外部函数执行上下文已被销毁，</p>
 <p>当外部函数已被销毁，内部函数 引用了的外部变量依旧会被保存，</p>
 <p>而 未被引用的外部变量 会通过 tree-shaking的方式 被销毁。</p>
-<h3 id="关于重绘和重排"><a href="#关于重绘和重排" class="headerlink" title="关于重绘和重排 ?"></a>关于重绘和重排 ?</h3><p>重绘：某些元素的外观被改变</p>
+<h3 id="关于重绘和重排"><a href="#关于重绘和重排" class="headerlink" title="关于重绘和重排"></a>关于重绘和重排</h3><p>重绘：某些元素的外观被改变</p>
 <p>重排：局部或者整体布局发生改变，需要重新生成布局，重新排列元素。</p>
 <p>导致重排的场景：</p>
 <p>添加或删除可见的DOM元素</p>
@@ -1032,7 +1039,7 @@ arr <span class="token keyword">instanceof</span> <span class="token class-name"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">178.5k</span>&nbsp;字
+                class="white-color">178.8k</span>&nbsp;字
             
             
             
