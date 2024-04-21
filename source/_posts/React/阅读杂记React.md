@@ -72,7 +72,13 @@ React 18之前，只有在React 事件处理函数中才会进行批处理更新
 
 __虚拟DOM具有哪些属性__
 
-注意，组件中通过props是拿不到ref 和key的，被delete并挂载在了vdom上，但可以拿到children
+注意，组件中通过props是拿不到 父组件传递的ref 和key的，被delete并挂载在了vdom上，但可以拿到children
+
+key, type, props, children, ref
+
+__Fiber具有哪些属性__
+
+child sibling updateQueue flags lanes childLanes memoizedState memoizedProps alternate
 
 ## Diff算法(React15)
 
@@ -104,6 +110,16 @@ __React的 Diff算法 只同层级比较，不同key不同type直接替换整个
 
 > 需要移动: 可复用的 旧真实DOM 索引 比上一个不需要移动的节点的索引要小的话
 
+## Diff算法(React16)
+
+reconcileChildrenArray
+
+https://zhuanlan.zhihu.com/p/570962640
+
+https://react.iamkasong.com/diff/multi.html#demo1
+
+https://qborfy.com/today/20230117.html
+
 ## key的作用
 
 __提升diff算法的判断速度__
@@ -125,6 +141,11 @@ __2. 如果不存在对 数据头 的添加删除操作，则可以使用index�
 __3. 如果包含输入类的DOM，界面会出现问题__
 
 __Diff算法(React16+)未解决__
+
+
+## 协调阶段和提交阶段
+
+https://www.lumin.tech/blog/react-0-base/
 
 ## 事件机制
 
@@ -311,6 +332,46 @@ componentDidUpdate
 componentWillUnmount
 
 __生命周期的父子组件的执行顺序？__
+父子组件初始化
+
+父组件 constructor
+父组件 getDerivedStateFromProps
+父组件 render
+子组件 constructor
+子组件 getDerivedStateFromProps
+子组件 render
+子组件 componentDidMount
+父组件 componentDidMount
+
+子组件修改自身state
+
+子组件 getDerivedStateFromProps
+子组件 shouldComponentUpdate
+子组件 render
+子组件 getSnapShotBeforeUpdate
+子组件 componentDidUpdate
+
+父组件修改props
+
+父组件 getDerivedStateFromProps
+父组件 shouldComponentUpdate
+父组件 render
+子组件 getDerivedStateFromProps
+子组件 shouldComponentUpdate
+子组件 render
+子组件 getSnapShotBeforeUpdate
+父组件 getSnapShotBeforeUpdate
+子组件 componentDidUpdate
+父组件 componentDidUpdate
+
+卸载子组件
+
+父组件 getDerivedStateFromProps
+父组件 shouldComponentUpdate
+父组件 render
+父组件 getSnapShotBeforeUpdate
+子组件 componentWillUnmount
+父组件 componentDidUpdate
 
 __函数组件的生命周期？__
 
@@ -333,6 +394,7 @@ ref的本质就是创建一个 `{current:null}` 对象，并将ref对象传递�
 > 本质，createContext() 返回一个context，具有两个属性，provider和consumer，
 > 这两个属性对象具有 _context属性，又指向context
 > 之后所有给provider挂载的属性，都会挂载进provider._context对象中，供子代consumer使用。
+
 
 
 
@@ -467,15 +529,17 @@ __一种数据结构名称__ : 一个Fiber节点对应一个React element，也�
 
 __React的最小工作单元__ : 运行时,Fiber 储存了该组件改变的状态、要执行的操作（删除/插入/更新...）。
 
+__核心理念__: 可中断 可恢复 优先级
 
-## Diff算法(React18)
 
-React同时维护两棵虚拟DOM树：一棵表示当前的DOM结构，另一棵在React状态变更将要重新渲染时生成。
 
-React通过比较这两棵树的差异，决定是否需要修改DOM结构，以及如何修改。
 
-但是目前的代码，似乎是自上而下，一边生成新vdom，一边进行比较更新，
+## 为什么Vue不需要Fiber
 
-而不是生成整个新vdom树，再新旧vdom树进行比较更新。
 
-旧的虚拟DOM树一直存在，新的一边对比一边生成？
+
+### AOT vs JIT
+
+AOT，Ahead Of Time，提前编译或预编译，宿主环境获得的是编译后的代码，在浏览器中我们可以直接下载并运行编译后的代码，比如：Vue的template是通过Vue-loader编译后才能使用。
+
+JIT，Just In Time，即时编译 ，代码在宿主环境编译并执行，每个文件都是单独编译的，当我们更改代码时不需要再次构建整个项目，比如：React中JSX只有在浏览器运行的时候才知道具体代码。

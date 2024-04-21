@@ -10,6 +10,8 @@ tags:
 
 ### 微前端
 
+https://www.lumin.tech/blog/micro-frontends-1-concept/
+
 #### 第一步，解决了什么痛点:
 __大应用拆分__
 __渐进式技术栈升级__
@@ -31,15 +33,34 @@ systemJS:  实现动态加载模块
 
 iframe 优势是能完美解决 样式隔离、js 隔离, 劣势是 无法突破这些隔离.
 
-__路由隔离__. 例如: 刷新丢失URL,无法 前进 后退
+__URL隔离__. 例如: 刷新丢失URL,无法 前进 后退
 
-__UI隔离,DOM结构不共享,无法合并计算样式.__ 例如: iframe内弹出的弹出,要求 遮罩 居中 随浏览器Resize
+__UI隔离__,DOM结构不共享,无法合并计算样式. 例如: iframe内弹出的弹出,要求 遮罩 居中 随浏览器Resize
 
-__全局上下文隔离，内存变量不共享__ 例如: 无法 数据状态同步, iframe设置的cookie会被视为第三方cookie, 被浏览器禁止.
+__JS隔离__,全局上下文隔离，内存变量不共享 例如: 无法 数据状态同步, iframe设置的cookie会被视为第三方cookie, 被浏览器禁止.
 
 __慢__ 每次进入 都须 重新加载资源, 重建浏览器上下文
 
 [Why Not Iframe](https://www.yuque.com/kuitos/gky7yw/gesexv)
+
+Why Not Single-spa: 无JS沙箱，无通信机制，无预加载
+
+京东的 Micro App，字节的 GarFish，腾讯的 无界
+
+选择qiankun最重要的一点: 阿里大品牌背书，社区活跃度高，demo，使用者众多，甚至有钉钉群微信群，大佬免费在线解答。
+
+不管用哪个新技术，在本地化的过程中，不出问题是不可能的，重要的是有没有解决方案，有没有人遇过这个问题。
+
+当然还有更重要的一点: 我们的大佬指定要阿里的qiankun
+
+### 父子应用通信
+
+路由参数、localStorage、eventBus、生命周期函数
+
+
+### qiankun接入过程中遇到的问题
+
+
 
 ### qiankun使用
 
