@@ -62,6 +62,40 @@ Why Not Single-spa: 无JS沙箱，无通信机制，无预加载
 
 
 
+### CSS隔离方案
+
+css-module，scoped 打包的时候生成选择器名字实现隔离
+BEM 规范
+CSS in js
+shadowDOM 严格的隔离
+
+### JS隔离方案
+
+__snapshotSandbox： 记录 window 对象，每次 unmount 都要和微应用的环境进行 Diff__
+激活沙箱时，将window的快照信息存到windowSnapshot中， 
+如果modifyPropsMap有值，还需要还原上次的状态；
+激活期间，可能修改了window的数据；
+退出沙箱时，将修改过的信息存到modifyPropsMap里面，并且把window还原成初始进入的状态。
+
+可应用于不支持proxy的浏览器，浪费内存，污染window
+
+__legacySandbox:在微应用修改 window.xxx 时直接记录 Diff，将其用于环境恢复__
+在 snapshotSandbox 的基础上优化了diff，
+通过使用proxy 监听每一次微应用对window的 修改 新增操作。
+将修改新增前的属性记录在两个对象上，这样在还原的时候就不需要diff对比新旧window，直接还原。
+addedPropsMapInSandbox、modifiedPropsOriginalValueMapInSandbox
+
+减少了diff过程，依旧污染window，依旧同时只能单例运行
+
+__proxySandbox：每个微应用都有自己的proxy__
+激活沙箱后，每次对window取值的时候，先从自己沙箱环境的fakeWindow里面找，
+如果不存在，就从rawWindow(外部的window)里去找；
+当对沙箱内部的window对象赋值的时候，会直接操作fakeWindow，而不会影响到rawWindow。
+每个微应用都有自己的proxy
+
+支持多个子应用同时运行，不污染全局window
+
+
 ### qiankun使用
 
 ```js
@@ -105,20 +139,3 @@ registerMicroApps([
 start()
 
 ```
-
-### CSS隔离方案
-
-css-module，scoped 打包的时候生成选择器名字实现隔离
-BEM 规范
-CSS in js
-shadowDOM 严格的隔离
-
-### JS隔离方案
-
-window快照方案: 储存一份window属性快照，对比，记录属性新增修改，失活时从window删除变化属性性，激活时复原变化属性
-
-浪费内存
-
-演化方案: 仅储存window 新增修改的属性，不储存window属性，基于proxy
-
-最终方案：多例代理，基于proxy
