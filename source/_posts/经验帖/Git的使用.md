@@ -83,7 +83,17 @@ git checkout master 回到原来的分支
 
 这样就可以自由查看某一个版本的代码了，这种方法正是我要找的。
 
+## git拉取远程新分支
 
+`git branch` 查看本地分支
+`git branch -r` 查看所有远程分支
+`git branch -D xxx` 删除本地指定分支
+`git checkout -b xxx origin/xxx` 新建并自动切换到本地分支xxx,并和远程分支建立映射关系
+
+`git branch -a` 查看所有远程和本地分支
+`git branch -vv` 查看本地分支和远程分支的映射关系
+
+`origin`为git地址的标志
 ## git 拉取冲突
 
 解决方案：git stash
@@ -93,10 +103,6 @@ git checkout master 回到原来的分支
 之后手动删除冲突的部分（其中<<<<<<与=====中的代码为服务器改动的代码，=====与>>>>>>中的代码为本地改动的代码）
 
      git stash pop
-
-## 拉取代码覆盖本地
-
-### git fetch
 
 ## git reset --hard 丢弃本地所有修改
 
