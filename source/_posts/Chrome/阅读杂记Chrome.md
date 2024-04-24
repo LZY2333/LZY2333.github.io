@@ -32,9 +32,20 @@ summary: Chrome杂记，阅读杂记系列为 【对日常看过的一些有趣�
 14.准备渲染进程
 15.提交文档
 
-[首屏渲染涉及的知识体系](https://zhuanlan.zhihu.com/p/34453198?group_id=957277541711540224)
-
 ### 浏览器渲染流程(已经拆分，待总结)
+
+### HTTP缓存 协商缓存 强缓存 弱缓存 CDN
+
+### cookie sessionStorage localStorage
+cookie
+session storage
+local storage
+indexedDB:用于客户端存储大量的结构化数据（文件/二进制大型对象（blobs））。该API使用索引实现对数据的高性能搜索。
+cache storage：用于对Cache对象的存储。
+
+### 跨域
+Fetch
+
 
 ### 浏览器
 
@@ -60,14 +71,7 @@ __插件进程__
 插件易崩溃,通过插件进程来隔离,保证不对浏览器和页面造成影响
 [浏览器渲染进程的多线程机制](https://blog.csdn.net/fredricen/article/details/105217588)
 
-#### 浏览器的存储有哪些及区别
-cookie
-session storage
-local storage
-indexedDB:用于客户端存储大量的结构化数据（文件/二进制大型对象（blobs））。该API使用索引实现对数据的高性能搜索。
-cache storage：用于对Cache对象的存储。
 
-#### 跨域
 
 
 
@@ -154,11 +158,6 @@ IP 负责送达目标主机 UDP负责送达具体应用
 所以第三次握手才可以确认客户端的接收能力。不然容易出现丢包的现象。
 
 #### 五层因特网协议栈
-
-#### HTTP 缓存，协商缓存，强缓存。
-
-#### cookie 和 storage有什么区别
-
 #### URI和URL
 
 UDP 协议有什么优点？
