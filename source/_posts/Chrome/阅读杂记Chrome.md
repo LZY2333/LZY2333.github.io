@@ -43,6 +43,9 @@ local storage
 indexedDB:用于客户端存储大量的结构化数据（文件/二进制大型对象（blobs））。该API使用索引实现对数据的高性能搜索。
 cache storage：用于对Cache对象的存储。
 
+sessionStorage 不能在多个窗口或标签页之间共享数据，
+但是当通过 window.open 或链接打开新同源页面时(不能是新窗口)，新页面会复制前一页的 sessionStorage
+
 ### 跨域
 Fetch
 

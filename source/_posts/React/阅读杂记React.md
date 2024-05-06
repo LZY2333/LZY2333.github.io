@@ -406,7 +406,7 @@ ref的本质就是创建一个 `{current:null}` 对象，并将ref对象传递�
 [react - 关于 react 为什么要从 ExpirationTime 切换到 lane 的一次考古](https://juejin.cn/post/7095307142046941191)
 顺便看看这个大佬的其他文章
 
-## 类组件和函数组件
+## 类组件 和 函数组件 对比
 
 类组件面向对象编程，函数组件函数式思想
 都可以接收属性并返回ReactElement
@@ -423,29 +423,10 @@ Hooks 提供了更细粒度的逻辑组织与复用
 
 __类组件的缺点__
 this 的模糊性
-业务逻辑散落在生命周期中
+业务逻辑散落在生命周期中，生命周期在继承时不可见
 类组件可以通过继承实现逻辑复用，但是继承的灵活性差，细节屏蔽多，不推荐使用
 类组件需要创建并保存实例，会占用一定内存
 
-## React和Vue对比
-
-[珠峰](http://zhufengpeixun.com/strong/html/126.11.react-1.html#t112.%E4%B8%BA%E4%BB%80%E4%B9%88%20React%20%E4%BC%9A%E5%BC%95%E5%85%A5%20JSX?)
-
-虚拟dom是什么? 原理? 优缺点?
-
-vue 和 react 在虚拟dom的diff上，做了哪些改进使得速度很快?
-
-vue 和 react 里的key的作用是什么? 为什么不能用Index？用了会怎样? 如果不加key会怎样?
-react 与 vue 数组中 key 的作用是什么？
-提升diff算法的判断速度，
-diff算法 会首先判断 新旧 key 和 元素类型 是否一致，如果一致再去递归判断子节点
-
-React 和 Vue 的本质区别: 
-Vue 是静态分析 template 文件，采用预编译优化，在解析模板的同时构建 AST 依赖树，同时标记出可能会变化的动态节点。
-利用数据双向绑定，进行数据拦截或代理，进行响应式处理。从而能够比较精准的计算出有改变的 DOM，减少计算量。
-
-React 是局部渲重新渲染，核心就是一堆递归的 React.createElement 的执行调用。
-其优化的方向是不断的优化 React.createElement 的执行速度，让其更快，更合理的创建最终的元素。
 
 ## 性能优化
 React.PureComponent,React.memo,当属性不变时，不重新渲染，跳过更新逻辑
@@ -534,9 +515,13 @@ __核心理念__: 可中断 可恢复 优先级
 
 
 
+## React 和 Vue 对比
+
+详情见 vue文件夹下的《React和Vue的区别》
+
 ## 为什么Vue不需要Fiber
 
-
+详情见 vue文件夹下的《React和Vue的区别》
 
 ### AOT vs JIT
 
