@@ -12,6 +12,10 @@ summary:
 
 ## React 和 Vue 的区别
 
+[React和Vue全方位对比](https://juejin.cn/post/7250834664260829243?searchId=2024050611250976DA66D7732C54253995)
+
+[个人理解Vue和React区别](https://juejin.cn/post/6844904158093377549?from=search-suggest)
+
 [珠峰](http://zhufengpeixun.com/strong/html/126.11.react-1.html#t112.%E4%B8%BA%E4%BB%80%E4%B9%88%20React%20%E4%BC%9A%E5%BC%95%E5%85%A5%20JSX?)
 
 虚拟dom是什么? 原理? 优缺点?

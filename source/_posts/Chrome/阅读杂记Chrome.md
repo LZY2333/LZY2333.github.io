@@ -36,6 +36,10 @@ summary: Chrome杂记，阅读杂记系列为 【对日常看过的一些有趣�
 
 ### HTTP缓存 协商缓存 强缓存 弱缓存 CDN
 
+304 协商缓存 还是要和服务器通信一次
+
+强制浏览器使用本地缓存（cache-control/expires）
+
 ### cookie sessionStorage localStorage
 cookie
 session storage
