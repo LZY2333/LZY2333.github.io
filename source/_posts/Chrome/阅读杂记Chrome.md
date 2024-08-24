@@ -36,6 +36,10 @@ summary: Chrome杂记，阅读杂记系列为 【对日常看过的一些有趣�
 
 ### HTTP缓存 协商缓存 强缓存 弱缓存 CDN
 
+304 协商缓存 还是要和服务器通信一次
+
+强制浏览器使用本地缓存（cache-control/expires）
+
 ### cookie sessionStorage localStorage
 ```js
 document.cookie = "username=xxx; expires=Thu, 15 Dec 2023 16:00:00 UTC; path=/";
@@ -59,6 +63,9 @@ session storage
 local storage
 indexedDB:用于客户端存储大量的结构化数据（文件/二进制大型对象（blobs））。该API使用索引实现对数据的高性能搜索。
 cache storage：用于对Cache对象的存储。
+
+sessionStorage 不能在多个窗口或标签页之间共享数据，
+但是当通过 window.open 或链接打开新同源页面时(不能是新窗口)，新页面会复制前一页的 sessionStorage
 
 ### 跨域
 

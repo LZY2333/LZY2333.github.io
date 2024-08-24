@@ -40,6 +40,7 @@ this 可在函数的第一个参数处做类型约束
 > 或 getName(this: typeof person, key: PersonKey) 冒号后的typeof，也能被识别为TS
 > 返回的是 类型本身
 > 而语句中的 typeof 会被视为 js语法， 非获取类型的功能，而是返回类型字符串
+
 ```ts
 const person = { name: "lzy", age: 25 }
 type Person = typeof person;
@@ -64,7 +65,6 @@ Ignoring tsconfig.json, compiles the specified files with default compiler optio
 
 找了半天为啥一直说我target不是es5，明明是在config里配置好了...
 
-
 ### 类的使用注意事项
 
 原型属性 (get xxx 属性访问器来实现) 、原型方法 (`类名.prototype`实现)
@@ -82,7 +82,6 @@ Ignoring tsconfig.json, compiles the specified files with default compiler optio
 1.static修饰
 
 2.静态属性将挂载在类(函数对象)上
-
 
 super:
 
