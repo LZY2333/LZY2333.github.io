@@ -139,6 +139,7 @@ addedPropsMapInSandbox、modifiedPropsOriginalValueMapInSandbox
 支持多个子应用同时运行，不污染全局 window
 
 ### qiankun 接入过程中遇到的问题
+
 解决方案去哪找: 谷歌，qiankun github的issue，qiankun的微信支持群。
 
 __微应用通信__

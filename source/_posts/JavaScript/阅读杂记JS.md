@@ -175,32 +175,6 @@ JS垃圾回收机制就是 定期找出 不再用到的变量 释放其内存。
 批量更新，交互触发多个事件状态变化，可进行一次更新。
 
 
-
-### 跨域
-
-https://juejin.cn/post/7184720010563027001#heading-57
-
-
-### Cookie、LocalStorage、SessionStorage和IndexedDB
-
-https://juejin.cn/post/7247504715725586490?searchId=2024041514290633254FE3BE4D4C948C03
-```js
-document.cookie = "username=xxx; expires=Thu, 15 Dec 2023 16:00:00 UTC; path=/";
-sessionStorage.setItem("key", "value"); // getItem removeItem clear()
-localStorage.setItem("key", "value"); // getItem removeItem clear()
-```
-储存容量
-cookie：4KB； LocalStorage和SessionStorage：5MB到10MB； indexedDB：无上限
-
-生命周期
-cookie：持久保存，可以设置过期时间。
-LocalStorage：持久保存，除非被显式清除。
-indexedDB：持久保存，除非被显式清除。
-SessionStorage：关闭浏览器标签或窗口后清除。
-
-安全性
-cookie最不安全，可以设置路径、域名和安全标志来限制访问。
-
 ### CommonJS AMD CMD UMD ES6Module
 
 CommonJS(NodeJS): exports/require 模块作用域，同步加载，值的拷贝

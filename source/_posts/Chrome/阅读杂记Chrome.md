@@ -37,6 +37,23 @@ summary: Chrome杂记，阅读杂记系列为 【对日常看过的一些有趣�
 ### HTTP缓存 协商缓存 强缓存 弱缓存 CDN
 
 ### cookie sessionStorage localStorage
+```js
+document.cookie = "username=xxx; expires=Thu, 15 Dec 2023 16:00:00 UTC; path=/";
+sessionStorage.setItem("key", "value"); // getItem removeItem clear()
+localStorage.setItem("key", "value"); // getItem removeItem clear()
+```
+储存容量
+cookie：4KB； LocalStorage和SessionStorage：5MB到10MB； indexedDB：无上限
+
+生命周期
+cookie：持久保存，可以设置过期时间。
+LocalStorage：持久保存，除非被显式清除。
+indexedDB：持久保存，除非被显式清除。
+SessionStorage：关闭浏览器标签或窗口后清除。
+
+安全性
+cookie最不安全，可以设置路径、域名和安全标志来限制访问。
+
 cookie
 session storage
 local storage
@@ -44,8 +61,51 @@ indexedDB:用于客户端存储大量的结构化数据（文件/二进制大型
 cache storage：用于对Cache对象的存储。
 
 ### 跨域
-Fetch
 
+ajax请求 与 当前页面URL 不同源: 协议+域名+端口
+
+跨域解决方案
+__JSONP__: 用script标签src属性来发送请求, 因为跨域只对ajax有限制，老浏览器支持
+
+__nginx__: 在同源服务器内设置反向代理，后端无跨域限制
+
+__CORS__: 后端配置允许跨域
+
+对于 __CORS简单请求__, 浏览器会自动添加 Origin 头部
+只需要服务端设置响应头Access-Control-Allow-Origin
+get post head 且 请求头中只有Accept Accept-Language Content-Language Content-Type
+
+对于 __CORS非简单请求__, 浏览器会先发送一个预检请求 OPTIONS 
+
+```js
+app.get("/api/sayHello", (req, res) => {  
+    // 允许有所的地址跨域  
+    res.setHeader("Access-Control-Allow-Origin", "*")  
+    // 允许所有的请求方法 GET, POST, PUT, DELETE 
+    res.setHeader("Access-Control-Allow-Methods", "*")
+    // 允许的非简单请求的头部字段，如（Content-Type、X-Requested-With、Accept、Origin、Access-Control-Request-Method、Access-Control-Request-Headers） 
+    res.setHeader("Access-Control-Allow-Headers", "*")  
+    // 允许携带cookie  
+    res.setHeader("Access-Control-Allow-Credentials", "*")
+    // 设置预检请求（OPTIONS 方法）的结果缓存时间。
+    res.setHeader("Access-Control-Max-Age", "*")
+    res.send({ name: "hello word" })  
+})  
+  
+app.listen(3000, () => {  
+    console.log("service running at 3000 ...")  
+})
+```
+> 发送cookie，需要服务器端设置 Access-Control-Allow-Credentials , 需要 AJAX 请求设置 withCredentials
+
+```js
+location /api {
+    proxy_pass http://api.example.com; # 目标服务器地址
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+```
 
 ### 浏览器
 
