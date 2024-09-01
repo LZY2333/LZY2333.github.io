@@ -6,8 +6,6 @@ tags:
     - React
 ---
 
-# Hooks
-
 Hooks 让函数式组件拥有了 生命周期、状态管理、逻辑复用等,
 
 所有作为组件应当具备的能力,并避开了class式的写法。
@@ -29,6 +27,7 @@ __为什么需要hooks__
 [大佬的reactHooks源码解析,存一下回头看](https://mp.weixin.qq.com/s/4-JYjizitK-VbRk5CQqlKA)
 
 [React官网-为什么我们创造了Hooks](https://react.docschina.org/docs/hooks-intro.html#motivation)
+
 ## useState
 
 给函数组件添加 重复渲染时可读取的 内部state
@@ -59,7 +58,7 @@ function App(){
 一个 __全局数组hookStates__ 一个 __全局下标hookIndex__ 初始为0.
 
 初始化时,
- 
+
 整个应用的 `useState` 随着组件初始化被依次调用,
 
 每个`useState` 将数据都放在 `hookIndex` 对应的 `hookStates[hookIndex]`中, 最后 `hookIndex++`.
@@ -72,7 +71,7 @@ function App(){
 
 更新时，
 
-再次将 全局变量 `hookIndex` 置为 0, 
+再次将 全局变量 `hookIndex` 置为 0,
 
 这样 第一个 useState 返回 `hookStates[hookIndex]`，并最后 `hookIndex++`.
 
@@ -165,6 +164,7 @@ function App(){
 
 __原理__
 注意,`dependencies` 是潜比较
+
 ```js
 export  function useMemo(factory,dependencies){
     if(hookStates[hookIndex]){ // 如果以前有,就进行比较
@@ -197,6 +197,7 @@ export  function useMemo(factory,dependencies){
 与`useState`不同,非直接覆盖`oldState`,
 
 可通过`reducer`事先设定处理方式,可获取到`oldState`,并根据`action`处理更多种更复杂的情况,
+
 ```js
 function reducer(state={number:0}, action) {
   switch (action.type) {
@@ -222,6 +223,7 @@ function Counter(){
 ```
 
 __简单实现原理__
+
 ```js
 export function useReducer(reducer, initialState) {
     hookStates[hookIndex] = hookStates[hookIndex] || initialState;
@@ -284,6 +286,7 @@ function App(){
 ```
 
 __简单实现__
+
 ```js
 function useContext(context){
     return context._currentValue;
@@ -291,6 +294,7 @@ function useContext(context){
 ```
 
 ## useEffect
+
 `useEffect` 操作副作用,其接收的函数会在组件渲染完成后执行.
 
 在函数组件主体内（这里指在 React 渲染阶段）改变 DOM、添加订阅、设置定时器、记录日志
@@ -318,6 +322,7 @@ function Counter() {
 
 __简单实现__
 注意,`dependencies` 是浅比较
+
 ```js
 export function useEffect(callback,dependencies){
     let currentIndex = hookIndex;
@@ -351,6 +356,7 @@ export function useEffect(callback,dependencies){
 浏览器绘制属于宏任务,`useLayoutEffect`会在能拿到DOM,但浏览器未开始绘制时执行
 
 使用
+
 ```js
 const Animate = ()=>{
     const ref = React.useRef();
@@ -372,7 +378,9 @@ const Animate = ()=>{
 
 `useRef`只是创建了一个对象,然后将该对象保存在了链表里以后能拿到而已
 
-reactDOM 在执行渲染时会给这个对象绑定上该组件对应的真实DOM.
+reactDOM 在执行渲染时，检测到该ReactElement存在Ref属性，
+
+会给这个ReactElement绑定上该组件对应的真实DOM.
 
 ```js
 export function useLayoutEffect(callback,dependencies){
