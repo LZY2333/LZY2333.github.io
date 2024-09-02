@@ -52,7 +52,6 @@ git mylog
 
 4.`git reset --hard xxx filename`回滚某个文件到指定版本号(需要进入该文件所在目录)
 
-
 使用 `git push -f` 提交更改,(这一步很危险,会产生代码丢失,一定要确定是想要的结果)
 
 如果用`git push`会报错,因为我们本地库HEAD指向的版本比远程库的要旧
@@ -94,6 +93,7 @@ git checkout master 回到原来的分支
 `git branch -vv` 查看本地分支和远程分支的映射关系
 
 `origin`为git地址的标志
+
 ## git 拉取冲突
 
 解决方案：git stash

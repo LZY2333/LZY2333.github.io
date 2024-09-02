@@ -33,15 +33,15 @@ reactDOM 在执行渲染时, 检测到某ReactElement挂载了Ref属性,
 
 `React.forwardRef` 用于转发ref, 让函数组件能获取到父组件挂载的ref
 
-`React.forwardRef` 本质上是接收一个 函数组件render, 返回 具有render属性, type属性 的 virtualDOM对象
+`React.forwardRef` 本质只是简单的接收一个 函数组件render, 返回 具有render属性, type属性 的 虚拟DOM对象
 
-reactDom解析到一个组件一个 virtualDOM, type为forwardRef时,
+reactDom解析到一个虚拟DOM type为forwardRef时,即为 forwardRef生成的组件,
 
-就会将props和ref 传递给render函数执行, 拿到 virtualDOM对象
+就会将props和ref 传递给render函数执行, 拿到 虚拟DOM对象, 再继续递归挂载真实DOM
 
 > 裸函数组件无法直接从Props内拿到ref,
 > 打包时, babel解析组件标签, ref作为props属性传递,
-> 执行时, `React.createElement` 执行会删除Props上的ref, key, 将其挂载为Props同级属性, 返回 virtualDOM对象
+> 执行时, `React.createElement` 执行会删除Props上的ref, key, 将其挂载为Props同级属性, 返回 虚拟DOM对象
 
 ## Mount
 
@@ -49,4 +49,4 @@ mount阶段仅比render阶段多一个Diff操作
 
 `DOM-Diff` 用于找出 新旧虚拟DOM的不同, 根据 虚拟DOM的不同 去更新真实DOM
 
-> render 和 mount 三个步骤相同: 生成 virtualDOM, 转化 真实DOM,  挂载 真实DOM
+> render 和 mount 三个步骤相同: 生成 虚拟DOM, 转化 真实DOM,  挂载 真实DOM
