@@ -584,7 +584,7 @@ __为什么子节点对比这么复杂__
 
 __子节点对比__
 
-1. 用map储存好oldVChildren, 然后依次一个个检查 newVChildren 数组中的元素, 
+1. 用map储存好oldVChildren, 遍历 newVChildren, 
 
 2. 如果 map 中存在该 该元素，代表可以复用，从map中删除。
 
@@ -607,9 +607,11 @@ function updateChildren(parentDOM, oldVChildren, newVChildren) {
         let newKey = newVChild.key || index;
         let oldVChild = keyedOldMap[newKey];
         if (oldVChild) {
-            //更新老节点,递归在这里
-            updateElement(oldVChild, newVChild); // * 有老的节点,无需移动的,直接更新属性就行,不放入patch
-            if (oldVChild.mountIndex < lastPlacedIndex) { // 有老节点,且其 old真实DOM 在当前已排好的 队列之后,需要移动插入
+            // 更新老节点,递归在这里
+            // 有老的节点,无需移动的,直接更新属性就行,不放入patch
+            updateElement(oldVChild, newVChild);
+            if (oldVChild.mountIndex < lastPlacedIndex) {
+                // 有老节点,且其 old真实DOM 在当前已排好的 队列之前,需要移动后面
                 patch.push({
                     type: MOVE,
                     oldVChild,
@@ -630,7 +632,7 @@ function updateChildren(parentDOM, oldVChildren, newVChildren) {
     });
     //获取所有的要移动的老节点
     let moveChild = patch.filter(action => action.type === MOVE).map(action => action.oldVChild);
-    //把剩下的没有复用到的老节点和要移动的节点全部从DOM树中删除
+    // keyedOldMap 中剩下的 都是没有复用到的老节点，和要移动的节点全部从DOM树中删除
     let deleteVChildren = Object.values(keyedOldMap)
     deleteVChildren.concat(moveChild).forEach(oldVChild => {
         let currentDOM = findDOM(oldVChild);
