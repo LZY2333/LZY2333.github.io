@@ -49,13 +49,9 @@ reactDom解析到一个虚拟DOM type为forwardRef时,即为 forwardRef生成的
 
 在React中由 `reconcileSingleElement`, `reconcileChildrenArray` 两个函数进行处理。
 
-`reconcileSingleElement`，通过type比较
+diff 最核心的是对 新旧子虚拟DOM 的比较，用到了最关键的key值，根据key值是否相同 判断是否能复用真实DOM
 
-1. 如果二者type不同，卸载 oldVdom 整个分支，根据 新vdom 创建 新真实DOM分支，并插入。
-
-2. 如果二者type相同，复用 旧真实DOM，更新 真实DOM的Props属性，`updateChildren` 更新子节点。
-
-`reconcileChildrenArray` 通过key值比较
+`reconcileChildrenArray`
 
 __遍历__ 新虚拟DOM数组, 对每个 新虚拟DOM 都会记录其需要做的操作，创建 移动 删除
 
@@ -69,6 +65,12 @@ __删除__ 在真实DOM中卸载 需要移动 以及没复用到的 旧真实DOM
 
 __创建__ 重新按顺序创建更新 Move节点的真实DOM 以及 Create节点的真实DOM 并插入文档流
 
+`reconcileSingleElement`，通过type比较
+
+1. 如果二者type不同，卸载 oldVdom 整个分支，根据 新vdom 创建 新真实DOM分支，并插入。
+
+2. 如果二者type相同，复用 旧真实DOM，更新 真实DOM的Props属性，`updateChildren` 更新子节点。
+
 > 0. React的 Diff算法 只同层级比较，不同key不同type直接替换整个分支
 > 1. 可以直接复用而不需要移动的节点:
 > diff 会永远保证后续复用的旧节点相对位置一致，不一致的可复用旧节点会被标记为move, 其真实DOM会先卸载再更新插入
@@ -78,7 +80,41 @@ __创建__ 重新按顺序创建更新 Move节点的真实DOM 以及 Create节�
 
 ## React.memo原理
 
+react.memo返回的不是虚拟dom是一个普通对象，&&type为memo。`<memoedFunction />`标签解析返回为&&type是reactNode，type是memo返回的对象，type.type是函数组件render
+
+type就是函数组件函数本身，作为函数传入，创建dom时调用。
+
 ### 浅比较
 
 > PureComponent 就是基于类组件的 shouldComponentUpdate 与 浅比较 实现
 
+## 类组件存在三个问题
+
+https://legacy.reactjs.org/docs/hooks-intro.html#motivation
+
+第四点，类组件对渲染性能优化不友好
+
+## Hooks原理
+
+不建议使用useLayoutEffect
+
+https://react.dev/reference/react/useLayoutEffect#caveats
+
+原始版本是全局变量来控制hooks，react18不是。都是存在数据池中。hooks就是从数据池中捞数据并返回。
+
+## Fiber架构为何被引入
+
+js单线程占用浏览器主进程和渲染流程互斥。js递归调用执行太久导致卡顿明显，且递归调用无法挂起和恢复。浏览器空闲时再进行协调计算，减少对渲染进程的阻塞。
+
+想要实现挂起和恢复，首先要做任务的拆分。于是需要fiber
+
+虚拟dom -> fiber树 -> 真实dom -> 挂载
+
+fiber作为桥梁能做很多事情
+
+> 帧与卡顿
+
+https://developer.chrome.com/blog/inside-browser-part3?hl=zh-cn#inner-workings-of-a-render-process
+
+> requestIdleCallback，获取浏览器空闲时间。但react源码并没有使用此api，存在浏览器兼容问题，调用时间不可控，子任务消耗大同样会有性能问题，没有优先级。
+> 组件和原生标签都会生成fiber节点
