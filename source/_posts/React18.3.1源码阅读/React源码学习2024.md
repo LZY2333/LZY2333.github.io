@@ -102,7 +102,7 @@ https://react.dev/reference/react/useLayoutEffect#caveats
 
 原始版本是全局变量来控制hooks，react18不是。都是存在数据池中。hooks就是从数据池中捞数据并返回。
 
-## Fiber架构为何被引入
+## Fiber架构优点
 
 js单线程占用浏览器主进程和渲染流程互斥。js递归调用执行太久导致卡顿明显，且递归调用无法挂起和恢复。浏览器空闲时再进行协调计算，减少对渲染进程的阻塞。
 
@@ -112,9 +112,33 @@ js单线程占用浏览器主进程和渲染流程互斥。js递归调用执行�
 
 fiber作为桥梁能做很多事情
 
+为什么要使用fiber架构，fiber架构能拆分任务。
+1.从而实现，时间切片，并发模式，优先级调度，从而解决性能问题。
+2.更好的可维护性可扩展，使得内部代码更模块化。
+
 > 帧与卡顿
 
 https://developer.chrome.com/blog/inside-browser-part3?hl=zh-cn#inner-workings-of-a-render-process
 
 > requestIdleCallback，获取浏览器空闲时间。但react源码并没有使用此api，存在浏览器兼容问题，调用时间不可控，子任务消耗大同样会有性能问题，没有优先级。
 > 组件和原生标签都会生成fiber节点
+
+## Fiber是什么
+
+fiber是什么，三种解释，fiber具有的属性
+
+## 待确定主题
+
+Fiber架构介绍
+https://github.com/acdlite/react-fiber-architecture
+
+### 工作循环(？)
+
+协调：计算新的组件状态和虚拟dom，这个阶段会被拆分成较小的工作单元
+提交：辅助讲新的虚拟dom应用到实际的dom上（？）
+
+### 并发模式
+
+并发模式（原本的大任务拆成小任务，在空闲时间执行？），
+时间切片（在浏览器每次空闲时间做任务），
+优先级调度
