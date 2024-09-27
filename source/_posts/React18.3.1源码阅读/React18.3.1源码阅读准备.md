@@ -34,11 +34,15 @@ tags:
 
 ### 第二步，启用flow对TS的类型检查
 
-安装VSCode插件, Flow Language Support, 安装后可能需要重启VSCode
+安装VSCode插件, Flow Language Support
 
 ![Flow插件安装](./FlowInstall.png)
 
 再去看packages下的文件，TS类型支持已出现。
+
+> 注意 vscode 推荐的 vscode-flow-ide 插件
+> 此插件会覆盖vscode的对ES6模块语法的解析, 导致查看源码时无法跳转到定义,
+> 卸载后问题解决, 可能需要配置文件，没有细研究
 
 ## yarn install 报错
 
