@@ -8,6 +8,7 @@ summary: 实现，类的继承，LRU淘汰算法，Ajax，节流函数，数组�
 ---
 
 ### 浅比较
+
 ```js
 /**
  * 浅比较(如果是对象，只比较第一层属性，与深比较/深拷贝相比性能更好，平常够用)
@@ -42,12 +43,15 @@ console.log(shallowEqual(obj11, obj12)); // true
 ```
 
 ### 手写深拷贝
+
 __浅拷贝__，如果复制的对象是基本数据类型，拷贝的就是值，如果是引用类型，拷贝的就是内存地址，一个对象改变会影响另一个对象
 
 #### JSON.parse(JSON.stringify()) 基本能用版
+
 1. `JSON.parse(JSON.stringify())`，写法简单，但无法拷贝函数，循环引用，或特殊引用类型.
 
 #### forIn遍历，递归自身，丐版
+
 ```js
 function clone(target) {
     if (typeof target !== 'object') return target;
@@ -61,6 +65,7 @@ function clone(target) {
 ```
 
 #### cloneTarget=[]兼容数组，map解决循环引用，够用了版
+
 ```js
 /**
  * 深拷贝
@@ -85,6 +90,7 @@ function deepClone(target, map = new WeakMap()) {
     return cloneTarget
 }
 ```
+
 #### WeakMap弱引用 与 {}强引用
 
 Map 和Weakmap 的区别
@@ -97,16 +103,18 @@ Map的键实际上是跟内存地址绑定的，只要内存地址不一样，�
 
 Map可以被遍历，WeakMap不能被遍历
 
-
 #### forIn循环效率低，while循环效率高，性能优化版
+
 #### 函数类型及特殊引用类型得专门判断
+
 `Map`， `Set` 等类型得专门判断
 
-
 ### 手写防抖节流
+
 防抖和节流都是防止某一事件频繁触发
 
 #### 防抖(debounce)
+
 施法前摇，在读条期间再次触发会打断施法，重新读条，直到正常读条结束，触发函数。
 
 ```js
@@ -125,8 +133,10 @@ function debounce(fn, wait) {
 防抖重在清零 `clearTimeout(timer)`
 
 #### 节流
+
 节流重在加锁 `timer=timeout`,控制事件发生频率,限流,单位时间内只发生一次
 防抖是在等用户给出最终答案 再触发，节流就是防止频繁触发 限流 锁。
+
 ```js
 function throttle(fn, wait) {
     let timer;
@@ -139,12 +149,12 @@ function throttle(fn, wait) {
     };
 }
 ```
+
 ### 如果防抖在首次触发怎么写？
 
 实现一个节流函数? 如果想要最后一次必须执行的话怎么实现?
 
 ### 加上对上下文的处理
-
 
 ### 手写排序
 
